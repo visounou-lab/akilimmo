@@ -1,136 +1,99 @@
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import PropertyList from "./components/property-list";
+import ContactForm from "./components/contact-form";
 
 const services = [
-  {
-    title: "Vente & location",
-    description:
-      "Recherche, acquisition et gestion de biens immobiliers haut de gamme au Bénin et en Côte d'Ivoire.",
-  },
-  {
-    title: "Gestion locative",
-    description:
-      "Optimisation des revenus, suivi des paiements et service client dédié pour propriétaires et locataires.",
-  },
-  {
-    title: "Contrats & documents",
-    description:
-      "Génération sécurisée de contrats PDF, factures et documents de location conformes aux normes locales.",
-  },
+  { icon: "🏠", title: "Vente & location", description: "Recherche, acquisition et gestion de biens immobiliers haut de gamme au Bénin et en Côte d'Ivoire." },
+  { icon: "📋", title: "Gestion locative", description: "Optimisation des revenus, suivi des paiements et service client dédié pour propriétaires et locataires." },
+  { icon: "📄", title: "Contrats & documents", description: "Génération sécurisée de contrats PDF, factures et documents de location conformes aux normes locales." },
 ];
 
 const values = [
-  {
-    title: "Professionnalisme local",
-    description:
-      "Des équipes dédiées au Bénin et en Côte d'Ivoire pour accompagner chaque transaction immobilière.",
-  },
-  {
-    title: "Technologie moderne",
-    description:
-      "Plateforme sécurisée avec suivi des paiements, notifications et gestion des contrats en temps réel.",
-  },
-  {
-    title: "Support 24/7",
-    description:
-      "Service client réactif pour répondre aux demandes de réservation, de réparation et de documentation.",
-  },
+  { icon: "🤝", title: "Professionnalisme local", description: "Des équipes dédiées au Bénin et en Côte d'Ivoire pour accompagner chaque transaction immobilière." },
+  { icon: "💻", title: "Technologie moderne", description: "Plateforme sécurisée avec suivi des paiements, notifications et gestion des contrats en temps réel." },
+  { icon: "🕐", title: "Support 24/7", description: "Service client réactif pour répondre aux demandes de réservation, de réparation et de documentation." },
+];
+
+const stats = [
+  { label: "Biens gérés", value: "120+" },
+  { label: "Clients satisfaits", value: "300+" },
+  { label: "Pays couverts", value: "2" },
+  { label: "Années d'expérience", value: "5+" },
 ];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pt-28">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 pt-28">
       <Navbar />
-
       <main className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
-        <section className="grid gap-10 rounded-[32px] bg-gradient-to-br from-[#E9F2FF] via-white to-white p-8 shadow-[0_30px_80px_-40px_rgba(0,102,204,0.35)] ring-1 ring-slate-200/70 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+
+        <section className="grid gap-10 rounded-[32px] bg-gradient-to-br from-[#E8F4FD] via-white to-white p-8 shadow-[0_30px_80px_-40px_rgba(0,102,204,0.35)] ring-1 ring-slate-200/70 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="space-y-6">
             <span className="inline-flex rounded-full bg-[#0066CC]/10 px-4 py-1 text-sm font-semibold text-[#0066CC]">
-              AKIL IMMO — Bénin & Côte d'Ivoire
+              AKIL IMMO — Bénin 🇧🇯 & Côte d'Ivoire 🇨🇮
             </span>
-            <h1 className="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-              Immobilier moderne et gestion locative 100 % professionnelle.
+            <h1 className="text-4xl font-semibold tracking-tight text-[#333333] sm:text-5xl">
+              Vous êtes loin,<br />nous sommes là.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-slate-600">
-              Découvrez des biens premium, des contrats sécurisés et un suivi de paiement simplifié pour propriétaires et locataires.
+              Plateforme immobilière professionnelle au Bénin et en Côte d'Ivoire. Gestion locative, contrats sécurisés et suivi des paiements simplifié.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#properties"
-                className="inline-flex items-center justify-center rounded-full bg-[#0066CC] px-6 py-3 text-sm font-semibold text-white shadow-lg transition duration-200 hover:bg-[#0054a3]"
-              >
-                Voir les biens disponibles
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition duration-200 hover:border-slate-300 hover:bg-slate-50"
-              >
-                Contactez-nous
-              </a>
+              <a href="#properties" className="inline-flex items-center justify-center rounded-full bg-[#0066CC] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#004499]">Voir les biens disponibles</a>
+              <a href="#contact" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50">Contactez-nous</a>
             </div>
           </div>
-
-          <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-gradient-to-br from-[#E6F0FF] via-white to-white p-6 shadow-lg">
+          <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white p-6 shadow-lg">
             <div className="space-y-4">
-              <div className="h-72 rounded-3xl bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#0066CC]/25 via-transparent to-transparent p-6 shadow-inner">
-                <div className="flex h-full flex-col justify-end rounded-3xl bg-white/90 p-6 backdrop-blur-sm">
-                  <span className="text-sm font-semibold uppercase tracking-[0.24em] text-[#0066CC]">Bien à la une</span>
-                  <h2 className="mt-4 text-2xl font-semibold text-slate-950">Appartement de prestige à Cotonou</h2>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">
-                    3 chambres, 2 salles de bain, piscine, proche de la plage et du centre-ville.
-                  </p>
-                </div>
+              <div className="h-64 rounded-3xl bg-gradient-to-br from-[#E8F4FD] to-white p-6 flex flex-col justify-end">
+                <span className="text-sm font-semibold uppercase tracking-widest text-[#0066CC]">Bien à la une</span>
+                <h2 className="mt-3 text-xl font-semibold text-[#333333]">Appartement de prestige à Cotonou</h2>
+                <p className="mt-2 text-sm text-slate-500">3 ch. · 2 SdB · Piscine · Vue mer</p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-3xl bg-[#0066CC] p-5 text-white shadow-lg">
-                  <span className="text-sm uppercase tracking-[0.24em] text-slate-200">Rôles</span>
-                  <p className="mt-3 text-2xl font-semibold">Admin, Propriétaire, Locataire</p>
+                <div className="rounded-3xl bg-[#0066CC] p-4 text-white">
+                  <p className="text-xs uppercase tracking-widest text-slate-200">Rôles</p>
+                  <p className="mt-2 text-sm font-semibold">Admin · Propriétaire · Locataire</p>
                 </div>
-                <div className="rounded-3xl bg-slate-100 p-5 text-slate-950 shadow-lg">
-                  <span className="text-sm uppercase tracking-[0.24em] text-[#0066CC]">Notifications</span>
-                  <p className="mt-3 text-2xl font-semibold">Réservations instantanées</p>
+                <div className="rounded-3xl bg-slate-100 p-4">
+                  <p className="text-xs uppercase tracking-widest text-[#0066CC]">Notifications</p>
+                  <p className="mt-2 text-sm font-semibold text-slate-900">Réservations instantanées</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mt-20" id="services">
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#0066CC]">Services</p>
-              <h2 className="mt-3 text-3xl font-semibold text-slate-950">Une expertise complète pour chaque profil</h2>
+        <section className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+              <p className="text-3xl font-bold text-[#0066CC]">{s.value}</p>
+              <p className="mt-1 text-sm text-slate-500">{s.label}</p>
             </div>
-            <p className="max-w-2xl text-sm leading-6 text-slate-600">
-              Une plateforme pensée pour les propriétaires, locataires et administrateurs du Bénin et de la Côte d'Ivoire.
-            </p>
+          ))}
+        </section>
+
+        <section className="mt-20" id="services">
+          <div className="mb-10">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#0066CC]">Services</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#333333]">Une expertise complète pour chaque profil</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
-            {services.map((service) => (
-              <article
-                key={service.title}
-                className="rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2)] transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
-              >
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0066CC]/10 text-[#0066CC] shadow-sm">
-                  <span className="font-bold">•</span>
-                </div>
-                <h3 className="text-xl font-semibold text-slate-950">{service.title}</h3>
-                <p className="mt-4 text-slate-600">{service.description}</p>
+            {services.map((s) => (
+              <article key={s.title} className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="mb-5 text-3xl">{s.icon}</div>
+                <h3 className="text-xl font-semibold text-[#333333]">{s.title}</h3>
+                <p className="mt-3 text-slate-600">{s.description}</p>
               </article>
             ))}
           </div>
         </section>
 
         <section className="mt-20" id="properties">
-          <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#0066CC]">Biens</p>
-              <h2 className="mt-3 text-3xl font-semibold text-slate-950">Biens disponibles par pays</h2>
-            </div>
-            <p className="max-w-2xl text-sm leading-6 text-slate-600">
-              Explorez des appartements, villas et maisons disponibles au Bénin et en Côte d'Ivoire avec un filtre pays rapide.
-            </p>
+          <div className="mb-10">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#0066CC]">Biens</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#333333]">Biens disponibles par pays</h2>
           </div>
           <PropertyList />
         </section>
@@ -139,52 +102,61 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[1.4fr_0.6fr] lg:items-center">
             <div>
               <h2 className="text-3xl font-semibold">AKIL IMMO accompagne votre prochain projet immobilier.</h2>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-100/90">
-                Simplifiez vos démarches avec un espace dédié aux propriétaires, locataires et équipes administratives.
-              </p>
+              <p className="mt-4 text-slate-100/90">Vous êtes loin, nous sommes là — pour chaque étape de votre projet.</p>
             </div>
-            <div className="space-y-4">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-200">Contact rapide</p>
-              <p className="text-2xl font-semibold">hello@akilimmo.com</p>
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-widest text-slate-200">Contact rapide</p>
+              <p className="text-xl font-semibold">info@akilimmo.com</p>
+              <a href="#contact" className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100">Nous écrire</a>
             </div>
           </div>
         </section>
 
         <section className="mt-20 grid gap-8 lg:grid-cols-3">
-          {values.map((value) => (
-            <article
-              key={value.title}
-              className="rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2)] transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
-            >
-              <h3 className="text-xl font-semibold text-slate-950">{value.title}</h3>
-              <p className="mt-4 text-slate-600">{value.description}</p>
+          {values.map((v) => (
+            <article key={v.title} className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+              <div className="mb-4 text-3xl">{v.icon}</div>
+              <h3 className="text-xl font-semibold text-[#333333]">{v.title}</h3>
+              <p className="mt-3 text-slate-600">{v.description}</p>
             </article>
           ))}
         </section>
 
-        <section className="mt-20 rounded-3xl bg-white p-8 shadow-sm" id="contact">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <section className="mt-20 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200/70" id="contact">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#0066CC]">Contact</p>
-              <h2 className="mt-3 text-3xl font-semibold text-slate-950">Prêt à lancer votre projet immobilier ?</h2>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
-                Envoyez-nous un message et un expert AKIL IMMO vous recontacte rapidement pour un audit personnalisé.
-              </p>
-            </div>
-            <div className="space-y-4 rounded-3xl bg-[#F8FBFF] p-6">
-              <div>
-                <p className="text-sm font-semibold text-slate-500">Email</p>
-                <p className="mt-1 text-lg font-semibold text-slate-900">contact@akilimmo.com</p>
+              <p className="text-sm font-semibold uppercase tracking-widest text-[#0066CC]">Contact</p>
+              <h2 className="mt-3 text-3xl font-semibold text-[#333333]">Prêt à lancer votre projet ?</h2>
+              <p className="mt-4 text-slate-600">Un expert AKIL IMMO vous répond rapidement.</p>
+              <div className="mt-8 space-y-3">
+                {[
+                  { icon: "📧", label: "Email", value: "info@akilimmo.com" },
+                  { icon: "📞", label: "Bénin", value: "+229 01 97 59 86 82" },
+                  { icon: "📞", label: "Côte d'Ivoire", value: "+225 07 10 25 91 46" },
+                  { icon: "📍", label: "Bureaux", value: "Abomey-Calavi, Bénin · Abidjan, CI" },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                    <span className="text-xl">{item.icon}</span>
+                    <div>
+                      <p className="text-xs text-slate-400">{item.label}</p>
+                      <p className="text-sm font-semibold text-slate-900">{item.value}</p>
+                    </div>
+                  </div>
+                ))}
+                <a href="https://wa.me/22901975986 82" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-2xl bg-green-50 px-4 py-3 transition hover:bg-green-100">
+                  <span className="text-xl">💬</span>
+                  <div>
+                    <p className="text-xs text-slate-400">WhatsApp</p>
+                    <p className="text-sm font-semibold text-green-700">Discuter sur WhatsApp</p>
+                  </div>
+                </a>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-slate-500">Téléphone</p>
-                <p className="mt-1 text-lg font-semibold text-slate-900">+229 90 00 00 00</p>
-              </div>
             </div>
+            <ContactForm />
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );

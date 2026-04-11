@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx prisma:*)",
+      "Bash(node -e \"const {defineConfig} = require\\('./node_modules/@prisma/config'\\); const c = require\\('./node_modules/@prisma/config'\\); console.log\\(Object.keys\\(c\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/dotenv/package.json'\\).version\\)\")",
+      "Bash(node -e \"const dotenv = require\\('./node_modules/dotenv'\\); console.log\\(Object.keys\\(dotenv\\)\\)\")",
+      "Bash(npm run:*)"
+    ]
+  }
+}

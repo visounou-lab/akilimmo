@@ -1,7 +1,9 @@
+import Link from "next/link";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
-import PropertyList from "./components/property-list";
 import ContactForm from "./components/contact-form";
+import BienCard from "./components/BienCard";
+import { prisma } from "@/lib/prisma";
 
 const services = [
   { icon: "🏠", title: "Vente & location", description: "Recherche, acquisition et gestion de biens immobiliers haut de gamme au Bénin et en Côte d'Ivoire." },
@@ -22,7 +24,13 @@ const stats = [
   { label: "Années d'expérience", value: "5+" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const biensDisponibles = await prisma.property.findMany({
+    where: { status: "AVAILABLE" },
+    orderBy: { createdAt: "desc" },
+    take: 6,
+    select: { id: true, title: true, city: true, country: true, price: true, bedrooms: true, bathrooms: true, area: true, imageUrl: true },
+  });
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 pt-28">
       <Navbar />
@@ -95,7 +103,28 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-widest text-[#0066CC]">Biens</p>
             <h2 className="mt-3 text-3xl font-semibold text-[#333333]">Biens disponibles par pays</h2>
           </div>
-          <PropertyList />
+          {biensDisponibles.length === 0 ? (
+            <p className="text-slate-500 text-sm">Aucun bien disponible pour le moment.</p>
+          ) : (
+            <div className="space-y-8">
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {biensDisponibles.map((bien) => (
+                  <BienCard key={bien.id} bien={bien} />
+                ))}
+              </div>
+              <div className="text-center">
+                <Link
+                  href="/biens"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                >
+                  Voir tous les biens disponibles
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="mt-20 rounded-3xl bg-[#0066CC] px-8 py-14 text-white shadow-xl">

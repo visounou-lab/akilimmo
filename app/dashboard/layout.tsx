@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import SidebarNav from "./_components/SidebarNav";
@@ -20,18 +21,9 @@ export default async function DashboardLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed inset-y-0 left-0 z-20">
         {/* Logo */}
-        <div className="px-6 py-5 border-b border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#0066CC] flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-sm">A</span>
-            </div>
-            <div className="leading-tight">
-              <p className="font-bold text-slate-900 text-base">
-                AKIL<span className="text-[#0066CC]"> IMMO</span>
-              </p>
-              <p className="text-xs text-slate-400">Administration</p>
-            </div>
-          </div>
+        <div className="px-6 py-4 border-b border-gray-100 flex flex-col items-center">
+          <Image src="/logo.png" alt="Akil Immo" width={140} height={140} priority />
+          <p className="text-xs text-slate-400 mt-1">Administration</p>
         </div>
 
         {/* Navigation */}

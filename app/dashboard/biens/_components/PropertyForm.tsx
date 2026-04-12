@@ -24,7 +24,7 @@ interface DefaultValues {
   status?: string;
   bedrooms?: number;
   bathrooms?: number;
-  area?: string;
+
   imageUrl?: string | null;
 }
 
@@ -144,8 +144,8 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Chambres / SDB / Superficie */}
-      <div className="grid grid-cols-3 gap-4">
+      {/* Chambres / SDB */}
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Chambres <span className="text-red-400">*</span></label>
           <input type="number" name="bedrooms" required min={0} defaultValue={defaultValues.bedrooms} placeholder="3" className={inputClass} />
@@ -153,10 +153,6 @@ export default function PropertyForm({
         <div>
           <label className={labelClass}>Salles de bain <span className="text-red-400">*</span></label>
           <input type="number" name="bathrooms" required min={0} defaultValue={defaultValues.bathrooms} placeholder="2" className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Superficie <span className="text-red-400">*</span></label>
-          <input type="text" name="area" required defaultValue={defaultValues.area} placeholder="120 m²" className={inputClass} />
         </div>
       </div>
 

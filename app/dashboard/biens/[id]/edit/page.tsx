@@ -51,7 +51,7 @@ export default async function EditBienPage({ params }: Props) {
             status:      property.status,
             bedrooms:    property.bedrooms,
             bathrooms:   property.bathrooms,
-            area:        property.area,
+
             imageUrl:    property.imageUrl,
           }}
         />

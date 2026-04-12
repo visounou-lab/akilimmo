@@ -14,7 +14,6 @@ interface BienCardProps {
     price: unknown;
     bedrooms: number;
     bathrooms: number;
-    area: string;
     imageUrl: string | null;
   };
 }
@@ -78,7 +77,7 @@ export default function BienCard({ bien }: BienCardProps) {
               </svg>
               {bien.bathrooms} sdb
             </span>
-            <span>{bien.area}</span>
+
           </div>
         </div>
       </article>

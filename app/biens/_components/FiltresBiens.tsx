@@ -17,7 +17,6 @@ interface Bien {
   price: unknown;
   bedrooms: number;
   bathrooms: number;
-  area: string;
   imageUrl: string | null;
 }
 

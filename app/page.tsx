@@ -29,7 +29,7 @@ export default async function Home() {
     where: { status: "AVAILABLE" },
     orderBy: { createdAt: "desc" },
     take: 6,
-    select: { id: true, title: true, city: true, country: true, price: true, bedrooms: true, bathrooms: true, area: true, imageUrl: true },
+    select: { id: true, title: true, city: true, country: true, price: true, bedrooms: true, bathrooms: true, imageUrl: true },
   });
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 pt-28">

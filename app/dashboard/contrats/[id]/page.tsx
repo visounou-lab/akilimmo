@@ -146,8 +146,6 @@ export default async function ContratDetailPage({ params }: Props) {
                   <span>{contract.property.bedrooms} chambres</span>
                   <span>·</span>
                   <span>{contract.property.bathrooms} sdb</span>
-                  <span>·</span>
-                  <span>{contract.property.area}</span>
                 </div>
               </div>
             </div>

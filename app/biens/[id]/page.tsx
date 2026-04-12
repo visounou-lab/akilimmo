@@ -96,7 +96,7 @@ export default async function BienDetailPage({ params }: Props) {
               {[
                 { label: "Chambres", value: bien.bedrooms },
                 { label: "Salles de bain", value: bien.bathrooms },
-                { label: "Superficie", value: bien.area },
+
               ].map((c) => (
                 <div key={c.label} className="rounded-2xl bg-white border border-slate-200 p-5 text-center shadow-sm">
                   <p className="text-2xl font-bold text-[#0066CC]">{c.value}</p>

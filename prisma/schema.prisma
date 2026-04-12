@@ -107,7 +107,6 @@ model Property {
   status        PropertyStatus @default(AVAILABLE)
   bedrooms      Int
   bathrooms     Int
-  area          String
   imageUrl      String?
   ownerId       String
   owner         User           @relation("OwnerProperties", fields: [ownerId], references: [id])

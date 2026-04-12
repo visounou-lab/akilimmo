@@ -128,8 +128,6 @@ export default async function BiensPage() {
                       <span>{p.bedrooms} ch.</span>
                       <span className="mx-1 text-slate-300">·</span>
                       <span>{p.bathrooms} sdb</span>
-                      <span className="mx-1 text-slate-300">·</span>
-                      <span>{p.area}</span>
                     </td>
 
                     {/* Actions */}

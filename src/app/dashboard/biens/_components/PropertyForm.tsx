@@ -28,7 +28,7 @@ interface DefaultValues {
 }
 
 interface PropertyFormProps {
-  action: (formData: FormData) => Promise<void>;
+  action: (formData: FormData) => void | Promise<void>;
   defaultValues?: DefaultValues;
   submitLabel?: string;
 }
@@ -53,48 +53,40 @@ export default function PropertyForm({
   }
 
   return (
-    <form action={action} encType="multipart/form-data" className="space-y-6">
+    <form action={action} className="space-y-6">
       {/* Photo */}
       <div>
         <label className={labelClass}>Photo du bien</label>
-        <div className="flex items-start gap-4">
-          <div
-            className="w-32 h-24 rounded-xl border-2 border-dashed border-slate-200 overflow-hidden flex items-center justify-center bg-slate-50 shrink-0 cursor-pointer hover:border-[#0066CC] transition-colors"
+        <input
+          ref={fileInputRef}
+          type="file"
+          name="image"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
             onClick={() => fileInputRef.current?.click()}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
           >
-            {preview ? (
-              <img src={preview} alt="preview" className="w-full h-full object-cover" />
-            ) : (
-              <div className="text-center p-2">
-                <svg className="w-6 h-6 text-slate-300 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-xs text-slate-400">Choisir</p>
-              </div>
-            )}
-          </div>
-          <div className="flex-1">
-            <input
-              ref={fileInputRef}
-              type="file"
-              name="image"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              Parcourir…
-            </button>
-            <p className="text-xs text-slate-400 mt-2">JPG, PNG ou WebP · max 5 Mo</p>
-          </div>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Parcourir…
+          </button>
+          <p className="text-xs text-slate-400">JPG, PNG ou WebP · max 5 Mo</p>
         </div>
+        {preview && (
+          <div className="mt-3">
+            <img
+              src={preview}
+              alt="Prévisualisation"
+              className="max-h-[200px] w-auto rounded-lg border border-slate-200 object-cover shadow-sm"
+            />
+          </div>
+        )}
       </div>
 
       {/* Titre */}

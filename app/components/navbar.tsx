@@ -9,13 +9,9 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#0054a3]/20 bg-[#0066CC]/95 shadow-lg shadow-[#0066CC]/15 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-        <a href="#" className="inline-flex items-center gap-3 text-lg font-semibold tracking-tight text-white">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/15 text-white shadow-sm">
-            A
-          </span>
-          <span>
-            <span className="font-bold text-white">AKIL</span> IMMO
-          </span>
+        <a href="#" className="inline-flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Akil Immo" height="50" style={{ height: "50px", width: "auto" }} />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

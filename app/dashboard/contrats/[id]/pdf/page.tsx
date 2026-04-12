@@ -83,7 +83,7 @@ export default async function ContratPdfPage({ params }: Props) {
         `}</style>
       </head>
       <body>
-        <button className="print-btn" onClick="window.print()">
+        <button className="print-btn" onClick={() => window.print()}>
           Imprimer / Enregistrer PDF
         </button>
 

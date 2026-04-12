@@ -28,7 +28,6 @@ export async function createProperty(formData: FormData) {
       status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-
       imageUrl,
       ownerId:     userId,
     },
@@ -62,7 +61,6 @@ export async function updateProperty(id: string, formData: FormData) {
       status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-
       imageUrl,
     },
   });

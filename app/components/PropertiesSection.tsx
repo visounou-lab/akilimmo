@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 const COUNTRY_LABEL: Record<string, string> = {
-  BENIN: "Bénin 🇧🇯",
-  COTE_D_IVOIRE: "Côte d'Ivoire 🇨🇮",
+  BENIN: "Bénin",
+  COTE_D_IVOIRE: "Côte d'Ivoire",
 };
 
 interface Bien {
@@ -161,8 +161,8 @@ export default function PropertiesSection({ biens }: { biens: Bien[] }) {
           <div className="flex items-center gap-1 bg-white rounded-xl border border-slate-200 p-1">
             {[
               { label: "Tous", value: "TOUS" },
-              { label: "🇧🇯 Bénin", value: "BENIN" },
-              { label: "🇨🇮 Côte d'Ivoire", value: "COTE_D_IVOIRE" },
+              { label: "Bénin", value: "BENIN" },
+              { label: "Côte d'Ivoire", value: "COTE_D_IVOIRE" },
             ].map((opt) => (
               <button
                 key={opt.value}

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 const COUNTRY_LABEL: Record<string, string> = {
-  BENIN:         "Bénin 🇧🇯",
-  COTE_D_IVOIRE: "Côte d'Ivoire 🇨🇮",
+  BENIN:         "Bénin",
+  COTE_D_IVOIRE: "Côte d'Ivoire",
 };
 
 interface BienCardProps {

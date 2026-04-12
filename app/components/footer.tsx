@@ -21,7 +21,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">🇧🇯 Bénin</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">Bénin</h4>
             <ul className="space-y-3 text-sm text-slate-400">
               <li>Akil Services</li>
               <li>Abomey-Calavi, Tokan</li>
@@ -29,7 +29,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">🇨🇮 Côte d'Ivoire</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">Côte d&apos;Ivoire</h4>
             <ul className="space-y-3 text-sm text-slate-400">
               <li>Akil Immo CI</li>
               <li>Abidjan</li>

@@ -59,8 +59,8 @@ export default function ContactForm() {
           <select id="country" name="country" value={form.country} onChange={handleChange}
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20">
             <option value="">Sélectionner...</option>
-            <option value="benin">🇧🇯 Bénin</option>
-            <option value="cotedivoire">🇨🇮 Côte d'Ivoire</option>
+            <option value="benin">Bénin</option>
+            <option value="cotedivoire">Côte d&apos;Ivoire</option>
             <option value="both">Les deux pays</option>
             <option value="other">Autre (diaspora)</option>
           </select>

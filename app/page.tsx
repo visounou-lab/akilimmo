@@ -17,20 +17,24 @@ const values = [
   { icon: "🕐", title: "Support 24/7", description: "Service client réactif pour répondre aux demandes de réservation, de réparation et de documentation." },
 ];
 
-const stats = [
-  { label: "Biens gérés", value: "120+" },
-  { label: "Clients satisfaits", value: "300+" },
-  { label: "Pays couverts", value: "2" },
-  { label: "Années d'expérience", value: "5+" },
-];
-
 export default async function Home() {
-  const biensDisponibles = await prisma.property.findMany({
-    where: { status: "AVAILABLE" },
-    orderBy: { createdAt: "desc" },
-    take: 6,
-    select: { id: true, title: true, city: true, country: true, price: true, bedrooms: true, bathrooms: true, imageUrl: true },
-  });
+  const [totalBiens, availableBiens, biensDisponibles] = await Promise.all([
+    prisma.property.count(),
+    prisma.property.count({ where: { status: "AVAILABLE" } }),
+    prisma.property.findMany({
+      where: { status: "AVAILABLE" },
+      orderBy: { createdAt: "desc" },
+      take: 6,
+      select: { id: true, title: true, city: true, country: true, price: true, bedrooms: true, bathrooms: true, imageUrl: true },
+    }),
+  ]);
+
+  const stats = [
+    { label: "Biens gérés",       value: String(totalBiens) },
+    { label: "Biens disponibles", value: String(availableBiens) },
+    { label: "Pays couverts",     value: "2" },
+    { label: "Années d'expérience", value: "5+" },
+  ];
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 pt-28">
       <Navbar />

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import SidebarNav from "./_components/SidebarNav";
@@ -22,7 +21,8 @@ export default async function DashboardLayout({
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed inset-y-0 left-0 z-20">
         {/* Logo */}
         <div className="px-6 py-4 border-b border-gray-100 flex flex-col items-center">
-          <Image src="/logo.png" alt="Akil Immo" width={140} height={140} priority />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Akil Immo" width={140} height={140} />
           <p className="text-xs text-slate-400 mt-1">Administration</p>
         </div>
 

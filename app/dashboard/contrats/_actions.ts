@@ -59,7 +59,7 @@ export async function updateContractStatus(id: string, formData: FormData) {
   await prisma.property.update({ where: { id: contract.propertyId }, data: { status: propertyStatus } });
 
   revalidatePath("/dashboard/contrats");
-  revalidatePath(`/dashboard/contrats/${id}`);
+  redirect(`/dashboard/contrats/${id}`);
 }
 
 export async function deleteContract(id: string) {

@@ -4,9 +4,9 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="space-y-4">
-            <a href="#" className="inline-flex items-center gap-3 text-white">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0066CC] font-bold text-white">A</span>
-              <span className="text-lg font-bold">AKIL <span className="text-[#4da3ff]">IMMO</span></span>
+            <a href="#">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Akil Immo" style={{ height: "45px", width: "auto" }} />
             </a>
             <p className="max-w-xs text-sm leading-7 text-slate-400">
               Vous êtes loin, nous sommes là. Plateforme immobilière au Bénin et en Côte d'Ivoire.

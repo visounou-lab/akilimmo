@@ -88,6 +88,7 @@ export default async function ContratPdfPage({ params }: Props) {
         </button>
 
         <div className="header">
+          <img src="/logo.png" alt="Akil Immo" width="80" style={{ margin: "0 auto 0.75rem" }} />
           <h1>AKIL IMMO</h1>
           <p>Contrat de location</p>
         </div>

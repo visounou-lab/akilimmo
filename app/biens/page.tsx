@@ -3,6 +3,8 @@ import Footer from "../components/footer";
 import FiltresBiens from "./_components/FiltresBiens";
 import { prisma } from "@/lib/prisma";
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "Biens disponibles | AKIL IMMO",
   description: "Découvrez tous nos biens disponibles à la location au Bénin et en Côte d'Ivoire.",

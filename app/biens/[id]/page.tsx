@@ -191,11 +191,11 @@ export default async function BienDetailPage({ params }: Props) {
           <div className="space-y-5">
             {/* Bloc prix */}
             <div className="rounded-3xl bg-white border border-slate-200 p-7 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Loyer mensuel</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tarif par nuit</p>
               <p className="text-3xl font-bold text-[#0066CC] leading-none">
                 {price}
               </p>
-              <p className="text-base text-slate-400 mt-1">XOF / mois</p>
+              <p className="text-base text-slate-400 mt-1">XOF / nuit</p>
               <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-sm text-slate-500">
                 <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

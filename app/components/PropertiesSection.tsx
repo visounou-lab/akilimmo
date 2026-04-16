@@ -103,7 +103,7 @@ function BienCard({ bien }: { bien: Bien }) {
 
           <div className="flex items-center justify-between mb-3">
             <p className="text-xl font-bold text-[#0066CC]">
-              {price} <span className="text-xs font-normal text-slate-400">XOF/mois</span>
+              {price} <span className="text-xs font-normal text-slate-400">XOF / nuit</span>
             </p>
           </div>
 

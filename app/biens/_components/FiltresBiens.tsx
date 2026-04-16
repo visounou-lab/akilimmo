@@ -5,8 +5,8 @@ import BienCard from "../../components/BienCard";
 
 const COUNTRY_OPTIONS = [
   { value: "TOUS",          label: "Tous les pays" },
-  { value: "BENIN",         label: "Bénin 🇧🇯" },
-  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire 🇨🇮" },
+  { value: "BENIN",         label: "Bénin" },
+  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire" },
 ];
 
 interface Bien {
@@ -18,6 +18,7 @@ interface Bien {
   bedrooms: number;
   bathrooms: number;
   imageUrl: string | null;
+  videoUrl: string | null;
 }
 
 export default function FiltresBiens({ biens }: { biens: Bien[] }) {

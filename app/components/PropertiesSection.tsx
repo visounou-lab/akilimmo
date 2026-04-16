@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { getYouTubeId, getYoutubeThumbnail } from "@/lib/youtube";
 
 const COUNTRY_LABEL: Record<string, string> = {
   BENIN: "Bénin",
@@ -18,6 +19,7 @@ interface Bien {
   bedrooms: number;
   bathrooms: number;
   imageUrl: string | null;
+  videoUrl: string | null;
 }
 
 const BUDGET_OPTIONS = [
@@ -30,6 +32,23 @@ const BUDGET_OPTIONS = [
 
 function BienCard({ bien }: { bien: Bien }) {
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
+
+  // Determine image source: YouTube thumbnail > imageUrl > placeholder
+  let displayImage: string | null = null;
+  let hasVideo = false;
+
+  if (bien.videoUrl) {
+    const videoId = getYouTubeId(bien.videoUrl);
+    if (videoId) {
+      displayImage = getYoutubeThumbnail(bien.videoUrl) || null;
+      hasVideo = true;
+    }
+  }
+
+  if (!displayImage && bien.imageUrl) {
+    displayImage = bien.imageUrl;
+  }
+
   return (
     <motion.div
       whileHover={{ y: -6, boxShadow: "0 20px 60px -10px rgba(0,102,204,0.25)" }}
@@ -39,9 +58,9 @@ function BienCard({ bien }: { bien: Bien }) {
       <Link href={`/biens/${bien.id}`} className="block">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
-          {bien.imageUrl ? (
+          {displayImage ? (
             <img
-              src={bien.imageUrl}
+              src={displayImage}
               alt={bien.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
@@ -49,6 +68,14 @@ function BienCard({ bien }: { bien: Bien }) {
             <div className="flex h-full w-full items-center justify-center">
               <svg className="w-14 h-14 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          )}
+          {/* Video indicator */}
+          {hasVideo && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+              <svg className="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
               </svg>
             </div>
           )}

@@ -14,7 +14,7 @@ export default async function BiensPage() {
     orderBy: { createdAt: "desc" },
     select: {
       id: true, title: true, city: true, country: true,
-      price: true, bedrooms: true, bathrooms: true, imageUrl: true,
+      price: true, bedrooms: true, bathrooms: true, imageUrl: true, videoUrl: true,
     },
   });
 

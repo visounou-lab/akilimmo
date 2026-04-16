@@ -11,13 +11,23 @@ export async function createProperty(formData: FormData) {
   if (!session?.user) redirect("/login");
   const userId = (session.user as { id: string }).id;
 
-  let imageUrl: string | null = null;
-  const image = formData.get("image") as File | null;
-  if (image && image.size > 0) {
-    imageUrl = await uploadImage(image);
+  const files = formData.getAll("images") as File[];
+  const primaryIndex = parseInt(formData.get("primaryIndex") as string, 10) || 0;
+
+  // Upload all images to Cloudinary
+  const uploadedUrls: string[] = [];
+  for (const file of files) {
+    if (file && file.size > 0) {
+      const url = await uploadImage(file);
+      uploadedUrls.push(url);
+    }
   }
 
-  await prisma.property.create({
+  const primaryUrl = uploadedUrls[primaryIndex] ?? uploadedUrls[0] ?? null;
+
+  const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
+
+  const property = await prisma.property.create({
     data: {
       title:       formData.get("title") as string,
       description: formData.get("description") as string,
@@ -28,10 +38,23 @@ export async function createProperty(formData: FormData) {
       status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-      imageUrl,
+      imageUrl:    primaryUrl,
+      videoUrl,
       ownerId:     userId,
     },
   });
+
+  // Create PropertyImage records
+  if (uploadedUrls.length > 0) {
+    await prisma.propertyImage.createMany({
+      data: uploadedUrls.map((url, i) => ({
+        propertyId: property.id,
+        url,
+        isPrimary: i === primaryIndex,
+        order: i,
+      })),
+    });
+  }
 
   revalidatePath("/dashboard/biens");
   redirect("/dashboard/biens");
@@ -43,11 +66,24 @@ export async function updateProperty(id: string, formData: FormData) {
 
   const existing = await prisma.property.findUniqueOrThrow({ where: { id } });
 
-  let imageUrl = existing.imageUrl;
-  const image = formData.get("image") as File | null;
-  if (image && image.size > 0) {
-    imageUrl = await uploadImage(image);
+  const files = formData.getAll("images") as File[];
+  const primaryIndex = parseInt(formData.get("primaryIndex") as string, 10) || 0;
+
+  const uploadedUrls: string[] = [];
+  for (const file of files) {
+    if (file && file.size > 0) {
+      const url = await uploadImage(file);
+      uploadedUrls.push(url);
+    }
   }
+
+  // If new images were uploaded, update imageUrl to the new primary
+  let imageUrl = existing.imageUrl;
+  if (uploadedUrls.length > 0) {
+    imageUrl = uploadedUrls[primaryIndex] ?? uploadedUrls[0];
+  }
+
+  const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
 
   await prisma.property.update({
     where: { id },
@@ -62,8 +98,40 @@ export async function updateProperty(id: string, formData: FormData) {
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
       imageUrl,
+      videoUrl,
     },
   });
+
+  // Add new PropertyImage records (appended to existing ones)
+  if (uploadedUrls.length > 0) {
+    const existingCount = await prisma.propertyImage.count({ where: { propertyId: id } });
+
+    // If no existing images, the new primary replaces the isPrimary flag
+    if (existingCount === 0) {
+      await prisma.propertyImage.createMany({
+        data: uploadedUrls.map((url, i) => ({
+          propertyId: id,
+          url,
+          isPrimary: i === primaryIndex,
+          order: i,
+        })),
+      });
+    } else {
+      // Append new images, mark primary if needed
+      await prisma.propertyImage.updateMany({
+        where: { propertyId: id, isPrimary: true },
+        data: { isPrimary: false },
+      });
+      await prisma.propertyImage.createMany({
+        data: uploadedUrls.map((url, i) => ({
+          propertyId: id,
+          url,
+          isPrimary: i === primaryIndex,
+          order: existingCount + i,
+        })),
+      });
+    }
+  }
 
   revalidatePath("/dashboard/biens");
   redirect("/dashboard/biens");

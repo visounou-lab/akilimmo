@@ -10,7 +10,10 @@ interface Props {
 
 export default async function EditBienPage({ params }: Props) {
   const { id } = await params;
-  const property = await prisma.property.findUnique({ where: { id } });
+  const property = await prisma.property.findUnique({
+    where: { id },
+    include: { images: { orderBy: { order: "asc" } } },
+  });
 
   if (!property) notFound();
 
@@ -52,6 +55,8 @@ export default async function EditBienPage({ params }: Props) {
             bedrooms:    property.bedrooms,
             bathrooms:   property.bathrooms,
             imageUrl:    property.imageUrl,
+            videoUrl:    property.videoUrl,
+            images:      (property as any).images ?? [],
           }}
         />
       </div>

@@ -9,6 +9,8 @@ import ServicesSection from "./components/ServicesSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import WhatsAppButton from "./components/WhatsAppButton";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const [totalBiens, availableBiens, biens] = await Promise.all([
     prisma.property.count(),

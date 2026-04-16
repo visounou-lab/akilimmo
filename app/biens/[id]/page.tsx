@@ -87,21 +87,51 @@ export default async function BienDetailPage({ params }: Props) {
           <div className="space-y-6">
             {/* Médias (Vidéo + Photos) */}
             <div className="space-y-3">
-              {/* Principal (vidéo ou première photo) */}
-              {mediaItems.length > 0 && (
-                <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#E8F4FD] to-slate-100 aspect-[16/9]">
-                  <img
-                    src={mediaItems[0].url || ""}
-                    alt={mediaItems[0].title || bien.title}
-                    className="h-full w-full object-cover"
-                  />
-                  {mediaItems[0].type === "video" && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
-                      <svg className="w-20 h-20 text-white drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  )}
+              {/* Si vidéo → Embed YouTube uniquement */}
+              {youtubeId ? (
+                <div className="space-y-2">
+                  <span className="inline-flex rounded-full bg-[#0066CC] px-4 py-1.5 text-sm font-semibold text-white shadow">
+                    Visite virtuelle
+                  </span>
+                  <div className="rounded-[32px] overflow-hidden bg-black aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
+                      title="Visite virtuelle"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* Sinon → Première image comme principal */
+                mediaItems.length > 0 && (
+                  <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#E8F4FD] to-slate-100 aspect-[16/9]">
+                    <img
+                      src={mediaItems[0].url || ""}
+                      alt={bien.title}
+                      className="h-full w-full object-cover"
+                    />
+                    {/* Badge pays */}
+                    <span className="absolute top-4 left-4 inline-flex rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-[#0066CC] shadow">
+                      {COUNTRY_LABEL[bien.country] ?? bien.country}
+                    </span>
+                    {/* Badge statut */}
+                    <span className={`absolute top-4 right-4 inline-flex rounded-full px-4 py-1.5 text-sm font-semibold shadow ${status.classes} bg-white/90 backdrop-blur-sm`}>
+                      {status.label}
+                    </span>
+                  </div>
+                )
+              )}
+
+              {/* Badges (pays + statut) si pas de vidéo */}
+              {!youtubeId && mediaItems.length === 0 && (
+                <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#E8F4FD] to-slate-100 aspect-[16/9] flex items-center justify-center">
+                  <svg className="w-16 h-16 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
                   {/* Badge pays */}
                   <span className="absolute top-4 left-4 inline-flex rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-[#0066CC] shadow">
                     {COUNTRY_LABEL[bien.country] ?? bien.country}
@@ -113,29 +143,14 @@ export default async function BienDetailPage({ params }: Props) {
                 </div>
               )}
 
-              {/* Grille des photos additionnelles */}
-              {mediaItems.length > 1 && (
+              {/* Grille des photos additionnelles (skip première si vidéo) */}
+              {mediaItems.length > (youtubeId ? 0 : 1) && (
                 <div className="grid grid-cols-4 gap-3">
-                  {mediaItems.slice(1).map((item, i) => (
+                  {mediaItems.slice(youtubeId ? 0 : 1).map((item, i) => (
                     <div key={i} className="relative overflow-hidden rounded-xl aspect-square bg-gradient-to-br from-[#E8F4FD] to-slate-100">
                       <img src={item.url || ""} alt="" className="h-full w-full object-cover hover:scale-105 transition-transform cursor-pointer" />
                     </div>
                   ))}
-                </div>
-              )}
-
-              {/* Embed YouTube si vidéo (sous la galerie) */}
-              {youtubeId && (
-                <div className="rounded-[32px] overflow-hidden bg-black aspect-video">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
-                    title="Visite virtuelle"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
                 </div>
               )}
             </div>

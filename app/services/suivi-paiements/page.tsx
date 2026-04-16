@@ -54,8 +54,8 @@ export default function SuiviPaiementsPage() {
               {[
                 {
                   icon: "📊",
-                  title: "Tableau de bord",
-                  desc: "Vue d'ensemble de tous vos biens et paiements en un coup d'œil",
+                  title: "Tableau de bord temps réel",
+                  desc: "Vue complète de tous vos biens et paiements en un coup d'œil",
                 },
                 {
                   icon: "📅",
@@ -69,13 +69,13 @@ export default function SuiviPaiementsPage() {
                 },
                 {
                   icon: "💹",
-                  title: "Rapports financiers",
-                  desc: "Synthèses mensuelles et annuelles détaillées",
+                  title: "Rapports financiers mensuels",
+                  desc: "Synthèses détaillées de vos revenus et dépenses",
                 },
                 {
-                  icon: "📈",
-                  title: "Prévisions",
-                  desc: "Projections de revenus basées sur vos contrats",
+                  icon: "📄",
+                  title: "Quittances automatiques",
+                  desc: "Génération automatique des quittances pour vos locataires",
                 },
                 {
                   icon: "⬇️",
@@ -116,10 +116,10 @@ export default function SuiviPaiementsPage() {
             <div className="space-y-4">
               {[
                 "✓ Visibilité totale sur vos revenus locatifs en temps réel",
-                "✓ Plus jamais de surprise avec les retards de paiement",
+                "✓ Plus jamais oublier un retard de paiement",
+                "✓ Relances automatiques de vos locataires en retard",
                 "✓ Données exactes pour votre déclaration fiscale",
-                "✓ Analyse détaillée de votre portefeuille immobilier",
-                "✓ Accès 24/7 depuis votre téléphone ou ordinateur",
+                "✓ Rapports détaillés disponibles à tout moment",
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -222,29 +222,44 @@ export default function SuiviPaiementsPage() {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             transition={{ duration: 0.6 }}
-            className="grid md:grid-cols-2 gap-6"
+            className="space-y-6"
           >
-            <a
-              href="https://wa.me/22901975982?text=Bonjour AKIL IMMO, je suis intéressé par le suivi des paiements en temps réel"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              </svg>
-              Contactez via WhatsApp
-            </a>
+            <h2 className="text-3xl font-bold text-slate-900 text-center mb-8">Contactez-nous</h2>
 
-            <a
-              href="/#contact"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Formulaire de contact
-            </a>
+            <div className="grid md:grid-cols-2 gap-6">
+              <a
+                href="https://wa.me/22901975982?text=Bonjour AKIL IMMO, je suis intéressé par le suivi des paiements en temps réel au Bénin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                WhatsApp Bénin
+              </a>
+
+              <a
+                href="https://wa.me/2250710259146?text=Bonjour AKIL IMMO, je suis intéressé par le suivi des paiements en temps réel en Côte d'Ivoire"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                WhatsApp Côte d'Ivoire
+              </a>
+            </div>
+
+            <div>
+              <a
+                href="/#contact"
+                className="block w-full text-center rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                Formulaire de contact
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>

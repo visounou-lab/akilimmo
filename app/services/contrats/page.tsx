@@ -55,17 +55,17 @@ export default function ContratsPage() {
                 {
                   icon: "📝",
                   title: "Rédaction de contrats",
-                  desc: "Contrats professionnels et complets adaptés à votre situation",
+                  desc: "Contrats de bail conformes au droit béninois et ivoirien",
                 },
                 {
                   icon: "⚖️",
                   title: "Conformité légale",
-                  desc: "Respect des lois béninoises et ivoiriennes actuelles",
+                  desc: "Respect total des lois locales et nationales",
                 },
                 {
                   icon: "✍️",
-                  title: "Signatures numériques",
-                  desc: "Processus simple et sécurisé avec valeur légale",
+                  title: "Signatures des deux parties",
+                  desc: "Signature du propriétaire et du locataire",
                 },
                 {
                   icon: "🔒",
@@ -75,12 +75,12 @@ export default function ContratsPage() {
                 {
                   icon: "📄",
                   title: "PDF téléchargeable",
-                  desc: "Votre contrat à disposition en format imprimable",
+                  desc: "Votre contrat disponible à tout moment",
                 },
                 {
-                  icon: "🤝",
-                  title: "Protection juridique",
-                  desc: "Droits et obligations clairs pour propriétaires et locataires",
+                  icon: "⚡",
+                  title: "Pas de notaire",
+                  desc: "Contrat valide devant les tribunaux sans besoin de notaire",
                 },
               ].map((item, i) => (
                 <motion.div
@@ -115,11 +115,11 @@ export default function ContratsPage() {
             <h2 className="text-3xl font-bold text-slate-900 mb-8">Avantages</h2>
             <div className="space-y-4">
               {[
-                "✓ Protection juridique complète pour propriétaire et locataire",
-                "✓ Conformité garantie avec les lois locales",
-                "✓ Processus rapide et sans tracasserie administrative",
-                "✓ Contrats adaptés à chaque cas particulier",
-                "✓ Support juridique en cas de litige",
+                "✓ Protection juridique totale pour propriétaire et locataire",
+                "✓ Contrat valable devant les tribunaux",
+                "✓ Zéro besoin de notaire — économies d'argent",
+                "✓ Processus rapide et transparent",
+                "✓ Conformité garantie aux codes civils béninois et ivoirien",
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -189,29 +189,44 @@ export default function ContratsPage() {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
             transition={{ duration: 0.6 }}
-            className="grid md:grid-cols-2 gap-6"
+            className="space-y-6"
           >
-            <a
-              href="https://wa.me/22901975982?text=Bonjour AKIL IMMO, je suis intéressé par vos services de rédaction de contrats"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              </svg>
-              Contactez via WhatsApp
-            </a>
+            <h2 className="text-3xl font-bold text-slate-900 text-center mb-8">Contactez-nous</h2>
 
-            <a
-              href="/#contact"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Formulaire de contact
-            </a>
+            <div className="grid md:grid-cols-2 gap-6">
+              <a
+                href="https://wa.me/22901975982?text=Bonjour AKIL IMMO, je suis intéressé par vos services de rédaction de contrats au Bénin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                WhatsApp Bénin
+              </a>
+
+              <a
+                href="https://wa.me/2250710259146?text=Bonjour AKIL IMMO, je suis intéressé par vos services de rédaction de contrats en Côte d'Ivoire"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                WhatsApp Côte d'Ivoire
+              </a>
+            </div>
+
+            <div>
+              <a
+                href="/#contact"
+                className="block w-full text-center rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+              >
+                Formulaire de contact
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>

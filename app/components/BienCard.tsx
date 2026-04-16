@@ -86,7 +86,7 @@ export default function BienCard({ bien }: BienCardProps) {
 
           <div className="flex items-center justify-between">
             <p className="text-lg font-bold text-[#0066CC]">
-              {price} <span className="text-sm font-normal text-slate-400">XOF/mois</span>
+              {price} <span className="text-sm font-normal text-slate-400">XOF / nuit</span>
             </p>
           </div>
 

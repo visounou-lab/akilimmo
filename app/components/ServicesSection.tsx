@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const services = [
   {
@@ -13,6 +14,7 @@ const services = [
     description: "Optimisation des revenus, suivi des paiements et service client dédié. Nous gérons votre bien comme si c'était le nôtre.",
     color: "from-[#0066CC] to-[#004499]",
     lightColor: "bg-[#0066CC]/10 text-[#0066CC]",
+    href: "/services/gestion-locative",
   },
   {
     icon: (
@@ -24,6 +26,7 @@ const services = [
     description: "Génération automatique de contrats PDF conformes aux normes locales du Bénin et de Côte d'Ivoire. Signatures électroniques incluses.",
     color: "from-emerald-600 to-emerald-700",
     lightColor: "bg-emerald-50 text-emerald-700",
+    href: "/services/contrats",
   },
   {
     icon: (
@@ -35,6 +38,7 @@ const services = [
     description: "Tableau de bord en temps réel. Relances automatiques, historique complet et rapports financiers mensuels pour chaque propriété.",
     color: "from-orange-500 to-orange-600",
     lightColor: "bg-orange-50 text-orange-600",
+    href: "/services/suivi-paiements",
   },
 ];
 
@@ -60,31 +64,32 @@ export default function ServicesSection() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {services.map((s, i) => (
-            <motion.article
-              key={s.title}
-              className="relative group rounded-3xl border border-slate-100 bg-white p-8 shadow-sm overflow-hidden transition-shadow hover:shadow-xl"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
-              whileHover={{ y: -4 }}
-            >
-              {/* Hover gradient overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+            <Link key={s.title} href={s.href}>
+              <motion.article
+                className="relative group rounded-3xl border border-slate-100 bg-white p-8 shadow-sm overflow-hidden transition-shadow hover:shadow-xl h-full cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                whileHover={{ y: -4 }}
+              >
+                {/* Hover gradient overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
 
-              <div className={`inline-flex p-3 rounded-2xl ${s.lightColor} mb-5 transition-transform group-hover:scale-110 duration-300`}>
-                {s.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{s.title}</h3>
-              <p className="text-slate-500 leading-relaxed text-sm">{s.description}</p>
+                <div className={`inline-flex p-3 rounded-2xl ${s.lightColor} mb-5 transition-transform group-hover:scale-110 duration-300`}>
+                  {s.icon}
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{s.title}</h3>
+                <p className="text-slate-500 leading-relaxed text-sm">{s.description}</p>
 
-              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#0066CC] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span>En savoir plus</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </motion.article>
+                <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#0066CC] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <span>En savoir plus</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </motion.article>
+            </Link>
           ))}
         </div>
       </div>

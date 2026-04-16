@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getYouTubeId, getYoutubeThumbnail } from "@/lib/youtube";
 
 const COUNTRY_LABEL: Record<string, string> = {
   BENIN:         "Bénin",
@@ -15,20 +16,37 @@ interface BienCardProps {
     bedrooms: number;
     bathrooms: number;
     imageUrl: string | null;
+    videoUrl?: string | null;
   };
 }
 
 export default function BienCard({ bien }: BienCardProps) {
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
 
+  // Determine image source: YouTube thumbnail > imageUrl > placeholder
+  let displayImage: string | null = null;
+  let hasVideo = false;
+
+  if (bien.videoUrl) {
+    const videoId = getYouTubeId(bien.videoUrl);
+    if (videoId) {
+      displayImage = getYoutubeThumbnail(bien.videoUrl) || null;
+      hasVideo = true;
+    }
+  }
+
+  if (!displayImage && bien.imageUrl) {
+    displayImage = bien.imageUrl;
+  }
+
   return (
     <Link href={`/biens/${bien.id}`}>
       <article className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl cursor-pointer">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
-          {bien.imageUrl ? (
+          {displayImage ? (
             <img
-              src={bien.imageUrl}
+              src={displayImage}
               alt={bien.title}
               className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
             />
@@ -36,6 +54,14 @@ export default function BienCard({ bien }: BienCardProps) {
             <div className="flex h-full w-full items-center justify-center">
               <svg className="w-12 h-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          )}
+          {/* Video indicator */}
+          {hasVideo && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+              <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
               </svg>
             </div>
           )}
@@ -77,7 +103,6 @@ export default function BienCard({ bien }: BienCardProps) {
               </svg>
               {bien.bathrooms} sdb
             </span>
-
           </div>
         </div>
       </article>

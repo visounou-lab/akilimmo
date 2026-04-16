@@ -26,6 +26,7 @@ export default async function Home() {
         bedrooms: true,
         bathrooms: true,
         imageUrl: true,
+        videoUrl: true,
       },
     }),
   ]);

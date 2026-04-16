@@ -97,23 +97,35 @@ model VerificationToken {
 }
 
 model Property {
-  id            String         @id @default(cuid())
+  id            String          @id @default(cuid())
   title         String
   description   String
   country       Country
   city          String
   address       String
   price         Decimal
-  status        PropertyStatus @default(AVAILABLE)
+  status        PropertyStatus  @default(AVAILABLE)
   bedrooms      Int
   bathrooms     Int
   imageUrl      String?
+  videoUrl      String?
   ownerId       String
-  owner         User           @relation("OwnerProperties", fields: [ownerId], references: [id])
+  owner         User            @relation("OwnerProperties", fields: [ownerId], references: [id])
   contracts     Contract[]
   notifications Notification[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  images        PropertyImage[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  propertyId String
+  url        String
+  isPrimary  Boolean  @default(false)
+  order      Int      @default(0)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
 }
 
 model Contract {

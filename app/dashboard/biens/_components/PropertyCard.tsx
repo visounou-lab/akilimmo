@@ -26,6 +26,7 @@ interface PropertyCardProps {
     bedrooms: number;
     bathrooms: number;
     imageUrl: string | null;
+    videoUrl: string | null;
     owner: { name: string | null };
   };
 }
@@ -57,6 +58,15 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
         <span className={`absolute top-3 right-3 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold shadow-sm ${status.classes}`}>
           {status.label}
         </span>
+        {/* Badge vidéo */}
+        {p.videoUrl && (
+          <span className="absolute bottom-3 left-3 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#0066CC]/90 text-white shadow-sm gap-1 items-center">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Vidéo
+          </span>
+        )}
       </div>
 
       {/* Contenu */}

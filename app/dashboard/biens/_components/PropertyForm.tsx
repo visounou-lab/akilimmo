@@ -14,6 +14,12 @@ const STATUSES = [
   { value: "OFF_MARKET", label: "Hors marché" },
 ];
 
+interface ExistingImage {
+  id: string;
+  url: string;
+  isPrimary: boolean;
+}
+
 interface DefaultValues {
   title?: string;
   description?: string;
@@ -24,8 +30,9 @@ interface DefaultValues {
   status?: string;
   bedrooms?: number;
   bathrooms?: number;
-
   imageUrl?: string | null;
+  videoUrl?: string | null;
+  images?: ExistingImage[];
 }
 
 interface PropertyFormProps {
@@ -40,52 +47,133 @@ const inputClass =
 
 const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
 
+function getYouTubeThumbnail(url: string): string | null {
+  const m = url.match(
+    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+  );
+  return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null;
+}
+
 export default function PropertyForm({
   action,
   defaultValues = {},
   submitLabel = "Enregistrer",
 }: PropertyFormProps) {
-  const [preview, setPreview] = useState<string | null>(defaultValues.imageUrl ?? null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) setPreview(URL.createObjectURL(file));
+  // New files selected by user (local preview)
+  const [newPreviews, setNewPreviews] = useState<string[]>([]);
+  // Primary index among new files (used to set order=0 in action)
+  const [primaryNewIdx, setPrimaryNewIdx] = useState<number>(0);
+
+  // Existing images from DB (in edit mode)
+  const [existingImages] = useState<ExistingImage[]>(defaultValues.images ?? []);
+
+  // YouTube video URL
+  const [videoUrl, setVideoUrl] = useState<string>(defaultValues.videoUrl ?? "");
+  const videoThumb = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
+
+  function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    const previews = files.map((f) => URL.createObjectURL(f));
+    setNewPreviews(previews);
+    setPrimaryNewIdx(0);
   }
 
   return (
     <form action={action} className="space-y-6">
-      {/* Photo */}
+      {/* === PHOTOS === */}
       <div>
-        <label className={labelClass}>Photo du bien</label>
+        <label className={labelClass}>Photos du bien</label>
         <input
           ref={fileInputRef}
           type="file"
-          name="image"
+          name="images"
           accept="image/jpeg,image/png,image/webp"
-          onChange={handleFileChange}
+          multiple
+          onChange={handleFilesChange}
           className="hidden"
         />
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            Parcourir…
-          </button>
-          <p className="text-xs text-slate-400">JPG, PNG ou WebP · max 5 Mo</p>
-        </div>
-        {preview && (
+        {/* Hidden field to communicate which new-file index is primary */}
+        <input type="hidden" name="primaryIndex" value={primaryNewIdx} />
+
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          Ajouter des photos
+        </button>
+        <p className="text-xs text-slate-400 mt-1.5">JPG, PNG ou WebP · max 5 Mo par fichier · plusieurs fichiers acceptés</p>
+
+        {/* Existing images (edit mode) */}
+        {existingImages.length > 0 && (
           <div className="mt-3">
-            <img
-              src={preview}
-              alt="Prévisualisation"
-              className="max-h-[200px] w-auto rounded-lg border border-slate-200 object-cover shadow-sm"
-            />
+            <p className="text-xs text-slate-500 mb-2">Photos actuelles</p>
+            <div className="grid grid-cols-4 gap-2">
+              {existingImages.map((img) => (
+                <div key={img.id} className="relative rounded-lg overflow-hidden border border-slate-200">
+                  <img src={img.url} alt="" className="h-20 w-full object-cover" />
+                  {img.isPrimary && (
+                    <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                      Principale
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* New file previews */}
+        {newPreviews.length > 0 && (
+          <div className="mt-3">
+            <p className="text-xs text-slate-500 mb-2">Nouvelles photos — cliquez pour définir la principale</p>
+            <div className="grid grid-cols-4 gap-2">
+              {newPreviews.map((src, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setPrimaryNewIdx(i)}
+                  className={`relative rounded-lg overflow-hidden border-2 transition-colors ${
+                    i === primaryNewIdx ? "border-[#0066CC]" : "border-transparent"
+                  }`}
+                >
+                  <img src={src} alt="" className="h-20 w-full object-cover" />
+                  {i === primaryNewIdx && (
+                    <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                      Principale
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* === VIDEO YOUTUBE === */}
+      <div>
+        <label className={labelClass}>Vidéo YouTube (optionnel)</label>
+        <input
+          type="url"
+          name="videoUrl"
+          value={videoUrl}
+          onChange={(e) => setVideoUrl(e.target.value)}
+          placeholder="https://www.youtube.com/watch?v=..."
+          className={inputClass}
+        />
+        {videoThumb && (
+          <div className="mt-2 relative w-48 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <img src={videoThumb} alt="Aperçu vidéo" className="w-full" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+              <svg className="w-10 h-10 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
           </div>
         )}
       </div>

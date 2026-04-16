@@ -40,6 +40,10 @@ export default async function BienDetailPage({ params }: Props) {
   // YouTube embed ID
   const youtubeId = bien.videoUrl ? getYouTubeId(bien.videoUrl) : null;
 
+  // WhatsApp number based on country
+  const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "22901975982";
+  const phoneDisplay = bien.country === "COTE_D_IVOIRE" ? "+225 07 10 25 91 46" : "+229 01 97 59 86 82";
+
   // Merge video placeholder at start + images
   const mediaItems: { type: "video" | "image"; url?: string; title?: string }[] = [];
   if (youtubeId) {
@@ -196,7 +200,7 @@ export default async function BienDetailPage({ params }: Props) {
                 Contacter l&apos;agence
               </a>
               <a
-                href={`https://wa.me/22901975986?text=${encodeURIComponent(`Bonjour AKIL IMMO, je suis intéressé par: ${bien.title}`)}`}
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Bonjour AKIL IMMO, je suis intéressé par: ${bien.title}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-3.5 text-sm font-semibold text-white transition"
@@ -224,7 +228,7 @@ export default async function BienDetailPage({ params }: Props) {
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  +229 01 97 59 86 82
+                  {phoneDisplay}
                 </p>
               </div>
             </div>

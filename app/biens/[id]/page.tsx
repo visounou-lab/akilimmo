@@ -34,6 +34,8 @@ export default async function BienDetailPage({ params }: Props) {
 
   if (!bien) notFound();
 
+  console.log("🎥 [BienDetail] videoUrl:", bien.videoUrl);
+
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
   const status = STATUS_CONFIG[bien.status] ?? STATUS_CONFIG.OFF_MARKET;
 

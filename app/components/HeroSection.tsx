@@ -206,7 +206,7 @@ export default function HeroSection() {
         </motion.form>
 
         <motion.div
-          className="mt-8 flex flex-wrap justify-center gap-3 text-xs text-white/60"
+          className="mt-8 hidden md:flex flex-wrap justify-center gap-3 text-xs text-white/60"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}

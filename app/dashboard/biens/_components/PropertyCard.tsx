@@ -84,7 +84,7 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
           <div className="flex items-end justify-between mt-3">
             <div>
               <p className="text-lg font-bold text-[#0066CC] leading-none">{price}</p>
-              <p className="text-xs text-slate-400 mt-0.5">XOF / mois</p>
+              <p className="text-xs text-slate-400 mt-0.5">XOF / nuit</p>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
               <span className="flex items-center gap-1">

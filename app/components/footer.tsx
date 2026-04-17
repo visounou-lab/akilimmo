@@ -23,7 +23,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">Bénin</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li>Akil Services</li>
+              <li>AKIL IMMO BÉNIN</li>
               <li>Abomey-Calavi, Tokan</li>
               <li>+229 01 97 59 86 82</li>
             </ul>

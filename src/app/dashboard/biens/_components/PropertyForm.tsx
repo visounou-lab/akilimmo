@@ -124,7 +124,7 @@ export default function PropertyForm({
       {/* Prix / Statut */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>Prix (XOF/mois) <span className="text-red-400">*</span></label>
+          <label className={labelClass}>Prix (XOF/nuit) <span className="text-red-400">*</span></label>
           <input type="number" name="price" required min={0} step={1000} defaultValue={defaultValues.price?.toString()} placeholder="ex : 250000" className={inputClass} />
         </div>
         <div>

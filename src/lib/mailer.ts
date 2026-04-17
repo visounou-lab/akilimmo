@@ -58,6 +58,76 @@ export async function sendNewOwnerNotification(data: {
   });
 }
 
+export async function sendNewPropertyNotification(data: {
+  ownerName: string;
+  title: string;
+  city: string;
+  propertyId: string;
+}) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: "david@akilimmo.com",
+    subject: "Nouveau bien soumis — AKIL IMMO",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <h2 style="color:#0066CC">Nouveau bien à valider</h2>
+        <ul style="color:#374151;line-height:1.8">
+          <li><strong>Propriétaire :</strong> ${data.ownerName}</li>
+          <li><strong>Titre :</strong> ${data.title}</li>
+          <li><strong>Ville :</strong> ${data.city}</li>
+        </ul>
+        <a href="https://www.akilimmo.com/dashboard/valider" style="display:inline-block;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px">
+          Valider le bien
+        </a>
+      </div>
+    `,
+  });
+}
+
+export async function sendPropertyApprovedEmail(to: string, firstName: string, title: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: `Votre bien "${title}" est en ligne — AKIL IMMO`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
+        <h2 style="color:#0066CC">Votre bien est publié ! 🎉</h2>
+        <p style="color:#374151">Bonjour ${firstName},</p>
+        <p style="color:#374151">Votre bien <strong>${title}</strong> est maintenant en ligne sur AKIL IMMO et visible par tous les visiteurs.</p>
+        <a href="https://www.akilimmo.com/biens" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+          Voir sur le site
+        </a>
+        <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendPropertyRejectedEmail(to: string, firstName: string, title: string, note: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: `Votre bien "${title}" — Révision nécessaire`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
+        <h2 style="color:#DC2626">Bien non publié</h2>
+        <p style="color:#374151">Bonjour ${firstName},</p>
+        <p style="color:#374151">Votre bien <strong>${title}</strong> n'a pas pu être publié pour la raison suivante :</p>
+        <blockquote style="border-left:4px solid #DC2626;padding:12px 16px;margin:16px 0;background:#FEF2F2;color:#374151">
+          ${note}
+        </blockquote>
+        <p style="color:#374151">Vous pouvez modifier votre bien et le resoumettre depuis votre espace propriétaire.</p>
+        <a href="https://www.akilimmo.com/owner/dashboard/biens" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+          Mon espace
+        </a>
+        <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+      </div>
+    `,
+  });
+}
+
 export async function sendWelcomeEmail(to: string, firstName: string) {
   await transporter.sendMail({
     from: process.env.SMTP_FROM,

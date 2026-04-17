@@ -1,0 +1,64 @@
+"use server";
+
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { uploadImage } from "@/lib/cloudinary";
+import { sendNewPropertyNotification } from "@/lib/mailer";
+import { revalidatePath } from "next/cache";
+
+export async function submitProperty(formData: FormData) {
+  const session = await auth();
+  const userId  = (session?.user as { id?: string })?.id;
+  if (!userId) throw new Error("Non authentifié");
+
+  const files = formData.getAll("images") as File[];
+  const uploadedUrls: string[] = [];
+  for (const file of files) {
+    if (file && file.size > 0) {
+      const url = await uploadImage(file);
+      uploadedUrls.push(url);
+    }
+  }
+
+  const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
+
+  const property = await prisma.property.create({
+    data: {
+      title:         formData.get("title") as string,
+      description:   formData.get("description") as string,
+      country:       formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
+      city:          formData.get("city") as string,
+      address:       formData.get("address") as string,
+      price:         parseFloat(formData.get("price") as string),
+      bedrooms:      parseInt(formData.get("bedrooms") as string, 10),
+      bathrooms:     parseInt(formData.get("bathrooms") as string, 10),
+      imageUrl:      uploadedUrls[0] ?? null,
+      videoUrl,
+      ownerId:       userId,
+      submittedBy:   userId,
+      publishStatus: "pending_review",
+    },
+  });
+
+  if (uploadedUrls.length > 0) {
+    await prisma.propertyImage.createMany({
+      data: uploadedUrls.map((url, i) => ({
+        propertyId: property.id,
+        url,
+        isPrimary:  i === 0,
+        order:      i,
+      })),
+    });
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } });
+  await sendNewPropertyNotification({
+    ownerName:  user?.name ?? "Propriétaire",
+    title:      property.title,
+    city:       property.city,
+    propertyId: property.id,
+  });
+
+  revalidatePath("/owner/dashboard/biens");
+  return { success: true };
+}

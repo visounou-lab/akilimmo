@@ -62,11 +62,12 @@ model User {
   updatedAt      DateTime       @updatedAt
   accounts       Account[]
   sessions       Session[]
-  properties     Property[]     @relation("OwnerProperties")
-  contracts      Contract[]     @relation("TenantContracts")
-  ownedContracts Contract[]     @relation("OwnerContracts")
-  payments       Payment[]
-  notifications  Notification[]
+  properties          Property[]     @relation("OwnerProperties")
+  submittedProperties Property[]     @relation("SubmittedProperties")
+  contracts           Contract[]     @relation("TenantContracts")
+  ownedContracts      Contract[]     @relation("OwnerContracts")
+  payments            Payment[]
+  notifications       Notification[]
 }
 
 model Account {
@@ -118,6 +119,10 @@ model Property {
   videoUrl      String?
   ownerId       String
   owner         User            @relation("OwnerProperties", fields: [ownerId], references: [id])
+  submittedBy   String?
+  submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
+  publishStatus String          @default("published")
+  adminNote     String?
   contracts     Contract[]
   notifications Notification[]
   images        PropertyImage[]

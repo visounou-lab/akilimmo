@@ -1,13 +1,10 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import ContactForm from "../../components/contact-form";
-
-export const metadata = {
-  title: "Suivi des Paiements en Temps Réel | AKIL IMMO",
-  description: "Tableau de bord en temps réel pour suivre vos paiements locatifs. Alertes, historique complet et rapports financiers.",
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },

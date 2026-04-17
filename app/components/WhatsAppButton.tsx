@@ -11,7 +11,7 @@ const WA_ICON = (
 );
 
 const COUNTRIES = [
-  { flag: "🇧🇯", label: "Bénin", href: "https://wa.me/22997598682" },
+  { flag: "🇧🇯", label: "Bénin", href: "https://wa.me/2290197598682" },
   { flag: "🇨🇮", label: "Côte d'Ivoire", href: "https://wa.me/2250710259146" },
 ];
 

@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeId } from "@/lib/youtube";
+import ReservationForm from "./_components/ReservationForm";
 
 const COUNTRY_LABEL: Record<string, string> = {
   BENIN:         "Bénin",
@@ -43,7 +44,7 @@ export default async function BienDetailPage({ params }: Props) {
   const youtubeId = bien.videoUrl ? getYouTubeId(bien.videoUrl) : null;
 
   // WhatsApp number based on country
-  const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "22997598682";
+  const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "2290197598682";
   const phoneDisplay = bien.country === "COTE_D_IVOIRE" ? "+225 07 10 25 91 46" : "+229 01 97 59 86 82";
 
   // Merge video placeholder at start + images
@@ -204,36 +205,19 @@ export default async function BienDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Bloc CTA */}
-            <div className="rounded-3xl bg-white border border-slate-200 p-7 shadow-sm space-y-3">
-              <p className="text-sm font-semibold text-slate-700 mb-1">Intéressé par ce bien ?</p>
-              <a
-                href="#contact-agence"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-3.5 text-sm font-semibold text-white transition shadow-lg shadow-[#0066CC]/25"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                Contacter l&apos;agence
-              </a>
-              <a
-                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Bonjour AKIL IMMO, je suis intéressé par: ${bien.title}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-3.5 text-sm font-semibold text-white transition"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.848L.054 23.09a.75.75 0 00.916.917l5.242-1.478A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 01-5.12-1.407l-.368-.218-3.11.876.891-3.01-.24-.38A9.964 9.964 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-                </svg>
-                WhatsApp
-              </a>
-            </div>
+            {/* Formulaire de réservation */}
+            <ReservationForm
+              bienTitle={bien.title}
+              bienCity={bien.city}
+              bienCountry={bien.country}
+              pricePerUnit={Number(bien.price)}
+              whatsappNumber={whatsappNumber}
+            />
 
             {/* Contact agence */}
             <div id="contact-agence" className="rounded-3xl bg-[#0066CC] p-7 text-white shadow-xl">
-              <h3 className="font-semibold text-lg mb-1">Intéressé par ce bien ?</h3>
-              <p className="text-white/80 text-sm mb-5">Contactez-nous directement pour organiser une visite.</p>
+              <h3 className="font-semibold text-lg mb-1">Contacter l&apos;agence</h3>
+              <p className="text-white/80 text-sm mb-5">Nous répondons rapidement à toutes vos demandes.</p>
               <div className="space-y-2 text-sm">
                 <a href="mailto:info@akilimmo.com" className="flex items-center gap-2 hover:text-white/80 transition">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>

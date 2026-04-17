@@ -212,7 +212,7 @@ export default function GestionLocativePage() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <a
-                href="https://wa.me/22997598682?text=Bonjour AKIL IMMO, je suis intéressé par votre service de gestion locative au Bénin"
+                href="https://wa.me/2290197598682?text=Bonjour AKIL IMMO, je suis intéressé par votre service de gestion locative au Bénin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 hover:bg-green-600 px-6 py-4 text-lg font-semibold text-white transition shadow-lg"

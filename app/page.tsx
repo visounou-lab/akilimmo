@@ -117,7 +117,7 @@ export default async function Home() {
                     </div>
                   ))}
                   <a
-                    href="https://wa.me/22997598682"
+                    href="https://wa.me/2290197598682"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 rounded-2xl bg-green-50 px-4 py-3 transition hover:bg-green-100"

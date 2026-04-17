@@ -43,7 +43,7 @@ export default async function BienDetailPage({ params }: Props) {
   const youtubeId = bien.videoUrl ? getYouTubeId(bien.videoUrl) : null;
 
   // WhatsApp number based on country
-  const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "22901975982";
+  const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "22997598682";
   const phoneDisplay = bien.country === "COTE_D_IVOIRE" ? "+225 07 10 25 91 46" : "+229 01 97 59 86 82";
 
   // Merge video placeholder at start + images

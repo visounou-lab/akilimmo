@@ -7,6 +7,7 @@ import Link from "next/link";
 const navItems = [
   { label: "Accueil",  href: "#" },
   { label: "Biens",    href: "/biens" },
+  { label: "Devenir propriétaire", href: "/inscription" },
   { label: "Contact",  href: "#contact" },
 ];
 

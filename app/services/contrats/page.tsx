@@ -1,13 +1,10 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import ContactForm from "../../components/contact-form";
-
-export const metadata = {
-  title: "Contrats Sécurisés & Conformes | AKIL IMMO",
-  description: "Contrats de location conformes au droit béninois et ivoirien. Sécurité juridique pour propriétaires et locataires.",
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },

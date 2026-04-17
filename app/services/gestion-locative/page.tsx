@@ -1,13 +1,10 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import ContactForm from "../../components/contact-form";
-
-export const metadata = {
-  title: "Gestion Locative Professionnelle | AKIL IMMO",
-  description: "Gérez vos biens en location facilement. Encaissement des loyers, suivi des paiements, rapports mensuels.",
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },

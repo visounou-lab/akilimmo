@@ -44,7 +44,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="inline-flex items-center shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Akil Immo" style={{ height: "50px", width: "auto" }} />
+          <img src="/logo.png" alt="Akil Immo" style={{ height: "50px", width: "auto", mixBlendMode: "screen" }} />
         </Link>
 
         {/* Desktop nav */}

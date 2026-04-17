@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function BiensPage() {
   const biens = await prisma.property.findMany({
-    where: { status: "AVAILABLE" },
+    where: { status: "AVAILABLE", publishStatus: "published" },
     orderBy: { createdAt: "desc" },
     select: {
       id: true, title: true, city: true, country: true,

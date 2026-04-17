@@ -1,34 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const navItems = [
-  { label: "Accueil",  href: "#" },
+  { label: "Accueil",  href: "/" },
   { label: "Biens",    href: "/biens" },
   { label: "Devenir propriétaire", href: "/inscription" },
   { label: "Contact",  href: "#contact" },
 ];
 
 const serviceItems = [
-  { label: "Gestion locative", href: "/services/gestion-locative" },
-  { label: "Contrats sécurisés", href: "/services/contrats" },
-  { label: "Suivi des paiements", href: "/services/suivi-paiements" },
+  { label: "Gestion locative",     href: "/services/gestion-locative" },
+  { label: "Contrats sécurisés",   href: "/services/contrats" },
+  { label: "Suivi des paiements",  href: "/services/suivi-paiements" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
+  const [menuOpen, setMenuOpen]       = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const { data: session }             = useSession();
+
+  const user     = session?.user as { role?: string; status?: string } | undefined;
+  const isOwner  = user?.role === "OWNER" && user?.status === "active";
+  const isAdmin  = user?.role === "ADMIN";
+  const isLogged = !!session;
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 60);
-    }
+    function onScroll() { setScrolled(window.scrollY > 60); }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const dashboardHref = isAdmin ? "/dashboard" : isOwner ? "/owner/dashboard" : "/login";
 
   return (
     <motion.header
@@ -51,41 +58,29 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-sm font-medium text-white/85 transition hover:text-white"
-            >
+            <a key={item.label} href={item.href}
+              className="text-sm font-medium text-white/85 transition hover:text-white">
               {item.label}
             </a>
           ))}
 
           {/* Services dropdown */}
-          <div
-            className="relative"
+          <div className="relative"
             onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
-          >
+            onMouseLeave={() => setServicesOpen(false)}>
             <button className="text-sm font-medium text-white/85 transition hover:text-white flex items-center gap-1">
               Services
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </button>
-
             {servicesOpen && (
               <motion.div
                 className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 border border-slate-100"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-              >
+                initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
                 {serviceItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-[#0066CC]/10 hover:text-[#0066CC] transition"
-                  >
+                  <a key={item.label} href={item.href}
+                    className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-[#0066CC]/10 hover:text-[#0066CC] transition">
                     {item.label}
                   </a>
                 ))}
@@ -96,37 +91,43 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
-          {/* Mobile only: Connexion button (white bg, blue text) */}
-          <a
-            href="/login"
-            className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm"
-          >
-            Connexion
-          </a>
-          {/* Desktop only: Connexion ghost link */}
-          <a
-            href="/login"
-            className={`hidden md:inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition ${
-              scrolled
-                ? "text-white/80 hover:text-white"
-                : "text-white/70 hover:text-white"
-            }`}
-          >
-            Connexion
-          </a>
-          {/* Desktop only: Contact button */}
-          <a
-            href="#contact"
-            className="hidden md:inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm"
-          >
+          {/* Mobile: "Mon espace" si connecté, sinon "Connexion" */}
+          {isLogged ? (
+            <Link href={dashboardHref}
+              className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
+              Mon espace
+            </Link>
+          ) : (
+            <a href="/login"
+              className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
+              Connexion
+            </a>
+          )}
+
+          {/* Desktop: "Mon espace" si connecté, sinon "Connexion" ghost */}
+          {isLogged ? (
+            <Link href={dashboardHref}
+              className="hidden md:inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
+              Mon espace
+            </Link>
+          ) : (
+            <a href="/login"
+              className={`hidden md:inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition ${
+                scrolled ? "text-white/80 hover:text-white" : "text-white/70 hover:text-white"
+              }`}>
+              Connexion
+            </a>
+          )}
+
+          {/* Desktop only: Contact */}
+          <a href="#contact"
+            className="hidden md:inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
             Contact
           </a>
+
           {/* Mobile burger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition"
-            aria-label="Menu"
-          >
+          <button onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition" aria-label="Menu">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               {menuOpen
                 ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -140,66 +141,47 @@ export default function Navbar() {
       {menuOpen && (
         <motion.div
           className="md:hidden bg-[#0066CC] border-t border-white/10 px-6 pb-4"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-        >
+          initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}>
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              className="block py-2.5 text-sm font-medium text-white/85 hover:text-white border-b border-white/10"
-            >
+            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}
+              className="block py-2.5 text-sm font-medium text-white/85 hover:text-white border-b border-white/10">
               {item.label}
             </a>
           ))}
 
-          {/* Mobile Services */}
+          {/* Services mobile */}
           <div className="border-b border-white/10">
-            <button
-              onClick={() => setServicesOpen(!servicesOpen)}
-              className="w-full text-left py-2.5 text-sm font-medium text-white/85 hover:text-white flex items-center justify-between"
-            >
+            <button onClick={() => setServicesOpen(!servicesOpen)}
+              className="w-full text-left py-2.5 text-sm font-medium text-white/85 hover:text-white flex items-center justify-between">
               Services
-              <svg
-                className={`w-4 h-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
+              <svg className={`w-4 h-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </button>
-
             {servicesOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="bg-white/10 py-2"
-              >
+              <div className="bg-white/10 py-2">
                 {serviceItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
+                  <a key={item.label} href={item.href}
                     onClick={() => { setMenuOpen(false); setServicesOpen(false); }}
-                    className="block px-4 py-2 text-sm text-white/80 hover:text-white"
-                  >
+                    className="block px-4 py-2 text-sm text-white/80 hover:text-white">
                     {item.label}
                   </a>
                 ))}
-              </motion.div>
+              </div>
             )}
           </div>
 
-          <a
-            href="/login"
-            className="block mt-2 py-2.5 text-sm font-medium text-white/70 hover:text-white"
-          >
-            Connexion
-          </a>
+          {isLogged ? (
+            <Link href={dashboardHref} onClick={() => setMenuOpen(false)}
+              className="block mt-2 py-2.5 text-sm font-medium text-white/85 hover:text-white">
+              Mon espace
+            </Link>
+          ) : (
+            <a href="/login" className="block mt-2 py-2.5 text-sm font-medium text-white/70 hover:text-white">
+              Connexion
+            </a>
+          )}
         </motion.div>
       )}
     </motion.header>

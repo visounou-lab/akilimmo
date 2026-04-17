@@ -21,6 +21,7 @@ interface BienCardProps {
 }
 
 export default function BienCard({ bien }: BienCardProps) {
+  // Tarification par nuit
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
 
   // Determine image source: YouTube thumbnail > imageUrl > placeholder

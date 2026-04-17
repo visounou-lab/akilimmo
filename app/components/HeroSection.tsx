@@ -129,7 +129,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-20">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-20 pb-24 md:pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -217,25 +217,25 @@ export default function HeroSection() {
             </span>
           ))}
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 flex flex-col items-center gap-1 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <span className="text-xs tracking-widest uppercase">Défiler</span>
+        {/* Scroll indicator — in-flow so it's never hidden behind the form */}
         <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          className="mt-4 flex flex-col items-center gap-1 text-white/50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+          <span className="text-xs tracking-widest uppercase">Défiler</span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

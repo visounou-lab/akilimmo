@@ -42,7 +42,7 @@ export default function BienCard({ bien }: BienCardProps) {
 
   return (
     <Link href={`/biens/${bien.id}`}>
-      <article className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl cursor-pointer">
+      <article className="group overflow-hidden rounded-none sm:rounded-[28px] border-b sm:border border-slate-200 bg-white shadow-none sm:shadow-sm transition sm:hover:-translate-y-1 sm:hover:shadow-xl cursor-pointer">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
           {displayImage ? (

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const navItems = [
   { label: "Accueil",  href: "#" },
@@ -41,10 +42,10 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
         {/* Logo */}
-        <a href="#" className="inline-flex items-center shrink-0">
+        <Link href="/" className="inline-flex items-center shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="Akil Immo" style={{ height: "50px", width: "auto" }} />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">

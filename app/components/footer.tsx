@@ -1,13 +1,15 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="mt-24 border-t border-slate-200 bg-slate-950 text-slate-300">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="space-y-4">
-            <a href="#">
+            <Link href="/">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.png" alt="Akil Immo" style={{ height: "45px", width: "auto" }} />
-            </a>
+            </Link>
             <p className="max-w-xs text-sm leading-7 text-slate-400">
               Vous êtes loin, nous sommes là. Plateforme immobilière au Bénin et en Côte d'Ivoire.
             </p>
@@ -31,7 +33,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-white">Côte d&apos;Ivoire</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li>Akil Immo CI</li>
+              <li>AKIL IMMO CI</li>
               <li>Abidjan</li>
               <li>+225 07 10 25 91 46</li>
               <li><a href="mailto:info@akilimmo.com" className="hover:text-white">info@akilimmo.com</a></li>

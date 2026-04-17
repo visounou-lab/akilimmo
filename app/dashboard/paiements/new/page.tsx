@@ -63,7 +63,7 @@ export default async function NewPaiementPage() {
                 {contracts.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.property.title} · {c.tenant.name ?? c.tenant.email} ({c.property.city}) —{" "}
-                    {new Intl.NumberFormat("fr-FR").format(Number(c.rentAmount))} XOF/mois
+                    {new Intl.NumberFormat("fr-FR").format(Number(c.rentAmount))} XOF/nuit
                   </option>
                 ))}
               </select>

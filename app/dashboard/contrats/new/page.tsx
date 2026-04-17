@@ -56,7 +56,7 @@ export default async function NewContratPage() {
                 <option value="">— Sélectionner un bien —</option>
                 {properties.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.title} — {p.city} ({new Intl.NumberFormat("fr-FR").format(Number(p.price))} XOF/mois)
+                    {p.title} — {p.city} ({new Intl.NumberFormat("fr-FR").format(Number(p.price))} XOF/nuit)
                   </option>
                 ))}
               </select>
@@ -106,7 +106,7 @@ export default async function NewContratPage() {
           {/* Loyer / Statut */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>Montant du loyer (XOF/mois) <span className="text-red-400">*</span></label>
+              <label className={labelClass}>Montant du loyer (XOF/nuit) <span className="text-red-400">*</span></label>
               <input
                 type="number"
                 name="rentAmount"

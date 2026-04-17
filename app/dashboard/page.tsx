@@ -238,7 +238,7 @@ export default async function DashboardPage() {
 
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-slate-800 truncate">{p.title}</p>
-                      <p className="text-xs text-slate-400">{p.city} · {formatPrice(p.price)}/mois</p>
+                      <p className="text-xs text-slate-400">{p.city} · {formatPrice(p.price)}/nuit</p>
                     </div>
 
                     <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${ps.classes}`}>

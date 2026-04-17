@@ -24,9 +24,9 @@ export default async function BiensPage() {
     <div className="min-h-screen bg-[#F8FAFC] pt-28">
       <Navbar />
 
-      <main className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <main className="mx-auto max-w-7xl px-0 sm:px-6 py-10 lg:px-8">
         {/* En-tête */}
-        <div className="mb-10">
+        <div className="mb-10 px-6 sm:px-0">
           <span className="inline-flex rounded-full bg-[#0066CC]/10 px-4 py-1 text-sm font-semibold text-[#0066CC] mb-3">
             Disponibles maintenant
           </span>

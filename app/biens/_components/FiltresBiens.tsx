@@ -46,7 +46,7 @@ export default function FiltresBiens({ biens }: { biens: Bien[] }) {
   return (
     <div className="space-y-8">
       {/* Filtres */}
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3 px-6 sm:px-0">
         <div className="flex flex-wrap gap-2">
           {COUNTRY_OPTIONS.map((opt) => (
             <button
@@ -95,7 +95,7 @@ export default function FiltresBiens({ biens }: { biens: Bien[] }) {
           </button>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-0 sm:gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((bien) => (
             <BienCard key={bien.id} bien={bien} />
           ))}

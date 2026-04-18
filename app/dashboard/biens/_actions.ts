@@ -172,14 +172,25 @@ export async function uploadPropertyImages(
   propertyId: string,
   files: File[]
 ): Promise<{ uploaded: number; errors: string[] }> {
+  console.log("[uploadPropertyImages] START", {
+    propertyId,
+    fileCount: files.length,
+    fileSizes: files.map((f) => ({ name: f.name, size: f.size, type: f.type })),
+  });
+
+  console.log("[uploadPropertyImages] auth check...");
   const session = await auth();
   if (!session?.user) throw new Error("Non authentifié");
   const userId = (session.user as { id: string }).id;
+  console.log("[uploadPropertyImages] auth OK, user:", (session.user as { email?: string }).email);
 
   const property = await assertImageAccess(userId, propertyId);
 
   const existingCount = await prisma.propertyImage.count({ where: { propertyId } });
+  console.log("[uploadPropertyImages] existingCount:", existingCount);
+
   if (existingCount + files.length > 15) {
+    console.log("[uploadPropertyImages] LIMIT exceeded");
     return { uploaded: 0, errors: [`Maximum 15 photos (${existingCount} existante(s) déjà enregistrée(s))`] };
   }
 
@@ -187,8 +198,12 @@ export async function uploadPropertyImages(
   let uploaded = 0;
 
   for (let i = 0; i < files.length; i++) {
+    const file = files[i];
     try {
-      const { url, publicId } = await uploadImage(files[i]);
+      console.log(`[uploadPropertyImages] uploading ${i + 1}/${files.length}:`, file.name);
+      const { url, publicId } = await uploadImage(file);
+      console.log(`[uploadPropertyImages] Cloudinary OK:`, { url, publicId });
+
       const isFirst = existingCount === 0 && i === 0;
       await prisma.propertyImage.create({
         data: { propertyId, url, publicId, isPrimary: isFirst, order: existingCount + i, alt: null },
@@ -197,10 +212,13 @@ export async function uploadPropertyImages(
         await prisma.property.update({ where: { id: propertyId }, data: { imageUrl: url } });
       }
       uploaded++;
-    } catch {
-      errors.push(files[i].name ?? `Photo ${i + 1}`);
+    } catch (e) {
+      console.error(`[uploadPropertyImages] ERROR for ${file.name}:`, e);
+      errors.push(`${file.name ?? `Photo ${i + 1}`}: ${e instanceof Error ? e.message : "erreur inconnue"}`);
     }
   }
+
+  console.log("[uploadPropertyImages] DONE", { uploaded, errorCount: errors.length });
 
   revalidatePath(`/dashboard/biens/${propertyId}/edit`);
   revalidatePath(`/biens/${property.slug}`);

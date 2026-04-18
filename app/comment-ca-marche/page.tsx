@@ -28,7 +28,7 @@ const STEPS = [
   {
     emoji: "💰",
     title: "Vous recevez vos revenus",
-    desc: "Vos paiements sont versés chaque mois. Suivez vos revenus en temps réel depuis votre dashboard.",
+    desc: "Après chaque réservation confirmée, vos revenus sont reversés selon les modalités convenues avec notre équipe. Suivez l'historique de vos paiements depuis votre dashboard.",
   },
 ];
 

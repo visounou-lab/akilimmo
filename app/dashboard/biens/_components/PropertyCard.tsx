@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import DeleteButton from "./DeleteButton";
+import { getYoutubeThumbnail } from "@/lib/youtube";
 
 const COUNTRY_LABEL: Record<string, string> = {
   BENIN:         "Bénin",
@@ -15,6 +16,10 @@ const STATUS_CONFIG: Record<string, { label: string; classes: string }> = {
   MAINTENANCE: { label: "Maintenance", classes: "bg-orange-50 text-orange-600" },
 };
 
+function getInitials(title: string): string {
+  return title.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+}
+
 interface PropertyCardProps {
   property: {
     id: string;
@@ -27,6 +32,7 @@ interface PropertyCardProps {
     bathrooms: number;
     imageUrl: string | null;
     videoUrl: string | null;
+    images?: { url: string }[];
     owner: { name: string | null };
   };
 }
@@ -35,23 +41,36 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
   const status = STATUS_CONFIG[p.status] ?? STATUS_CONFIG.OFF_MARKET;
   const price  = new Intl.NumberFormat("fr-FR").format(Number(p.price));
 
+  // Priority: Cloudinary images[0] → imageUrl → YouTube thumbnail → initials placeholder
+  let displayImage: string | null = p.images?.[0]?.url ?? p.imageUrl ?? null;
+  let hasVideo = false;
+  if (!displayImage && p.videoUrl) {
+    displayImage = getYoutubeThumbnail(p.videoUrl);
+    if (displayImage) hasVideo = true;
+  }
+
+  const initials = getInitials(p.title);
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group flex flex-col">
       {/* Image */}
-      <div className="relative h-44 bg-slate-100 overflow-hidden shrink-0">
-        {p.imageUrl ? (
+      <div className="relative h-44 overflow-hidden shrink-0">
+        {displayImage ? (
           <Image
-            src={p.imageUrl}
+            src={displayImage}
             alt={p.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+          <div
+            className="w-full h-full flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #1E3A5F 0%, #2563EB 100%)" }}
+          >
+            <span className="text-4xl font-bold text-white/80 select-none tracking-wider">
+              {initials}
+            </span>
           </div>
         )}
         {/* Badge statut */}
@@ -59,7 +78,7 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
           {status.label}
         </span>
         {/* Badge vidéo */}
-        {p.videoUrl && (
+        {(p.videoUrl || hasVideo) && (
           <span className="absolute bottom-3 left-3 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#0066CC]/90 text-white shadow-sm gap-1 items-center">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />

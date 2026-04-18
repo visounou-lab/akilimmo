@@ -5,7 +5,10 @@ import PropertyCard from "./_components/PropertyCard";
 export default async function BiensPage() {
   const properties = await prisma.property.findMany({
     orderBy: { createdAt: "desc" },
-    include: { owner: { select: { name: true } } },
+    include: {
+      owner:  { select: { name: true } },
+      images: { select: { url: true }, orderBy: { order: "asc" }, take: 1 },
+    },
   });
 
   return (

@@ -13,6 +13,7 @@ import {
   countryLabel,
 } from "@/lib/share";
 import ReservationForm from "../[id]/_components/ReservationForm";
+import ShareButtons from "../../components/ShareButtons";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -240,7 +241,12 @@ export default async function BienDetailSlugPage({ params }: Props) {
               <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">{bien.description}</p>
             </div>
 
-            {/* TODO: <ShareButtons url={url} title={bien.title} /> */}
+            <ShareButtons
+              url={url}
+              title={bien.title}
+              price={price}
+              city={bien.city}
+            />
           </div>
 
           {/* Sidebar */}

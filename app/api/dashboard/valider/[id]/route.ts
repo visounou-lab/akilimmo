@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { sendPropertyApprovedEmail, sendPropertyRejectedEmail } from "@/lib/mailer";
+import { uniquePropertySlug } from "@/lib/slug";
 
 export async function PATCH(
   req: NextRequest,
@@ -56,9 +57,16 @@ export async function PATCH(
 
   if (action === "update") {
     const { title, description, country, city, address, price, bedrooms, bathrooms, videoUrl } = body;
+    const newTitle = title ?? property.title;
+    const newCity  = city  ?? property.city;
+    const slugData =
+      newTitle !== property.title || newCity !== property.city
+        ? { slug: await uniquePropertySlug(newTitle, newCity, id) }
+        : {};
     await prisma.property.update({
       where: { id },
       data: {
+        ...slugData,
         ...(title       !== undefined && { title }),
         ...(description !== undefined && { description }),
         ...(country     !== undefined && { country }),

@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { uploadImage } from "@/lib/cloudinary";
+import { uniquePropertySlug } from "@/lib/slug";
 
 export async function createProperty(formData: FormData) {
   const session = await auth();
@@ -17,18 +18,22 @@ export async function createProperty(formData: FormData) {
     imageUrl = await uploadImage(image);
   }
 
+  const title = formData.get("title") as string;
+  const city  = formData.get("city") as string;
+  const slug  = await uniquePropertySlug(title, city);
+
   await prisma.property.create({
     data: {
-      title:       formData.get("title") as string,
+      slug,
+      title,
       description: formData.get("description") as string,
       country:     formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
-      city:        formData.get("city") as string,
+      city,
       address:     formData.get("address") as string,
       price:       parseFloat(formData.get("price") as string),
       status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-
       imageUrl,
       ownerId:     userId,
     },
@@ -50,19 +55,27 @@ export async function updateProperty(id: string, formData: FormData) {
     imageUrl = await uploadImage(image);
   }
 
+  const title = formData.get("title") as string;
+  const city  = formData.get("city") as string;
+
+  const slugData =
+    title !== existing.title || city !== existing.city
+      ? { slug: await uniquePropertySlug(title, city, id) }
+      : {};
+
   await prisma.property.update({
     where: { id },
     data: {
-      title:       formData.get("title") as string,
+      ...slugData,
+      title,
       description: formData.get("description") as string,
       country:     formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
-      city:        formData.get("city") as string,
+      city,
       address:     formData.get("address") as string,
       price:       parseFloat(formData.get("price") as string),
       status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
       bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-
       imageUrl,
     },
   });

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { uploadImage } from "@/lib/cloudinary";
 import { sendNewPropertyNotification } from "@/lib/mailer";
 import { revalidatePath } from "next/cache";
+import { uniquePropertySlug } from "@/lib/slug";
 
 export async function submitProperty(formData: FormData) {
   const session = await auth();
@@ -22,12 +23,17 @@ export async function submitProperty(formData: FormData) {
 
   const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
 
+  const title = formData.get("title") as string;
+  const city  = formData.get("city") as string;
+  const slug  = await uniquePropertySlug(title, city);
+
   const property = await prisma.property.create({
     data: {
-      title:         formData.get("title") as string,
+      slug,
+      title,
       description:   formData.get("description") as string,
       country:       formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
-      city:          formData.get("city") as string,
+      city,
       address:       formData.get("address") as string,
       price:         parseFloat(formData.get("price") as string),
       bedrooms:      parseInt(formData.get("bedrooms") as string, 10),

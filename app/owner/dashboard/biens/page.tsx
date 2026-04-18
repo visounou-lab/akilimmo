@@ -20,7 +20,7 @@ export default async function OwnerBiensPage() {
   const biens = await prisma.property.findMany({
     where:   { submittedBy: userId },
     orderBy: { createdAt: "desc" },
-    select:  { id: true, title: true, city: true, country: true, price: true, publishStatus: true, adminNote: true, createdAt: true },
+    select:  { id: true, slug: true, title: true, city: true, country: true, price: true, publishStatus: true, adminNote: true, createdAt: true },
   });
 
   return (
@@ -83,7 +83,7 @@ export default async function OwnerBiensPage() {
                     <td className="px-4 py-3.5 text-xs text-slate-500">{formatDate(b.createdAt)}</td>
                     <td className="px-4 py-3.5">
                       {b.publishStatus === "published" && (
-                        <Link href={`/biens/${b.id}`} target="_blank"
+                        <Link href={`/biens/${b.slug}`} target="_blank"
                           className="text-xs text-[#0066CC] hover:underline font-medium whitespace-nowrap">
                           Voir sur le site →
                         </Link>

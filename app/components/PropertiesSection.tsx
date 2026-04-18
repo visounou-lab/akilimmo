@@ -12,6 +12,7 @@ const COUNTRY_LABEL: Record<string, string> = {
 
 interface Bien {
   id: string;
+  slug: string;
   title: string;
   city: string;
   country: string;
@@ -55,7 +56,7 @@ function BienCard({ bien }: { bien: Bien }) {
       transition={{ duration: 0.2 }}
       className="group overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-sm cursor-pointer"
     >
-      <Link href={`/biens/${bien.id}`} className="block">
+      <Link href={`/biens/${bien.slug}`} className="block">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
           {displayImage ? (

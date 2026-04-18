@@ -16,7 +16,7 @@ export default async function BiensPage() {
     where: { status: "AVAILABLE", publishStatus: "published" },
     orderBy: { createdAt: "desc" },
     select: {
-      id: true, title: true, city: true, country: true,
+      id: true, slug: true, title: true, city: true, country: true,
       price: true, bedrooms: true, bathrooms: true, imageUrl: true, videoUrl: true,
     },
   });

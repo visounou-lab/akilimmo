@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
@@ -20,6 +21,27 @@ const STATUS_CONFIG: Record<string, { label: string; classes: string }> = {
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const bien = await prisma.property.findUnique({
+    where: { id },
+    select: { title: true, city: true, description: true, imageUrl: true, images: { select: { url: true }, take: 1 } },
+  });
+  if (!bien) return {};
+  const desc    = bien.description?.slice(0, 155) ?? "";
+  const imgUrl  = bien.imageUrl ?? bien.images?.[0]?.url ?? "https://www.akilimmo.com/og-image.jpg";
+  return {
+    title: `${bien.title} — ${bien.city}`,
+    description: desc,
+    openGraph: {
+      title: bien.title,
+      description: desc,
+      images: [imgUrl],
+      url: `https://www.akilimmo.com/biens/${id}`,
+    },
+  };
 }
 
 export default async function BienDetailPage({ params }: Props) {

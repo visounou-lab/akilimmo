@@ -6,8 +6,9 @@ import { prisma } from "@/lib/prisma";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Biens disponibles | AKIL IMMO",
-  description: "Découvrez tous nos biens disponibles à la location au Bénin et en Côte d'Ivoire.",
+  title: "Biens disponibles — Appartements et Villas",
+  description:
+    "Découvrez tous nos appartements et villas meublés disponibles à la location au Bénin et en Côte d'Ivoire.",
 };
 
 export default async function BiensPage() {

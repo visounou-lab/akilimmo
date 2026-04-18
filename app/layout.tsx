@@ -59,6 +59,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.akilimmo.com",
   },
+  verification: {
+    google: "vJrgCkTnDkAHuO0Ml0HDX8uud9WxemENqUZGVMRLTrE",
+  },
 };
 
 export default function RootLayout({

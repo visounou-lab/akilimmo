@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import PhotoUploader from "../../../components/PhotoUploader";
 
 const COUNTRIES = [
   { value: "BENIN",         label: "Bénin" },
@@ -39,6 +40,7 @@ interface PropertyFormProps {
   action: (formData: FormData) => void | Promise<void>;
   defaultValues?: DefaultValues;
   submitLabel?: string;
+  propertyId?: string;
 }
 
 const inputClass =
@@ -58,6 +60,7 @@ export default function PropertyForm({
   action,
   defaultValues = {},
   submitLabel = "Enregistrer",
+  propertyId,
 }: PropertyFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -85,73 +88,69 @@ export default function PropertyForm({
       {/* === PHOTOS === */}
       <div>
         <label className={labelClass}>Photos du bien</label>
-        <input
-          ref={fileInputRef}
-          type="file"
-          name="images"
-          accept="image/jpeg,image/png,image/webp"
-          multiple
-          onChange={handleFilesChange}
-          className="hidden"
-        />
-        {/* Hidden field to communicate which new-file index is primary */}
-        <input type="hidden" name="primaryIndex" value={primaryNewIdx} />
 
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-          </svg>
-          Ajouter des photos
-        </button>
-        <p className="text-xs text-slate-400 mt-1.5">JPG, PNG ou WebP · max 5 Mo par fichier · plusieurs fichiers acceptés</p>
+        {propertyId ? (
+          /* Mode édition : PhotoUploader interactif */
+          <PhotoUploader
+            propertyId={propertyId}
+            initialImages={existingImages.map((img, i) => ({
+              id: img.id,
+              url: img.url,
+              isPrimary: img.isPrimary,
+              order: (img as any).order ?? i,
+            }))}
+          />
+        ) : (
+          /* Mode création : upload groupé soumis avec le formulaire */
+          <>
+            <input
+              ref={fileInputRef}
+              type="file"
+              name="images"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              onChange={handleFilesChange}
+              className="hidden"
+            />
+            <input type="hidden" name="primaryIndex" value={primaryNewIdx} />
 
-        {/* Existing images (edit mode) */}
-        {existingImages.length > 0 && (
-          <div className="mt-3">
-            <p className="text-xs text-slate-500 mb-2">Photos actuelles</p>
-            <div className="grid grid-cols-4 gap-2">
-              {existingImages.map((img) => (
-                <div key={img.id} className="relative rounded-lg overflow-hidden border border-slate-200">
-                  <img src={img.url} alt="" className="h-20 w-full object-cover" />
-                  {img.isPrimary && (
-                    <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
-                      Principale
-                    </span>
-                  )}
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              Ajouter des photos
+            </button>
+            <p className="text-xs text-slate-400 mt-1.5">JPG, PNG ou WebP · max 15 photos · sélectionnez la principale en cliquant dessus</p>
+
+            {newPreviews.length > 0 && (
+              <div className="mt-3">
+                <p className="text-xs text-slate-500 mb-2">Aperçu — cliquez pour définir la principale</p>
+                <div className="grid grid-cols-4 gap-2">
+                  {newPreviews.map((src, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setPrimaryNewIdx(i)}
+                      className={`relative rounded-lg overflow-hidden border-2 transition-colors ${
+                        i === primaryNewIdx ? "border-[#0066CC]" : "border-transparent"
+                      }`}
+                    >
+                      <img src={src} alt="" className="h-20 w-full object-cover" />
+                      {i === primaryNewIdx && (
+                        <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                          Principale
+                        </span>
+                      )}
+                    </button>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* New file previews */}
-        {newPreviews.length > 0 && (
-          <div className="mt-3">
-            <p className="text-xs text-slate-500 mb-2">Nouvelles photos — cliquez pour définir la principale</p>
-            <div className="grid grid-cols-4 gap-2">
-              {newPreviews.map((src, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setPrimaryNewIdx(i)}
-                  className={`relative rounded-lg overflow-hidden border-2 transition-colors ${
-                    i === primaryNewIdx ? "border-[#0066CC]" : "border-transparent"
-                  }`}
-                >
-                  <img src={src} alt="" className="h-20 w-full object-cover" />
-                  {i === primaryNewIdx && (
-                    <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
-                      Principale
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

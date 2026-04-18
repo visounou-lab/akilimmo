@@ -21,6 +21,7 @@ export default async function Home() {
       take: 6,
       select: {
         id: true,
+        slug: true,
         title: true,
         city: true,
         country: true,

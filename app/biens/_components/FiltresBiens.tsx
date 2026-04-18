@@ -11,6 +11,7 @@ const COUNTRY_OPTIONS = [
 
 interface Bien {
   id: string;
+  slug: string;
   title: string;
   city: string;
   country: string;

@@ -10,7 +10,6 @@ const navItems = [
   { label: "Biens",                href: "/biens" },
   { label: "Devenir propriétaire", href: "/inscription" },
   { label: "Comment ça marche",    href: "/comment-ca-marche" },
-  { label: "Contact",              href: "#contact" },
 ];
 
 const serviceItems = [
@@ -173,6 +172,11 @@ export default function Navbar() {
               </div>
             )}
           </div>
+
+          <a href="#contact" onClick={() => setMenuOpen(false)}
+            className="block py-2.5 text-sm font-medium text-white/85 hover:text-white border-b border-white/10">
+            Contact
+          </a>
 
           {isLogged ? (
             <Link href={dashboardHref} onClick={() => setMenuOpen(false)}

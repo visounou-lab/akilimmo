@@ -39,7 +39,7 @@ export default function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-slate-700" htmlFor="name">Nom complet <span className="text-red-400">*</span></label>
-          <input id="name" name="name" type="text" required value={form.name} onChange={handleChange} placeholder="Ex : David Ayina"
+          <input id="name" name="name" type="text" required value={form.name} onChange={handleChange} placeholder="Ex : Jean Dupont"
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20" />
         </div>
         <div className="space-y-1.5">

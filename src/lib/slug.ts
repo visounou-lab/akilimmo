@@ -15,7 +15,12 @@ export async function uniquePropertySlug(
   city: string,
   excludeId?: string
 ): Promise<string> {
-  const base = slugify(`${title}-${city}`);
+  const citySlug  = slugify(city);
+  const titleSlug = slugify(title);
+  // Avoid appending city if the slugified title already ends with it
+  const base = titleSlug.endsWith(citySlug)
+    ? titleSlug
+    : `${titleSlug}-${citySlug}`;
   let candidate = base;
   let n = 2;
 

@@ -7,6 +7,7 @@ interface PendingProperty {
   title: string;
   city: string;
   country: string;
+  address: string;
   price: string;
   description: string;
   bedrooms: number;
@@ -16,6 +17,18 @@ interface PendingProperty {
   createdAt: string;
   submitter: { name: string | null; email: string } | null;
   owner:     { name: string | null; email: string };
+}
+
+interface EditFields {
+  title: string;
+  description: string;
+  country: string;
+  city: string;
+  address: string;
+  price: string;
+  bedrooms: number;
+  bathrooms: number;
+  videoUrl: string;
 }
 
 const COUNTRY_LABEL: Record<string, string> = {
@@ -33,6 +46,9 @@ export default function ValiderPage() {
   const [actionId, setActionId]      = useState<string | null>(null);
   const [rejectModal, setRejectModal] = useState<{ id: string; title: string } | null>(null);
   const [rejectNote, setRejectNote]   = useState("");
+  const [editId, setEditId]           = useState<string | null>(null);
+  const [editFields, setEditFields]   = useState<EditFields | null>(null);
+  const [saving, setSaving]           = useState(false);
 
   const fetch_ = useCallback(async () => {
     setLoading(true);
@@ -53,6 +69,39 @@ export default function ValiderPage() {
     setActionId(null);
     setRejectModal(null);
     setRejectNote("");
+    await fetch_();
+  }
+
+  function openEdit(p: PendingProperty) {
+    setEditId(p.id);
+    setEditFields({
+      title: p.title,
+      description: p.description,
+      country: p.country,
+      city: p.city,
+      address: p.address,
+      price: p.price,
+      bedrooms: p.bedrooms,
+      bathrooms: p.bathrooms,
+      videoUrl: p.videoUrl ?? "",
+    });
+  }
+
+  function closeEdit() {
+    setEditId(null);
+    setEditFields(null);
+  }
+
+  async function saveEdit(id: string) {
+    if (!editFields) return;
+    setSaving(true);
+    await fetch(`/api/dashboard/valider/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update", ...editFields }),
+    });
+    setSaving(false);
+    closeEdit();
     await fetch_();
   }
 
@@ -128,17 +177,24 @@ export default function ValiderPage() {
                   <div className="mt-5 flex items-center gap-3 flex-wrap">
                     <button
                       onClick={() => doAction(p.id, "publish")}
-                      disabled={actionId === p.id}
+                      disabled={actionId === p.id || editId === p.id}
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-sm font-semibold transition disabled:opacity-50"
                     >
                       {actionId === p.id ? "…" : "✅ Publier"}
                     </button>
                     <button
                       onClick={() => setRejectModal({ id: p.id, title: p.title })}
-                      disabled={actionId === p.id}
+                      disabled={actionId === p.id || editId === p.id}
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 text-sm font-semibold transition disabled:opacity-50"
                     >
                       ❌ Refuser
+                    </button>
+                    <button
+                      onClick={() => editId === p.id ? closeEdit() : openEdit(p)}
+                      disabled={!!actionId}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 text-slate-700 hover:bg-slate-100 text-sm font-semibold transition disabled:opacity-50"
+                    >
+                      {editId === p.id ? "✖ Fermer" : "✏️ Modifier"}
                     </button>
                     {p.videoUrl && (
                       <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
@@ -149,6 +205,116 @@ export default function ValiderPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Inline edit form */}
+              {editId === p.id && editFields && (
+                <div className="border-t border-gray-100 bg-slate-50 p-6">
+                  <h4 className="text-sm font-semibold text-slate-700 mb-4">Modifier le bien</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Titre</label>
+                      <input
+                        type="text"
+                        value={editFields.title}
+                        onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Pays</label>
+                      <select
+                        value={editFields.country}
+                        onChange={(e) => setEditFields({ ...editFields, country: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white"
+                      >
+                        <option value="BENIN">Bénin</option>
+                        <option value="COTE_D_IVOIRE">Côte d&apos;Ivoire</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Ville</label>
+                      <input
+                        type="text"
+                        value={editFields.city}
+                        onChange={(e) => setEditFields({ ...editFields, city: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Adresse</label>
+                      <input
+                        type="text"
+                        value={editFields.address}
+                        onChange={(e) => setEditFields({ ...editFields, address: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Prix (XOF / mois)</label>
+                      <input
+                        type="number"
+                        value={editFields.price}
+                        onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Lien vidéo</label>
+                      <input
+                        type="url"
+                        value={editFields.videoUrl}
+                        onChange={(e) => setEditFields({ ...editFields, videoUrl: e.target.value })}
+                        placeholder="https://youtube.com/…"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Chambres</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={editFields.bedrooms}
+                        onChange={(e) => setEditFields({ ...editFields, bedrooms: Number(e.target.value) })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Salles de bain</label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={editFields.bathrooms}
+                        onChange={(e) => setEditFields({ ...editFields, bathrooms: Number(e.target.value) })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Description</label>
+                      <textarea
+                        rows={4}
+                        value={editFields.description}
+                        onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition resize-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-3 mt-4">
+                    <button
+                      onClick={closeEdit}
+                      className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-white transition"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      onClick={() => saveEdit(p.id)}
+                      disabled={saving}
+                      className="px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#0055AA] disabled:opacity-50 text-white text-sm font-semibold transition"
+                    >
+                      {saving ? "Enregistrement…" : "Enregistrer les modifications"}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

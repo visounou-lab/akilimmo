@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -138,9 +139,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="AKIL IMMO" className="h-12 mx-auto"
-              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(88%) saturate(1500%) hue-rotate(200deg)" }} />
+            <Image src="/logo.png" alt="AKIL IMMO" width={80} height={80} className="mx-auto" />
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Nouveau mot de passe</h1>
           <p className="mt-1 text-sm text-slate-500">Choisissez un nouveau mot de passe sécurisé</p>

@@ -14,7 +14,6 @@ const navItems = [
 ];
 
 const serviceItems = [
-  { label: "Comment ça marche",    href: "/comment-ca-marche" },
   { label: "Gestion locative",     href: "/services/gestion-locative" },
   { label: "Contrats sécurisés",   href: "/services/contrats" },
   { label: "Suivi des paiements",  href: "/services/suivi-paiements" },

@@ -15,7 +15,7 @@ export async function createProperty(formData: FormData) {
   let imageUrl: string | null = null;
   const image = formData.get("image") as File | null;
   if (image && image.size > 0) {
-    imageUrl = await uploadImage(image);
+    imageUrl = (await uploadImage(image)).url;
   }
 
   const title = formData.get("title") as string;
@@ -52,7 +52,7 @@ export async function updateProperty(id: string, formData: FormData) {
   let imageUrl = existing.imageUrl;
   const image = formData.get("image") as File | null;
   if (image && image.size > 0) {
-    imageUrl = await uploadImage(image);
+    imageUrl = (await uploadImage(image)).url;
   }
 
   const title = formData.get("title") as string;

@@ -6,7 +6,12 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export async function uploadImage(file: File): Promise<string> {
+export type UploadResult = {
+  url:      string;
+  publicId: string;
+};
+
+export async function uploadImage(file: File): Promise<UploadResult> {
   const bytes  = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
@@ -16,7 +21,7 @@ export async function uploadImage(file: File): Promise<string> {
         { folder: "akilimmo/biens", resource_type: "image" },
         (error, result) => {
           if (error || !result) return reject(error ?? new Error("Upload failed"));
-          resolve(result.secure_url);
+          resolve({ url: result.secure_url, publicId: result.public_id });
         }
       )
       .end(buffer);

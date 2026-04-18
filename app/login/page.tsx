@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 function LoginForm() {
   const [email, setEmail]       = useState("");
@@ -96,8 +97,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="AKIL IMMO" className="h-14 mx-auto" />
+            <Image src="/logo.png" alt="AKIL IMMO" width={80} height={80} className="mx-auto" />
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Connexion</h1>
           <p className="mt-1 text-sm text-slate-500">Accédez à votre espace AKIL IMMO</p>

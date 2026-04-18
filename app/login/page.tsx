@@ -61,17 +61,17 @@ function LoginForm() {
           />
         </div>
         <div>
-          <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-sm font-medium text-slate-700">Mot de passe</label>
-            <Link href="/forgot-password" className="text-xs text-[#0066CC] hover:underline">
-              Mot de passe oublié ?
-            </Link>
-          </div>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Mot de passe</label>
           <input
             type="password" required placeholder="••••••••"
             value={password} onChange={e => setPassword(e.target.value)}
             className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white"
           />
+        </div>
+        <div style={{ textAlign: "right", marginBottom: "4px" }}>
+          <Link href="/forgot-password" style={{ fontSize: "13px", color: "#1E40AF", textDecoration: "none" }}>
+            Mot de passe oublié ?
+          </Link>
         </div>
         <button
           type="submit" disabled={loading}
@@ -97,8 +97,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="AKIL IMMO" className="h-12 mx-auto"
-              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(88%) saturate(1500%) hue-rotate(200deg)" }} />
+            <img src="/logo.png" alt="AKIL IMMO" className="h-14 mx-auto" />
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Connexion</h1>
           <p className="mt-1 text-sm text-slate-500">Accédez à votre espace AKIL IMMO</p>

@@ -128,6 +128,27 @@ export async function sendPropertyRejectedEmail(to: string, firstName: string, t
   });
 }
 
+export async function sendPasswordResetEmail(to: string, firstName: string, token: string) {
+  const url = `https://www.akilimmo.com/reset-password?token=${token}`;
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: "Réinitialisation de votre mot de passe — AKIL IMMO",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
+        <h2 style="color:#0066CC;margin-bottom:8px">Réinitialisation de votre mot de passe</h2>
+        <p style="color:#374151">Bonjour ${firstName},</p>
+        <p style="color:#374151">Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe. Ce lien expire dans <strong>1 heure</strong>.</p>
+        <a href="${url}" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+          Réinitialiser mon mot de passe
+        </a>
+        <p style="color:#9CA3AF;font-size:13px;margin-top:24px">Si vous n'avez pas demandé cela, ignorez cet email. Votre mot de passe ne sera pas modifié.</p>
+      </div>
+    `,
+  });
+}
+
 export async function sendWelcomeEmail(to: string, firstName: string) {
   await transporter.sendMail({
     from: process.env.SMTP_FROM,

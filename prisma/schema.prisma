@@ -57,6 +57,8 @@ model User {
   isVerified     Boolean        @default(false)
   verifyToken    String?        @unique
   verifyExpires  DateTime?
+  resetToken     String?        @unique
+  resetExpires   DateTime?
   status         String         @default("pending")
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt

@@ -137,10 +137,15 @@ model PropertyImage {
   id         String   @id @default(cuid())
   propertyId String
   url        String
+  publicId   String?
+  alt        String?
   isPrimary  Boolean  @default(false)
   order      Int      @default(0)
   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
+
+  @@index([propertyId])
+  @@index([propertyId, isPrimary])
 }
 
 model Contract {

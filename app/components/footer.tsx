@@ -43,8 +43,8 @@ export default function Footer() {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
           <p className="text-xs text-slate-500">© {new Date().getFullYear()} AKIL IMMO — Akil Services. Tous droits réservés.</p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-slate-500 hover:text-slate-300">Mentions légales</a>
-            <a href="#" className="text-xs text-slate-500 hover:text-slate-300">Confidentialité</a>
+            <Link href="/mentions-legales" className="text-xs text-slate-500 hover:text-slate-300">Mentions légales</Link>
+            <Link href="/confidentialite" className="text-xs text-slate-500 hover:text-slate-300">Confidentialité</Link>
           </div>
         </div>
       </div>

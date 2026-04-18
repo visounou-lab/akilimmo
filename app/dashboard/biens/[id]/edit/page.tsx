@@ -44,6 +44,7 @@ export default async function EditBienPage({ params }: Props) {
         <PropertyForm
           action={boundAction}
           submitLabel="Enregistrer les modifications"
+          propertyId={id}
           defaultValues={{
             title:       property.title,
             description: property.description,

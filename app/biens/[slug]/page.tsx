@@ -34,7 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const price       = Number(p.price);
   const url         = buildPropertyUrl(p.slug);
-  const ogImage     = ogImageUrl(p.imageUrl);
+  const primaryImg  = p.images.find((i) => i.isPrimary) ?? p.images[0];
+  const ogImage     = ogImageUrl(primaryImg?.url ?? p.imageUrl);
   const title       = `${p.title} — ${formatFCFA(price)}`;
   const description = p.description?.slice(0, 160) ||
     `${p.title} à ${p.city}, ${countryLabel(p.country)} — ${p.bedrooms} chambres, ${p.bathrooms} salles de bain. AKIL IMMO.`;
@@ -73,10 +74,12 @@ export default async function BienDetailSlugPage({ params }: Props) {
   const bien = await getProperty(slug);
   if (!bien) notFound();
 
-  const price     = Number(bien.price);
-  const url       = buildPropertyUrl(bien.slug);
-  const ogImage   = ogImageUrl(bien.imageUrl);
-  const available = bien.status === "AVAILABLE";
+  const price        = Number(bien.price);
+  const url          = buildPropertyUrl(bien.slug);
+  const primaryImg   = bien.images.find((i) => i.isPrimary) ?? bien.images[0];
+  const heroUrl      = primaryImg?.url ?? bien.imageUrl;
+  const ogImage      = ogImageUrl(heroUrl);
+  const available    = bien.status === "AVAILABLE";
   const status    = STATUS_CONFIG[bien.status] ?? STATUS_CONFIG.OFF_MARKET;
 
   const jsonLd = {
@@ -84,7 +87,9 @@ export default async function BienDetailSlugPage({ params }: Props) {
     "@type":    "Product",
     name:        bien.title,
     description: bien.description,
-    image:       ogImage,
+    image:       bien.images.length > 0
+      ? bien.images.slice(0, 6).map((i) => i.url)
+      : ogImage,
     url,
     category:    "RealEstate",
     brand: { "@type": "Organization", name: "AKIL IMMO", url: SITE_URL },
@@ -108,17 +113,18 @@ export default async function BienDetailSlugPage({ params }: Props) {
   const whatsappNumber = bien.country === "COTE_D_IVOIRE" ? "2250710259146" : "2290197598682";
   const phoneDisplay   = bien.country === "COTE_D_IVOIRE" ? "+225 07 10 25 91 46" : "+229 01 97 59 86 82";
 
-  const mediaItems: { type: "video" | "image"; url?: string; title?: string }[] = [];
-  if (youtubeId) {
-    mediaItems.push({
-      type:  "video",
-      url:   `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`,
-      title: "Visite virtuelle",
-    });
-  }
-  bien.images?.forEach((img) => {
-    mediaItems.push({ type: "image", url: img.url });
+  // Primary image first, then rest in order
+  const sortedImages = [...(bien.images ?? [])].sort((a, b) => {
+    if (a.isPrimary && !b.isPrimary) return -1;
+    if (!a.isPrimary && b.isPrimary) return 1;
+    return a.order - b.order;
   });
+
+  const mediaItems: { type: "video" | "image"; url?: string }[] = [];
+  if (youtubeId) {
+    mediaItems.push({ type: "video", url: `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` });
+  }
+  sortedImages.forEach((img) => mediaItems.push({ type: "image", url: img.url }));
   if (mediaItems.length === 0 && bien.imageUrl) {
     mediaItems.push({ type: "image", url: bien.imageUrl });
   }

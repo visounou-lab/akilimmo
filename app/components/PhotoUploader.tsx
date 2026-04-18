@@ -31,21 +31,54 @@ export default function PhotoUploader({ propertyId, initialImages }: Props) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   // ── upload ────────────────────────────────────────────────────────────────
 
   async function handleFiles(fileList: FileList | null) {
     if (!fileList || fileList.length === 0) return;
     const files = Array.from(fileList);
+
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
     if (images.length + files.length > 15) {
-      alert("Maximum 15 photos par bien.");
+      setErrorMsg(`Maximum 15 photos par bien (${images.length} déjà enregistrée(s)).`);
       return;
     }
+
+    const MAX_PER_FILE = 10 * 1024 * 1024;
+    const MAX_TOTAL = 50 * 1024 * 1024;
+    const oversized = files.filter((f) => f.size > MAX_PER_FILE);
+    if (oversized.length > 0) {
+      setErrorMsg(`Fichier(s) trop volumineux (max 10 Mo) : ${oversized.map((f) => f.name).join(", ")}`);
+      return;
+    }
+    const totalSize = files.reduce((s, f) => s + f.size, 0);
+    if (totalSize > MAX_TOTAL) {
+      setErrorMsg(`Sélection trop lourde (max 50 Mo au total). Réduisez le nombre de fichiers.`);
+      return;
+    }
+
     setUploading(true);
-    const result = await uploadPropertyImages(propertyId, files);
+    let result: { uploaded: number; errors: string[] };
+    try {
+      result = await uploadPropertyImages(propertyId, files);
+    } catch (e) {
+      console.error("[PhotoUploader] handleFiles error:", e);
+      setErrorMsg(e instanceof Error ? e.message : "Erreur inattendue lors de l'upload.");
+      setUploading(false);
+      return;
+    }
     setUploading(false);
+
     if (result.errors.length) {
-      alert("Certaines photos n'ont pas pu être uploadées :\n" + result.errors.join(", "));
+      setErrorMsg("Certaines photos n'ont pas pu être uploadées : " + result.errors.join(", "));
+    }
+    if (result.uploaded > 0) {
+      setSuccessMsg(`✓ ${result.uploaded} photo${result.uploaded > 1 ? "s" : ""} ajoutée${result.uploaded > 1 ? "s" : ""}`);
+      setTimeout(() => setSuccessMsg(null), 3000);
     }
     router.refresh();
   }
@@ -65,10 +98,11 @@ export default function PhotoUploader({ propertyId, initialImages }: Props) {
 
   async function handleDelete(img: ImageItem) {
     if (!window.confirm(`Supprimer cette photo ?`)) return;
+    setErrorMsg(null);
     setBusyId(img.id);
     const res = await deletePropertyImage(img.id);
     setBusyId(null);
-    if (!res.success) { alert(res.error ?? "Erreur lors de la suppression."); return; }
+    if (!res.success) { setErrorMsg(res.error ?? "Erreur lors de la suppression."); return; }
     setImages((prev) => prev.filter((i) => i.id !== img.id));
     router.refresh();
   }
@@ -77,10 +111,11 @@ export default function PhotoUploader({ propertyId, initialImages }: Props) {
 
   async function handleSetPrimary(img: ImageItem) {
     if (img.isPrimary) return;
+    setErrorMsg(null);
     setBusyId(img.id);
     const res = await setPrimaryPropertyImage(img.id);
     setBusyId(null);
-    if (!res.success) { alert("Erreur lors du changement de photo principale."); return; }
+    if (!res.success) { setErrorMsg("Erreur lors du changement de photo principale."); return; }
     setImages((prev) =>
       prev.map((i) => ({ ...i, isPrimary: i.id === img.id }))
     );
@@ -149,6 +184,24 @@ export default function PhotoUploader({ propertyId, initialImages }: Props) {
         onChange={onInputChange}
         aria-hidden="true"
       />
+
+      {/* Error banner */}
+      {errorMsg && (
+        <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+          <span>{errorMsg}</span>
+          <button type="button" onClick={() => setErrorMsg(null)} className="ml-auto text-red-400 hover:text-red-600" aria-label="Fermer">✕</button>
+        </div>
+      )}
+
+      {/* Success toast */}
+      {successMsg && (
+        <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 px-4 py-2.5 text-sm font-medium text-green-700">
+          {successMsg}
+        </div>
+      )}
 
       {/* Compteur */}
       <p className="text-xs text-slate-400">{images.length} / 15 photo{images.length !== 1 ? "s" : ""}</p>

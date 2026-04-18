@@ -13,11 +13,10 @@ export async function submitProperty(formData: FormData) {
   if (!userId) throw new Error("Non authentifié");
 
   const files = formData.getAll("images") as File[];
-  const uploadedUrls: string[] = [];
+  const uploaded: { url: string; publicId: string }[] = [];
   for (const file of files) {
     if (file && file.size > 0) {
-      const url = await uploadImage(file);
-      uploadedUrls.push(url);
+      uploaded.push(await uploadImage(file));
     }
   }
 
@@ -38,7 +37,7 @@ export async function submitProperty(formData: FormData) {
       price:         parseFloat(formData.get("price") as string),
       bedrooms:      parseInt(formData.get("bedrooms") as string, 10),
       bathrooms:     parseInt(formData.get("bathrooms") as string, 10),
-      imageUrl:      uploadedUrls[0] ?? null,
+      imageUrl:      uploaded[0]?.url ?? null,
       videoUrl,
       ownerId:       userId,
       submittedBy:   userId,
@@ -46,11 +45,12 @@ export async function submitProperty(formData: FormData) {
     },
   });
 
-  if (uploadedUrls.length > 0) {
+  if (uploaded.length > 0) {
     await prisma.propertyImage.createMany({
-      data: uploadedUrls.map((url, i) => ({
+      data: uploaded.map(({ url, publicId }, i) => ({
         propertyId: property.id,
         url,
+        publicId,
         isPrimary:  i === 0,
         order:      i,
       })),

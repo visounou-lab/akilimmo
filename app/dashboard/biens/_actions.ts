@@ -15,15 +15,14 @@ export async function createProperty(formData: FormData) {
   const files = formData.getAll("images") as File[];
   const primaryIndex = parseInt(formData.get("primaryIndex") as string, 10) || 0;
 
-  const uploadedUrls: string[] = [];
+  const uploaded: { url: string; publicId: string }[] = [];
   for (const file of files) {
     if (file && file.size > 0) {
-      const url = await uploadImage(file);
-      uploadedUrls.push(url);
+      uploaded.push(await uploadImage(file));
     }
   }
 
-  const primaryUrl = uploadedUrls[primaryIndex] ?? uploadedUrls[0] ?? null;
+  const primaryUrl = uploaded[primaryIndex]?.url ?? uploaded[0]?.url ?? null;
   const videoUrl   = (formData.get("videoUrl") as string | null)?.trim() || null;
 
   const title = formData.get("title") as string;
@@ -48,11 +47,12 @@ export async function createProperty(formData: FormData) {
     },
   });
 
-  if (uploadedUrls.length > 0) {
+  if (uploaded.length > 0) {
     await prisma.propertyImage.createMany({
-      data: uploadedUrls.map((url, i) => ({
+      data: uploaded.map(({ url, publicId }, i) => ({
         propertyId: property.id,
         url,
+        publicId,
         isPrimary: i === primaryIndex,
         order: i,
       })),
@@ -72,17 +72,16 @@ export async function updateProperty(id: string, formData: FormData) {
   const files = formData.getAll("images") as File[];
   const primaryIndex = parseInt(formData.get("primaryIndex") as string, 10) || 0;
 
-  const uploadedUrls: string[] = [];
+  const uploaded: { url: string; publicId: string }[] = [];
   for (const file of files) {
     if (file && file.size > 0) {
-      const url = await uploadImage(file);
-      uploadedUrls.push(url);
+      uploaded.push(await uploadImage(file));
     }
   }
 
   let imageUrl = existing.imageUrl;
-  if (uploadedUrls.length > 0) {
-    imageUrl = uploadedUrls[primaryIndex] ?? uploadedUrls[0];
+  if (uploaded.length > 0) {
+    imageUrl = uploaded[primaryIndex]?.url ?? uploaded[0]?.url ?? existing.imageUrl;
   }
 
   const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
@@ -112,14 +111,15 @@ export async function updateProperty(id: string, formData: FormData) {
     },
   });
 
-  if (uploadedUrls.length > 0) {
+  if (uploaded.length > 0) {
     const existingCount = await prisma.propertyImage.count({ where: { propertyId: id } });
 
     if (existingCount === 0) {
       await prisma.propertyImage.createMany({
-        data: uploadedUrls.map((url, i) => ({
+        data: uploaded.map(({ url, publicId }, i) => ({
           propertyId: id,
           url,
+          publicId,
           isPrimary: i === primaryIndex,
           order: i,
         })),
@@ -130,9 +130,10 @@ export async function updateProperty(id: string, formData: FormData) {
         data: { isPrimary: false },
       });
       await prisma.propertyImage.createMany({
-        data: uploadedUrls.map((url, i) => ({
+        data: uploaded.map(({ url, publicId }, i) => ({
           propertyId: id,
           url,
+          publicId,
           isPrimary: i === primaryIndex,
           order: existingCount + i,
         })),

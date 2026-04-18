@@ -277,6 +277,17 @@ export default function InscriptionClient() {
               )}
             </button>
 
+            <p className="text-center text-xs text-slate-400 leading-relaxed">
+              En créant un compte, vous acceptez nos{" "}
+              <Link href="/mentions-legales" className="text-[#0066CC] hover:underline">
+                Conditions d&apos;utilisation
+              </Link>{" "}
+              et notre{" "}
+              <Link href="/confidentialite" className="text-[#0066CC] hover:underline">
+                Politique de confidentialité
+              </Link>.
+            </p>
+
             <p className="text-center text-sm text-slate-500">
               Déjà un compte ?{" "}
               <Link href="/login" className="text-[#0066CC] hover:underline font-medium">

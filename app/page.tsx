@@ -16,7 +16,7 @@ export default async function Home() {
     prisma.property.count(),
     prisma.property.count({ where: { status: "AVAILABLE" } }),
     prisma.property.findMany({
-      where: { status: "AVAILABLE" },
+      where: { status: "AVAILABLE", publishStatus: "published" },
       orderBy: { createdAt: "desc" },
       take: 6,
       select: {

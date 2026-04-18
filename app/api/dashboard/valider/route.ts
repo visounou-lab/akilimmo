@@ -16,7 +16,7 @@ export async function GET() {
     where:   { publishStatus: "pending_review" },
     orderBy: { createdAt: "asc" },
     select: {
-      id: true, title: true, city: true, country: true, price: true,
+      id: true, title: true, city: true, country: true, address: true, price: true,
       description: true, bedrooms: true, bathrooms: true,
       imageUrl: true, videoUrl: true, createdAt: true,
       submitter: { select: { name: true, email: true } },

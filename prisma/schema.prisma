@@ -108,6 +108,7 @@ model VerificationToken {
 
 model Property {
   id            String          @id @default(cuid())
+  slug          String          @unique
   title         String
   description   String
   country       Country

@@ -14,9 +14,51 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AKIL IMMO | Immobilier Bénin et Côte d'Ivoire",
+  title: {
+    default: "AKIL IMMO — Location Appartements & Villas au Bénin et Côte d'Ivoire",
+    template: "%s | AKIL IMMO",
+  },
   description:
-    "AKIL IMMO - Vitrine immobilière professionnelle pour le Bénin et la Côte d'Ivoire.",
+    "Trouvez votre appartement ou villa meublée à Cotonou, Abomey-Calavi et Abidjan. Location courte et longue durée. Gestion locative professionnelle.",
+  keywords: [
+    "location appartement Cotonou",
+    "location villa Abidjan",
+    "immobilier Bénin",
+    "location meublée Côte d'Ivoire",
+    "AKIL IMMO",
+  ],
+  authors: [{ name: "AKIL IMMO" }],
+  creator: "AKIL IMMO",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "https://www.akilimmo.com",
+    siteName: "AKIL IMMO",
+    title: "AKIL IMMO — Location Appartements & Villas au Bénin et Côte d'Ivoire",
+    description:
+      "Trouvez votre appartement ou villa meublée à Cotonou, Abomey-Calavi et Abidjan.",
+    images: [
+      {
+        url: "https://www.akilimmo.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "AKIL IMMO",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AKIL IMMO — Location au Bénin et Côte d'Ivoire",
+    description: "Appartements et villas meublées à Cotonou et Abidjan.",
+    images: ["https://www.akilimmo.com/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://www.akilimmo.com",
+  },
 };
 
 export default function RootLayout({

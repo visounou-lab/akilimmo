@@ -11,6 +11,15 @@ export type UploadResult = {
   publicId: string;
 };
 
+export async function deleteImage(publicId: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, (error) => {
+      if (error) return reject(error);
+      resolve();
+    });
+  });
+}
+
 export async function uploadImage(file: File): Promise<UploadResult> {
   const bytes  = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);

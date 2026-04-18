@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const navItems = [
-  { label: "Accueil",  href: "/" },
-  { label: "Biens",    href: "/biens" },
+  { label: "Accueil",              href: "/" },
+  { label: "Biens",                href: "/biens" },
   { label: "Devenir propriétaire", href: "/inscription" },
-  { label: "Contact",  href: "#contact" },
+  { label: "Comment ça marche",    href: "/comment-ca-marche" },
+  { label: "Contact",              href: "#contact" },
 ];
 
 const serviceItems = [
@@ -20,9 +21,10 @@ const serviceItems = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled]       = useState(false);
-  const [menuOpen, setMenuOpen]       = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [menuOpen, setMenuOpen]         = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const closeTimer                      = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { data: session }             = useSession();
 
   const user     = session?.user as { role?: string; status?: string } | undefined;
@@ -67,8 +69,8 @@ export default function Navbar() {
 
           {/* Services dropdown */}
           <div className="relative"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}>
+            onMouseEnter={() => { if (closeTimer.current) clearTimeout(closeTimer.current); setServicesOpen(true); }}
+            onMouseLeave={() => { closeTimer.current = setTimeout(() => setServicesOpen(false), 200); }}>
             <button className="text-sm font-medium text-white/85 transition hover:text-white flex items-center gap-1">
               Services
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

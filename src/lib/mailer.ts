@@ -1,5 +1,9 @@
 import nodemailer from "nodemailer";
 
+if (!process.env.SMTP_PASS) {
+  console.warn("[contact] SMTP_PASS not set — emails will fail silently");
+}
+
 export const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT ?? 465),
@@ -167,5 +171,78 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
         <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
       </div>
     `,
+  });
+}
+
+export async function sendContactRequest(data: {
+  nom: string;
+  email: string;
+  telephone?: string;
+  pays?: string;
+  sujet: string;
+  message: string;
+}): Promise<void> {
+  const row = (label: string, value: string) =>
+    `<tr>
+      <td style="padding:8px 12px;font-weight:600;color:#374151;white-space:nowrap;width:140px;vertical-align:top">${label}</td>
+      <td style="padding:8px 12px;color:#374151;word-break:break-word">${value}</td>
+    </tr>`;
+
+  const html = `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+      <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+      </div>
+      <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+        <h2 style="margin:0 0 20px;color:#0066CC;font-size:20px">Nouveau message de contact</h2>
+        <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+          <tbody style="background:#F9FAFB">
+            ${row("Nom", data.nom)}
+            ${row("Email", `<a href="mailto:${data.email}" style="color:#0066CC">${data.email}</a>`)}
+            ${data.telephone ? row("Téléphone", `<a href="tel:${data.telephone}" style="color:#0066CC">${data.telephone}</a>`) : ""}
+            ${data.pays ? row("Pays", data.pays) : ""}
+            ${row("Sujet", data.sujet)}
+          </tbody>
+        </table>
+        <div style="margin-top:20px;padding:16px;background:#F0F7FF;border-left:4px solid #0066CC;border-radius:4px">
+          <p style="margin:0 0 6px;font-weight:600;color:#374151">Message :</p>
+          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${data.message}</p>
+        </div>
+        <p style="margin-top:24px;font-size:13px;color:#6B7280">
+          Répondre à ce message répondra directement à <a href="mailto:${data.email}" style="color:#0066CC">${data.email}</a>.
+        </p>
+      </div>
+      <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+        AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+      </p>
+    </div>
+  `;
+
+  const text = [
+    `Nouveau message de contact — AKIL IMMO`,
+    ``,
+    `Nom        : ${data.nom}`,
+    `Email      : ${data.email}`,
+    data.telephone ? `Téléphone  : ${data.telephone}` : null,
+    data.pays      ? `Pays       : ${data.pays}`      : null,
+    `Sujet      : ${data.sujet}`,
+    ``,
+    `Message :`,
+    data.message,
+    ``,
+    `---`,
+    `AKIL IMMO — www.akilimmo.com`,
+  ]
+    .filter((l) => l !== null)
+    .join("\n");
+
+  await transporter.sendMail({
+    from:    process.env.SMTP_FROM,
+    to:      "info@akilimmo.com",
+    cc:      "david@akilimmo.com",
+    replyTo: `${data.nom} <${data.email}>`,
+    subject: `Nouveau contact AKIL IMMO — ${data.sujet}`,
+    html,
+    text,
   });
 }

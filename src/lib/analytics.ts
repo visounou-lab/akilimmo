@@ -21,6 +21,12 @@ export function trackEvent(
 //   currency: "XOF",
 // });
 
+export function trackContactFormSubmit() {
+  trackEvent("conversion", {
+    send_to: "AW-17185310519/HojbCMPC2t0aELeOzIJA",
+  });
+}
+
 export function trackPageView(url: string) {
   if (typeof window === "undefined") return;
   if (typeof window.gtag !== "function") return;

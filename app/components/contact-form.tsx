@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { trackContactFormSubmit } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -33,6 +34,7 @@ export default function ContactForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Erreur inconnue");
+      trackContactFormSubmit();
       setStatus("success");
       setForm(EMPTY);
     } catch (err) {

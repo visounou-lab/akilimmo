@@ -12,11 +12,11 @@ export default async function BiensPage() {
   });
 
   return (
-    <div className="p-8">
+    <div className="px-4 py-4 sm:px-6 sm:py-6 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Biens immobiliers</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Biens immobiliers</h1>
           <p className="text-sm text-slate-500 mt-0.5">
             {properties.length} bien{properties.length !== 1 ? "s" : ""} enregistré{properties.length !== 1 ? "s" : ""}
           </p>
@@ -49,7 +49,7 @@ export default async function BiensPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {properties.map((p) => (
             <PropertyCard key={p.id} property={p} />
           ))}

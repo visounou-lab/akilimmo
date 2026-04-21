@@ -154,7 +154,7 @@ export default function CommentCaMarchePage() {
               Créer mon compte propriétaire
             </Link>
             <a
-              href="#contact"
+              href="/#contact"
               className="text-sm font-medium text-white/80 hover:text-white transition underline underline-offset-4"
             >
               Nous contacter d&apos;abord

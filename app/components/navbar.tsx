@@ -121,7 +121,7 @@ export default function Navbar() {
           )}
 
           {/* Desktop only: Contact */}
-          <a href="#contact"
+          <a href="/#contact"
             className="hidden md:inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
             Contact
           </a>
@@ -173,7 +173,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <a href="#contact" onClick={() => setMenuOpen(false)}
+          <a href="/#contact" onClick={() => setMenuOpen(false)}
             className="block py-2.5 text-sm font-medium text-white/85 hover:text-white border-b border-white/10">
             Contact
           </a>

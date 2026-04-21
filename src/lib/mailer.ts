@@ -246,3 +246,67 @@ export async function sendContactRequest(data: {
     text,
   });
 }
+
+const DOC_TYPE_LABELS: Record<string, string> = {
+  quittance:   "Quittance de loyer",
+  contrat:     "Contrat de location",
+  attestation: "Attestation de propriété",
+};
+
+export async function sendDocumentRequest(data: {
+  ownerName:    string;
+  ownerEmail:   string;
+  type:         string;
+  propertyTitle?: string;
+  message?:     string;
+  requestId:    string;
+}): Promise<void> {
+  const label = DOC_TYPE_LABELS[data.type] ?? data.type;
+
+  const html = `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+      <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+      </div>
+      <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+        <h2 style="margin:0 0 20px;color:#0066CC;font-size:20px">Nouvelle demande de document</h2>
+        <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
+          <tbody style="background:#F9FAFB">
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151;width:160px">Propriétaire</td><td style="padding:8px 12px;color:#374151">${data.ownerName}</td></tr>
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Email</td><td style="padding:8px 12px;color:#374151"><a href="mailto:${data.ownerEmail}" style="color:#0066CC">${data.ownerEmail}</a></td></tr>
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Type</td><td style="padding:8px 12px;color:#374151">${label}</td></tr>
+            ${data.propertyTitle ? `<tr><td style="padding:8px 12px;font-weight:600;color:#374151">Bien</td><td style="padding:8px 12px;color:#374151">${data.propertyTitle}</td></tr>` : ""}
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Référence</td><td style="padding:8px 12px;color:#374151;font-family:monospace;font-size:13px">${data.requestId}</td></tr>
+          </tbody>
+        </table>
+        ${data.message ? `
+        <div style="margin-top:20px;padding:16px;background:#F0F7FF;border-left:4px solid #0066CC;border-radius:4px">
+          <p style="margin:0 0 6px;font-weight:600;color:#374151">Message :</p>
+          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${data.message}</p>
+        </div>` : ""}
+        <a href="https://www.akilimmo.com/dashboard" style="display:inline-block;margin-top:24px;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">
+          Traiter la demande
+        </a>
+      </div>
+    </div>
+  `;
+
+  await transporter.sendMail({
+    from:    process.env.SMTP_FROM,
+    to:      "info@akilimmo.com",
+    cc:      "david@akilimmo.com",
+    replyTo: `${data.ownerName} <${data.ownerEmail}>`,
+    subject: `Demande de document — ${label} (${data.ownerName})`,
+    html,
+    text: [
+      `Demande de document — AKIL IMMO`,
+      ``,
+      `Propriétaire : ${data.ownerName}`,
+      `Email        : ${data.ownerEmail}`,
+      `Type         : ${label}`,
+      data.propertyTitle ? `Bien         : ${data.propertyTitle}` : null,
+      `Référence    : ${data.requestId}`,
+      data.message ? `\nMessage :\n${data.message}` : null,
+    ].filter(Boolean).join("\n"),
+  });
+}

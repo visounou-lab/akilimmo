@@ -32,6 +32,7 @@ const BUDGET_OPTIONS = [
 ];
 
 function BienCard({ bien }: { bien: Bien }) {
+  const [imgFailed, setImgFailed] = useState(false);
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
 
   // Determine image source: YouTube thumbnail > imageUrl > placeholder
@@ -59,10 +60,11 @@ function BienCard({ bien }: { bien: Bien }) {
       <Link href={`/biens/${bien.slug}`} className="block">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
-          {displayImage ? (
+          {displayImage && !imgFailed ? (
             <img
               src={displayImage}
               alt={bien.title}
+              onError={() => setImgFailed(true)}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           ) : (

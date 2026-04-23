@@ -73,7 +73,7 @@ export default async function NewContratPage() {
                   Seuls les utilisateurs avec le rôle <strong>Locataire</strong> apparaissent ici.
                   Il n&apos;y a actuellement aucun compte locataire en base.
                   Créez d&apos;abord un utilisateur locataire depuis{" "}
-                  <Link href="/dashboard/users" className="underline font-medium">
+                  <Link href="/dashboard/utilisateurs" className="underline font-medium">
                     la gestion des utilisateurs
                   </Link>
                   , puis revenez créer le contrat.

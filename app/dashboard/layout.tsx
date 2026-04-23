@@ -15,7 +15,8 @@ export default async function DashboardLayout({
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  const user = session.user as { name?: string | null; email?: string | null };
+  const user = session.user as { name?: string | null; email?: string | null; role?: string };
+  if (user.role !== "ADMIN") redirect("/login");
 
   return (
     <DashboardShell

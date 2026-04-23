@@ -58,8 +58,9 @@ export default async function ContratPdfPage({ params }: Props) {
 
   if (!contract) notFound();
 
-  const months = Math.round(
-    (contract.endDate.getTime() - contract.startDate.getTime()) / (1000 * 60 * 60 * 24 * 30)
+  const months = Math.max(1,
+    (contract.endDate.getFullYear() - contract.startDate.getFullYear()) * 12 +
+    (contract.endDate.getMonth() - contract.startDate.getMonth())
   );
   const total = Number(contract.rentAmount) * months;
 

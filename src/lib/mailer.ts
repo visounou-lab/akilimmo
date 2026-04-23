@@ -21,15 +21,22 @@ export async function sendVerificationEmail(to: string, token: string) {
     to,
     subject: "Vérifiez votre adresse email — AKIL IMMO",
     html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
-        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
-        <h2 style="color:#0066CC;margin-bottom:8px">Vérifiez votre adresse email</h2>
-        <p style="color:#374151">Merci de vous être inscrit sur AKIL IMMO en tant que propriétaire.</p>
-        <p style="color:#374151">Cliquez sur le bouton ci-dessous pour confirmer votre adresse email :</p>
-        <a href="${url}" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
-          Vérifier mon email
-        </a>
-        <p style="color:#9CA3AF;font-size:13px;margin-top:24px">Ce lien expire dans 24 heures. Si vous n'avez pas créé de compte, ignorez cet email.</p>
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Vérifiez votre adresse email</h2>
+          <p style="color:#374151;margin:0 0 12px">Merci de vous être inscrit sur AKIL IMMO en tant que propriétaire.</p>
+          <p style="color:#374151;margin:0 0 12px">Cliquez sur le bouton ci-dessous pour confirmer votre adresse email :</p>
+          <a href="${url}" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+            Vérifier mon email
+          </a>
+          <p style="color:#9CA3AF;font-size:13px;margin-top:24px">Ce lien expire dans 24 heures. Si vous n'avez pas créé de compte, ignorez cet email.</p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
       </div>
     `,
   });
@@ -159,16 +166,26 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
     to,
     subject: "Bienvenue sur AKIL IMMO — Votre compte est activé !",
     html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
-        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
-        <h2 style="color:#0066CC">Bienvenue sur AKIL IMMO !</h2>
-        <p style="color:#374151">Bonjour ${firstName},</p>
-        <p style="color:#374151">Votre compte propriétaire AKIL IMMO est maintenant <strong>actif</strong>.</p>
-        <p style="color:#374151">Vous pouvez vous connecter et soumettre vos biens à la location.</p>
-        <a href="https://www.akilimmo.com/login" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
-          Se connecter
-        </a>
-        <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Bienvenue sur AKIL IMMO !</h2>
+          <p style="color:#374151;margin:0 0 12px">Bonjour ${firstName},</p>
+          <p style="color:#374151;margin:0 0 12px">Votre compte propriétaire est maintenant <strong>actif</strong>. Vous pouvez dès à présent vous connecter et soumettre vos biens à la location.</p>
+          <a href="https://www.akilimmo.com/login" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+            Se connecter
+          </a>
+          <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+          <p style="color:#6B7280;font-size:13px;margin:4px 0 0">
+            <a href="mailto:info@akilimmo.com" style="color:#0066CC">info@akilimmo.com</a> —
+            <a href="https://www.akilimmo.com" style="color:#0066CC">www.akilimmo.com</a>
+          </p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
       </div>
     `,
   });

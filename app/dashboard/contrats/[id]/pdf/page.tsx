@@ -58,11 +58,10 @@ export default async function ContratPdfPage({ params }: Props) {
 
   if (!contract) notFound();
 
-  const months = Math.max(1,
-    (contract.endDate.getFullYear() - contract.startDate.getFullYear()) * 12 +
-    (contract.endDate.getMonth() - contract.startDate.getMonth())
-  );
-  const total = Number(contract.rentAmount) * months;
+  const nights = Math.max(1, Math.round(
+    (contract.endDate.getTime() - contract.startDate.getTime()) / (1000 * 60 * 60 * 24)
+  ));
+  const total = Number(contract.rentAmount) * nights;
 
   const STATUS_LABEL: Record<string, string> = {
     PENDING: "En attente", ACTIVE: "Actif", TERMINATED: "Résilié",
@@ -133,10 +132,10 @@ export default async function ContratPdfPage({ params }: Props) {
             </div>
             <div className="field">
               <p className="label">Durée</p>
-              <p className="value">{months} mois</p>
+              <p className="value">{nights} nuit{nights > 1 ? "s" : ""}</p>
             </div>
             <div className="field">
-              <p className="label">Loyer mensuel</p>
+              <p className="label">Prix par nuit</p>
               <p className="value highlight">{formatPrice(contract.rentAmount)}</p>
             </div>
             <div className="field">

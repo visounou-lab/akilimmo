@@ -57,7 +57,7 @@ export default async function OwnerPaiementsPage({ searchParams }: Props) {
     ...(filterStatus ? { status: filterStatus as "PENDING" | "PAID" | "FAILED" } : {}),
   };
 
-  const [payments, allPayments] = await Promise.all([
+  const [payments, allPayments, overduePayments] = await Promise.all([
     prisma.payment.findMany({
       where: paymentWhere,
       orderBy: { dueDate: "desc" },
@@ -73,6 +73,15 @@ export default async function OwnerPaiementsPage({ searchParams }: Props) {
     prisma.payment.findMany({
       where: { contract: { propertyId: { in: propertyIds } } },
       select: { amount: true, status: true, akilimmoFeeAmount: true, netAmount: true },
+    }),
+    prisma.payment.findMany({
+      where: {
+        contract: { propertyId: { in: propertyIds } },
+        status:   "PENDING",
+        dueDate:  { lt: new Date() },
+      },
+      orderBy: { dueDate: "asc" },
+      select:  { id: true, amount: true, dueDate: true, contract: { select: { property: { select: { title: true } } } } },
     }),
   ]);
 
@@ -92,6 +101,38 @@ export default async function OwnerPaiementsPage({ searchParams }: Props) {
         <h1 className="text-2xl font-bold text-slate-900">Mes paiements</h1>
         <p className="text-sm text-slate-500 mt-0.5">Historique des loyers encaissés sur vos biens</p>
       </div>
+
+      {/* Loyers en retard */}
+      {overduePayments.length > 0 && (
+        <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-4">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-amber-800">
+                {overduePayments.length} loyer{overduePayments.length > 1 ? "s" : ""} en attente de règlement
+              </p>
+              <div className="mt-1.5 space-y-1">
+                {overduePayments.map((p) => {
+                  const daysLate = Math.floor((Date.now() - p.dueDate.getTime()) / 86_400_000);
+                  return (
+                    <p key={p.id} className="text-sm text-amber-700">
+                      <span className="font-medium">{p.contract.property.title}</span>
+                      {" · "}{formatPrice(p.amount)}
+                      {" · "}
+                      <span className="italic">en retard de {daysLate} jour{daysLate > 1 ? "s" : ""}</span>
+                    </p>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-amber-600 mt-2">
+                Contactez AKIL IMMO si vous avez des questions sur ces paiements.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">

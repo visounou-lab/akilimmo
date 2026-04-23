@@ -34,6 +34,7 @@ export default async function DashboardPage() {
     activeContractCount,
     pendingPaymentCount,
     monthlyRevenue,
+    overduePayments,
     recentPayments,
     recentProperties,
   ] = await Promise.all([
@@ -43,6 +44,18 @@ export default async function DashboardPage() {
     prisma.payment.aggregate({
       where: { status: "PAID", paidAt: { gte: startOfMonth } },
       _sum: { amount: true },
+    }),
+    prisma.payment.findMany({
+      where: { status: "PENDING", dueDate: { lt: now } },
+      orderBy: { dueDate: "asc" },
+      include: {
+        contract: {
+          include: {
+            property: { select: { title: true } },
+            tenant:   { select: { name: true, email: true } },
+          },
+        },
+      },
     }),
     prisma.payment.findMany({
       take: 5,
@@ -130,6 +143,46 @@ export default async function DashboardPage() {
           — voici un aperçu de la plateforme.
         </p>
       </div>
+
+      {/* Loyers en retard */}
+      {overduePayments.length > 0 && (
+        <div className="mb-6 bg-red-50 border border-red-200 rounded-2xl p-4">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 mt-0.5">
+              <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-red-800">
+                {overduePayments.length} loyer{overduePayments.length > 1 ? "s" : ""} en retard
+              </p>
+              <div className="mt-2 space-y-1.5">
+                {overduePayments.map((p) => {
+                  const daysLate = Math.floor((now.getTime() - p.dueDate.getTime()) / 86_400_000);
+                  return (
+                    <div key={p.id} className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-sm text-red-700">
+                        <span className="font-medium">{p.contract.property.title}</span>
+                        {" · "}{p.contract.tenant.name ?? p.contract.tenant.email}
+                        {" · "}<span className="font-medium">{formatPrice(p.amount)}</span>
+                        {" · "}
+                        <span className="italic">{daysLate}j de retard</span>
+                      </span>
+                      <Link
+                        href={`/dashboard/paiements?status=PENDING`}
+                        className="text-xs font-medium text-red-700 underline hover:text-red-900"
+                      >
+                        Voir →
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-10">

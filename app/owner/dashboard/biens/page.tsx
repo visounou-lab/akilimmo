@@ -16,8 +16,10 @@ const RENTAL_STATUS: Record<string, { label: string; color: string }> = {
   OFF_MARKET: { label: "Hors marché", color: "#64748B" },
 };
 
-function formatPrice(n: number | string) {
-  return new Intl.NumberFormat("fr-FR").format(Number(n));
+function formatPrice(n: number | string | { toNumber(): number }) {
+  return new Intl.NumberFormat("fr-FR").format(
+    typeof n === "object" ? n.toNumber() : Number(n)
+  );
 }
 
 export default async function OwnerBiensPage() {

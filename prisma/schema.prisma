@@ -70,6 +70,7 @@ model User {
   ownedContracts      Contract[]     @relation("OwnerContracts")
   payments            Payment[]
   notifications       Notification[]
+  documentRequests    DocumentRequest[]
 }
 
 model Account {
@@ -125,10 +126,12 @@ model Property {
   submittedBy   String?
   submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
   publishStatus String          @default("published")
+  rentalStatus  String          @default("AVAILABLE")
   adminNote     String?
-  contracts     Contract[]
-  notifications Notification[]
-  images        PropertyImage[]
+  contracts        Contract[]
+  notifications    Notification[]
+  images           PropertyImage[]
+  documentRequests DocumentRequest[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
@@ -167,17 +170,31 @@ model Contract {
 }
 
 model Payment {
-  id          String        @id @default(cuid())
-  contract    Contract      @relation(fields: [contractId], references: [id])
-  contractId  String
-  payer       User          @relation(fields: [payerId], references: [id])
-  payerId     String
-  amount      Decimal
-  status      PaymentStatus @default(PENDING)
-  dueDate     DateTime
-  paidAt      DateTime?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id                  String        @id @default(cuid())
+  contract            Contract      @relation(fields: [contractId], references: [id])
+  contractId          String
+  payer               User          @relation(fields: [payerId], references: [id])
+  payerId             String
+  amount              Decimal
+  status              PaymentStatus @default(PENDING)
+  dueDate             DateTime
+  paidAt              DateTime?
+
+  // Wave payment fields
+  paymentMethod       String?       // "wave", "orange_money", "bank_transfer"
+  waveTransactionId   String?       @unique // Wave transaction ID
+  waveReference       String?       // Wave reference/receipt
+  waveStatus          String?       // wave_completed, wave_failed, wave_pending
+
+  // Fees & calculations
+  grossAmount         Decimal?      // Montant brut (avant frais AKIL IMMO)
+  akilimmoFeeAmount   Decimal?      // Commission AKIL IMMO (6%)
+  netAmount           Decimal?      // Montant net propriétaire
+
+  // Metadata
+  payerPhone          String?       // Store phone for Wave/Orange Money
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 }
 
 model Notification {
@@ -192,4 +209,20 @@ model Notification {
   property   Property?            @relation(fields: [propertyId], references: [id])
   propertyId String?
   createdAt  DateTime             @default(now())
+}
+
+model DocumentRequest {
+  id          String    @id @default(cuid())
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  type        String
+  status      String    @default("pending")
+  propertyId  String?
+  property    Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  message     String?
+  createdAt   DateTime  @default(now())
+  deliveredAt DateTime?
+
+  @@index([ownerId])
+  @@index([status])
 }

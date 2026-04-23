@@ -50,6 +50,15 @@ export default async function PaiementsPage({ searchParams }: Props) {
     prisma.payment.findMany({ select: { amount: true, status: true } }),
   ]);
 
+  const METHOD_LABELS: Record<string, string> = {
+    wave:         "Wave",
+    orange_money: "Orange Money",
+    free_money:   "Free Money",
+    virement:     "Virement",
+    especes:      "Espèces",
+    autre:        "Autre",
+  };
+
   const totalAll   = allPayments.reduce((s, p) => s + Number(p.amount), 0);
   const paidAll    = allPayments.filter((p) => p.status === "PAID").reduce((s, p) => s + Number(p.amount), 0);
   const pendingAll = allPayments.filter((p) => p.status === "PENDING").reduce((s, p) => s + Number(p.amount), 0);
@@ -139,6 +148,7 @@ export default async function PaiementsPage({ searchParams }: Props) {
                 <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">Échéance</th>
                 <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">Montant</th>
                 <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">Statut</th>
+                <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Mode</th>
                 <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Payé le</th>
                 <th className="px-4 py-3.5" />
               </tr>
@@ -170,6 +180,15 @@ export default async function PaiementsPage({ searchParams }: Props) {
                       <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${st.classes}`}>
                         {st.label}
                       </span>
+                    </td>
+                    <td className="px-4 py-3.5 hidden lg:table-cell">
+                      {p.paymentMethod ? (
+                        <span className="inline-flex px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600">
+                          {METHOD_LABELS[p.paymentMethod] ?? p.paymentMethod}
+                        </span>
+                      ) : (
+                        <span className="text-slate-300 text-xs">—</span>
+                      )}
                     </td>
                     <td className="px-4 py-3.5 text-xs text-slate-500 hidden md:table-cell">
                       {p.paidAt ? formatDate(p.paidAt) : <span className="text-slate-300">—</span>}

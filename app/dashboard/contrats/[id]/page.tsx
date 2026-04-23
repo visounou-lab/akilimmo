@@ -44,10 +44,9 @@ export default async function ContratDetailPage({ params }: Props) {
   const status = STATUS_CONFIG[contract.status] ?? STATUS_CONFIG.PENDING;
 
   // Durée en mois
-  const months = Math.max(1,
-    (contract.endDate.getFullYear() - contract.startDate.getFullYear()) * 12 +
-    (contract.endDate.getMonth() - contract.startDate.getMonth())
-  );
+  const nights = Math.max(1, Math.round(
+    (contract.endDate.getTime() - contract.startDate.getTime()) / (1000 * 60 * 60 * 24)
+  ));
 
   return (
     <div className="p-8 max-w-4xl">
@@ -115,15 +114,15 @@ export default async function ContratDetailPage({ params }: Props) {
               </div>
               <div>
                 <p className="text-xs text-slate-400 mb-0.5">Durée</p>
-                <p className="text-sm font-medium text-slate-800">{months} mois</p>
+                <p className="text-sm font-medium text-slate-800">{nights} nuit{nights > 1 ? "s" : ""}</p>
               </div>
               <div>
-                <p className="text-xs text-slate-400 mb-0.5">Loyer mensuel</p>
+                <p className="text-xs text-slate-400 mb-0.5">Prix par nuit</p>
                 <p className="text-sm font-semibold text-[#0066CC]">{formatPrice(contract.rentAmount)}</p>
               </div>
               <div>
-                <p className="text-xs text-slate-400 mb-0.5">Total contrat</p>
-                <p className="text-sm font-semibold text-slate-800">{formatPrice(Number(contract.rentAmount) * months)}</p>
+                <p className="text-xs text-slate-400 mb-0.5">Total séjour</p>
+                <p className="text-sm font-semibold text-slate-800">{formatPrice(Number(contract.rentAmount) * nights)}</p>
               </div>
             </div>
           </div>

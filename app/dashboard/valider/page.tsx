@@ -14,6 +14,7 @@ interface PendingProperty {
   bathrooms: number;
   imageUrl: string | null;
   videoUrl: string | null;
+  adminNote: string | null;
   createdAt: string;
   submitter: { name: string | null; email: string } | null;
   owner:     { name: string | null; email: string };
@@ -29,6 +30,7 @@ interface EditFields {
   bedrooms: number;
   bathrooms: number;
   videoUrl: string;
+  adminNote: string;
 }
 
 const COUNTRY_LABEL: Record<string, string> = {
@@ -84,6 +86,7 @@ export default function ValiderPage() {
       bedrooms: p.bedrooms,
       bathrooms: p.bathrooms,
       videoUrl: p.videoUrl ?? "",
+      adminNote: p.adminNote ?? "",
     });
   }
 
@@ -174,6 +177,18 @@ export default function ValiderPage() {
                     <p className="mt-3 text-sm text-slate-600 line-clamp-3">{p.description}</p>
                   )}
 
+                  {p.adminNote && (
+                    <div className="mt-3 flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5">
+                      <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                      <div>
+                        <p className="text-xs font-semibold text-amber-700 mb-0.5">Note admin</p>
+                        <p className="text-xs text-amber-700">{p.adminNote}</p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="mt-5 flex items-center gap-3 flex-wrap">
                     <button
                       onClick={() => doAction(p.id, "publish")}
@@ -183,7 +198,7 @@ export default function ValiderPage() {
                       {actionId === p.id ? "…" : "✅ Publier"}
                     </button>
                     <button
-                      onClick={() => setRejectModal({ id: p.id, title: p.title })}
+                      onClick={() => { setRejectModal({ id: p.id, title: p.title }); setRejectNote(p.adminNote ?? ""); }}
                       disabled={actionId === p.id || editId === p.id}
                       className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 text-sm font-semibold transition disabled:opacity-50"
                     >
@@ -295,6 +310,16 @@ export default function ValiderPage() {
                         value={editFields.description}
                         onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
                         className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition resize-none"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-medium text-amber-600 mb-1">Note admin (optionnel — visible par le propriétaire en cas de refus)</label>
+                      <textarea
+                        rows={2}
+                        value={editFields.adminNote}
+                        onChange={(e) => setEditFields({ ...editFields, adminNote: e.target.value })}
+                        placeholder="ex : Photos insuffisantes, veuillez ajouter des photos de la chambre principale…"
+                        className="w-full rounded-xl border border-amber-200 bg-amber-50/50 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200 transition resize-none"
                       />
                     </div>
                   </div>

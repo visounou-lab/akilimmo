@@ -56,7 +56,7 @@ export async function PATCH(
   }
 
   if (action === "update") {
-    const { title, description, country, city, address, price, bedrooms, bathrooms, videoUrl } = body;
+    const { title, description, country, city, address, price, bedrooms, bathrooms, videoUrl, adminNote } = body;
     const newTitle = title ?? property.title;
     const newCity  = city  ?? property.city;
     const slugData =
@@ -76,6 +76,7 @@ export async function PATCH(
         ...(bedrooms    !== undefined && { bedrooms: Number(bedrooms) }),
         ...(bathrooms   !== undefined && { bathrooms: Number(bathrooms) }),
         ...(videoUrl    !== undefined && { videoUrl: videoUrl || null }),
+        ...(adminNote   !== undefined && { adminNote: adminNote || null }),
       },
     });
     return NextResponse.json({ message: "Modifié" });

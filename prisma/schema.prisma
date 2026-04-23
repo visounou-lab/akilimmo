@@ -41,6 +41,7 @@ enum NotificationCategory {
   PAYMENT
   DOCUMENT
   ALERT
+  MESSAGE
 }
 
 model User {

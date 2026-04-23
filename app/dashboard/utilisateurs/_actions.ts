@@ -21,9 +21,10 @@ export async function createUser(formData: FormData) {
   if (existing) throw new Error("Un utilisateur avec cet email existe déjà.");
 
   const hashed = await bcrypt.hash(password, 10);
-  await prisma.user.create({ data: { email, name, role, password: hashed } });
+  await prisma.user.create({ data: { email, name, role, password: hashed, status: role === "OWNER" ? "pending" : "active" } });
 
   revalidatePath("/dashboard/utilisateurs");
+  redirect("/dashboard/utilisateurs");
 }
 
 export async function deleteUser(id: string) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import PhotoUploader from "../../../components/PhotoUploader";
 
 const COUNTRIES = [
@@ -51,7 +51,7 @@ const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
 
 function getYouTubeThumbnail(url: string): string | null {
   const m = url.match(
-    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
   );
   return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null;
 }
@@ -72,9 +72,30 @@ export default function PropertyForm({
   // Existing images from DB (in edit mode)
   const [existingImages] = useState<ExistingImage[]>(defaultValues.images ?? []);
 
-  // YouTube video URL
+  // YouTube video URL + validation
   const [videoUrl, setVideoUrl] = useState<string>(defaultValues.videoUrl ?? "");
-  const videoThumb = videoUrl ? getYouTubeThumbnail(videoUrl) : null;
+  const [videoState, setVideoState] = useState<"idle" | "checking" | "valid" | "invalid">("idle");
+  const [videoError, setVideoError] = useState<string>("");
+  const videoThumb = videoUrl && videoState === "valid" ? getYouTubeThumbnail(videoUrl) : null;
+
+  useEffect(() => {
+    const trimmed = videoUrl.trim();
+    if (!trimmed) { setVideoState("idle"); setVideoError(""); return; }
+    setVideoState("checking");
+    setVideoError("");
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/youtube-validate?url=${encodeURIComponent(trimmed)}`);
+        const data = await res.json() as { valid: boolean; error?: string };
+        setVideoState(data.valid ? "valid" : "invalid");
+        setVideoError(data.valid ? "" : (data.error ?? "URL invalide"));
+      } catch {
+        setVideoState("invalid");
+        setVideoError("Impossible de vérifier la vidéo");
+      }
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [videoUrl]);
 
   function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
@@ -83,8 +104,14 @@ export default function PropertyForm({
     setPrimaryNewIdx(0);
   }
 
+  const videoBlocked = videoState === "invalid" || (videoUrl.trim() !== "" && videoState === "checking");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (videoBlocked) { e.preventDefault(); return; }
+  }
+
   return (
-    <form action={action} className="space-y-6">
+    <form action={action} onSubmit={handleSubmit} className="space-y-6">
       {/* === PHOTOS === */}
       <div>
         <label className={labelClass}>Photos du bien</label>
@@ -156,15 +183,43 @@ export default function PropertyForm({
 
       {/* === VIDEO YOUTUBE === */}
       <div>
-        <label className={labelClass}>Vidéo YouTube (optionnel)</label>
-        <input
-          type="url"
-          name="videoUrl"
-          value={videoUrl}
-          onChange={(e) => setVideoUrl(e.target.value)}
-          placeholder="https://www.youtube.com/watch?v=..."
-          className={inputClass}
-        />
+        <label className={labelClass}>
+          Vidéo YouTube{" "}
+          <span className="text-slate-400 font-normal">(optionnel — chaîne AKIL IMMO uniquement)</span>
+        </label>
+        <div className="relative">
+          <input
+            type="url"
+            name="videoUrl"
+            value={videoUrl}
+            onChange={(e) => setVideoUrl(e.target.value)}
+            placeholder="https://www.youtube.com/watch?v=..."
+            className={`${inputClass} pr-10 ${
+              videoState === "invalid" ? "border-red-400 focus:border-red-400 focus:ring-red-400/20" :
+              videoState === "valid"   ? "border-emerald-400 focus:border-emerald-400 focus:ring-emerald-400/20" : ""
+            }`}
+          />
+          {/* indicator icon */}
+          {videoState === "checking" && (
+            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+          )}
+          {videoState === "valid" && (
+            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+          {videoState === "invalid" && (
+            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
+        </div>
+        {videoState === "invalid" && videoError && (
+          <p className="mt-1 text-xs text-red-600">{videoError}</p>
+        )}
         {videoThumb && (
           <div className="mt-2 relative w-48 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
             <img src={videoThumb} alt="Aperçu vidéo" className="w-full" />
@@ -239,7 +294,8 @@ export default function PropertyForm({
       <div className="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] text-white text-sm font-semibold transition-colors shadow-sm"
+          disabled={videoBlocked}
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors shadow-sm"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

@@ -175,14 +175,6 @@ export default function SoumettreePage() {
           )}
         </div>
 
-        {/* Vidéo YouTube */}
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            URL Vidéo YouTube <span className="text-slate-400 font-normal">(optionnel)</span>
-          </label>
-          <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." className={inputClass} />
-        </div>
-
         {error && (
           <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-600">{error}</div>
         )}

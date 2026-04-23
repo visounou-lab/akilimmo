@@ -7,6 +7,20 @@ import { redirect } from "next/navigation";
 import { uploadImage, deleteImage } from "@/lib/cloudinary";
 import { uniquePropertySlug } from "@/lib/slug";
 
+async function validateAkilimmoVideo(rawUrl: string | null): Promise<string | null> {
+  if (!rawUrl) return null;
+  const res = await fetch(
+    `https://www.youtube.com/oembed?url=${encodeURIComponent(rawUrl)}&format=json`,
+    { cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Vidéo YouTube introuvable");
+  const data = await res.json() as { author_url?: string };
+  if (!(data.author_url ?? "").toLowerCase().includes("akilimmo1")) {
+    throw new Error("Cette vidéo n'appartient pas à la chaîne AKIL IMMO");
+  }
+  return rawUrl;
+}
+
 export async function createProperty(formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
@@ -23,7 +37,7 @@ export async function createProperty(formData: FormData) {
   }
 
   const primaryUrl = uploaded[primaryIndex]?.url ?? uploaded[0]?.url ?? null;
-  const videoUrl   = (formData.get("videoUrl") as string | null)?.trim() || null;
+  const videoUrl   = await validateAkilimmoVideo((formData.get("videoUrl") as string | null)?.trim() || null);
 
   const title = formData.get("title") as string;
   const city  = formData.get("city") as string;
@@ -84,7 +98,7 @@ export async function updateProperty(id: string, formData: FormData) {
     imageUrl = uploaded[primaryIndex]?.url ?? uploaded[0]?.url ?? existing.imageUrl;
   }
 
-  const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
+  const videoUrl = await validateAkilimmoVideo((formData.get("videoUrl") as string | null)?.trim() || null);
   const title    = formData.get("title") as string;
   const city     = formData.get("city") as string;
 

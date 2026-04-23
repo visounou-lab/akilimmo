@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import PropertyThumb from "./_components/PropertyThumb";
 
 const PUBLISH_STATUS: Record<string, { label: string; bg: string; text: string; dot: string }> = {
   draft:          { label: "Brouillon",   bg: "bg-slate-100",    text: "text-slate-500",    dot: "bg-slate-400"   },
@@ -15,6 +16,14 @@ const RENTAL_STATUS: Record<string, { label: string; color: string }> = {
   RESERVED:   { label: "Réservé",     color: "#D97706" },
   OFF_MARKET: { label: "Hors marché", color: "#64748B" },
 };
+
+function getYouTubeThumbnail(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const m = url.match(
+    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+  );
+  return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null;
+}
 
 function formatPrice(n: number | string | { toNumber(): number }) {
   return new Intl.NumberFormat("fr-FR").format(
@@ -39,6 +48,8 @@ export default async function OwnerBiensPage() {
       status:        true,
       publishStatus: true,
       adminNote:     true,
+      imageUrl:      true,
+      videoUrl:      true,
       createdAt:     true,
       images: {
         orderBy: { order: "asc" },
@@ -94,27 +105,14 @@ export default async function OwnerBiensPage() {
           {biens.map((b) => {
             const pubSt     = PUBLISH_STATUS[b.publishStatus] ?? PUBLISH_STATUS.draft;
             const rentSt    = RENTAL_STATUS[b.status] ?? RENTAL_STATUS.AVAILABLE;
-            const thumb     = b.images[0]?.url;
+            const thumb     = b.images[0]?.url ?? b.imageUrl ?? getYouTubeThumbnail(b.videoUrl);
             const hasLease  = b.contracts.length > 0;
 
             return (
               <div key={b.id} className="bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col">
                 {/* Thumbnail */}
                 <div className="relative h-40 bg-slate-100 shrink-0">
-                  {thumb ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={thumb}
-                      alt={b.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  )}
+                  <PropertyThumb src={thumb} title={b.title} />
                   {/* Rental status pill */}
                   <div className="absolute top-2 left-2">
                     <span

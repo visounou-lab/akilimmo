@@ -97,6 +97,34 @@ export default async function NewPaiementPage() {
               </div>
             </div>
 
+            {/* Mode de paiement + Référence */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className={labelClass}>Mode de paiement</label>
+                <select name="paymentMethod" className={inputClass} defaultValue="">
+                  <option value="">— Non précisé —</option>
+                  <option value="wave">Wave</option>
+                  <option value="orange_money">Orange Money</option>
+                  <option value="free_money">Free Money</option>
+                  <option value="virement">Virement bancaire</option>
+                  <option value="especes">Espèces</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+              <div>
+                <label className={labelClass}>
+                  Référence / N° transaction
+                  <span className="text-slate-400 font-normal text-xs ml-1">(optionnel)</span>
+                </label>
+                <input
+                  type="text"
+                  name="waveReference"
+                  placeholder="ex : WV-2024-XXXXXXX"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
             {/* Dates */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>

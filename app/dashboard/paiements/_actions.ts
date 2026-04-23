@@ -21,16 +21,21 @@ export async function createPayment(formData: FormData) {
     select: { tenantId: true },
   });
 
+  const methodRaw    = formData.get("paymentMethod") as string | null;
+  const referenceRaw = formData.get("waveReference") as string | null;
+
   await prisma.payment.create({
     data: {
       contractId,
-      payerId:  contract.tenantId,
-      amount:   parseFloat(formData.get("amount") as string),
-      dueDate:  new Date(formData.get("dueDate") as string),
-      paidAt:   paidAtRaw
-                  ? new Date(paidAtRaw)
-                  : status === "PAID" ? new Date() : null,
+      payerId:       contract.tenantId,
+      amount:        parseFloat(formData.get("amount") as string),
+      dueDate:       new Date(formData.get("dueDate") as string),
+      paidAt:        paidAtRaw
+                       ? new Date(paidAtRaw)
+                       : status === "PAID" ? new Date() : null,
       status,
+      ...(methodRaw    && { paymentMethod: methodRaw }),
+      ...(referenceRaw && { waveReference: referenceRaw }),
     },
   });
 
@@ -38,13 +43,22 @@ export async function createPayment(formData: FormData) {
   redirect("/dashboard/paiements");
 }
 
-export async function markAsPaid(id: string) {
+export async function markAsPaid(
+  id: string,
+  opts?: { method?: string; reference?: string; phone?: string }
+) {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
   await prisma.payment.update({
     where: { id },
-    data: { status: "PAID", paidAt: new Date() },
+    data: {
+      status: "PAID",
+      paidAt: new Date(),
+      ...(opts?.method    && { paymentMethod: opts.method }),
+      ...(opts?.reference && { waveReference: opts.reference }),
+      ...(opts?.phone     && { payerPhone: opts.phone }),
+    },
   });
 
   revalidatePath("/dashboard/paiements");

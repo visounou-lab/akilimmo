@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { getYouTubeId, getYoutubeThumbnail } from "@/lib/youtube";
 
 function getInitials(title: string): string {
@@ -26,6 +29,8 @@ interface BienCardProps {
 }
 
 export default function BienCard({ bien }: BienCardProps) {
+  const [imgFailed, setImgFailed] = useState(false);
+
   // Tarification par nuit
   const price = new Intl.NumberFormat("fr-FR").format(Number(bien.price));
 
@@ -50,10 +55,11 @@ export default function BienCard({ bien }: BienCardProps) {
       <article className="group overflow-hidden rounded-none sm:rounded-[28px] border-b sm:border border-slate-200 bg-white shadow-none sm:shadow-sm transition sm:hover:-translate-y-1 sm:hover:shadow-xl cursor-pointer">
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
-          {displayImage ? (
+          {displayImage && !imgFailed ? (
             <img
               src={displayImage}
               alt={bien.title}
+              onError={() => setImgFailed(true)}
               className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
             />
           ) : (

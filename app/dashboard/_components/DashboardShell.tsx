@@ -90,11 +90,9 @@ export default function DashboardShell({
         <div className="border-b border-gray-100 flex flex-col items-center py-4 px-4 lg:px-6 shrink-0">
           {/* Mobile open + Desktop: logo image */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo.png"
-            alt="AKIL IMMO"
-            className="h-16 w-auto md:hidden lg:block"
-          />
+          <div className="bg-[#0066CC] rounded-xl px-3 py-2 md:hidden lg:flex items-center justify-center">
+            <img src="/logo.png" alt="AKIL IMMO" className="h-10 w-auto" />
+          </div>
           <p className="text-xs uppercase tracking-wide text-gray-500 mt-1 text-center md:hidden lg:block">
             Administration
           </p>

@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 const CATEGORY_CONFIG = {
-  PAYMENT:  { label: "Paiement",  bg: "bg-emerald-50", text: "text-emerald-700", dot: "bg-emerald-500" },
-  BOOKING:  { label: "Réservation", bg: "bg-blue-50",  text: "text-blue-700",   dot: "bg-blue-500"   },
-  DOCUMENT: { label: "Document",  bg: "bg-purple-50",  text: "text-purple-700", dot: "bg-purple-500" },
-  ALERT:    { label: "Alerte",    bg: "bg-amber-50",   text: "text-amber-700",  dot: "bg-amber-500"  },
+  PAYMENT:  { label: "Paiement",     bg: "bg-emerald-50", text: "text-emerald-700", dot: "bg-emerald-500" },
+  BOOKING:  { label: "Réservation",  bg: "bg-blue-50",    text: "text-blue-700",    dot: "bg-blue-500"   },
+  DOCUMENT: { label: "Document",     bg: "bg-purple-50",  text: "text-purple-700",  dot: "bg-purple-500" },
+  ALERT:    { label: "Alerte",       bg: "bg-amber-50",   text: "text-amber-700",   dot: "bg-amber-500"  },
+  MESSAGE:  { label: "Message",      bg: "bg-sky-50",     text: "text-sky-700",     dot: "bg-sky-500"    },
 };
 
 function formatDate(date: Date) {

@@ -174,6 +174,34 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
   });
 }
 
+export async function sendAdminMessageEmail(to: string, firstName: string, subject: string, body: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: `${subject} — AKIL IMMO`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <p style="color:#374151;margin:0 0 20px">Bonjour ${firstName},</p>
+          <div style="color:#374151;line-height:1.7;white-space:pre-wrap">${body}</div>
+          <hr style="border:none;border-top:1px solid #E5E7EB;margin:28px 0" />
+          <p style="color:#374151;margin:0">L'équipe AKIL IMMO</p>
+          <p style="color:#6B7280;font-size:13px;margin:4px 0 0">
+            <a href="mailto:info@akilimmo.com" style="color:#0066CC">info@akilimmo.com</a> —
+            <a href="https://www.akilimmo.com" style="color:#0066CC">www.akilimmo.com</a>
+          </p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendPropertySubmitReminderEmail(to: string, firstName: string) {
   await transporter.sendMail({
     from: process.env.SMTP_FROM,

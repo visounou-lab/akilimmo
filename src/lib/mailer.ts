@@ -247,6 +247,89 @@ export async function sendContactRequest(data: {
   });
 }
 
+export async function sendPaymentConfirmedEmail(data: {
+  ownerEmail:    string;
+  ownerName:     string;
+  propertyTitle: string;
+  amount:        number;
+  paymentMethod: string | null;
+  reference:     string | null;
+  paidAt:        Date;
+}) {
+  const methodLabels: Record<string, string> = {
+    wave:         "Wave",
+    orange_money: "Orange Money",
+    free_money:   "Free Money",
+    virement:     "Virement bancaire",
+    especes:      "Espèces",
+    autre:        "Autre",
+  };
+  const methodStr  = data.paymentMethod ? (methodLabels[data.paymentMethod] ?? data.paymentMethod) : "Non précisé";
+  const amountStr  = new Intl.NumberFormat("fr-FR").format(data.amount) + " FCFA";
+  const dateStr    = new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "long", year: "numeric" }).format(data.paidAt);
+  const firstName  = data.ownerName.split(" ").at(-1) ?? data.ownerName;
+
+  await transporter.sendMail({
+    from:    process.env.SMTP_FROM,
+    to:      data.ownerEmail,
+    subject: `Paiement encaissé — ${data.propertyTitle}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 4px;color:#16A34A;font-size:20px">Loyer encaissé ✓</h2>
+          <p style="margin:0 0 24px;color:#6B7280;font-size:14px">Confirmation de paiement</p>
+
+          <p style="color:#374151">Bonjour ${firstName},</p>
+          <p style="color:#374151">Le loyer de votre bien <strong>${data.propertyTitle}</strong> a bien été encaissé par AKIL IMMO.</p>
+
+          <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:20px;margin:20px 0">
+            <table style="width:100%;border-collapse:collapse">
+              <tr>
+                <td style="padding:6px 0;color:#6B7280;font-size:14px;width:50%">Montant encaissé</td>
+                <td style="padding:6px 0;color:#374151;font-weight:700;font-size:18px;text-align:right">${amountStr}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0;color:#6B7280;font-size:14px;border-top:1px solid #D1FAE5">Votre part (94%)</td>
+                <td style="padding:6px 0;color:#16A34A;font-weight:600;font-size:14px;text-align:right;border-top:1px solid #D1FAE5">
+                  ${new Intl.NumberFormat("fr-FR").format(Math.round(data.amount * 0.94))} FCFA
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0;color:#6B7280;font-size:14px">Mode de paiement</td>
+                <td style="padding:6px 0;color:#374151;font-size:14px;text-align:right">${methodStr}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0;color:#6B7280;font-size:14px">Date</td>
+                <td style="padding:6px 0;color:#374151;font-size:14px;text-align:right">${dateStr}</td>
+              </tr>
+              ${data.reference ? `
+              <tr>
+                <td style="padding:6px 0;color:#6B7280;font-size:14px">Référence</td>
+                <td style="padding:6px 0;color:#374151;font-size:14px;font-family:monospace;text-align:right">${data.reference}</td>
+              </tr>` : ""}
+            </table>
+          </div>
+
+          <p style="color:#6B7280;font-size:13px">La commission AKIL IMMO de 6 % est déduite du montant brut.</p>
+
+          <a href="https://www.akilimmo.com/owner/dashboard/paiements"
+             style="display:inline-block;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px">
+            Voir mes paiements
+          </a>
+
+          <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 const DOC_TYPE_LABELS: Record<string, string> = {
   quittance:   "Quittance de loyer",
   contrat:     "Contrat de location",

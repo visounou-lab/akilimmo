@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { createNotification } from "@/lib/notifications";
+import { sendPaymentConfirmedEmail } from "@/lib/mailer";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -63,8 +64,15 @@ export async function markAsPaid(
     include: {
       contract: {
         include: {
-          property: { select: { id: true, title: true, ownerId: true } },
-          tenant:   { select: { name: true } },
+          property: {
+            select: {
+              id:      true,
+              title:   true,
+              ownerId: true,
+              owner:   { select: { email: true, name: true } },
+            },
+          },
+          tenant: { select: { name: true } },
         },
       },
     },
@@ -77,14 +85,25 @@ export async function markAsPaid(
   };
   const modeStr = opts?.method ? ` via ${methodLabel[opts.method] ?? opts.method}` : "";
 
-  await createNotification({
-    userId:     property.ownerId,
-    category:   "PAYMENT",
-    title:      "Paiement confirmé",
-    body:       `Le loyer de ${tenant.name ?? "votre locataire"} pour « ${property.title} » a été encaissé${modeStr}.`,
-    actionUrl:  "/owner/dashboard/paiements",
-    propertyId: property.id,
-  });
+  await Promise.all([
+    createNotification({
+      userId:     property.ownerId,
+      category:   "PAYMENT",
+      title:      "Paiement confirmé",
+      body:       `Le loyer de ${tenant.name ?? "votre locataire"} pour « ${property.title} » a été encaissé${modeStr}.`,
+      actionUrl:  "/owner/dashboard/paiements",
+      propertyId: property.id,
+    }),
+    sendPaymentConfirmedEmail({
+      ownerEmail:    property.owner.email!,
+      ownerName:     property.owner.name ?? "Propriétaire",
+      propertyTitle: property.title,
+      amount:        Number(payment.amount),
+      paymentMethod: opts?.method ?? null,
+      reference:     opts?.reference ?? null,
+      paidAt:        payment.paidAt ?? new Date(),
+    }),
+  ]);
 
   revalidatePath("/dashboard/paiements");
 }

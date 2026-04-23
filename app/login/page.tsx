@@ -36,7 +36,7 @@ function LoginForm() {
     } else if (user?.role === "OWNER") {
       router.push("/owner/dashboard");
     } else {
-      router.push("/dashboard");
+      router.push("/tenant/dashboard");
     }
   };
 

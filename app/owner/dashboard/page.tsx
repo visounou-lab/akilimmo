@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatFCFA } from "@/lib/share";
-import { getMockActivity } from "./_mock/data";
 
 // TODO V2 : assigner dynamiquement un conseiller par propriétaire (champ advisorId sur User)
 const ADVISOR = {
@@ -71,7 +70,9 @@ export default async function OwnerDashboardPage() {
   const startPrev         = new Date(now.getFullYear(), now.getMonth() - 1, 1);
   const monthLabel        = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" }).format(now).toUpperCase();
 
-  const [properties, currentRevAgg, prevRevAgg, rentedCount] = await Promise.all([
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 86_400_000);
+
+  const [properties, currentRevAgg, prevRevAgg, rentedCount, recentActivity] = await Promise.all([
     prisma.property.findMany({
       where:   { ownerId: userId },
       orderBy: { createdAt: "desc" },
@@ -89,6 +90,12 @@ export default async function OwnerDashboardPage() {
       _sum:  { amount: true },
     }),
     prisma.contract.count({ where: { ownerId: userId, status: "ACTIVE" } }),
+    prisma.notification.findMany({
+      where:   { userId, createdAt: { gte: sevenDaysAgo } },
+      orderBy: { createdAt: "desc" },
+      take:    5,
+      select:  { id: true, title: true, body: true, category: true, createdAt: true },
+    }),
   ]);
 
   const currentRevenue = Number(currentRevAgg._sum.amount ?? 0);
@@ -98,7 +105,6 @@ export default async function OwnerDashboardPage() {
     : null;
   const totalCount     = properties.length;
 
-  const activity = getMockActivity(properties.map((p) => p.title));
   const whatsappUrl = openAdvisorWhatsApp(userName);
 
   return (
@@ -235,17 +241,24 @@ export default async function OwnerDashboardPage() {
       </div>
 
       {/* ── 4. Activité récente ──────────────────────────────────── */}
-      {activity.length > 0 && (
+      {recentActivity.length > 0 && (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-800">Activité récente</h2>
-            <span className="text-xs text-slate-400">7 derniers jours</span>
+            <Link href="/owner/dashboard/notifications" className="text-xs text-[#0066CC] hover:underline font-medium">
+              Tout voir →
+            </Link>
           </div>
           <div className="divide-y divide-gray-50">
-            {activity.map((item, i) => {
-              const ic = ACTIVITY_ICON[item.type];
+            {recentActivity.map((notif) => {
+              const ic = ACTIVITY_ICON[
+                notif.category === "PAYMENT" ? "payment"
+                : notif.category === "BOOKING" ? "tenant"
+                : "photos"
+              ];
+              const daysAgo = Math.floor((now.getTime() - notif.createdAt.getTime()) / 86_400_000);
               return (
-                <div key={i} className="flex items-center gap-3 px-5 py-3.5">
+                <div key={notif.id} className="flex items-center gap-3 px-5 py-3.5">
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{ backgroundColor: ic.bg }}
@@ -253,12 +266,11 @@ export default async function OwnerDashboardPage() {
                     {ic.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-800 leading-snug">{item.title}</p>
-                    {/* ANTI-DÉSINTERMÉDIATION : on n'affiche jamais le nom du locataire */}
-                    <p className="text-xs text-slate-400 truncate">{item.subtitle}</p>
+                    <p className="text-sm font-medium text-slate-800 leading-snug">{notif.title}</p>
+                    <p className="text-xs text-slate-400 truncate">{notif.body}</p>
                   </div>
                   <span className="text-xs text-slate-400 shrink-0">
-                    Il y a {item.daysAgo} j.
+                    {daysAgo === 0 ? "Aujourd'hui" : `Il y a ${daysAgo}j`}
                   </span>
                 </div>
               );

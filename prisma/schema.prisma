@@ -125,6 +125,7 @@ model Property {
   owner         User            @relation("OwnerProperties", fields: [ownerId], references: [id])
   submittedBy   String?
   submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
+  propertyType  String?
   publishStatus String          @default("published")
   rentalStatus  String          @default("AVAILABLE")
   adminNote     String?

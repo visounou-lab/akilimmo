@@ -26,6 +26,8 @@ export async function submitProperty(formData: FormData) {
   const city  = formData.get("city") as string;
   const slug  = await uniquePropertySlug(title, city);
 
+  const propertyTypeRaw = (formData.get("type") as string | null)?.trim() || null;
+
   const property = await prisma.property.create({
     data: {
       slug,
@@ -39,6 +41,7 @@ export async function submitProperty(formData: FormData) {
       bathrooms:     parseInt(formData.get("bathrooms") as string, 10),
       imageUrl:      uploaded[0]?.url ?? null,
       videoUrl,
+      propertyType:  propertyTypeRaw,
       ownerId:       userId,
       submittedBy:   userId,
       publishStatus: "pending_review",

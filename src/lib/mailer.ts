@@ -290,6 +290,48 @@ export async function sendPropertySubmitReminderEmail(to: string, firstName: str
   });
 }
 
+export async function sendTenantAccessEmail(to: string, name: string, token: string) {
+  const firstName = name.split(" ")[0];
+  const url = `https://www.akilimmo.com/reset-password?token=${token}`;
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: "Vos accès AKIL IMMO — Activez votre compte",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Bienvenue sur AKIL IMMO !</h2>
+          <p style="color:#374151;margin:0 0 12px">Bonjour ${firstName},</p>
+          <p style="color:#374151;margin:0 0 12px">
+            Votre compte locataire a été créé sur la plateforme AKIL IMMO.<br />
+            Voici vos informations de connexion :
+          </p>
+          <div style="background:#F0F7FF;border-radius:10px;padding:16px 20px;margin:20px 0">
+            <p style="margin:0 0 8px;color:#374151"><strong>Email :</strong> ${to}</p>
+            <p style="margin:0;color:#374151"><strong>Site :</strong> <a href="https://www.akilimmo.com/login" style="color:#0066CC">www.akilimmo.com/login</a></p>
+          </div>
+          <p style="color:#374151;margin:0 0 20px">
+            Cliquez sur le bouton ci-dessous pour créer votre mot de passe et accéder à votre espace locataire :
+          </p>
+          <div style="text-align:center;margin:24px 0">
+            <a href="${url}" style="display:inline-block;background:#0066CC;color:white;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">
+              Créer mon mot de passe →
+            </a>
+          </div>
+          <p style="color:#9CA3AF;font-size:13px;margin-top:20px">Ce lien expire dans 1 heure. Si vous avez des questions, contactez-nous à <a href="mailto:info@akilimmo.com" style="color:#0066CC">info@akilimmo.com</a>.</p>
+          <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendContactRequest(data: {
   nom: string;
   email: string;

@@ -138,8 +138,8 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/">
-            <Image src="/logo.png" alt="AKIL IMMO" width={80} height={80} className="mx-auto" />
+          <Link href="/" className="inline-flex items-center justify-center bg-[#0066CC] rounded-2xl p-3 mx-auto">
+            <Image src="/logo.png" alt="AKIL IMMO" width={64} height={64} />
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Nouveau mot de passe</h1>
           <p className="mt-1 text-sm text-slate-500">Choisissez un nouveau mot de passe sécurisé</p>

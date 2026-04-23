@@ -39,8 +39,8 @@ export default async function UtilisateursPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Liste */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-x-auto">
+            <table className="w-full text-sm min-w-[480px]">
               <thead>
                 <tr className="border-b border-gray-100 bg-slate-50/60">
                   <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">Utilisateur</th>

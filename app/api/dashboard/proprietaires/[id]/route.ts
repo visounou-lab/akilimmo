@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { sendWelcomeEmail } from "@/lib/mailer";
+import { sendWelcomeEmail, sendPropertySubmitReminderEmail } from "@/lib/mailer";
 
 export async function PATCH(
   req: NextRequest,
@@ -31,7 +31,10 @@ export async function PATCH(
   if (action === "activate") {
     await prisma.user.update({ where: { id }, data: { status: "active" } });
     const firstName = owner.name?.split(" ")[0] ?? "Propriétaire";
-    if (owner.email) await sendWelcomeEmail(owner.email, firstName);
+    if (owner.email) {
+      await sendWelcomeEmail(owner.email, firstName);
+      await sendPropertySubmitReminderEmail(owner.email, firstName);
+    }
     return NextResponse.json({ message: "Compte activé" });
   }
 

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { createUser } from "./_actions";
 import DeleteUserButton from "./_components/DeleteUserButton";
+import SendAccessButton from "./_components/SendAccessButton";
 
 const ROLE_CONFIG: Record<string, { label: string; classes: string }> = {
   ADMIN:  { label: "Admin",      classes: "bg-purple-50 text-purple-700" },
@@ -75,7 +76,10 @@ export default async function UtilisateursPage() {
                         {formatDate(u.createdAt)}
                       </td>
                       <td className="px-4 py-3.5">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1">
+                          {u.role === "TENANT" && (
+                            <SendAccessButton id={u.id} />
+                          )}
                           <DeleteUserButton id={u.id} isSelf={u.id === currentUserId} />
                         </div>
                       </td>

@@ -49,9 +49,24 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Notifications",
+    href: "/owner/dashboard/notifications",
+    icon: (
+      <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>
+    ),
+  },
 ];
 
-export default function OwnerSidebarNav({ onClose }: { onClose?: () => void }) {
+export default function OwnerSidebarNav({
+  onClose,
+  unreadCount = 0,
+}: {
+  onClose?: () => void;
+  unreadCount?: number;
+}) {
   const pathname = usePathname();
 
   return (
@@ -64,6 +79,7 @@ export default function OwnerSidebarNav({ onClose }: { onClose?: () => void }) {
           item.href === "/owner/dashboard"
             ? pathname === "/owner/dashboard"
             : pathname.startsWith(item.href);
+        const isNotif = item.href === "/owner/dashboard/notifications";
 
         return (
           <Link
@@ -79,10 +95,20 @@ export default function OwnerSidebarNav({ onClose }: { onClose?: () => void }) {
                 : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
             ].join(" ")}
           >
-            <span className={isActive ? "text-white" : "text-slate-400"}>
+            <span className={`relative ${isActive ? "text-white" : "text-slate-400"}`}>
               {item.icon}
+              {isNotif && unreadCount > 0 && !isActive && (
+                <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
             </span>
-            <span className="md:hidden lg:inline">{item.label}</span>
+            <span className="md:hidden lg:inline flex-1">{item.label}</span>
+            {isNotif && unreadCount > 0 && (
+              <span className="md:hidden lg:inline-flex ml-auto items-center justify-center h-5 min-w-5 px-1 rounded-full bg-red-500 text-[10px] font-bold text-white">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
           </Link>
         );
       })}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import OwnerSidebarNav from "./OwnerSidebarNav";
 
 type Props = {
@@ -9,15 +10,18 @@ type Props = {
   userName: string;
   userEmail: string;
   userInitial: string;
+  unreadCount: number;
   signOutAction: () => void | Promise<void>;
 };
 
 const PAGE_TITLES: Record<string, string> = {
-  "/owner/dashboard":           "Tableau de bord",
-  "/owner/dashboard/biens":     "Mes biens",
-  "/owner/dashboard/soumettre": "Soumettre un bien",
-  "/owner/dashboard/demandes":  "Mes demandes",
-  "/owner/dashboard/profil":    "Mon profil",
+  "/owner/dashboard":                  "Tableau de bord",
+  "/owner/dashboard/biens":            "Mes biens",
+  "/owner/dashboard/soumettre":        "Soumettre un bien",
+  "/owner/dashboard/demandes":         "Mes demandes",
+  "/owner/dashboard/profil":           "Mon profil",
+  "/owner/dashboard/notifications":    "Notifications",
+  "/owner/dashboard/paiements":        "Mes paiements",
 };
 
 function getPageTitle(pathname: string): string {
@@ -33,6 +37,7 @@ export default function OwnerShell({
   userName,
   userEmail,
   userInitial,
+  unreadCount,
   signOutAction,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -94,7 +99,7 @@ export default function OwnerShell({
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto py-4 px-2 lg:px-3">
-          <OwnerSidebarNav onClose={() => setSidebarOpen(false)} />
+          <OwnerSidebarNav onClose={() => setSidebarOpen(false)} unreadCount={unreadCount} />
         </div>
 
         {/* User footer */}
@@ -136,9 +141,19 @@ export default function OwnerShell({
         <span className="flex-1 text-center text-sm font-semibold text-slate-800 truncate">
           {pageTitle}
         </span>
-        <div className="h-8 w-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-          <span className="text-[#0066CC] font-semibold text-xs">{userInitial}</span>
-        </div>
+        <Link
+          href="/owner/dashboard/notifications"
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+        </Link>
       </header>
 
       {/* Main */}

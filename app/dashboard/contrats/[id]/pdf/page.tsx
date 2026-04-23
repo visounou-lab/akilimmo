@@ -13,6 +13,37 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+const printStyles = `
+  @media print {
+    aside, header, nav, .print-btn-bar { display: none !important; }
+    main { margin: 0 !important; padding: 0 !important; }
+    body { background: white !important; }
+  }
+  @page { size: A4; margin: 2cm; }
+  * { box-sizing: border-box; }
+  .contract-doc { font-family: Georgia, serif; color: #1e293b; line-height: 1.6; max-width: 700px; margin: 0 auto; }
+  .doc-header { text-align: center; border-bottom: 3px solid #0066CC; padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .doc-header h1 { font-size: 26px; color: #0066CC; letter-spacing: 2px; margin: 0 0 0.25rem; }
+  .doc-header p { color: #64748b; font-style: italic; margin: 0; }
+  .badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-family: sans-serif; font-size: 12px; font-weight: 600; background: #f0f9ff; color: #0066CC; border: 1px solid #bae6fd; }
+  .section { margin-bottom: 2rem; }
+  .section h2 { font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #64748b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field p { margin: 0; }
+  .field .label { font-family: sans-serif; font-size: 11px; color: #94a3b8; }
+  .field .value { font-size: 15px; font-weight: 600; }
+  .highlight { color: #0066CC; }
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .party { background: #f8fafc; border-radius: 8px; padding: 1rem; }
+  .party .role { font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.5rem; }
+  .party .name { font-size: 16px; font-weight: 700; }
+  .party .email { font-family: sans-serif; font-size: 12px; color: #64748b; }
+  .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+  .sig-box { border-top: 1px solid #cbd5e1; padding-top: 0.5rem; text-align: center; }
+  .sig-box p { font-family: sans-serif; font-size: 12px; color: #94a3b8; margin: 0; }
+  .doc-footer { margin-top: 3rem; text-align: center; font-family: sans-serif; font-size: 11px; color: #94a3b8; }
+`;
+
 export default async function ContratPdfPage({ params }: Props) {
   const { id } = await params;
 
@@ -37,60 +68,31 @@ export default async function ContratPdfPage({ params }: Props) {
   };
 
   return (
-    <html lang="fr">
-      <head>
-        <meta charSet="utf-8" />
-        <title>Contrat — {contract.property.title}</title>
-        <style>{`
-          @page { size: A4; margin: 2cm; }
-          * { box-sizing: border-box; }
-          body { font-family: Georgia, serif; color: #1e293b; line-height: 1.6; }
-          .print-btn {
-            position: fixed; top: 1rem; right: 1rem;
-            background: #0066CC; color: #fff; border: none;
-            padding: 0.5rem 1.2rem; border-radius: 8px;
-            font-family: sans-serif; font-size: 14px; cursor: pointer;
-          }
-          @media print { .print-btn { display: none; } }
-          .print-btn:hover { background: #004499; }
-          .header { text-align: center; border-bottom: 3px solid #0066CC; padding-bottom: 1.5rem; margin-bottom: 2rem; }
-          .header h1 { font-size: 28px; color: #0066CC; letter-spacing: 2px; margin: 0 0 0.25rem; }
-          .header p { color: #64748b; font-style: italic; margin: 0; }
-          .badge {
-            display: inline-block; padding: 3px 12px; border-radius: 20px;
-            font-family: sans-serif; font-size: 12px; font-weight: 600;
-            background: #f0f9ff; color: #0066CC; border: 1px solid #bae6fd;
-          }
-          .section { margin-bottom: 2rem; }
-          .section h2 {
-            font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px;
-            text-transform: uppercase; color: #64748b;
-            border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem;
-          }
-          .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-          .field p { margin: 0; }
-          .field .label { font-family: sans-serif; font-size: 11px; color: #94a3b8; }
-          .field .value { font-size: 15px; font-weight: 600; }
-          .highlight { color: #0066CC; }
-          .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-          .party { background: #f8fafc; border-radius: 8px; padding: 1rem; }
-          .party .role { font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.5rem; }
-          .party .name { font-size: 16px; font-weight: 700; }
-          .party .email { font-family: sans-serif; font-size: 12px; color: #64748b; }
-          .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
-          .sig-box { border-top: 1px solid #cbd5e1; padding-top: 0.5rem; text-align: center; }
-          .sig-box p { font-family: sans-serif; font-size: 12px; color: #94a3b8; margin: 0; }
-          .footer { margin-top: 3rem; text-align: center; font-family: sans-serif; font-size: 11px; color: #94a3b8; }
-        `}</style>
-      </head>
-      <body>
-        <button className="print-btn" id="print-btn">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: printStyles }} />
+
+      {/* Barre d'impression — masquée à l'impression */}
+      <div className="print-btn-bar flex items-center justify-between px-6 py-3 bg-white border-b border-slate-100 mb-6">
+        <p className="text-sm text-slate-500">Aperçu du contrat — {contract.property.title}</p>
+        <button
+          id="print-btn"
+          className="inline-flex items-center gap-2 bg-[#0066CC] hover:bg-[#004499] text-white px-5 py-2 rounded-full text-sm font-semibold transition"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
           Imprimer / Enregistrer PDF
         </button>
-        <script dangerouslySetInnerHTML={{ __html: `document.getElementById('print-btn').addEventListener('click', function(){ window.print(); });` }} />
+      </div>
 
-        <div className="header">
-          <img src="/logo.png" alt="Akil Immo" width="80" style={{ margin: "0 auto 0.75rem" }} />
+      <script dangerouslySetInnerHTML={{ __html: `document.getElementById('print-btn').addEventListener('click',function(){window.print();});` }} />
+
+      {/* Contenu du contrat */}
+      <div className="contract-doc px-6 pb-12">
+
+        <div className="doc-header">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Akil Immo" width={70} style={{ margin: "0 auto 0.75rem", display: "block" }} />
           <h1>AKIL IMMO</h1>
           <p>Contrat de location</p>
         </div>
@@ -119,7 +121,7 @@ export default async function ContratPdfPage({ params }: Props) {
 
         <div className="section">
           <h2>Conditions du contrat</h2>
-          <div className="grid">
+          <div className="grid2">
             <div className="field">
               <p className="label">Date de début</p>
               <p className="value">{formatDate(contract.startDate)}</p>
@@ -164,10 +166,10 @@ export default async function ContratPdfPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="footer">
+        <div className="doc-footer">
           <p>Document généré par AKIL IMMO — {new Date().toLocaleDateString("fr-FR")}</p>
         </div>
-      </body>
-    </html>
+      </div>
+    </>
   );
 }

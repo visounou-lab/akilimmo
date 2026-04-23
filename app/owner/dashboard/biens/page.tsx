@@ -36,8 +36,8 @@ export default async function OwnerBiensPage() {
       city:          true,
       country:       true,
       price:         true,
+      status:        true,
       publishStatus: true,
-      rentalStatus:  true,
       adminNote:     true,
       createdAt:     true,
       images: {
@@ -93,7 +93,7 @@ export default async function OwnerBiensPage() {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {biens.map((b) => {
             const pubSt     = PUBLISH_STATUS[b.publishStatus] ?? PUBLISH_STATUS.draft;
-            const rentSt    = RENTAL_STATUS[b.rentalStatus ?? "AVAILABLE"];
+            const rentSt    = RENTAL_STATUS[b.status] ?? RENTAL_STATUS.AVAILABLE;
             const thumb     = b.images[0]?.url;
             const hasLease  = b.contracts.length > 0;
 

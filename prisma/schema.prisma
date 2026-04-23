@@ -127,7 +127,6 @@ model Property {
   submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
   propertyType  String?
   publishStatus String          @default("published")
-  rentalStatus  String          @default("AVAILABLE")
   adminNote     String?
   contracts        Contract[]
   notifications    Notification[]

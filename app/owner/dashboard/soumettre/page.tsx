@@ -107,19 +107,10 @@ export default function SoumettreePage() {
           </div>
         </div>
 
-        {/* Prix + Tarification */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Prix (XOF) <span className="text-red-400">*</span></label>
-            <input type="number" name="price" required min="1" placeholder="ex : 25000" className={inputClass} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Tarification</label>
-            <select name="pricingType" className={inputClass}>
-              <option value="night">Par nuit</option>
-              <option value="month">Par mois</option>
-            </select>
-          </div>
+        {/* Prix */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Prix par nuit (XOF) <span className="text-red-400">*</span></label>
+          <input type="number" name="price" required min="1" placeholder="ex : 25000" className={inputClass} />
         </div>
 
         {/* Chambres + SDB */}

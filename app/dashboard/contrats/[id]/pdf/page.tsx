@@ -52,6 +52,7 @@ export default async function ContratPdfPage({ params }: Props) {
             font-family: sans-serif; font-size: 14px; cursor: pointer;
           }
           @media print { .print-btn { display: none; } }
+          .print-btn:hover { background: #004499; }
           .header { text-align: center; border-bottom: 3px solid #0066CC; padding-bottom: 1.5rem; margin-bottom: 2rem; }
           .header h1 { font-size: 28px; color: #0066CC; letter-spacing: 2px; margin: 0 0 0.25rem; }
           .header p { color: #64748b; font-style: italic; margin: 0; }
@@ -83,9 +84,10 @@ export default async function ContratPdfPage({ params }: Props) {
         `}</style>
       </head>
       <body>
-        <button className="print-btn" onClick={() => window.print()}>
+        <button className="print-btn" id="print-btn">
           Imprimer / Enregistrer PDF
         </button>
+        <script dangerouslySetInnerHTML={{ __html: `document.getElementById('print-btn').addEventListener('click', function(){ window.print(); });` }} />
 
         <div className="header">
           <img src="/logo.png" alt="Akil Immo" width="80" style={{ margin: "0 auto 0.75rem" }} />

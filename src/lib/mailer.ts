@@ -174,6 +174,77 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
   });
 }
 
+export async function sendPropertySubmitReminderEmail(to: string, firstName: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: "Déposez votre premier bien sur AKIL IMMO 🏠",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#0066CC;padding:24px 32px;border-radius:12px 12px 0 0">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 8px;color:#0066CC;font-size:22px">Votre compte est prêt, ${firstName} !</h2>
+          <p style="margin:0 0 24px;color:#6B7280;font-size:14px">Il ne reste plus qu'une étape : déposer votre premier bien.</p>
+
+          <p style="color:#374151">Bonjour ${firstName},</p>
+          <p style="color:#374151">
+            Votre espace propriétaire AKIL IMMO est actif. Des milliers de locataires potentiels
+            cherchent un logement en Côte d'Ivoire et au Bénin — votre bien peut être en ligne
+            <strong>dès aujourd'hui</strong>.
+          </p>
+
+          <div style="background:#F0F7FF;border-radius:10px;padding:20px 24px;margin:24px 0">
+            <p style="margin:0 0 12px;font-weight:700;color:#0066CC;font-size:15px">Ce que vous obtenez avec AKIL IMMO :</p>
+            <table style="width:100%;border-collapse:collapse">
+              <tr>
+                <td style="padding:7px 0;vertical-align:top;width:28px;color:#0066CC;font-size:18px">✅</td>
+                <td style="padding:7px 0;color:#374151"><strong>Visibilité immédiate</strong> — votre bien affiché sur notre plateforme dès validation (24-48h)</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 0;vertical-align:top;color:#0066CC;font-size:18px">✅</td>
+                <td style="padding:7px 0;color:#374151"><strong>Gestion simplifiée</strong> — contrats, paiements et documents au même endroit</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 0;vertical-align:top;color:#0066CC;font-size:18px">✅</td>
+                <td style="padding:7px 0;color:#374151"><strong>Locataires sérieux</strong> — uniquement des profils vérifiés sur notre plateforme</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 0;vertical-align:top;color:#0066CC;font-size:18px">✅</td>
+                <td style="padding:7px 0;color:#374151"><strong>Suivi des loyers</strong> — encaissements enregistrés, notifications automatiques</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 0;vertical-align:top;color:#0066CC;font-size:18px">✅</td>
+                <td style="padding:7px 0;color:#374151"><strong>Support dédié</strong> — notre équipe vous accompagne à chaque étape</td>
+              </tr>
+            </table>
+          </div>
+
+          <p style="color:#374151">La soumission prend moins de <strong>5 minutes</strong>. Ajoutez le titre, la description, quelques photos et le prix — notre équipe s'occupe du reste.</p>
+
+          <div style="text-align:center;margin:28px 0">
+            <a href="https://www.akilimmo.com/owner/dashboard/soumettre"
+               style="display:inline-block;background:#0066CC;color:white;padding:16px 36px;border-radius:10px;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:0.3px">
+              Déposer mon premier bien →
+            </a>
+          </div>
+
+          <p style="color:#6B7280;font-size:13px;text-align:center">
+            Des questions ? Répondez à cet email ou écrivez-nous à
+            <a href="mailto:info@akilimmo.com" style="color:#0066CC">info@akilimmo.com</a>
+          </p>
+
+          <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendContactRequest(data: {
   nom: string;
   email: string;

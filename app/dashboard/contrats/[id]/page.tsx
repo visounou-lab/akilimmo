@@ -44,8 +44,9 @@ export default async function ContratDetailPage({ params }: Props) {
   const status = STATUS_CONFIG[contract.status] ?? STATUS_CONFIG.PENDING;
 
   // Durée en mois
-  const months = Math.round(
-    (contract.endDate.getTime() - contract.startDate.getTime()) / (1000 * 60 * 60 * 24 * 30)
+  const months = Math.max(1,
+    (contract.endDate.getFullYear() - contract.startDate.getFullYear()) * 12 +
+    (contract.endDate.getMonth() - contract.startDate.getMonth())
   );
 
   return (

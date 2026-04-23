@@ -151,8 +151,8 @@ export default async function ContratPdfPage({ params }: Props) {
 
         <div className="section">
           <h2>Clauses générales</h2>
-          <p>Le locataire s&apos;engage à payer le loyer le 5 de chaque mois. Tout retard de paiement supérieur à 15 jours entraînera des pénalités. Le bien doit être restitué dans l&apos;état initial à la fin du contrat.</p>
-          <p>Le bailleur s&apos;engage à mettre le logement en bon état de réparation à usage locatif et à ne pas perturber la jouissance paisible du locataire pendant toute la durée du contrat.</p>
+          <p>Le locataire s&apos;engage à régler le montant total du séjour avant l&apos;entrée dans les lieux. Le bien doit être restitué dans l&apos;état initial à la date de départ convenue. Toute dégradation constatée sera à la charge du locataire.</p>
+          <p>Le bailleur s&apos;engage à mettre le logement meublé et équipé à disposition du locataire aux dates convenues et à garantir sa jouissance paisible pendant toute la durée du séjour.</p>
         </div>
 
         <div className="signatures">

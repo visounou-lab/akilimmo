@@ -18,7 +18,7 @@ export async function GET() {
     select: {
       id: true, title: true, city: true, country: true, address: true, price: true,
       description: true, bedrooms: true, bathrooms: true,
-      imageUrl: true, videoUrl: true, createdAt: true,
+      imageUrl: true, videoUrl: true, adminNote: true, createdAt: true,
       submitter: { select: { name: true, email: true } },
       owner:     { select: { name: true, email: true } },
     },

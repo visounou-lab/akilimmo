@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import PropertyCard from "./_components/PropertyCard";
+import BiensSearch from "./_components/BiensSearch";
 
 export default async function BiensPage() {
-  const properties = await prisma.property.findMany({
+  const raw = await prisma.property.findMany({
     orderBy: { createdAt: "desc" },
     include: {
       owner:  { select: { name: true } },
       images: { select: { url: true }, orderBy: { order: "asc" }, take: 1 },
     },
   });
+  const properties = raw.map((p) => ({ ...p, price: Number(p.price) }));
 
   return (
     <div className="px-4 py-4 sm:px-6 sm:py-6 lg:p-8">
@@ -49,11 +50,7 @@ export default async function BiensPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {properties.map((p) => (
-            <PropertyCard key={p.id} property={p} />
-          ))}
-        </div>
+        <BiensSearch properties={properties} />
       )}
     </div>
   );

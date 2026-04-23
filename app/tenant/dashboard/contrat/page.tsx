@@ -90,7 +90,7 @@ export default async function TenantContratPage() {
                 {/* Détails */}
                 <div className="grid grid-cols-2 gap-4 py-4 border-t border-b border-slate-100">
                   {[
-                    { label: "Loyer mensuel",  value: formatPrice(c.rentAmount) },
+                    { label: "Prix par nuit",  value: formatPrice(c.rentAmount) },
                     { label: "Début",          value: formatDate(c.startDate)   },
                     { label: "Fin",            value: formatDate(c.endDate)     },
                     { label: "Référence",      value: c.id.slice(-8).toUpperCase() },

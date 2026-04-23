@@ -1,4 +1,5 @@
 import { auth, signOut } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import OwnerShell from "./_components/OwnerShell";
@@ -50,11 +51,16 @@ export default async function OwnerLayout({ children }: { children: React.ReactN
     );
   }
 
+  const unreadCount = await prisma.notification.count({
+    where: { userId: user?.id, isRead: false },
+  });
+
   return (
     <OwnerShell
       userName={user?.name ?? "Propriétaire"}
       userEmail={user?.email ?? ""}
       userInitial={(user?.name ?? "P").charAt(0).toUpperCase()}
+      unreadCount={unreadCount}
       signOutAction={handleSignOut}
     >
       {children}

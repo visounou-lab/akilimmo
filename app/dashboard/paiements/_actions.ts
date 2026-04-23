@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { createNotification } from "@/lib/notifications";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -50,7 +51,7 @@ export async function markAsPaid(
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  await prisma.payment.update({
+  const payment = await prisma.payment.update({
     where: { id },
     data: {
       status: "PAID",
@@ -59,6 +60,30 @@ export async function markAsPaid(
       ...(opts?.reference && { waveReference: opts.reference }),
       ...(opts?.phone     && { payerPhone: opts.phone }),
     },
+    include: {
+      contract: {
+        include: {
+          property: { select: { id: true, title: true, ownerId: true } },
+          tenant:   { select: { name: true } },
+        },
+      },
+    },
+  });
+
+  const { property, tenant } = payment.contract;
+  const methodLabel: Record<string, string> = {
+    wave: "Wave", orange_money: "Orange Money", free_money: "Free Money",
+    virement: "Virement", especes: "Espèces", autre: "Autre",
+  };
+  const modeStr = opts?.method ? ` via ${methodLabel[opts.method] ?? opts.method}` : "";
+
+  await createNotification({
+    userId:     property.ownerId,
+    category:   "PAYMENT",
+    title:      "Paiement confirmé",
+    body:       `Le loyer de ${tenant.name ?? "votre locataire"} pour « ${property.title} » a été encaissé${modeStr}.`,
+    actionUrl:  "/owner/dashboard/paiements",
+    propertyId: property.id,
   });
 
   revalidatePath("/dashboard/paiements");

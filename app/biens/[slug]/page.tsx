@@ -132,14 +132,28 @@ export default async function BienDetailSlugPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] pt-28">
+    <div className="min-h-screen bg-[#F8FAFC]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
 
-      <main className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      {/* Hero gallery — remonte sous le header transparent */}
+      <div className="pt-14 sm:pt-16 md:pt-20 bg-slate-900">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <PhotoGallery
+            mediaItems={mediaItems}
+            title={bien.title}
+            statusLabel={status.label}
+            statusClasses={status.classes}
+            countryLabel={countryLabel(bien.country)}
+            youtubeId={youtubeId}
+          />
+        </div>
+      </div>
+
+      <main className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-slate-400 mb-8">
           <Link href="/" className="hover:text-[#0066CC] transition-colors">Accueil</Link>
@@ -156,16 +170,6 @@ export default async function BienDetailSlugPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
           {/* Colonne principale */}
           <div className="space-y-6">
-            {/* Médias */}
-            <PhotoGallery
-              mediaItems={mediaItems}
-              title={bien.title}
-              statusLabel={status.label}
-              statusClasses={status.classes}
-              countryLabel={countryLabel(bien.country)}
-              youtubeId={youtubeId}
-            />
-
             {/* Titre & localisation */}
             <div>
               <h1 className="text-3xl font-bold text-slate-900">{bien.title}</h1>
@@ -222,6 +226,7 @@ export default async function BienDetailSlugPage({ params }: Props) {
             </div>
 
             {/* Formulaire de réservation */}
+            <div id="reserver-bien">
             <ReservationForm
               bienTitle={bien.title}
               bienCity={bien.city}
@@ -229,6 +234,7 @@ export default async function BienDetailSlugPage({ params }: Props) {
               pricePerUnit={price}
               whatsappNumber={whatsappNumber}
             />
+            </div>
 
             {/* Contact agence */}
             <div id="contact-agence" className="rounded-3xl bg-[#0066CC] p-7 text-white shadow-xl">

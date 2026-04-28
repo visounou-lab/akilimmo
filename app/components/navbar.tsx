@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -23,7 +24,16 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen]         = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const closeTimer                      = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { data: session }             = useSession();
+  const { data: session }               = useSession();
+  const pathname                        = usePathname();
+  const isBienDetail                    = /^\/biens\/.+/.test(pathname);
+
+  function scrollToReservation() {
+    const el = document.getElementById("reserver-bien");
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
 
   const user     = session?.user as { role?: string; status?: string } | undefined;
   const isOwner  = user?.role === "OWNER" && user?.status === "active";
@@ -92,8 +102,19 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
-          {/* Mobile: "Mon espace" si connecté, sinon "Connexion" */}
-          {isLogged ? (
+          {/* Mobile: "Réserver" sur page bien, sinon "Mon espace"/"Connexion" */}
+          {isBienDetail ? (
+            <button
+              onClick={scrollToReservation}
+              aria-label="Réserver ce bien"
+              className="inline-flex md:hidden items-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 animate-pulse-soft"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Réserver
+            </button>
+          ) : isLogged ? (
             <Link href={dashboardHref}
               className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
               Mon espace
@@ -125,6 +146,20 @@ export default function Navbar() {
             className="hidden md:inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
             Contact
           </a>
+
+          {/* Desktop only: Réserver (uniquement page bien) */}
+          {isBienDetail && (
+            <button
+              onClick={scrollToReservation}
+              aria-label="Réserver ce bien"
+              className="hidden md:inline-flex items-center gap-2 rounded-full bg-green-500 hover:bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 animate-pulse-soft"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Réserver ce bien
+            </button>
+          )}
 
           {/* Mobile burger */}
           <button onClick={() => setMenuOpen(!menuOpen)}

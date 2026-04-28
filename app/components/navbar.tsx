@@ -41,9 +41,19 @@ export default function Navbar() {
   const isLogged = !!session;
 
   useEffect(() => {
-    function onScroll() { setScrolled(window.scrollY > 60); }
+    let rafId: number | null = null;
+    function onScroll() {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 80);
+        rafId = null;
+      });
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const dashboardHref = isAdmin ? "/dashboard" : isOwner ? "/owner/dashboard" : "/login";

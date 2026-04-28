@@ -114,19 +114,9 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
-          {/* Mobile: "Réserver" sur page bien, sinon "Mon espace"/"Connexion" */}
-          {isBienDetail ? (
-            <button
-              onClick={scrollToReservation}
-              aria-label="Réserver ce bien"
-              className="inline-flex md:hidden items-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 animate-pulse-soft"
-            >
-              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Réserver
-            </button>
-          ) : isLogged ? (
+          {/* Mobile: "Mon espace" ou "Connexion" — le bouton Réserver flottant
+              (FloatingReserveButton, bottom-6) gère le CTA sur les pages bien */}
+          {isLogged ? (
             <Link href={dashboardHref}
               className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
               Mon espace

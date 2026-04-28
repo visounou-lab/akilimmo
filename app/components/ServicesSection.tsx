@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useReducedMotion, motion } from "framer-motion";
 import Link from "next/link";
 
 const services = [
@@ -14,6 +14,7 @@ const services = [
     description: "Optimisation des revenus, suivi des paiements et service client dédié. Nous gérons votre bien comme si c'était le nôtre.",
     color: "from-[#0066CC] to-[#004499]",
     lightColor: "bg-[#0066CC]/10 text-[#0066CC]",
+    cta: "text-[#0066CC]",
     href: "/services/gestion-locative",
   },
   {
@@ -26,6 +27,7 @@ const services = [
     description: "Génération automatique de contrats PDF conformes aux normes locales du Bénin et de Côte d'Ivoire. Signatures électroniques incluses.",
     color: "from-emerald-600 to-emerald-700",
     lightColor: "bg-emerald-50 text-emerald-700",
+    cta: "text-emerald-700",
     href: "/services/contrats",
   },
   {
@@ -38,20 +40,38 @@ const services = [
     description: "Tableau de bord en temps réel. Relances automatiques, historique complet et rapports financiers mensuels pour chaque propriété.",
     color: "from-orange-500 to-orange-600",
     lightColor: "bg-orange-50 text-orange-600",
+    cta: "text-orange-600",
     href: "/services/suivi-paiements",
   },
 ];
 
 export default function ServicesSection() {
+  const prefersReduced = useReducedMotion();
+
+  const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: prefersReduced ? 0 : 0.15 } },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: prefersReduced ? 0 : 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <section className="py-20 bg-white" id="services">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           className="mb-14 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={headingVariants}
         >
           <p className="text-sm font-semibold uppercase tracking-widest text-[#0066CC] mb-2">Services</p>
           <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
@@ -62,36 +82,50 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {services.map((s, i) => (
-            <Link key={s.title} href={s.href}>
-              <motion.article
-                className="relative group rounded-3xl border border-slate-100 bg-white p-8 shadow-sm overflow-hidden transition-shadow hover:shadow-xl h-full cursor-pointer"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.12 }}
-                whileHover={{ y: -4 }}
+        <motion.div
+          className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          variants={containerVariants}
+        >
+          {services.map((s) => (
+            <motion.div key={s.title} variants={cardVariants}>
+              <Link
+                href={s.href}
+                aria-label={`En savoir plus sur ${s.title}`}
+                className="group relative block h-full rounded-3xl border border-slate-100 bg-white p-8 shadow-sm overflow-hidden
+                  transition-all duration-300 hover:-translate-y-2 hover:shadow-xl
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0066CC] focus-visible:ring-offset-2"
               >
                 {/* Hover gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
 
-                <div className={`inline-flex p-3 rounded-2xl ${s.lightColor} mb-5 transition-transform group-hover:scale-110 duration-300`}>
+                {/* Icon */}
+                <div
+                  className={`inline-flex p-3 rounded-2xl ${s.lightColor} mb-5
+                    transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
+                >
                   {s.icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{s.title}</h3>
-                <p className="text-slate-500 leading-relaxed text-sm">{s.description}</p>
 
-                <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#0066CC] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{s.title}</h3>
+                <p className="text-slate-500 leading-relaxed text-sm flex-1">{s.description}</p>
+
+                {/* CTA always visible, arrow slides right on hover */}
+                <div className={`mt-6 flex items-center gap-1.5 text-sm font-semibold ${s.cta}`}>
                   <span>En savoir plus</span>
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg
+                    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
-              </motion.article>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

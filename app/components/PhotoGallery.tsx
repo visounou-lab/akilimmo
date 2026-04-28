@@ -45,21 +45,23 @@ export default function PhotoGallery({
     <>
       <div className="space-y-3">
         {youtubeId ? (
-          <div className="space-y-2">
-            <span className="inline-flex rounded-full bg-[#0066CC] px-4 py-1.5 text-sm font-semibold text-white shadow">
+          <div className="relative rounded-[32px] overflow-hidden bg-black aspect-video">
+            {/* Badge overlaid on the video — no longer conflicts with the navbar */}
+            <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-blue-600/90 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl pointer-events-none">
+              <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
               Visite virtuelle
             </span>
-            <div className="rounded-[32px] overflow-hidden bg-black aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
-                title="Visite virtuelle"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
+              title="Visite virtuelle"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         ) : heroItem ? (
           <button

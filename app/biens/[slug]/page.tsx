@@ -155,6 +155,21 @@ export default async function BienDetailSlugPage({ params }: Props) {
         </div>
       </div>
 
+      {/* ── Bandeau prix above-the-fold ── */}
+      <div className="bg-white border-b border-slate-100">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-bold text-[#0B3D91]">{formatFCFA(price)}</span>
+              <span className="text-sm text-slate-500">/ nuit</span>
+            </div>
+            <span className={`inline-flex rounded-full px-4 py-1.5 text-sm font-semibold ${status.classes}`}>
+              {status.label}
+            </span>
+          </div>
+        </div>
+      </div>
+
       <main className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-slate-400 mb-8">

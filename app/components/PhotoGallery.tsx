@@ -45,23 +45,28 @@ export default function PhotoGallery({
     <>
       <div className="space-y-3">
         {youtubeId ? (
-          <div className="relative rounded-[32px] overflow-hidden bg-black aspect-video">
-            {/* Badge overlaid on the video — no longer conflicts with the navbar */}
-            <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-blue-600/90 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl pointer-events-none">
-              <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Visite virtuelle
-            </span>
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
-              title="Visite virtuelle"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+          <div className="space-y-2">
+            <div className="rounded-[32px] overflow-hidden bg-black aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
+                title="Visite virtuelle"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            {/* Badge outside the iframe — n'interfère plus avec l'UI YouTube */}
+            <div className="flex justify-end px-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#00D4F0] px-4 py-1.5 text-sm font-semibold text-white shadow-sm">
+                <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Visite virtuelle
+              </span>
+            </div>
           </div>
         ) : heroItem ? (
           <button

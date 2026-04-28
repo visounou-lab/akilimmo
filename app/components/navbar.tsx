@@ -62,8 +62,10 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="inline-flex items-center shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Akil Immo" style={{ height: "50px", width: "auto", mixBlendMode: "screen" }} />
+          <div className="bg-[#0066CC] rounded-xl px-2 py-1.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Akil Immo" style={{ height: "38px", width: "auto" }} />
+          </div>
         </Link>
 
         {/* Desktop nav */}

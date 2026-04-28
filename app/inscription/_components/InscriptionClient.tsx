@@ -109,8 +109,8 @@ export default function InscriptionClient() {
       <div className="w-full max-w-lg">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/">
-            <Image src="/logo.png" alt="AKIL IMMO" width={80} height={80} className="mx-auto" />
+          <Link href="/" className="inline-flex items-center justify-center bg-[#0066CC] rounded-2xl p-3 mx-auto">
+            <Image src="/logo.png" alt="AKIL IMMO" width={64} height={64} />
           </Link>
           <h1 className="mt-4 text-2xl font-bold text-slate-900">Devenir propriétaire</h1>
           <p className="mt-1 text-sm text-slate-500">

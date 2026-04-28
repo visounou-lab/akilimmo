@@ -15,6 +15,7 @@ import {
 import ReservationForm from "../[id]/_components/ReservationForm";
 import ShareButtons from "../../components/ShareButtons";
 import PhotoGallery from "../../components/PhotoGallery";
+import FloatingReserveButton from "../../components/ui/FloatingReserveButton";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -138,6 +139,7 @@ export default async function BienDetailSlugPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
+      <FloatingReserveButton />
 
       {/* Hero gallery — remonte sous le header transparent */}
       <div className="pt-14 sm:pt-16 md:pt-20 bg-slate-900">

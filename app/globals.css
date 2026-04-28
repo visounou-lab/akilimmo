@@ -9,6 +9,16 @@
   animation: pulse-soft 3s ease-in-out infinite;
 }
 
+@keyframes shadow-pulse {
+  0%, 100% { box-shadow: 0 4px 14px -2px rgba(0, 212, 240, 0.20); }
+  50%       { box-shadow: 0 4px 28px -2px rgba(0, 212, 240, 0.55); }
+}
+
+.animate-shadow-pulse {
+  animation: shadow-pulse 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-pulse-soft { animation: none; }
+  .animate-pulse-soft,
+  .animate-shadow-pulse { animation: none; }
 }

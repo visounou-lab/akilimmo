@@ -6,8 +6,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
+import AnalyticsConsent from "./components/AnalyticsConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,23 +81,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-slate-50 text-slate-900">
         <Providers>{children}</Providers>
-        <GoogleAnalytics gaId="G-3DEL10SDZJ" />
-        {process.env.NODE_ENV === "production" && (
-          <>
-            <Script
-              src="https://www.googletagmanager.com/gtag/js?id=AW-17185310519"
-              strategy="afterInteractive"
-            />
-            <Script id="google-ads-config" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'AW-17185310519');
-              `}
-            </Script>
-          </>
-        )}
+        <AnalyticsConsent />
       </body>
     </html>
   );

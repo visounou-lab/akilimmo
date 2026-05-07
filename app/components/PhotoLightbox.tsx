@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 type Props = {
   images: Array<{ id: string; url: string; alt?: string | null }>;
@@ -76,11 +77,15 @@ export default function PhotoLightbox({ images, isOpen, initialIndex, onClose }:
         className="flex flex-1 items-center justify-center w-full px-16"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
+        <Image
           src={current.url}
           alt={current.alt ?? `Photo ${index + 1}`}
-          className="max-h-[80vh] max-w-[90vw] object-contain select-none rounded-lg shadow-2xl"
+          width={1200}
+          height={800}
+          className="max-h-[80vh] max-w-[90vw] object-contain select-none rounded-lg shadow-2xl w-auto h-auto"
           draggable={false}
+          priority
+          sizes="90vw"
         />
       </div>
 
@@ -142,7 +147,7 @@ export default function PhotoLightbox({ images, isOpen, initialIndex, onClose }:
                   : "border-transparent opacity-50 hover:opacity-80"
               }`}
             >
-              <img src={img.url} alt="" className="h-full w-full object-cover" draggable={false} />
+              <Image src={img.url} alt="" fill className="object-cover" draggable={false} sizes="56px" />
             </button>
           ))}
         </div>

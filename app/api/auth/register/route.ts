@@ -2,8 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { sendVerificationEmail, sendNewOwnerNotification } from "@/lib/mailer";
+import { rateLimit } from "@/lib/ratelimit";
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+  const { allowed, retryAfterMs } = rateLimit(`register:${ip}`, 3, 3_600_000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop d'inscriptions depuis cette adresse. Réessayez plus tard." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(retryAfterMs / 1000)) } },
+    );
+  }
+
   try {
     const { firstName, lastName, email, phone, country, city, password } = await req.json();
 

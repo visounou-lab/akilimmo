@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import PhotoLightbox from "./PhotoLightbox";
 
 type MediaItem = {
@@ -94,10 +95,13 @@ export default function PhotoGallery({
             className="relative w-full overflow-hidden rounded-[32px] bg-gradient-to-br from-[#E8F4FD] to-slate-100 aspect-[16/9] cursor-zoom-in group"
             aria-label="Agrandir la photo"
           >
-            <img
+            <Image
               src={heroItem.url}
               alt={title}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              fill
+              sizes="(max-width: 1024px) 100vw, 800px"
+              className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              priority
             />
             <span className="absolute top-4 left-4 inline-flex rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-[#0066CC] shadow">
               {country}
@@ -137,10 +141,12 @@ export default function PhotoGallery({
                 aria-label={`Voir photo ${i + (youtubeId ? 1 : 2)}`}
                 className="relative overflow-hidden rounded-xl aspect-square bg-gradient-to-br from-[#E8F4FD] to-slate-100 cursor-zoom-in group"
               >
-                <img
+                <Image
                   src={item.url}
                   alt=""
-                  className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105 group-hover:opacity-90"
+                  fill
+                  sizes="(max-width: 640px) 25vw, 120px"
+                  className="object-cover transition-transform duration-200 group-hover:scale-105 group-hover:opacity-90"
                 />
               </button>
             ))}

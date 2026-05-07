@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 export async function createUser(formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   const email = formData.get("email") as string;
   const name  = formData.get("name")  as string;
@@ -30,6 +31,7 @@ export async function createUser(formData: FormData) {
 export async function deleteUser(id: string) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   await prisma.user.delete({ where: { id } });
   revalidatePath("/dashboard/utilisateurs");

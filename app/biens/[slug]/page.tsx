@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Navbar from "../../components/navbar";
@@ -17,9 +18,11 @@ import ShareButtons from "../../components/ShareButtons";
 import PhotoGallery from "../../components/PhotoGallery";
 import FloatingReserveButton from "../../components/ui/FloatingReserveButton";
 
+export const revalidate = 3600;
+
 type Props = { params: Promise<{ slug: string }> };
 
-async function getProperty(slug: string) {
+const getProperty = cache(async (slug: string) => {
   return prisma.property.findUnique({
     where: { slug },
     include: {
@@ -27,7 +30,7 @@ async function getProperty(slug: string) {
       images: { orderBy: { order: "asc" } },
     },
   });
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const SLIDES = [
   "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80",
@@ -93,11 +94,13 @@ export default function HeroSection() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2 }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={SLIDES[current]}
             alt=""
-            className="w-full h-full object-cover"
+            fill
+            priority={current === 0}
+            sizes="100vw"
+            className="object-cover"
           />
         </motion.div>
       </AnimatePresence>

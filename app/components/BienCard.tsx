@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { getYouTubeId, getYoutubeThumbnail } from "@/lib/youtube";
 
@@ -56,11 +57,13 @@ export default function BienCard({ bien }: BienCardProps) {
         {/* Image */}
         <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-[#E8F4FD] to-slate-100">
           {displayImage && !imgFailed ? (
-            <img
+            <Image
               src={displayImage}
               alt={bien.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition duration-300 group-hover:scale-105"
               onError={() => setImgFailed(true)}
-              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
             />
           ) : (
             <div

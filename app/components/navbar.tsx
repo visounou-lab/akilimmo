@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   { label: "Accueil",              href: "/" },
@@ -75,8 +76,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="inline-flex items-center shrink-0">
           <div className={`${isBienDetail && !scrolled ? "bg-white/15 backdrop-blur-sm" : "bg-[#0066CC]"} rounded-xl px-2 py-1.5 transition-colors duration-300`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Akil Immo" style={{ height: "38px", width: "auto" }} />
+            <Image src="/logo.png" alt="Akil Immo" width={120} height={38} priority style={{ height: "38px", width: "auto" }} />
           </div>
         </Link>
 

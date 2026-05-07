@@ -63,7 +63,9 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-[#0066CC] shadow-lg shadow-[#0066CC]/20 border-b border-[#0054a3]/30"
-          : "bg-transparent"
+          : isBienDetail
+            ? "bg-gradient-to-b from-black/60 to-transparent"
+            : "bg-transparent"
       }`}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
@@ -72,7 +74,7 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="inline-flex items-center shrink-0">
-          <div className="bg-[#0066CC] rounded-xl px-2 py-1.5">
+          <div className={`${isBienDetail && !scrolled ? "bg-white/15 backdrop-blur-sm" : "bg-[#0066CC]"} rounded-xl px-2 py-1.5 transition-colors duration-300`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.png" alt="Akil Immo" style={{ height: "38px", width: "auto" }} />
           </div>
@@ -114,9 +116,9 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
-          {/* Mobile: "Mon espace" ou "Connexion" — le bouton Réserver flottant
-              (FloatingReserveButton, bottom-6) gère le CTA sur les pages bien */}
-          {isLogged ? (
+          {/* Mobile: "Mon espace" ou "Connexion" — masqué sur fiches biens
+              (FloatingReserveButton gère le CTA sur ces pages) */}
+          {!isBienDetail && (isLogged ? (
             <Link href={dashboardHref}
               className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
               Mon espace
@@ -126,7 +128,7 @@ export default function Navbar() {
               className="inline-flex md:hidden items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0066CC] transition hover:bg-slate-100 shadow-sm">
               Connexion
             </a>
-          )}
+          ))}
 
           {/* Desktop: "Mon espace" si connecté, sinon "Connexion" ghost */}
           {isLogged ? (

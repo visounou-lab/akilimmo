@@ -34,10 +34,11 @@ export default async function PaiementsPage({ searchParams }: Props) {
     ? { status: filterStatus as "PENDING" | "PAID" | "FAILED" }
     : {};
 
-  const [payments, allPayments] = await Promise.all([
+  const [payments, aggTotal, aggPaid, aggPending] = await Promise.all([
     prisma.payment.findMany({
       where,
       orderBy: { dueDate: "desc" },
+      take: 100,
       include: {
         contract: {
           include: {
@@ -47,7 +48,9 @@ export default async function PaiementsPage({ searchParams }: Props) {
         },
       },
     }),
-    prisma.payment.findMany({ select: { amount: true, status: true } }),
+    prisma.payment.aggregate({ _sum: { amount: true } }),
+    prisma.payment.aggregate({ where: { status: "PAID" },    _sum: { amount: true } }),
+    prisma.payment.aggregate({ where: { status: "PENDING" }, _sum: { amount: true } }),
   ]);
 
   const METHOD_LABELS: Record<string, string> = {
@@ -59,9 +62,9 @@ export default async function PaiementsPage({ searchParams }: Props) {
     autre:        "Autre",
   };
 
-  const totalAll   = allPayments.reduce((s, p) => s + Number(p.amount), 0);
-  const paidAll    = allPayments.filter((p) => p.status === "PAID").reduce((s, p) => s + Number(p.amount), 0);
-  const pendingAll = allPayments.filter((p) => p.status === "PENDING").reduce((s, p) => s + Number(p.amount), 0);
+  const totalAll   = Number(aggTotal._sum.amount   ?? 0);
+  const paidAll    = Number(aggPaid._sum.amount     ?? 0);
+  const pendingAll = Number(aggPending._sum.amount  ?? 0);
 
   return (
     <div className="p-8">

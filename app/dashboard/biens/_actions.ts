@@ -24,7 +24,9 @@ async function validateAkilimmoVideo(rawUrl: string | null): Promise<string | nu
 export async function createProperty(formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
-  const userId = (session.user as { id: string }).id;
+  const user = session.user as { id: string; role?: string };
+  if (user.role !== "ADMIN") redirect("/login");
+  const userId = user.id;
 
   const files = formData.getAll("images") as File[];
   const primaryIndex = parseInt(formData.get("primaryIndex") as string, 10) || 0;
@@ -80,6 +82,7 @@ export async function createProperty(formData: FormData) {
 export async function updateProperty(id: string, formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   const existing = await prisma.property.findUniqueOrThrow({ where: { id } });
 
@@ -162,6 +165,7 @@ export async function updateProperty(id: string, formData: FormData) {
 export async function deleteProperty(id: string) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   await prisma.property.delete({ where: { id } });
 

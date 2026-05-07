@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 export async function createContract(formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   const propertyId = formData.get("propertyId") as string | null;
   const tenantId   = formData.get("tenantId")   as string | null;
@@ -58,6 +59,7 @@ export async function createContract(formData: FormData) {
 export async function updateContractStatus(id: string, formData: FormData) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   const status = formData.get("status") as "PENDING" | "ACTIVE" | "TERMINATED";
 
@@ -96,6 +98,7 @@ export async function updateContractStatus(id: string, formData: FormData) {
 export async function deleteContract(id: string) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if ((session.user as { role?: string }).role !== "ADMIN") redirect("/login");
 
   const contract = await prisma.contract.findUniqueOrThrow({ where: { id } });
   await prisma.contract.delete({ where: { id } });

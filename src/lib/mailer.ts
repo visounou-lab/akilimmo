@@ -1,5 +1,14 @@
 import nodemailer from "nodemailer";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 if (!process.env.SMTP_PASS) {
   console.warn("[contact] SMTP_PASS not set — emails will fail silently");
 }
@@ -56,10 +65,10 @@ export async function sendNewOwnerNotification(data: {
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
         <h2 style="color:#0066CC">Nouveau propriétaire inscrit</h2>
         <ul style="color:#374151;line-height:1.8">
-          <li><strong>Nom :</strong> ${data.name}</li>
-          <li><strong>Email :</strong> ${data.email}</li>
-          <li><strong>Pays :</strong> ${data.country}</li>
-          <li><strong>Ville :</strong> ${data.city}</li>
+          <li><strong>Nom :</strong> ${escapeHtml(data.name)}</li>
+          <li><strong>Email :</strong> ${escapeHtml(data.email)}</li>
+          <li><strong>Pays :</strong> ${escapeHtml(data.country)}</li>
+          <li><strong>Ville :</strong> ${escapeHtml(data.city)}</li>
         </ul>
         <a href="https://www.akilimmo.com/dashboard/proprietaires" style="display:inline-block;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px">
           Gérer les propriétaires
@@ -83,9 +92,9 @@ export async function sendNewPropertyNotification(data: {
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
         <h2 style="color:#0066CC">Nouveau bien à valider</h2>
         <ul style="color:#374151;line-height:1.8">
-          <li><strong>Propriétaire :</strong> ${data.ownerName}</li>
-          <li><strong>Titre :</strong> ${data.title}</li>
-          <li><strong>Ville :</strong> ${data.city}</li>
+          <li><strong>Propriétaire :</strong> ${escapeHtml(data.ownerName)}</li>
+          <li><strong>Titre :</strong> ${escapeHtml(data.title)}</li>
+          <li><strong>Ville :</strong> ${escapeHtml(data.city)}</li>
         </ul>
         <a href="https://www.akilimmo.com/dashboard/valider" style="display:inline-block;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px">
           Valider le bien
@@ -104,7 +113,7 @@ export async function sendPropertyApprovedEmail(to: string, firstName: string, t
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
         <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
         <h2 style="color:#0066CC">Votre bien est publié ! 🎉</h2>
-        <p style="color:#374151">Bonjour ${firstName},</p>
+        <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
         <p style="color:#374151">Votre bien <strong>${title}</strong> est maintenant en ligne sur AKIL IMMO et visible par tous les visiteurs.</p>
         <a href="https://www.akilimmo.com/biens" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
           Voir sur le site
@@ -124,10 +133,10 @@ export async function sendPropertyRejectedEmail(to: string, firstName: string, t
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
         <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
         <h2 style="color:#DC2626">Bien non publié</h2>
-        <p style="color:#374151">Bonjour ${firstName},</p>
-        <p style="color:#374151">Votre bien <strong>${title}</strong> n'a pas pu être publié pour la raison suivante :</p>
+        <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
+        <p style="color:#374151">Votre bien <strong>${escapeHtml(title)}</strong> n'a pas pu être publié pour la raison suivante :</p>
         <blockquote style="border-left:4px solid #DC2626;padding:12px 16px;margin:16px 0;background:#FEF2F2;color:#374151">
-          ${note}
+          ${escapeHtml(note)}
         </blockquote>
         <p style="color:#374151">Vous pouvez modifier votre bien et le resoumettre depuis votre espace propriétaire.</p>
         <a href="https://www.akilimmo.com/owner/dashboard/biens" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
@@ -149,7 +158,7 @@ export async function sendPasswordResetEmail(to: string, firstName: string, toke
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
         <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
         <h2 style="color:#0066CC;margin-bottom:8px">Réinitialisation de votre mot de passe</h2>
-        <p style="color:#374151">Bonjour ${firstName},</p>
+        <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
         <p style="color:#374151">Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe. Ce lien expire dans <strong>1 heure</strong>.</p>
         <a href="${url}" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
           Réinitialiser mon mot de passe
@@ -172,7 +181,7 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
         </div>
         <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
           <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Bienvenue sur AKIL IMMO !</h2>
-          <p style="color:#374151;margin:0 0 12px">Bonjour ${firstName},</p>
+          <p style="color:#374151;margin:0 0 12px">Bonjour ${escapeHtml(firstName)},</p>
           <p style="color:#374151;margin:0 0 12px">Votre compte propriétaire est maintenant <strong>actif</strong>. Vous pouvez dès à présent vous connecter et soumettre vos biens à la location.</p>
           <a href="https://www.akilimmo.com/login" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
             Se connecter
@@ -202,8 +211,8 @@ export async function sendAdminMessageEmail(to: string, firstName: string, subje
           <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
         </div>
         <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
-          <p style="color:#374151;margin:0 0 20px">Bonjour ${firstName},</p>
-          <div style="color:#374151;line-height:1.7;white-space:pre-wrap">${body}</div>
+          <p style="color:#374151;margin:0 0 20px">Bonjour ${escapeHtml(firstName)},</p>
+          <div style="color:#374151;line-height:1.7;white-space:pre-wrap">${escapeHtml(body)}</div>
           <hr style="border:none;border-top:1px solid #E5E7EB;margin:28px 0" />
           <p style="color:#374151;margin:0">L'équipe AKIL IMMO</p>
           <p style="color:#6B7280;font-size:13px;margin:4px 0 0">
@@ -233,7 +242,7 @@ export async function sendPropertySubmitReminderEmail(to: string, firstName: str
           <h2 style="margin:0 0 8px;color:#0066CC;font-size:22px">Votre compte est prêt, ${firstName} !</h2>
           <p style="margin:0 0 24px;color:#6B7280;font-size:14px">Il ne reste plus qu'une étape : déposer votre premier bien.</p>
 
-          <p style="color:#374151">Bonjour ${firstName},</p>
+          <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
           <p style="color:#374151">
             Votre espace propriétaire AKIL IMMO est actif. Des milliers de locataires potentiels
             cherchent un logement en Côte d'Ivoire et au Bénin — votre bien peut être en ligne
@@ -304,7 +313,7 @@ export async function sendTenantAccessEmail(to: string, name: string, token: str
         </div>
         <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
           <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Bienvenue sur AKIL IMMO !</h2>
-          <p style="color:#374151;margin:0 0 12px">Bonjour ${firstName},</p>
+          <p style="color:#374151;margin:0 0 12px">Bonjour ${escapeHtml(firstName)},</p>
           <p style="color:#374151;margin:0 0 12px">
             Votre compte locataire a été créé sur la plateforme AKIL IMMO.<br />
             Voici vos informations de connexion :
@@ -342,7 +351,7 @@ export async function sendContactRequest(data: {
 }): Promise<void> {
   const row = (label: string, value: string) =>
     `<tr>
-      <td style="padding:8px 12px;font-weight:600;color:#374151;white-space:nowrap;width:140px;vertical-align:top">${label}</td>
+      <td style="padding:8px 12px;font-weight:600;color:#374151;white-space:nowrap;width:140px;vertical-align:top">${escapeHtml(label)}</td>
       <td style="padding:8px 12px;color:#374151;word-break:break-word">${value}</td>
     </tr>`;
 
@@ -355,19 +364,19 @@ export async function sendContactRequest(data: {
         <h2 style="margin:0 0 20px;color:#0066CC;font-size:20px">Nouveau message de contact</h2>
         <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
           <tbody style="background:#F9FAFB">
-            ${row("Nom", data.nom)}
-            ${row("Email", `<a href="mailto:${data.email}" style="color:#0066CC">${data.email}</a>`)}
-            ${data.telephone ? row("Téléphone", `<a href="tel:${data.telephone}" style="color:#0066CC">${data.telephone}</a>`) : ""}
-            ${data.pays ? row("Pays", data.pays) : ""}
-            ${row("Sujet", data.sujet)}
+            ${row("Nom", escapeHtml(data.nom))}
+            ${row("Email", `<a href="mailto:${escapeHtml(data.email)}" style="color:#0066CC">${escapeHtml(data.email)}</a>`)}
+            ${data.telephone ? row("Téléphone", `<a href="tel:${escapeHtml(data.telephone)}" style="color:#0066CC">${escapeHtml(data.telephone)}</a>`) : ""}
+            ${data.pays ? row("Pays", escapeHtml(data.pays)) : ""}
+            ${row("Sujet", escapeHtml(data.sujet))}
           </tbody>
         </table>
         <div style="margin-top:20px;padding:16px;background:#F0F7FF;border-left:4px solid #0066CC;border-radius:4px">
           <p style="margin:0 0 6px;font-weight:600;color:#374151">Message :</p>
-          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${data.message}</p>
+          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${escapeHtml(data.message)}</p>
         </div>
         <p style="margin-top:24px;font-size:13px;color:#6B7280">
-          Répondre à ce message répondra directement à <a href="mailto:${data.email}" style="color:#0066CC">${data.email}</a>.
+          Répondre à ce message répondra directement à <a href="mailto:${escapeHtml(data.email)}" style="color:#0066CC">${escapeHtml(data.email)}</a>.
         </p>
       </div>
       <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
@@ -440,7 +449,7 @@ export async function sendPaymentConfirmedEmail(data: {
           <h2 style="margin:0 0 4px;color:#16A34A;font-size:20px">Loyer encaissé ✓</h2>
           <p style="margin:0 0 24px;color:#6B7280;font-size:14px">Confirmation de paiement</p>
 
-          <p style="color:#374151">Bonjour ${firstName},</p>
+          <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
           <p style="color:#374151">Le loyer de votre bien <strong>${data.propertyTitle}</strong> a bien été encaissé par AKIL IMMO.</p>
 
           <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:20px;margin:20px 0">
@@ -513,17 +522,17 @@ export async function sendDocumentRequest(data: {
         <h2 style="margin:0 0 20px;color:#0066CC;font-size:20px">Nouvelle demande de document</h2>
         <table style="width:100%;border-collapse:collapse;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden">
           <tbody style="background:#F9FAFB">
-            <tr><td style="padding:8px 12px;font-weight:600;color:#374151;width:160px">Propriétaire</td><td style="padding:8px 12px;color:#374151">${data.ownerName}</td></tr>
-            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Email</td><td style="padding:8px 12px;color:#374151"><a href="mailto:${data.ownerEmail}" style="color:#0066CC">${data.ownerEmail}</a></td></tr>
-            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Type</td><td style="padding:8px 12px;color:#374151">${label}</td></tr>
-            ${data.propertyTitle ? `<tr><td style="padding:8px 12px;font-weight:600;color:#374151">Bien</td><td style="padding:8px 12px;color:#374151">${data.propertyTitle}</td></tr>` : ""}
-            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Référence</td><td style="padding:8px 12px;color:#374151;font-family:monospace;font-size:13px">${data.requestId}</td></tr>
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151;width:160px">Propriétaire</td><td style="padding:8px 12px;color:#374151">${escapeHtml(data.ownerName)}</td></tr>
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Email</td><td style="padding:8px 12px;color:#374151"><a href="mailto:${escapeHtml(data.ownerEmail)}" style="color:#0066CC">${escapeHtml(data.ownerEmail)}</a></td></tr>
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Type</td><td style="padding:8px 12px;color:#374151">${escapeHtml(label)}</td></tr>
+            ${data.propertyTitle ? `<tr><td style="padding:8px 12px;font-weight:600;color:#374151">Bien</td><td style="padding:8px 12px;color:#374151">${escapeHtml(data.propertyTitle)}</td></tr>` : ""}
+            <tr><td style="padding:8px 12px;font-weight:600;color:#374151">Référence</td><td style="padding:8px 12px;color:#374151;font-family:monospace;font-size:13px">${escapeHtml(data.requestId)}</td></tr>
           </tbody>
         </table>
         ${data.message ? `
         <div style="margin-top:20px;padding:16px;background:#F0F7FF;border-left:4px solid #0066CC;border-radius:4px">
           <p style="margin:0 0 6px;font-weight:600;color:#374151">Message :</p>
-          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${data.message}</p>
+          <p style="margin:0;color:#374151;white-space:pre-wrap;line-height:1.6">${escapeHtml(data.message)}</p>
         </div>` : ""}
         <a href="https://www.akilimmo.com/dashboard" style="display:inline-block;margin-top:24px;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">
           Traiter la demande

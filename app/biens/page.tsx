@@ -1,49 +1,53 @@
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
-import FiltresBiens from "./_components/FiltresBiens";
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import Navbar from "../../components/v3/Navbar";
+import Footer from "../../components/v3/Footer";
+import BiensListClient from "../../components/v3/BiensListClient";
 
 export const revalidate = 60;
 
-export const metadata = {
-  title: "Biens disponibles — Appartements et Villas",
+export const metadata: Metadata = {
+  title: "Biens disponibles — Appartements et Villas | AKIL IMMO",
   description:
-    "Découvrez tous nos appartements et villas meublés disponibles à la location au Bénin et en Côte d'Ivoire.",
+    "Villas et appartements meublés vérifiés à la location au Bénin et en Côte d'Ivoire. Filtrez par pays et par ville pour trouver votre logement idéal.",
 };
 
-export default async function BiensPage() {
-  const biens = await prisma.property.findMany({
+export default async function V3BiensPage() {
+  const raw = await prisma.property.findMany({
     where: { status: "AVAILABLE", publishStatus: "published" },
     orderBy: { createdAt: "desc" },
     select: {
-      id: true, slug: true, title: true, city: true, country: true,
-      price: true, bedrooms: true, bathrooms: true, imageUrl: true, videoUrl: true,
+      id: true,
+      slug: true,
+      title: true,
+      city: true,
+      country: true,
+      price: true,
+      bedrooms: true,
+      bathrooms: true,
+      imageUrl: true,
+      videoUrl: true,
+      propertyType: true,
+      images: {
+        where: { status: "APPROVED" },
+        orderBy: { order: "asc" },
+        select: { url: true, status: true, order: true },
+      },
     },
   });
 
+  const properties = raw.map((p) => ({
+    ...p,
+    price: Number(p.price),
+  }));
+
   return (
-    <div className="min-h-screen bg-[#F8FAFC] pt-28">
+    <>
       <Navbar />
-
-      <main className="mx-auto max-w-7xl px-0 sm:px-6 py-10 lg:px-8">
-        {/* En-tête */}
-        <div className="mb-10 px-6 sm:px-0">
-          <span className="inline-flex rounded-full bg-[#0066CC]/10 px-4 py-1 text-sm font-semibold text-[#0066CC] mb-3">
-            Disponibles maintenant
-          </span>
-          <h1 className="text-4xl font-semibold text-slate-900">
-            Biens disponibles
-          </h1>
-          <p className="mt-3 text-lg text-slate-500 max-w-2xl">
-            Tous nos biens disponibles à la location au Bénin et en Côte d&apos;Ivoire.
-            Filtrez par pays et par ville pour trouver votre logement idéal.
-          </p>
-        </div>
-
-        <FiltresBiens biens={biens} />
+      <main id="main-content" className="pt-16">
+        <BiensListClient properties={properties} />
       </main>
-
       <Footer />
-    </div>
+    </>
   );
 }

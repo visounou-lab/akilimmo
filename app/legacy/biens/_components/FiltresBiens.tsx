@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import BienCard from "../../components/BienCard";
+import BienCard from "../../../components/BienCard";
 
 const COUNTRY_OPTIONS = [
   { value: "TOUS",          label: "Tous les pays" },

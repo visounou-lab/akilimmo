@@ -83,7 +83,7 @@ export default function ContactCardV3({ waNumber, phoneDisplay }: Props) {
 
       {/* Bouton retour */}
       <a
-        href="/v3/biens"
+        href="/biens"
         className="flex items-center justify-center gap-2 cursor-pointer rounded-xl transition-all duration-150 focus:outline-none focus-visible:ring-2"
         style={{
           fontFamily: "var(--font-inter), sans-serif",

@@ -158,7 +158,7 @@ export default function InscriptionFormV3() {
           </p>
 
           <Link
-            href="/v3"
+            href="/"
             className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm cursor-pointer transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
@@ -237,7 +237,7 @@ export default function InscriptionFormV3() {
 
           {/* Back link */}
           <Link
-            href="/v3"
+            href="/"
             className="flex items-center gap-1.5 text-sm cursor-pointer transition-colors duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",

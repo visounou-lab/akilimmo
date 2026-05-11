@@ -9,8 +9,8 @@ export default function BreadcrumbV3({ title }: { title: string }) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center gap-1.5">
         {(
           [
-            { label: "Accueil", href: "/v3" },
-            { label: "Biens", href: "/v3/biens" },
+            { label: "Accueil", href: "/" },
+            { label: "Biens", href: "/biens" },
           ] as const
         ).map(({ label, href }) => (
           <span key={href} className="flex items-center gap-1.5">

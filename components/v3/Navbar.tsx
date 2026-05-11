@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Louer", href: "/v3/biens" },
-  { label: "Court séjour", href: "/v3/biens" },
-  { label: "Comment ça marche", href: "/v3/comment-ca-marche" },
+  { label: "Louer", href: "/biens" },
+  { label: "Court séjour", href: "/biens" },
+  { label: "Comment ça marche", href: "/comment-ca-marche" },
   { label: "Devenir partenaire", href: "/inscription" },
 ];
 
@@ -29,7 +29,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a
-            href="/v3"
+            href="/"
             className="flex items-center gap-3 cursor-pointer"
             aria-label="AKIL IMMO — Accueil"
           >

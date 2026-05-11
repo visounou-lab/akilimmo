@@ -48,27 +48,22 @@ export default function HeroSection() {
           style={{
             fontFamily: "var(--font-playfair), serif",
             fontWeight: 700,
-            fontSize: "clamp(2.4rem, 7vw, 5.5rem)",
-            lineHeight: 1.1,
+            fontSize: "clamp(2rem, 5.5vw, 4.2rem)",
+            lineHeight: 1.15,
             color: "#FDFCF8",
             letterSpacing: "-0.01em",
           }}
         >
-          Votre maison au pays
+          Votre logement meublé au pays,
           <br />
-          <em
-            style={{
-              fontStyle: "italic",
-              color: "#C8922A",
-            }}
-          >
-            vous attend.
+          <em style={{ fontStyle: "italic", color: "#C8922A" }}>
+            sans le stress de la distance.
           </em>
         </h1>
 
         {/* Slogan */}
         <p
-          className="mx-auto mb-4 max-w-2xl text-lg sm:text-xl"
+          className="mx-auto mb-5 max-w-2xl text-lg sm:text-xl"
           style={{
             fontFamily: "var(--font-playfair), serif",
             fontWeight: 400,
@@ -80,16 +75,18 @@ export default function HeroSection() {
           Vous êtes loin, nous sommes là.
         </p>
         <p
-          className="mx-auto mb-10 max-w-xl text-base"
+          className="mx-auto mb-10 max-w-2xl text-base sm:text-lg"
           style={{
             fontFamily: "var(--font-inter), sans-serif",
             fontWeight: 300,
             color: "rgba(253,252,248,0.7)",
-            lineHeight: 1.75,
+            lineHeight: 1.8,
           }}
         >
-          Depuis l'étranger, trouvez, visitez et signez votre bien immobilier
-          en toute confiance — nous gérons tout sur place pour vous.
+          Villas et appartements meublés vérifiés à Abidjan, Cotonou, Cocody
+          et Abomey-Calavi. Vidéo HD du bien, galerie photos détaillée,
+          réservation simple sur WhatsApp. Pour la diaspora, les expat&apos;s,
+          et tous ceux qui veulent louer en confiance.
         </p>
 
         {/* CTAs */}
@@ -120,7 +117,7 @@ export default function HeroSection() {
           </a>
 
           <a
-            href="https://wa.me/22900000000"
+            href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-4 text-base font-medium transition-all duration-200"

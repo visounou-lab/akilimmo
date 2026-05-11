@@ -9,17 +9,35 @@ const TESTIMONIALS = [
     location: "Paris, France",
     initials: "AK",
     quote:
-      "Je cherchais un appartement à Cotonou depuis la France sans savoir à qui faire confiance. AKIL IMMO m'a organisé une visite vidéo en direct, répondu à toutes mes questions et m'a aidée à signer à distance en moins de deux semaines. Aujourd'hui, ma famille vit dans cet appartement. Je recommande sans hésiter.",
-    property: "Appartement · Cotonou",
+      "Je cherchais un appartement à Cotonou depuis la France. Sur AKIL IMMO, j'ai trouvé une annonce avec une vidéo complète du bien et toutes les photos dont j'avais besoin. J'ai contacté le propriétaire sur WhatsApp, posé toutes mes questions, et réservé en quelques jours. À mon arrivée, tout correspondait à l'annonce. Je recommande sans hésiter.",
+    property: "Locataire · Cotonou",
   },
   {
     id: 2,
+    name: "Sarah B.",
+    location: "Expat en mission à Abidjan",
+    initials: "SB",
+    quote:
+      "Je suis arrivée à Abidjan pour une mission de 8 mois. AKIL IMMO m'a permis de comparer plusieurs appartements meublés à Cocody depuis Paris, vidéos et photos à l'appui. Échange WhatsApp clair avec le propriétaire, réservation rapide, clés à l'arrivée. Plateforme sérieuse et efficace.",
+    property: "Appartement meublé · Cocody",
+  },
+  {
+    id: 3,
     name: "Jean-Luc M.",
     location: "Montréal, Canada",
     initials: "JM",
     quote:
-      "Investir au pays depuis l'étranger, c'était mon grand projet depuis des années. AKIL IMMO a rendu ça possible. Suivi mensuel, loyers versés sans retard, interlocuteur toujours disponible sur WhatsApp. C'est exactement le sérieux qu'on attend quand on confie son investissement à distance.",
-    property: "Villa · Cocody, Abidjan",
+      "Mon appartement à Cocody dormait depuis deux ans. AKIL IMMO l'a remis en valeur, trouvé un locataire sérieux en trois semaines, et m'envoie chaque mois un reporting WhatsApp. Zéro impayé, zéro souci à 6 000 km.",
+    property: "Propriétaire · Cocody, Abidjan",
+  },
+  {
+    id: 4,
+    name: "M. Dossou",
+    location: "Agence Immobilière Étoile, Cotonou",
+    initials: "MD",
+    quote:
+      "On avait des biens meublés haut de gamme qui peinaient à trouver preneur en local. En s'associant à AKIL IMMO, on touche maintenant la diaspora et les expat's. Trois biens placés en deux mois. Une vraie complémentarité.",
+    property: "Partenaire AKIL IMMO · Cotonou",
   },
 ];
 

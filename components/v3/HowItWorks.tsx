@@ -1,31 +1,31 @@
 "use client";
 
-import { Search, Video, FileSignature } from "lucide-react";
+import { Search, Video, CalendarCheck } from "lucide-react";
 
 const STEPS = [
   {
     icon: Search,
     step: "01",
-    title: "Vous choisissez en ligne",
+    title: "Vous explorez en ligne",
     description:
-      "Parcourez nos biens depuis où vous êtes. Photos HD, plans, quartier, prix — tout est transparent. Zéro déplacement nécessaire.",
-    ariaLabel: "Étape 1 : choisissez votre bien en ligne",
+      "Parcourez nos villas et appartements meublés vérifiés. Vidéos HD du bien, galerie photos détaillée, plans, équipements, quartier — tout est transparent. Court ou long séjour, vous filtrez selon votre besoin.",
+    ariaLabel: "Étape 1 : explorez les biens en ligne",
   },
   {
     icon: Video,
     step: "02",
-    title: "Nous visitons pour vous",
+    title: "Vous visitez en virtuel",
     description:
-      "Votre conseiller AKIL IMMO se déplace sur place, filme la visite en direct et répond à toutes vos questions en temps réel.",
-    ariaLabel: "Étape 2 : nous effectuons la visite virtuelle pour vous",
+      "Chaque bien dispose d'une vidéo complète intégrée et d'une galerie photos HD. Vous découvrez le logement comme si vous y étiez, à votre rythme, depuis n'importe où dans le monde.",
+    ariaLabel: "Étape 2 : visite virtuelle du bien",
   },
   {
-    icon: FileSignature,
+    icon: CalendarCheck,
     step: "03",
-    title: "Vous signez à distance",
+    title: "Vous réservez sur WhatsApp",
     description:
-      "Contrat électronique sécurisé, transfert encadré, remise de clés coordonnée. Vous signez depuis Paris, Madrid ou Montréal.",
-    ariaLabel: "Étape 3 : signature du contrat à distance",
+      "Formulaire de contact intégré avec calendrier de disponibilités. Un échange WhatsApp avec le propriétaire ou l'agence pour finaliser. Réservation rapide, sans intermédiaire physique.",
+    ariaLabel: "Étape 3 : réservation via WhatsApp",
   },
 ];
 

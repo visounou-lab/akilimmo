@@ -1,10 +1,10 @@
-import { Building2, CalendarCheck, MapPin, Headset } from "lucide-react";
+import { Building2, CalendarCheck, MapPin, Zap } from "lucide-react";
 
 const STATS = [
   { icon: Building2, value: "350+", label: "Biens gérés", ariaLabel: "Plus de 350 biens gérés" },
   { icon: CalendarCheck, value: "8 ans", label: "D'expérience", ariaLabel: "8 ans d'expérience" },
   { icon: MapPin, value: "2 pays", label: "Côte d'Ivoire · Bénin", ariaLabel: "Présence en Côte d'Ivoire et au Bénin" },
-  { icon: Headset, value: "100%", label: "Suivi à distance", ariaLabel: "100% suivi à distance" },
+  { icon: Zap, value: "24h", label: "Délai de réponse", ariaLabel: "Délai de réponse de 24 heures" },
 ];
 
 export default function StatsBar() {

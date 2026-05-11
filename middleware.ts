@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
   // Edge protection for authenticated routes
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   if (isProtected) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({ req, secret: process.env.AUTH_SECRET });
     if (!token) {
       const loginUrl = req.nextUrl.clone();
       loginUrl.pathname = "/login";

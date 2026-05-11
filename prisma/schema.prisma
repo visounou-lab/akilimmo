@@ -44,6 +44,12 @@ enum NotificationCategory {
   MESSAGE
 }
 
+enum ImageStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id             String         @id @default(cuid())
   name           String?
@@ -72,6 +78,7 @@ model User {
   payments            Payment[]
   notifications       Notification[]
   documentRequests    DocumentRequest[]
+  uploadedImages      PropertyImage[] @relation("uploadedImages")
 }
 
 model Account {
@@ -138,18 +145,25 @@ model Property {
 }
 
 model PropertyImage {
-  id         String   @id @default(cuid())
-  propertyId String
-  url        String
-  publicId   String?
-  alt        String?
-  isPrimary  Boolean  @default(false)
-  order      Int      @default(0)
-  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
+  id            String      @id @default(cuid())
+  propertyId    String
+  property      Property    @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url           String
+  publicId      String?
+  alt           String?
+  isPrimary     Boolean     @default(false)
+  order         Int         @default(0)
+  status        ImageStatus @default(PENDING)
+  uploadedById  String?
+  uploadedBy    User?       @relation("uploadedImages", fields: [uploadedById], references: [id])
+  validatedAt   DateTime?
+  validatedById String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([propertyId])
   @@index([propertyId, isPrimary])
+  @@index([status])
 }
 
 model Contract {

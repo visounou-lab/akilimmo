@@ -1,17 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Acheter", href: "#biens" },
-  { label: "Louer", href: "#biens" },
-  { label: "Gérer", href: "#comment-ca-marche" },
-  { label: "Comment ça marche", href: "#comment-ca-marche" },
+  { label: "Louer", href: "/v3/biens" },
+  { label: "Court séjour", href: "/v3/biens" },
+  { label: "Comment ça marche", href: "/v3/comment-ca-marche" },
+  { label: "Devenir partenaire", href: "/inscription" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href.startsWith("#")) return false;
+    return pathname === href || pathname.startsWith(href + "/");
+  }
 
   return (
     <header
@@ -53,23 +60,29 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-7" aria-label="Navigation principale">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm cursor-pointer transition-colors duration-200"
-                style={{
-                  fontFamily: "var(--font-inter), sans-serif",
-                  fontWeight: 400,
-                  color: "rgba(253,252,248,0.75)",
-                  letterSpacing: "0.02em",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#C8922A")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253,252,248,0.75)")}
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className="text-sm cursor-pointer transition-colors duration-200"
+                  style={{
+                    fontFamily: "var(--font-inter), sans-serif",
+                    fontWeight: active ? 500 : 400,
+                    color: active ? "#C8922A" : "rgba(253,252,248,0.75)",
+                    letterSpacing: "0.02em",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#C8922A")}
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = active ? "#C8922A" : "rgba(253,252,248,0.75)")
+                  }
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* CTA desktop */}
@@ -118,20 +131,25 @@ export default function Navbar() {
           className="md:hidden border-t px-4 pb-4 pt-2"
           style={{ backgroundColor: "#1B4D3E", borderColor: "rgba(200,146,42,0.25)" }}
         >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="block py-2.5 text-sm cursor-pointer transition-colors duration-150"
-              style={{
-                fontFamily: "var(--font-inter), sans-serif",
-                color: "rgba(253,252,248,0.8)",
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                aria-current={active ? "page" : undefined}
+                className="block py-2.5 text-sm cursor-pointer transition-colors duration-150"
+                style={{
+                  fontFamily: "var(--font-inter), sans-serif",
+                  fontWeight: active ? 500 : 400,
+                  color: active ? "#C8922A" : "rgba(253,252,248,0.8)",
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <a
             href="#contact"
             onClick={() => setOpen(false)}

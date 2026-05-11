@@ -6,18 +6,26 @@ const NAV_COLUMNS = [
   {
     title: "Biens",
     links: [
-      { label: "Acheter", href: "#biens" },
-      { label: "Louer", href: "#biens" },
-      { label: "Gérer mon bien", href: "#comment-ca-marche" },
+      { label: "Louer (long séjour)", href: "#biens" },
+      { label: "Court séjour", href: "#biens" },
+      { label: "Tous nos biens", href: "#biens" },
     ],
   },
   {
     title: "AKIL IMMO",
     links: [
-      { label: "Comment ça marche", href: "#comment-ca-marche" },
+      { label: "Comment ça marche", href: "/v3/comment-ca-marche" },
       { label: "Témoignages", href: "#" },
       { label: "Mentions légales", href: "/mentions-legales" },
       { label: "Confidentialité", href: "/confidentialite" },
+    ],
+  },
+  {
+    title: "Partenaires",
+    links: [
+      { label: "Devenir partenaire", href: "/inscription" },
+      { label: "Espace propriétaire", href: "#" },
+      { label: "Espace agence", href: "#" },
     ],
   },
   {
@@ -71,23 +79,24 @@ export default function Footer() {
             lineHeight: 1.2,
           }}
         >
-          Commencez votre projet immobilier
+          Parlons de votre projet
         </h2>
         <p
-          className="mb-8 mx-auto max-w-md text-base"
+          className="mb-8 mx-auto max-w-xl text-base"
           style={{
             fontFamily: "var(--font-inter), sans-serif",
             fontWeight: 300,
             color: "rgba(253,252,248,0.7)",
-            lineHeight: 1.7,
+            lineHeight: 1.75,
           }}
         >
-          Un conseiller dédié vous répond sous 24h. Zéro engagement, zéro frais cachés.
+          Locataire à la recherche d&apos;un meublé, propriétaire ou agence partenaire
+          — un conseiller AKIL IMMO vous répond sous 24h. Zéro engagement, zéro frais cachés.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="https://wa.me/22900000000"
+            href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
@@ -111,7 +120,7 @@ export default function Footer() {
             Écrire sur WhatsApp
           </a>
           <a
-            href="mailto:contact@akilimmo.com"
+            href="mailto:info@akilimmo.com"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
@@ -142,7 +151,7 @@ export default function Footer() {
         style={{ backgroundColor: "#1C1917" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-          <div className="grid gap-10 md:grid-cols-4">
+          <div className="grid gap-10 md:grid-cols-5">
             {/* Brand */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
@@ -186,9 +195,10 @@ export default function Footer() {
 
               <ul className="space-y-2.5 text-xs">
                 {[
-                  { Icon: Phone, text: "+229 00 00 00 00" },
-                  { Icon: Mail, text: "contact@akilimmo.com" },
-                  { Icon: MapPin, text: "Cotonou, Bénin · Abidjan, CI" },
+                  { Icon: Phone, text: "+229 01 97 59 86 82 (Bénin)" },
+                  { Icon: Phone, text: "+225 07 10 25 91 46 (CI)" },
+                  { Icon: Mail, text: "info@akilimmo.com" },
+                  { Icon: MapPin, text: "Abomey-Calavi, Tokan, Bénin · Abidjan, Côte d'Ivoire" },
                 ].map(({ Icon, text }) => (
                   <li
                     key={text}
@@ -264,7 +274,7 @@ export default function Footer() {
 
       {/* Floating WhatsApp button */}
       <a
-        href="https://wa.me/22900000000"
+        href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contacter AKIL IMMO sur WhatsApp"

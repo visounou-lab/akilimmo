@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendNewReservationEmail } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
@@ -61,6 +62,21 @@ export async function POST(req: NextRequest) {
         })),
       });
     }
+
+    // Fire-and-forget email — ne bloque pas la réponse
+    sendNewReservationEmail({
+      clientName:    clientName.trim(),
+      clientPhone:   clientPhone.trim(),
+      propertyTitle: reservation.property.title,
+      propertyCity:  reservation.property.city,
+      checkIn:       new Date(checkIn),
+      checkOut:      new Date(checkOut),
+      duration:      Number(duration),
+      locationType,
+      totalPrice:    Number(totalPrice),
+      message:       message?.trim() || null,
+      reservationId: reservation.id,
+    }).catch((e) => console.error("[reservation email]", e));
 
     return NextResponse.json({ ok: true, id: reservation.id });
   } catch (err) {

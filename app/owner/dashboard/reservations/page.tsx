@@ -33,7 +33,7 @@ export default async function OwnerReservationsPage() {
         select: { id: true, title: true, city: true, slug: true },
       },
     },
-  });
+  }).catch(() => []);
 
   const pending = reservations.filter((r) => r.status === "pending").length;
 

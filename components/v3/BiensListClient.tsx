@@ -26,6 +26,13 @@ const COUNTRY_OPTIONS = [
   { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire" },
 ] as const;
 
+const PRICE_BRACKETS = [
+  { value: "TOUS",    label: "Tous prix" },
+  { value: "0-50000",      label: "< 50 000 XOF" },
+  { value: "50000-150000", label: "50k – 150k" },
+  { value: "150000-999999999", label: "> 150 000 XOF" },
+] as const;
+
 const WA_NUMBERS: Record<string, string> = {
   BENIN: "2290197598682",
   COTE_D_IVOIRE: "2250710259146",
@@ -50,6 +57,8 @@ export default function BiensListClient({
 }) {
   const [country, setCountry] = useState("TOUS");
   const [city, setCity] = useState("TOUTES");
+  const [priceRange, setPriceRange] = useState("TOUS");
+  const [type, setType] = useState("TOUS");
 
   const cities = useMemo(() => {
     const subset =
@@ -57,13 +66,25 @@ export default function BiensListClient({
     return ["TOUTES", ...Array.from(new Set(subset.map((p) => p.city))).sort()];
   }, [properties, country]);
 
+  const types = useMemo(() => {
+    const all = properties.map((p) => p.propertyType).filter(Boolean) as string[];
+    return ["TOUS", ...Array.from(new Set(all)).sort()];
+  }, [properties]);
+
   const filtered = useMemo(() => {
     return properties.filter((p) => {
       if (country !== "TOUS" && p.country !== country) return false;
       if (city !== "TOUTES" && p.city !== city) return false;
+      if (type !== "TOUS" && p.propertyType !== type) return false;
+      if (priceRange !== "TOUS") {
+        const [minStr, maxStr] = priceRange.split("-");
+        const min = Number(minStr);
+        const max = Number(maxStr);
+        if (p.price < min || p.price > max) return false;
+      }
       return true;
     });
-  }, [properties, country, city]);
+  }, [properties, country, city, type, priceRange]);
 
   function handleCountryChange(val: string) {
     setCountry(val);
@@ -73,6 +94,8 @@ export default function BiensListClient({
   function resetFilters() {
     setCountry("TOUS");
     setCity("TOUTES");
+    setPriceRange("TOUS");
+    setType("TOUS");
   }
 
   return (
@@ -213,6 +236,60 @@ export default function BiensListClient({
                     strokeLinejoin="round"
                   />
                 </svg>
+              </span>
+            </div>
+
+            {/* Select type de bien */}
+            {types.length > 2 && (
+              <div className="relative">
+                <label htmlFor="filter-type" className="sr-only">Filtrer par type</label>
+                <select
+                  id="filter-type"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  className="cursor-pointer appearance-none rounded-full py-2 pl-4 pr-8 text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B4D3E]"
+                  style={{
+                    fontFamily: "var(--font-inter), sans-serif",
+                    fontWeight: 400,
+                    backgroundColor: "#FDFCF8",
+                    color: "#1B4D3E",
+                    border: "1.5px solid #1B4D3E",
+                  }}
+                >
+                  {types.map((t) => (
+                    <option key={t} value={t}>
+                      {t === "TOUS" ? "Tous les types" : t}
+                    </option>
+                  ))}
+                </select>
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" aria-hidden="true" style={{ color: "#1B4D3E" }}>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </span>
+              </div>
+            )}
+
+            {/* Select prix */}
+            <div className="relative">
+              <label htmlFor="filter-prix" className="sr-only">Filtrer par prix</label>
+              <select
+                id="filter-prix"
+                value={priceRange}
+                onChange={(e) => setPriceRange(e.target.value)}
+                className="cursor-pointer appearance-none rounded-full py-2 pl-4 pr-8 text-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B4D3E]"
+                style={{
+                  fontFamily: "var(--font-inter), sans-serif",
+                  fontWeight: 400,
+                  backgroundColor: priceRange !== "TOUS" ? "#1B4D3E" : "#FDFCF8",
+                  color: priceRange !== "TOUS" ? "#FDFCF8" : "#1B4D3E",
+                  border: "1.5px solid #1B4D3E",
+                }}
+              >
+                {PRICE_BRACKETS.map((b) => (
+                  <option key={b.value} value={b.value}>{b.label}</option>
+                ))}
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" aria-hidden="true" style={{ color: priceRange !== "TOUS" ? "#FDFCF8" : "#1B4D3E" }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </span>
             </div>
 

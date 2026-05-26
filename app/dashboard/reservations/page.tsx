@@ -22,7 +22,7 @@ export default async function ReservationsPage() {
         select: { id: true, title: true, city: true, country: true, slug: true },
       },
     },
-  });
+  }).catch(() => []);
 
   const pending   = reservations.filter((r) => r.status === "pending").length;
   const contacted = reservations.filter((r) => r.status === "contacted").length;

@@ -62,7 +62,7 @@ export default async function DashboardPage() {
     prisma.contract.count({ where: { status: "ACTIVE" } }),
     prisma.user.count({ where: { role: "OWNER", status: "active" } }),
     prisma.user.count({ where: { role: "OWNER", status: "pending" } }),
-    prisma.reservationRequest.count({ where: { status: "pending" } }),
+    prisma.reservationRequest.count({ where: { status: "pending" } }).catch(() => 0),
     prisma.payment.aggregate({
       where: { status: "PAID", paidAt: { gte: startOfMonth } },
       _sum: { amount: true },

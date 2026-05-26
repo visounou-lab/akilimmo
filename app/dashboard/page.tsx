@@ -326,16 +326,7 @@ export default async function DashboardPage() {
               <Link
                 key={s.href}
                 href={s.href}
-                className="flex items-center gap-3 p-3 rounded-xl transition-all duration-150 group"
-                style={{ border: "1.5px solid rgba(200,146,42,0.15)" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(200,146,42,0.4)";
-                  e.currentTarget.style.backgroundColor = "rgba(200,146,42,0.04)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(200,146,42,0.15)";
-                  e.currentTarget.style.backgroundColor = "transparent";
-                }}
+                className="flex items-center gap-3 p-3 rounded-xl transition-all duration-150 group border border-[rgba(200,146,42,0.15)] hover:border-[rgba(200,146,42,0.4)] hover:bg-[rgba(200,146,42,0.04)]"
               >
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors"

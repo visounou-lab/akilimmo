@@ -341,6 +341,100 @@ export async function sendTenantAccessEmail(to: string, name: string, token: str
   });
 }
 
+export async function sendNewReservationEmail(data: {
+  clientName:   string;
+  clientPhone:  string;
+  propertyTitle: string;
+  propertyCity: string;
+  checkIn:      Date;
+  checkOut:     Date;
+  duration:     number;
+  locationType: string;
+  totalPrice:   number;
+  message?:     string | null;
+  reservationId: string;
+}): Promise<void> {
+  const fmtDate = (d: Date) =>
+    new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(d);
+  const fmtPrice = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+  const durationLabel = `${data.duration} ${data.locationType}${data.duration > 1 ? "s" : ""}`;
+  const waUrl = `https://wa.me/${data.clientPhone.replace(/\D/g, "")}`;
+
+  await transporter.sendMail({
+    from:    process.env.SMTP_FROM,
+    to:      "david@akilimmo.com",
+    subject: `Nouvelle réservation — ${data.propertyTitle}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+        <div style="background:#1C1917;padding:24px 32px;border-radius:12px 12px 0 0;border-bottom:3px solid #C8922A">
+          <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:40px" />
+        </div>
+        <div style="background:#FDFCF8;padding:32px;border:1.5px solid rgba(200,146,42,0.2);border-top:none;border-radius:0 0 12px 12px">
+          <h2 style="margin:0 0 4px;color:#1C1917;font-size:20px">Nouvelle demande de réservation</h2>
+          <p style="margin:0 0 24px;color:#6B5E52;font-size:14px">À traiter dans les meilleurs délais</p>
+
+          <div style="background:#fff;border:1.5px solid rgba(200,146,42,0.2);border-radius:10px;padding:20px;margin-bottom:20px">
+            <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#C8922A">BIEN</p>
+            <p style="margin:0;font-size:16px;font-weight:700;color:#1C1917">${escapeHtml(data.propertyTitle)}</p>
+            <p style="margin:4px 0 0;color:#6B5E52;font-size:14px">${escapeHtml(data.propertyCity)}</p>
+          </div>
+
+          <table style="width:100%;border-collapse:collapse;background:#fff;border:1.5px solid rgba(200,146,42,0.2);border-radius:10px;overflow:hidden;margin-bottom:20px">
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(200,146,42,0.1)">
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px;width:140px">Client</td>
+                <td style="padding:10px 16px;color:#1C1917;font-weight:600">${escapeHtml(data.clientName)}</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(200,146,42,0.1)">
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px">Téléphone</td>
+                <td style="padding:10px 16px">
+                  <a href="${waUrl}" style="color:#16A34A;font-weight:600;text-decoration:none">${escapeHtml(data.clientPhone)} (WhatsApp)</a>
+                </td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(200,146,42,0.1)">
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px">Arrivée</td>
+                <td style="padding:10px 16px;color:#1C1917">${fmtDate(data.checkIn)}</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(200,146,42,0.1)">
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px">Départ</td>
+                <td style="padding:10px 16px;color:#1C1917">${fmtDate(data.checkOut)}</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(200,146,42,0.1)">
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px">Durée</td>
+                <td style="padding:10px 16px;color:#1C1917">${escapeHtml(durationLabel)}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 16px;color:#6B5E52;font-size:13px">Total estimé</td>
+                <td style="padding:10px 16px;color:#C8922A;font-weight:700;font-size:16px">${fmtPrice(data.totalPrice)} XOF</td>
+              </tr>
+            </tbody>
+          </table>
+
+          ${data.message ? `
+          <div style="background:#fff;border-left:3px solid #C8922A;padding:12px 16px;border-radius:4px;margin-bottom:20px">
+            <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C8922A">MESSAGE DU CLIENT</p>
+            <p style="margin:0;color:#3D3530;white-space:pre-wrap;line-height:1.6;font-size:14px">${escapeHtml(data.message)}</p>
+          </div>` : ""}
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="https://www.akilimmo.com/dashboard/reservations"
+               style="display:inline-block;background:#1C1917;color:#FDFCF8;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
+              Voir dans le dashboard →
+            </a>
+            <a href="${waUrl}"
+               style="display:inline-block;background:#16A34A;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
+              Contacter sur WhatsApp
+            </a>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:16px">
+          AKIL IMMO — <a href="https://www.akilimmo.com" style="color:#9CA3AF">www.akilimmo.com</a>
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function sendContactRequest(data: {
   nom: string;
   email: string;

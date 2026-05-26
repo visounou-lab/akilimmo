@@ -1,6 +1,7 @@
 "use client";
 
 import { Users, Star, MessageCircle, ArrowRight } from "lucide-react";
+import WaCountryPicker from "./WaCountryPicker";
 
 const CARDS = [
   {
@@ -183,10 +184,8 @@ export default function LaunchSection() {
             <ArrowRight size={15} aria-hidden="true" />
           </a>
 
-          <a
-            href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WaCountryPicker
+            message="Bonjour, je souhaite en savoir plus sur AKIL IMMO"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
@@ -208,7 +207,7 @@ export default function LaunchSection() {
           >
             <MessageCircle size={15} aria-hidden="true" />
             Parler à l&apos;équipe
-          </a>
+          </WaCountryPicker>
         </div>
       </div>
     </section>

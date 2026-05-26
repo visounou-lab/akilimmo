@@ -7,12 +7,17 @@ const ADVISOR = {
   name:     "David Ayina",
   initials: "DA",
   title:    "Directeur Commercial · AKIL IMMO",
-  phone:    "2290197598682",
 };
 
-function advisorWhatsApp(ownerName: string) {
+const WA_BY_COUNTRY: Record<string, string> = {
+  COTE_D_IVOIRE: "2250710259146",
+  BENIN:         "2290197598682",
+};
+
+function advisorWhatsApp(ownerName: string, country?: string | null) {
+  const phone = WA_BY_COUNTRY[country ?? ""] ?? WA_BY_COUNTRY.BENIN;
   const msg = `Bonjour David, je suis ${ownerName} et je souhaite vous parler de mes biens sur AKIL IMMO.`;
-  return `https://wa.me/${ADVISOR.phone}?text=${encodeURIComponent(msg)}`;
+  return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }
 
 const STATUS_BADGE: Record<string, { label: string; dot: string; bg: string; text: string }> = {
@@ -42,7 +47,8 @@ export default async function OwnerDashboardPage() {
   const monthLabel   = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" }).format(now);
   const sevenDaysAgo = new Date(now.getTime() - 7 * 86_400_000);
 
-  const [properties, currentRevAgg, prevRevAgg, rentedCount, recentActivity] = await Promise.all([
+  const [ownerUser, properties, currentRevAgg, prevRevAgg, rentedCount, recentActivity] = await Promise.all([
+    prisma.user.findUnique({ where: { id: userId }, select: { country: true } }),
     prisma.property.findMany({
       where:   { ownerId: userId },
       orderBy: { createdAt: "desc" },
@@ -75,7 +81,7 @@ export default async function OwnerDashboardPage() {
     : null;
   const totalCount     = properties.length;
   const occupancyRate  = totalCount > 0 ? Math.round((rentedCount / totalCount) * 100) : 0;
-  const whatsappUrl    = advisorWhatsApp(userName);
+  const whatsappUrl    = advisorWhatsApp(userName, ownerUser?.country);
 
   const card: React.CSSProperties = {
     backgroundColor: "#FFFFFF",

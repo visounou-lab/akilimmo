@@ -1,6 +1,12 @@
 "use client";
 
 import { MessageCircle, Mail, MapPin, Phone } from "lucide-react";
+import WaCountryPicker from "./WaCountryPicker";
+import WhatsAppButton from "../../app/components/WhatsAppButton";
+
+function WhatsAppFloating() {
+  return <WhatsAppButton />;
+}
 
 const NAV_COLUMNS = [
   {
@@ -95,10 +101,8 @@ export default function Footer() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WaCountryPicker
+            message="Bonjour, je souhaite en savoir plus sur AKIL IMMO"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
@@ -118,7 +122,7 @@ export default function Footer() {
           >
             <MessageCircle size={16} aria-hidden="true" />
             Écrire sur WhatsApp
-          </a>
+          </WaCountryPicker>
           <a
             href="mailto:info@akilimmo.com"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
@@ -272,32 +276,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Floating WhatsApp button */}
-      <a
-        href="https://wa.me/2290197598682?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20AKIL%20IMMO"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contacter AKIL IMMO sur WhatsApp"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full cursor-pointer transition-all duration-200"
-        style={{
-          width: 56,
-          height: 56,
-          backgroundColor: "#16A34A",
-          boxShadow: "0 4px 16px rgba(22,163,74,0.45)",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.transform = "scale(1.1)";
-          (e.currentTarget as HTMLElement).style.boxShadow =
-            "0 6px 22px rgba(22,163,74,0.6)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-          (e.currentTarget as HTMLElement).style.boxShadow =
-            "0 4px 16px rgba(22,163,74,0.45)";
-        }}
-      >
-        <MessageCircle size={24} color="#ffffff" aria-hidden="true" />
-      </a>
+      {/* Floating WhatsApp button — pays sélectionnable */}
+      <WhatsAppFloating />
     </footer>
   );
 }

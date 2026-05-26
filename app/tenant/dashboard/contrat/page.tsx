@@ -10,6 +10,15 @@ function formatPrice(n: unknown) {
   return new Intl.NumberFormat("fr-FR").format(Number(n)) + " FCFA";
 }
 
+const WA_BY_COUNTRY: Record<string, string> = {
+  COTE_D_IVOIRE: "2250710259146",
+  BENIN:         "2290197598682",
+};
+function contactWaUrl(country: string) {
+  const phone = WA_BY_COUNTRY[country] ?? WA_BY_COUNTRY.BENIN;
+  return `https://wa.me/${phone}?text=${encodeURIComponent("Bonjour AKIL IMMO, j'ai une question concernant mon contrat.")}`;
+}
+
 const CONTRACT_STATUS: Record<string, { label: string; classes: string }> = {
   ACTIVE:     { label: "Actif",    classes: "bg-emerald-50 text-emerald-700" },
   PENDING:    { label: "En attente", classes: "bg-amber-50 text-amber-700"  },
@@ -104,15 +113,15 @@ export default async function TenantContratPage() {
 
                 {/* Gestionnaire */}
                 <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-                  <div className="w-9 h-9 rounded-full bg-[#0066CC] flex items-center justify-center shrink-0">
-                    <span className="text-white text-xs font-bold">AI</span>
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "#1C1917" }}>
+                    <span className="text-white text-xs font-bold" style={{ color: "#C8922A" }}>AI</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs text-slate-400">Géré par</p>
                     <p className="text-sm font-semibold text-slate-800">AKIL IMMO</p>
                   </div>
                   <a
-                    href="https://wa.me/2290197598682?text=Bonjour%20AKIL%20IMMO%2C%20j%27ai%20une%20question%20concernant%20mon%20contrat."
+                    href={contactWaUrl(c.property.country)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center shrink-0 hover:bg-[#1db954] transition-colors"

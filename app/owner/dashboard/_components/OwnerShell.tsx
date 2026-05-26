@@ -15,13 +15,13 @@ type Props = {
 };
 
 const PAGE_TITLES: Record<string, string> = {
-  "/owner/dashboard":                  "Tableau de bord",
-  "/owner/dashboard/biens":            "Mes biens",
-  "/owner/dashboard/soumettre":        "Soumettre un bien",
-  "/owner/dashboard/demandes":         "Mes demandes",
-  "/owner/dashboard/profil":           "Mon profil",
-  "/owner/dashboard/notifications":    "Notifications",
-  "/owner/dashboard/paiements":        "Mes paiements",
+  "/owner/dashboard":               "Tableau de bord",
+  "/owner/dashboard/biens":         "Mes biens",
+  "/owner/dashboard/soumettre":     "Soumettre un bien",
+  "/owner/dashboard/demandes":      "Mes demandes",
+  "/owner/dashboard/profil":        "Mon profil",
+  "/owner/dashboard/notifications": "Notifications",
+  "/owner/dashboard/paiements":     "Mes paiements",
 };
 
 function getPageTitle(pathname: string): string {
@@ -53,99 +53,119 @@ export default function OwnerShell({
   const pageTitle = getPageTitle(pathname);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen" style={{ backgroundColor: "#FDFCF8" }}>
 
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 z-40 lg:hidden"
+          style={{ backgroundColor: "rgba(28,25,23,0.7)", backdropFilter: "blur(2px)" }}
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />
       )}
 
-      {/* Sidebar */}
+      {/* ── Sidebar ── */}
       <aside
         className={[
-          "fixed inset-y-0 left-0 z-50 flex flex-col bg-white border-r border-gray-200",
+          "fixed inset-y-0 left-0 z-50 flex flex-col w-64",
           "transition-transform duration-300 ease-in-out",
-          "w-72 md:w-[72px] lg:w-64",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
-          "md:translate-x-0",
+          "lg:translate-x-0",
         ].join(" ")}
+        style={{ backgroundColor: "#1C1917", borderRight: "1px solid rgba(255,255,255,0.07)" }}
       >
-        {/* X close — mobile only */}
-        <button
-          onClick={() => setSidebarOpen(false)}
-          className="absolute top-3 right-3 md:hidden flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
-          aria-label="Fermer le menu"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
         {/* Brand */}
-        <div className="border-b border-gray-100 flex flex-col items-center py-4 px-4 lg:px-6 shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <div className="bg-[#0066CC] rounded-xl px-3 py-2 md:hidden lg:flex items-center justify-center">
-            <img src="/logo.png" alt="AKIL IMMO" className="h-10 w-auto" />
+        <div
+          className="relative px-5 py-5 shrink-0 flex items-center gap-3"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          <div
+            className="flex items-center justify-center rounded-xl px-2.5 py-1.5"
+            style={{ backgroundColor: "rgba(200,146,42,0.15)", border: "1px solid rgba(200,146,42,0.25)" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="AKIL IMMO" className="h-8 w-auto" />
           </div>
-          <p className="text-xs uppercase tracking-wide text-gray-500 mt-1 text-center md:hidden lg:block">
-            Mon espace propriétaire
-          </p>
-          <div className="hidden md:flex lg:hidden h-10 w-10 items-center justify-center rounded-full bg-[#0066CC]/10">
-            <span className="text-[#0066CC] font-bold text-lg">P</span>
+          <div>
+            <p className="text-white font-semibold text-sm leading-tight tracking-wide">AKIL IMMO</p>
+            <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-inter), sans-serif" }}>
+              Espace propriétaire
+            </p>
           </div>
+
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="absolute top-4 right-4 lg:hidden flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+            aria-label="Fermer le menu"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-4 px-2 lg:px-3">
+        <div className="flex-1 overflow-y-auto py-5 px-3">
           <OwnerSidebarNav onClose={() => setSidebarOpen(false)} unreadCount={unreadCount} />
         </div>
 
         {/* User footer */}
-        <div className="border-t border-gray-100 p-3 space-y-2 shrink-0">
-          <div className="flex items-center gap-3 px-2 md:justify-center lg:justify-start">
-            <div className="w-8 h-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-              <span className="text-[#0066CC] font-semibold text-xs">{userInitial}</span>
+        <div className="shrink-0 p-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="flex items-center gap-3 px-2 py-2 rounded-xl mb-1">
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+              style={{ backgroundColor: "rgba(200,146,42,0.2)", border: "1px solid rgba(200,146,42,0.35)" }}
+            >
+              <span className="font-semibold text-xs" style={{ color: "#C8922A" }}>{userInitial}</span>
             </div>
-            <div className="min-w-0 md:hidden lg:block">
-              <p className="text-sm font-medium text-slate-800 truncate">{userName}</p>
-              <p className="text-xs text-slate-400 truncate">{userEmail}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-white truncate">{userName}</p>
+              <p className="text-xs truncate" style={{ color: "rgba(255,255,255,0.35)" }}>{userEmail}</p>
             </div>
           </div>
           <form action={signOutAction}>
             <button
               type="submit"
-              className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium md:justify-center lg:justify-start"
+              className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm rounded-xl transition-colors font-medium group"
+              style={{ color: "rgba(248,113,113,0.85)" }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(248,113,113,0.1)"; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; }}
             >
               <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              <span className="md:hidden lg:inline">Se déconnecter</span>
+              <span>Se déconnecter</span>
             </button>
           </form>
         </div>
       </aside>
 
-      {/* Mobile header */}
-      <header className="fixed top-0 left-0 right-0 z-30 h-14 bg-white border-b border-gray-200 flex items-center px-4 gap-3 md:hidden shadow-sm">
+      {/* ── Mobile header ── */}
+      <header
+        className="fixed top-0 left-0 right-0 z-30 h-14 flex items-center px-4 gap-3 lg:hidden"
+        style={{ backgroundColor: "#1C1917", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+      >
         <button
           onClick={() => setSidebarOpen(true)}
           aria-label="Ouvrir le menu"
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
+          className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors shrink-0"
+          style={{ color: "rgba(255,255,255,0.7)" }}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <span className="flex-1 text-center text-sm font-semibold text-slate-800 truncate">
+
+        <span className="flex-1 text-center text-sm font-semibold text-white truncate">
           {pageTitle}
         </span>
+
         <Link
           href="/owner/dashboard/notifications"
-          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors shrink-0"
+          style={{ color: "rgba(255,255,255,0.7)" }}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -158,8 +178,8 @@ export default function OwnerShell({
         </Link>
       </header>
 
-      {/* Main */}
-      <main className="flex-1 ml-0 md:ml-[72px] lg:ml-64 min-h-screen pt-14 md:pt-0">
+      {/* ── Main content ── */}
+      <main className="flex-1 lg:ml-64 min-h-screen pt-14 lg:pt-0">
         {children}
       </main>
     </div>

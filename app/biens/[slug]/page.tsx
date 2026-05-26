@@ -334,6 +334,7 @@ export default async function V3BienDetailPage({ params }: Props) {
 
                 {/* Formulaire de réservation */}
                 <ReservationFormV3
+                  propertyId={bien.id}
                   bienTitle={bien.title}
                   bienCity={bien.city}
                   bienCountry={bien.country}

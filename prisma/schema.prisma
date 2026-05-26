@@ -136,10 +136,11 @@ model Property {
   propertyType  String?
   publishStatus String          @default("published")
   adminNote     String?
-  contracts        Contract[]
-  notifications    Notification[]
-  images           PropertyImage[]
-  documentRequests DocumentRequest[]
+  contracts            Contract[]
+  notifications        Notification[]
+  images               PropertyImage[]
+  documentRequests     DocumentRequest[]
+  reservationRequests  ReservationRequest[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
@@ -240,4 +241,25 @@ model DocumentRequest {
 
   @@index([ownerId])
   @@index([status])
+}
+
+model ReservationRequest {
+  id           String   @id @default(cuid())
+  propertyId   String
+  property     Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  clientName   String
+  clientPhone  String
+  checkIn      DateTime
+  checkOut     DateTime
+  locationType String
+  duration     Int
+  totalPrice   Int
+  message      String?
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([propertyId])
+  @@index([status])
+  @@index([createdAt])
 }

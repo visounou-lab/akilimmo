@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MessageCircle } from "lucide-react";
 
 interface Props {
+  propertyId: string;
   bienTitle: string;
   bienCity: string;
   bienCountry: string;
@@ -52,6 +53,7 @@ const labelStyle: React.CSSProperties = {
 };
 
 export default function ReservationFormV3({
+  propertyId,
   bienTitle,
   bienCity,
   bienCountry,
@@ -81,12 +83,29 @@ export default function ReservationFormV3({
     );
   }
 
-  function handleReserve() {
+  async function handleReserve() {
     if (!canReserve) return;
     const durationLabel =
       locationType === "nuit"
         ? `${duration} nuit${duration > 1 ? "s" : ""}`
         : `${duration} mois`;
+
+    // Save to DB (fire-and-forget — ne bloque pas WhatsApp)
+    fetch("/api/reservations", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        propertyId,
+        clientName,
+        clientPhone,
+        checkIn,
+        checkOut,
+        locationType,
+        duration,
+        totalPrice: total,
+        message: message.trim() || undefined,
+      }),
+    }).catch(() => {/* silencieux */});
 
     let text =
       `Bonjour AKIL IMMO 👋\n\n` +

@@ -5,7 +5,7 @@ import ReservationActions from "./_components/ReservationActions";
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; dot: string }> = {
   pending:   { label: "En attente",  bg: "#FEF3C7", text: "#92400E", dot: "#F59E0B" },
-  contacted: { label: "Contacté",   bg: "#DBEAFE", text: "#1E40AF", dot: "#3B82F6" },
+  contacted: { label: "Contacté",   bg: "#DBEAFE", text: "#C8922A", dot: "#3B82F6" },
   confirmed: { label: "Confirmé",   bg: "#D1FAE5", text: "#065F46", dot: "#10B981" },
   cancelled: { label: "Annulé",     bg: "#FEE2E2", text: "#991B1B", dot: "#EF4444" },
 };

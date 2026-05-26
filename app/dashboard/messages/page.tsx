@@ -113,7 +113,7 @@ export default function MessagesPage() {
           <select
             value={ownerId}
             onChange={(e) => setOwnerId(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white"
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 bg-white"
           >
             <option value="">Sélectionner un propriétaire…</option>
             {owners.map((o) => (
@@ -138,7 +138,7 @@ export default function MessagesPage() {
                 key={t.label}
                 type="button"
                 onClick={() => applyTemplate(t)}
-                className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:border-[#0066CC] hover:text-[#0066CC] hover:bg-[#0066CC]/5 transition"
+                className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:border-[#C8922A] hover:text-[#C8922A] hover:bg-[#1C1917]/5 transition"
               >
                 {t.label}
               </button>
@@ -156,7 +156,7 @@ export default function MessagesPage() {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             placeholder="ex : Bienvenue sur AKIL IMMO"
-            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white"
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 bg-white"
           />
         </div>
 
@@ -171,7 +171,7 @@ export default function MessagesPage() {
             onChange={(e) => setBody(e.target.value)}
             rows={10}
             placeholder="Écrivez votre message ici…"
-            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white resize-none"
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 bg-white resize-none"
           />
           <p className="text-xs text-slate-400 mt-1">
             La signature &quot;L&apos;équipe AKIL IMMO&quot; est ajoutée automatiquement.
@@ -183,7 +183,7 @@ export default function MessagesPage() {
           <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Aperçu notification</p>
             <div className="bg-white rounded-lg border border-slate-100 p-3 flex gap-3">
-              <span className="w-2 h-2 rounded-full bg-[#0066CC] mt-1.5 shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-[#1C1917] mt-1.5 shrink-0" />
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-sky-50 text-sky-700">
@@ -214,7 +214,7 @@ export default function MessagesPage() {
         <button
           onClick={handleSend}
           disabled={loading}
-          className="inline-flex items-center gap-2 rounded-full bg-[#0066CC] hover:bg-[#004499] disabled:opacity-60 text-white px-6 py-3 text-sm font-semibold transition shadow-sm"
+          className="inline-flex items-center gap-2 rounded-full bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-60 text-white px-6 py-3 text-sm font-semibold transition shadow-sm"
         >
           {loading ? (
             <>

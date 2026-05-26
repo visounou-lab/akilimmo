@@ -22,17 +22,17 @@ const printStyles = `
   @page { size: A4; margin: 2cm; }
   * { box-sizing: border-box; }
   .contract-doc { font-family: Georgia, serif; color: #1e293b; line-height: 1.6; max-width: 700px; margin: 0 auto; }
-  .doc-header { text-align: center; border-bottom: 3px solid #0066CC; padding-bottom: 1.5rem; margin-bottom: 2rem; }
-  .doc-header h1 { font-size: 26px; color: #0066CC; letter-spacing: 2px; margin: 0 0 0.25rem; }
+  .doc-header { text-align: center; border-bottom: 3px solid #C8922A; padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .doc-header h1 { font-size: 26px; color: #C8922A; letter-spacing: 2px; margin: 0 0 0.25rem; }
   .doc-header p { color: #64748b; font-style: italic; margin: 0; }
-  .badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-family: sans-serif; font-size: 12px; font-weight: 600; background: #f0f9ff; color: #0066CC; border: 1px solid #bae6fd; }
+  .badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-family: sans-serif; font-size: 12px; font-weight: 600; background: #f0f9ff; color: #C8922A; border: 1px solid #bae6fd; }
   .section { margin-bottom: 2rem; }
   .section h2 { font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #64748b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .field p { margin: 0; }
   .field .label { font-family: sans-serif; font-size: 11px; color: #94a3b8; }
   .field .value { font-size: 15px; font-weight: 600; }
-  .highlight { color: #0066CC; }
+  .highlight { color: #C8922A; }
   .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
   .party { background: #f8fafc; border-radius: 8px; padding: 1rem; }
   .party .role { font-family: sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.5rem; }
@@ -76,7 +76,7 @@ export default async function ContratPdfPage({ params }: Props) {
         <p className="text-sm text-slate-500">Aperçu du contrat — {contract.property.title}</p>
         <button
           id="print-btn"
-          className="inline-flex items-center gap-2 bg-[#0066CC] hover:bg-[#004499] text-white px-5 py-2 rounded-full text-sm font-semibold transition"
+          className="inline-flex items-center gap-2 bg-[#1C1917] hover:bg-[#2D2420] text-white px-5 py-2 rounded-full text-sm font-semibold transition"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

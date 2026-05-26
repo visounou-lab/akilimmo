@@ -6,7 +6,7 @@ import SendAccessButton from "./SendAccessButton";
 
 const ROLE_CONFIG: Record<string, { label: string; classes: string }> = {
   ADMIN:  { label: "Admin",        classes: "bg-purple-50 text-purple-700" },
-  OWNER:  { label: "Propriétaire", classes: "bg-[#0066CC]/10 text-[#0066CC]" },
+  OWNER:  { label: "Propriétaire", classes: "bg-[#1C1917]/10 text-[#C8922A]" },
   TENANT: { label: "Locataire",    classes: "bg-emerald-50 text-emerald-700" },
 };
 
@@ -53,7 +53,7 @@ export default function UtilisateursSearch({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Nom, email ou rôle…"
-          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors bg-white"
+          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors bg-white"
         />
         {q && (
           <button onClick={() => setQ("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -68,7 +68,7 @@ export default function UtilisateursSearch({
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <p className="text-slate-500 font-medium">Aucun résultat pour « {q} »</p>
-            <button onClick={() => setQ("")} className="text-sm text-[#0066CC] mt-2 hover:underline">Effacer la recherche</button>
+            <button onClick={() => setQ("")} className="text-sm text-[#C8922A] mt-2 hover:underline">Effacer la recherche</button>
           </div>
         ) : (
           <table className="w-full text-sm min-w-[480px]">
@@ -87,8 +87,8 @@ export default function UtilisateursSearch({
                   <tr key={u.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-                          <span className="text-xs font-semibold text-[#0066CC]">
+                        <div className="w-8 h-8 rounded-full bg-[#1C1917]/10 flex items-center justify-center shrink-0">
+                          <span className="text-xs font-semibold text-[#C8922A]">
                             {(u.name ?? u.email)[0].toUpperCase()}
                           </span>
                         </div>

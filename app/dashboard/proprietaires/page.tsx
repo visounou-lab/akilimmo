@@ -102,8 +102,8 @@ export default function ProprietairesPage() {
                   <tr key={o.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-                          <span className="text-xs font-semibold text-[#0066CC]">
+                        <div className="w-8 h-8 rounded-full bg-[#1C1917]/10 flex items-center justify-center shrink-0">
+                          <span className="text-xs font-semibold text-[#C8922A]">
                             {(o.name ?? o.email)[0].toUpperCase()}
                           </span>
                         </div>

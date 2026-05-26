@@ -10,7 +10,7 @@ const COUNTRY_LABEL: Record<string, string> = {
 
 const STATUS_CONFIG: Record<string, { label: string; classes: string }> = {
   AVAILABLE:   { label: "Disponible",  classes: "bg-emerald-50 text-emerald-700" },
-  RESERVED:    { label: "Réservé",     classes: "bg-[#0066CC]/10 text-[#0066CC]" },
+  RESERVED:    { label: "Réservé",     classes: "bg-[#1C1917]/10 text-[#C8922A]" },
   RENTED:      { label: "Loué",        classes: "bg-red-50 text-red-600" },
   OFF_MARKET:  { label: "Hors marché", classes: "bg-slate-100 text-slate-500" },
   MAINTENANCE: { label: "Maintenance", classes: "bg-orange-50 text-orange-600" },
@@ -79,7 +79,7 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
         </span>
         {/* Badge vidéo */}
         {(p.videoUrl || hasVideo) && (
-          <span className="absolute bottom-3 left-3 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#0066CC]/90 text-white shadow-sm gap-1 items-center">
+          <span className="absolute bottom-3 left-3 inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1C1917]/90 text-white shadow-sm gap-1 items-center">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -102,7 +102,7 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
 
           <div className="flex items-end justify-between mt-3">
             <div>
-              <p className="text-lg font-bold text-[#0066CC] leading-none">{price}</p>
+              <p className="text-lg font-bold text-[#C8922A] leading-none">{price}</p>
               <p className="text-xs text-slate-400 mt-0.5">XOF / nuit</p>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">

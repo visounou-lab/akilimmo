@@ -45,7 +45,7 @@ interface PropertyFormProps {
 
 const inputClass =
   "w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 " +
-  "focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors";
+  "focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors";
 
 const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
 
@@ -163,12 +163,12 @@ export default function PropertyForm({
                       type="button"
                       onClick={() => setPrimaryNewIdx(i)}
                       className={`relative rounded-lg overflow-hidden border-2 transition-colors ${
-                        i === primaryNewIdx ? "border-[#0066CC]" : "border-transparent"
+                        i === primaryNewIdx ? "border-[#C8922A]" : "border-transparent"
                       }`}
                     >
                       <img src={src} alt="" className="h-20 w-full object-cover" />
                       {i === primaryNewIdx && (
-                        <span className="absolute top-1 left-1 rounded bg-[#0066CC] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                        <span className="absolute top-1 left-1 rounded bg-[#1C1917] px-1.5 py-0.5 text-[10px] font-semibold text-white">
                           Principale
                         </span>
                       )}
@@ -295,7 +295,7 @@ export default function PropertyForm({
         <button
           type="submit"
           disabled={videoBlocked}
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors shadow-sm"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

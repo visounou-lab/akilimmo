@@ -1,59 +1,71 @@
-import { Building2, CalendarCheck, MapPin, Zap } from "lucide-react";
+import { ShieldCheck, MapPin, MessageCircle, KeyRound } from "lucide-react";
 
-const STATS = [
-  { icon: Building2, value: "350+", label: "Biens gérés", ariaLabel: "Plus de 350 biens gérés" },
-  { icon: CalendarCheck, value: "8 ans", label: "D'expérience", ariaLabel: "8 ans d'expérience" },
-  { icon: MapPin, value: "2 pays", label: "Côte d'Ivoire · Bénin", ariaLabel: "Présence en Côte d'Ivoire et au Bénin" },
-  { icon: Zap, value: "24h", label: "Délai de réponse", ariaLabel: "Délai de réponse de 24 heures" },
+const PILLARS = [
+  {
+    icon: ShieldCheck,
+    title: "Agence certifiée",
+    desc: "Biens vérifiés & contrats sécurisés",
+  },
+  {
+    icon: MapPin,
+    title: "2 pays couverts",
+    desc: "Côte d'Ivoire · Bénin",
+  },
+  {
+    icon: MessageCircle,
+    title: "Réponse sous 24h",
+    desc: "Accompagnement personnalisé",
+  },
+  {
+    icon: KeyRound,
+    title: "Prise en charge totale",
+    desc: "De la recherche à la remise des clés",
+  },
 ];
 
 export default function StatsBar() {
   return (
     <section
-      aria-label="Chiffres clés AKIL IMMO"
+      aria-label="Nos engagements"
       style={{ backgroundColor: "#1B4D3E" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <dl className="grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-4">
-          {STATS.map(({ icon: Icon, value, label, ariaLabel }) => (
-            <div
-              key={label}
-              className="flex flex-col items-center text-center"
-              aria-label={ariaLabel}
-            >
+          {PILLARS.map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="flex flex-col items-center text-center">
               <Icon
                 size={26}
                 aria-hidden="true"
-                style={{ color: "#C8922A", marginBottom: "0.6rem" }}
+                style={{ color: "#C8922A", marginBottom: "0.75rem" }}
               />
               <dt
                 style={{
                   fontFamily: "var(--font-playfair), serif",
                   fontWeight: 700,
-                  fontSize: "2rem",
+                  fontSize: "1.05rem",
                   color: "#FDFCF8",
-                  lineHeight: 1,
+                  lineHeight: 1.3,
+                  marginBottom: "0.4rem",
                 }}
               >
-                {value}
+                {title}
               </dt>
               <dd
-                className="mt-2 text-sm"
+                className="text-sm"
                 style={{
                   fontFamily: "var(--font-inter), sans-serif",
                   fontWeight: 400,
-                  color: "rgba(253,252,248,0.65)",
-                  letterSpacing: "0.04em",
+                  color: "rgba(253,252,248,0.6)",
+                  letterSpacing: "0.03em",
                 }}
               >
-                {label}
+                {desc}
               </dd>
             </div>
           ))}
         </dl>
       </div>
 
-      {/* Gold separator line */}
       <div
         style={{
           height: 2,

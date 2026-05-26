@@ -100,9 +100,11 @@ export default function SidebarNav({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <nav className="space-y-1">
-      {/* Section header — hidden on tablet (72px mode), visible on mobile open + desktop */}
-      <p className="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider md:hidden lg:block">
+    <nav className="space-y-0.5">
+      <p
+        className="px-3 mb-3 text-xs font-semibold uppercase tracking-widest md:hidden lg:block"
+        style={{ color: "rgba(200,146,42,0.5)", fontSize: "0.6rem", letterSpacing: "0.14em" }}
+      >
         Navigation
       </p>
 
@@ -118,19 +120,35 @@ export default function SidebarNav({ onClose }: { onClose?: () => void }) {
             href={item.href}
             title={item.label}
             onClick={onClose}
-            className={[
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-              // Tablet: center icon; desktop + mobile: left-align
-              "md:justify-center lg:justify-start",
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 md:justify-center lg:justify-start"
+            style={
               isActive
-                ? "bg-[#0066CC] text-white shadow-sm"
-                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
-            ].join(" ")}
+                ? {
+                    backgroundColor: "rgba(200,146,42,0.15)",
+                    color: "#C8922A",
+                    borderLeft: "2px solid #C8922A",
+                  }
+                : {
+                    color: "rgba(255,255,255,0.6)",
+                    borderLeft: "2px solid transparent",
+                  }
+            }
+            onMouseEnter={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+              }
+            }}
           >
-            <span className={isActive ? "text-white" : "text-slate-400"}>
+            <span style={{ color: isActive ? "#C8922A" : "rgba(255,255,255,0.4)" }}>
               {item.icon}
             </span>
-            {/* Label: shown on mobile open + desktop, hidden on tablet */}
             <span className="md:hidden lg:inline">{item.label}</span>
           </Link>
         );

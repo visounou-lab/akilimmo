@@ -14,7 +14,7 @@ const METHODS = [
 
 const inputClass =
   "w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-800 " +
-  "focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors bg-white";
+  "focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors bg-white";
 
 export default function MarkAsPaidButton({ id }: { id: string }) {
   const [open, setOpen]       = useState(false);

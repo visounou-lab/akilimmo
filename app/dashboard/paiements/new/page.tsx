@@ -4,7 +4,7 @@ import { createPayment } from "../_actions";
 
 const inputClass =
   "w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 " +
-  "focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors bg-white";
+  "focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors bg-white";
 
 const labelClass = "block text-sm font-medium text-slate-700 mb-1.5";
 
@@ -26,7 +26,7 @@ export default async function NewPaiementPage() {
     <div className="p-8 max-w-3xl">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
-        <Link href="/dashboard/paiements" className="hover:text-[#0066CC] transition-colors">
+        <Link href="/dashboard/paiements" className="hover:text-[#C8922A] transition-colors">
           Paiements
         </Link>
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -152,7 +152,7 @@ export default async function NewPaiementPage() {
             <div className="flex items-center gap-3 pt-2">
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] text-white text-sm font-semibold transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] text-white text-sm font-semibold transition-colors shadow-sm"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

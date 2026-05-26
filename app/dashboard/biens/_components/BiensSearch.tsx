@@ -43,7 +43,7 @@ export default function BiensSearch({ properties }: { properties: Property[] }) 
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Titre, ville ou propriétaire…"
-          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors bg-white"
+          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors bg-white"
         />
         {q && (
           <button onClick={() => setQ("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -57,7 +57,7 @@ export default function BiensSearch({ properties }: { properties: Property[] }) 
       {filtered.length === 0 ? (
         <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center shadow-sm">
           <p className="text-slate-500 font-medium">Aucun résultat pour « {q} »</p>
-          <button onClick={() => setQ("")} className="text-sm text-[#0066CC] mt-2 hover:underline">Effacer la recherche</button>
+          <button onClick={() => setQ("")} className="text-sm text-[#C8922A] mt-2 hover:underline">Effacer la recherche</button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">

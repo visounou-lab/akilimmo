@@ -7,7 +7,7 @@ export default function NewBienPage() {
     <div className="p-8 max-w-3xl">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
-        <Link href="/dashboard/biens" className="hover:text-[#0066CC] transition-colors">
+        <Link href="/dashboard/biens" className="hover:text-[#C8922A] transition-colors">
           Biens
         </Link>
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

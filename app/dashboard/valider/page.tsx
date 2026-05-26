@@ -166,7 +166,7 @@ export default function ValiderPage() {
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-xl font-bold text-[#0066CC]">
+                      <p className="text-xl font-bold text-[#C8922A]">
                         {new Intl.NumberFormat("fr-FR").format(Number(p.price))} XOF
                       </p>
                       <p className="text-xs text-slate-400">{p.bedrooms} ch. · {p.bathrooms} sdb</p>
@@ -213,7 +213,7 @@ export default function ValiderPage() {
                     </button>
                     {p.videoUrl && (
                       <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
-                        className="text-sm text-[#0066CC] hover:underline">
+                        className="text-sm text-[#C8922A] hover:underline">
                         Voir la vidéo →
                       </a>
                     )}
@@ -232,7 +232,7 @@ export default function ValiderPage() {
                         type="text"
                         value={editFields.title}
                         onChange={(e) => setEditFields({ ...editFields, title: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div>
@@ -240,7 +240,7 @@ export default function ValiderPage() {
                       <select
                         value={editFields.country}
                         onChange={(e) => setEditFields({ ...editFields, country: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition bg-white"
                       >
                         <option value="BENIN">Bénin</option>
                         <option value="COTE_D_IVOIRE">Côte d&apos;Ivoire</option>
@@ -252,7 +252,7 @@ export default function ValiderPage() {
                         type="text"
                         value={editFields.city}
                         onChange={(e) => setEditFields({ ...editFields, city: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div className="sm:col-span-2">
@@ -261,7 +261,7 @@ export default function ValiderPage() {
                         type="text"
                         value={editFields.address}
                         onChange={(e) => setEditFields({ ...editFields, address: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div>
@@ -270,7 +270,7 @@ export default function ValiderPage() {
                         type="number"
                         value={editFields.price}
                         onChange={(e) => setEditFields({ ...editFields, price: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div>
@@ -280,7 +280,7 @@ export default function ValiderPage() {
                         value={editFields.videoUrl}
                         onChange={(e) => setEditFields({ ...editFields, videoUrl: e.target.value })}
                         placeholder="https://youtube.com/…"
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div>
@@ -290,7 +290,7 @@ export default function ValiderPage() {
                         min={0}
                         value={editFields.bedrooms}
                         onChange={(e) => setEditFields({ ...editFields, bedrooms: Number(e.target.value) })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div>
@@ -300,7 +300,7 @@ export default function ValiderPage() {
                         min={0}
                         value={editFields.bathrooms}
                         onChange={(e) => setEditFields({ ...editFields, bathrooms: Number(e.target.value) })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition"
                       />
                     </div>
                     <div className="sm:col-span-2">
@@ -309,7 +309,7 @@ export default function ValiderPage() {
                         rows={4}
                         value={editFields.description}
                         onChange={(e) => setEditFields({ ...editFields, description: e.target.value })}
-                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition resize-none"
+                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition resize-none"
                       />
                     </div>
                     <div className="sm:col-span-2">
@@ -333,7 +333,7 @@ export default function ValiderPage() {
                     <button
                       onClick={() => saveEdit(p.id)}
                       disabled={saving}
-                      className="px-6 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#0055AA] disabled:opacity-50 text-white text-sm font-semibold transition"
+                      className="px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#0055AA] disabled:opacity-50 text-white text-sm font-semibold transition"
                     >
                       {saving ? "Enregistrement…" : "Enregistrer les modifications"}
                     </button>

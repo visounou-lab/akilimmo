@@ -52,7 +52,7 @@ export default async function ContratDetailPage({ params }: Props) {
     <div className="p-8 max-w-4xl">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
-        <Link href="/dashboard/contrats" className="hover:text-[#0066CC] transition-colors">
+        <Link href="/dashboard/contrats" className="hover:text-[#C8922A] transition-colors">
           Contrats
         </Link>
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -87,7 +87,7 @@ export default async function ContratDetailPage({ params }: Props) {
           </Link>
           <Link
             href={`/dashboard/contrats/${id}/edit`}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0066CC] hover:bg-[#004499] text-white text-sm font-semibold transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1C1917] hover:bg-[#2D2420] text-white text-sm font-semibold transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -118,7 +118,7 @@ export default async function ContratDetailPage({ params }: Props) {
               </div>
               <div>
                 <p className="text-xs text-slate-400 mb-0.5">Prix par nuit</p>
-                <p className="text-sm font-semibold text-[#0066CC]">{formatPrice(contract.rentAmount)}</p>
+                <p className="text-sm font-semibold text-[#C8922A]">{formatPrice(contract.rentAmount)}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-400 mb-0.5">Total séjour</p>
@@ -190,8 +190,8 @@ export default async function ContratDetailPage({ params }: Props) {
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <h2 className="text-sm font-semibold text-slate-700 mb-4 uppercase tracking-wide">Locataire</h2>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-                <span className="text-sm font-semibold text-[#0066CC]">
+              <div className="w-9 h-9 rounded-full bg-[#1C1917]/10 flex items-center justify-center shrink-0">
+                <span className="text-sm font-semibold text-[#C8922A]">
                   {(contract.tenant.name ?? contract.tenant.email)[0].toUpperCase()}
                 </span>
               </div>

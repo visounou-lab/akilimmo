@@ -56,7 +56,7 @@ export default function ContratsSearch({ contracts }: { contracts: Contract[] })
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Bien, locataire, propriétaire…"
-          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors bg-white"
+          className="w-full rounded-xl border border-slate-200 pl-9 pr-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors bg-white"
         />
         {q && (
           <button onClick={() => setQ("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -71,7 +71,7 @@ export default function ContratsSearch({ contracts }: { contracts: Contract[] })
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <p className="text-slate-500 font-medium">Aucun résultat pour « {q} »</p>
-            <button onClick={() => setQ("")} className="text-sm text-[#0066CC] mt-2 hover:underline">Effacer la recherche</button>
+            <button onClick={() => setQ("")} className="text-sm text-[#C8922A] mt-2 hover:underline">Effacer la recherche</button>
           </div>
         ) : (
           <table className="w-full text-sm min-w-[600px]">
@@ -116,7 +116,7 @@ export default function ContratsSearch({ contracts }: { contracts: Contract[] })
                         <Link
                           href={`/dashboard/contrats/${c.id}/edit`}
                           title="Modifier le statut"
-                          className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:bg-[#0066CC]/10 hover:text-[#0066CC] transition-colors"
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:bg-[#1C1917]/10 hover:text-[#C8922A] transition-colors"
                         >
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

@@ -111,7 +111,7 @@ export default async function AdminDemandesPage({
               {tab.label}
               {tab.count != null && tab.count > 0 && (
                 <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${
-                  active ? "bg-[#0066CC] text-white" : "bg-slate-200 text-slate-600"
+                  active ? "bg-[#1C1917] text-white" : "bg-slate-200 text-slate-600"
                 }`}>
                   {tab.count}
                 </span>
@@ -137,8 +137,8 @@ export default async function AdminDemandesPage({
               <div key={r.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
                 <div className="flex items-start gap-4">
                   {/* Icon */}
-                  <div className="w-10 h-10 rounded-xl bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-[#0066CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <div className="w-10 h-10 rounded-xl bg-[#1C1917]/10 flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5 text-[#C8922A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>

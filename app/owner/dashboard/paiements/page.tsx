@@ -139,7 +139,7 @@ export default async function OwnerPaiementsPage({ searchParams }: Props) {
         {[
           { label: "Encaissé",    value: formatPrice(totalPaid),    color: "text-emerald-600", sub: null },
           { label: "En attente",  value: formatPrice(totalPending), color: "text-amber-600",   sub: null },
-          { label: "Net propriétaire", value: formatPrice(totalNet), color: "text-[#0066CC]", sub: "Après commission AKIL IMMO (6 %)" },
+          { label: "Net propriétaire", value: formatPrice(totalNet), color: "text-[#C8922A]", sub: "Après commission AKIL IMMO (6 %)" },
         ].map((kpi) => (
           <div key={kpi.label} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
             <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">{kpi.label}</p>

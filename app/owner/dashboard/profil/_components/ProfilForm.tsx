@@ -55,7 +55,7 @@ export default function ProfilForm({ initialName, email, initialPhone, initialCo
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC]"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A]"
           />
         </div>
 
@@ -82,7 +82,7 @@ export default function ProfilForm({ initialName, email, initialPhone, initialCo
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+229 97 00 00 00"
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC]"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A]"
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function ProfilForm({ initialName, email, initialPhone, initialCo
             value={city}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Cotonou"
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC]"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A]"
           />
         </div>
 
@@ -106,7 +106,7 @@ export default function ProfilForm({ initialName, email, initialPhone, initialCo
             id="country"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC] bg-white"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A] bg-white"
           >
             {COUNTRY_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -137,7 +137,7 @@ export default function ProfilForm({ initialName, email, initialPhone, initialCo
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex items-center gap-2 rounded-full bg-[#0066CC] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#004499] disabled:opacity-60 transition-colors"
+          className="inline-flex items-center gap-2 rounded-full bg-[#1C1917] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#2D2420] disabled:opacity-60 transition-colors"
         >
           {status === "loading" ? (
             <>

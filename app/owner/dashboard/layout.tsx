@@ -42,7 +42,7 @@ export default async function OwnerLayout({ children }: { children: React.ReactN
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-full bg-[#0066CC] text-white px-6 py-3 text-sm font-semibold hover:bg-[#004499] transition"
+            className="inline-flex items-center justify-center rounded-full bg-[#1C1917] text-white px-6 py-3 text-sm font-semibold hover:bg-[#2D2420] transition"
           >
             Retour à l&apos;accueil
           </Link>

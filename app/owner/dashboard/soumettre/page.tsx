@@ -6,7 +6,7 @@ import { submitProperty } from "./_actions";
 
 const inputClass =
   "w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 " +
-  "focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white";
+  "focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[rgba(200,146,42,0.2)] transition bg-white";
 
 export default function SoumettreePage() {
   const [loading, setLoading]   = useState(false);
@@ -148,7 +148,7 @@ export default function SoumettreePage() {
           <label className="block text-sm font-medium text-slate-700 mb-1.5">
             Photos <span className="text-slate-400 font-normal">(max 10, JPEG/PNG)</span>
           </label>
-          <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-8 cursor-pointer hover:border-[#0066CC] hover:bg-[#0066CC]/5 transition">
+          <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-8 cursor-pointer hover:border-[#C8922A] hover:bg-[rgba(200,146,42,0.05)] transition">
             <svg className="w-8 h-8 text-slate-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -171,7 +171,7 @@ export default function SoumettreePage() {
         )}
 
         <button type="submit" disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#0066CC] hover:bg-[#004499] disabled:opacity-60 text-white px-6 py-3.5 text-sm font-semibold transition shadow-sm">
+          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-60 text-white px-6 py-3.5 text-sm font-semibold transition shadow-sm">
           {loading ? (
             <>
               <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">

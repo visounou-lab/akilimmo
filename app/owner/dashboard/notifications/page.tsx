@@ -62,12 +62,12 @@ export default async function NotificationsPage() {
               <div
                 key={n.id}
                 className={`bg-white rounded-2xl border p-4 flex gap-4 transition-colors ${
-                  !n.isRead ? "border-[#0066CC]/20 bg-blue-50/30" : "border-slate-100"
+                  !n.isRead ? "border-[rgba(200,146,42,0.3)] bg-[rgba(200,146,42,0.04)]" : "border-slate-100"
                 }`}
               >
                 {/* Dot */}
                 <div className="flex-shrink-0 mt-1">
-                  <span className={`w-2 h-2 rounded-full block mt-1 ${!n.isRead ? "bg-[#0066CC]" : "bg-slate-200"}`} />
+                  <span className={`w-2 h-2 rounded-full block mt-1 ${!n.isRead ? "bg-[#C8922A]" : "bg-slate-200"}`} />
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -85,7 +85,7 @@ export default async function NotificationsPage() {
                   {n.actionUrl && (
                     <Link
                       href={n.actionUrl}
-                      className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#0066CC] hover:underline"
+                      className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#C8922A] hover:underline"
                     >
                       Voir le détail
                       <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

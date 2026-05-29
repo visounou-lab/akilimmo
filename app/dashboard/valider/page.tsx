@@ -333,7 +333,7 @@ export default function ValiderPage() {
                     <button
                       onClick={() => saveEdit(p.id)}
                       disabled={saving}
-                      className="px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#0055AA] disabled:opacity-50 text-white text-sm font-semibold transition"
+                      className="px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-50 text-white text-sm font-semibold transition"
                     >
                       {saving ? "Enregistrement…" : "Enregistrer les modifications"}
                     </button>

@@ -82,7 +82,7 @@ export default async function AdminDemandesPage({
   ];
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="px-4 py-6 sm:px-6 lg:p-8 max-w-5xl">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Demandes de documents</h1>

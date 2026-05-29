@@ -67,9 +67,9 @@ export default async function PaiementsPage({ searchParams }: Props) {
   const pendingAll = Number(aggPending._sum.amount  ?? 0);
 
   return (
-    <div className="p-8">
+    <div className="px-4 py-6 sm:px-6 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Paiements</h1>
           <p className="text-sm text-slate-500 mt-0.5">
@@ -89,7 +89,7 @@ export default async function PaiementsPage({ searchParams }: Props) {
       </div>
 
       {/* Résumé */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           { label: "Total",      value: formatPrice(totalAll),   color: "text-slate-800" },
           { label: "Encaissé",   value: formatPrice(paidAll),    color: "text-emerald-600" },
@@ -142,8 +142,8 @@ export default async function PaiementsPage({ searchParams }: Props) {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-x-auto">
+          <table className="w-full text-sm min-w-[600px]">
             <thead>
               <tr className="border-b border-gray-100 bg-slate-50/60">
                 <th className="text-left px-4 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">Bien</th>

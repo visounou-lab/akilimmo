@@ -69,7 +69,8 @@ export default async function TenantDashboardPage() {
           </div>
           <Link
             href="/tenant/dashboard/contrat"
-            className="inline-flex items-center gap-1 mt-4 text-xs font-medium text-[#0066CC] hover:underline"
+            className="inline-flex items-center gap-1 mt-4 text-xs font-medium hover:underline"
+            style={{ color: "#C8922A" }}
           >
             Voir le détail du contrat →
           </Link>
@@ -120,10 +121,10 @@ export default async function TenantDashboardPage() {
           <Link
             key={item.href}
             href={item.href}
-            className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center gap-3 hover:border-[#0066CC]/30 hover:shadow-md transition-all"
+            className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center gap-3 hover:border-[rgba(200,146,42,0.35)] hover:shadow-md transition-all"
           >
-            <div className="w-9 h-9 rounded-xl bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-              <svg className="w-4.5 h-4.5 text-[#0066CC]" style={{ width: 18, height: 18 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(200,146,42,0.1)" }}>
+              <svg style={{ width: 18, height: 18, color: "#C8922A" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
             </div>

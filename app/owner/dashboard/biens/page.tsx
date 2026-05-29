@@ -11,7 +11,7 @@ const PUBLISH_STATUS: Record<string, { label: string; bg: string; text: string; 
 };
 
 const RENTAL_STATUS: Record<string, { label: string; color: string }> = {
-  AVAILABLE:  { label: "Disponible",  color: "#0066CC" },
+  AVAILABLE:  { label: "Disponible",  color: "#C8922A" },
   RENTED:     { label: "Loué",        color: "#16A34A" },
   RESERVED:   { label: "Réservé",     color: "#D97706" },
   OFF_MARKET: { label: "Hors marché", color: "#64748B" },
@@ -75,7 +75,7 @@ export default async function OwnerBiensPage() {
         </div>
         <Link
           href="/owner/dashboard/soumettre"
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] text-white text-sm font-semibold transition shadow-sm"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] text-white text-sm font-semibold transition shadow-sm"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -95,7 +95,7 @@ export default async function OwnerBiensPage() {
           <p className="text-sm text-slate-400 mt-1">Soumettez votre premier bien à la location.</p>
           <Link
             href="/owner/dashboard/soumettre"
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-xl bg-[#0066CC] hover:bg-[#004499] text-white text-sm font-semibold transition"
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] text-white text-sm font-semibold transition"
           >
             Soumettre un bien
           </Link>
@@ -161,7 +161,7 @@ export default async function OwnerBiensPage() {
                       <Link
                         href={`/biens/${b.slug}`}
                         target="_blank"
-                        className="text-xs font-medium text-[#0066CC] hover:underline"
+                        className="text-xs font-medium text-[#C8922A] hover:underline"
                       >
                         Voir la fiche →
                       </Link>

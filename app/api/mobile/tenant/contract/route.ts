@@ -11,8 +11,23 @@ export async function GET(req: NextRequest) {
     select: {
       id: true,
       rentAmount: true,
+      startDate: true,
       endDate: true,
-      property: { select: { title: true, city: true, address: true } },
+      property: {
+        select: {
+          title: true,
+          city: true,
+          address: true,
+          imageUrl: true,
+          bedrooms: true,
+          propertyType: true,
+          images: {
+            where: { isPrimary: true, status: "APPROVED" },
+            take: 1,
+            select: { url: true },
+          },
+        },
+      },
     },
   });
 
@@ -21,6 +36,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     ...contract,
     rentAmount: Number(contract.rentAmount),
-    endDate: contract.endDate.toISOString(),
+    startDate:  contract.startDate.toISOString(),
+    endDate:    contract.endDate.toISOString(),
+    property: {
+      ...contract.property,
+      coverImage: contract.property.images[0]?.url ?? contract.property.imageUrl ?? null,
+      images: undefined,
+    },
   });
 }

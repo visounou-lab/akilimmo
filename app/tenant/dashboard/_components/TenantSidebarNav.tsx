@@ -66,11 +66,16 @@ export default function TenantSidebarNav({ onClose }: { onClose?: () => void }) 
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
               "md:justify-center lg:justify-start",
               isActive
-                ? "bg-[#0066CC] text-white shadow-sm"
+                ? "shadow-sm"
                 : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
             ].join(" ")}
+            style={isActive ? {
+              backgroundColor: "rgba(200,146,42,0.12)",
+              color: "#C8922A",
+              borderLeft: "2px solid #C8922A",
+            } : { borderLeft: "2px solid transparent" }}
           >
-            <span className={isActive ? "text-white" : "text-slate-400"}>
+            <span style={isActive ? { color: "#C8922A" } : {}}>
               {item.icon}
             </span>
             <span className="md:hidden lg:inline">{item.label}</span>

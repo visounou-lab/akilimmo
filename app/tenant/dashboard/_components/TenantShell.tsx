@@ -68,14 +68,14 @@ export default function TenantShell({ children, userName, userEmail, userInitial
         {/* Brand */}
         <div className="border-b border-gray-100 flex flex-col items-center py-4 px-4 lg:px-6 shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <div className="bg-[#0066CC] rounded-xl px-3 py-2 md:hidden lg:flex items-center justify-center">
+          <div className="rounded-xl px-3 py-2 md:hidden lg:flex items-center justify-center" style={{ backgroundColor: "#1C1917" }}>
             <img src="/logo.png" alt="AKIL IMMO" className="h-10 w-auto" />
           </div>
           <p className="text-xs uppercase tracking-wide text-gray-500 mt-1 text-center md:hidden lg:block">
             Mon espace locataire
           </p>
-          <div className="hidden md:flex lg:hidden h-10 w-10 items-center justify-center rounded-full bg-[#0066CC]/10">
-            <span className="text-[#0066CC] font-bold text-lg">L</span>
+          <div className="hidden md:flex lg:hidden h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: "rgba(200,146,42,0.12)" }}>
+            <span className="font-bold text-lg" style={{ color: "#C8922A" }}>L</span>
           </div>
         </div>
 
@@ -87,8 +87,8 @@ export default function TenantShell({ children, userName, userEmail, userInitial
         {/* User footer */}
         <div className="border-t border-gray-100 p-3 space-y-2 shrink-0">
           <div className="flex items-center gap-3 px-2 md:justify-center lg:justify-start">
-            <div className="w-8 h-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0">
-              <span className="text-[#0066CC] font-semibold text-xs">{userInitial}</span>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(200,146,42,0.12)" }}>
+              <span className="font-semibold text-xs" style={{ color: "#C8922A" }}>{userInitial}</span>
             </div>
             <div className="min-w-0 md:hidden lg:block">
               <p className="text-sm font-medium text-slate-800 truncate">{userName}</p>
@@ -122,9 +122,10 @@ export default function TenantShell({ children, userName, userEmail, userInitial
         <span className="flex-1 text-center text-sm font-semibold text-slate-800 truncate">{pageTitle}</span>
         <Link
           href="/tenant/dashboard/profil"
-          className="h-8 w-8 rounded-full bg-[#0066CC]/10 flex items-center justify-center shrink-0"
+          className="h-8 w-8 rounded-full flex items-center justify-center shrink-0"
+          style={{ backgroundColor: "rgba(200,146,42,0.12)" }}
         >
-          <span className="text-[#0066CC] font-semibold text-xs">{userInitial}</span>
+          <span className="font-semibold text-xs" style={{ color: "#C8922A" }}>{userInitial}</span>
         </Link>
       </header>
 

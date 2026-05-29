@@ -18,7 +18,7 @@ export default async function UtilisateursPage() {
   const users = raw.map((u) => ({ ...u, createdAt: u.createdAt.toISOString() }));
 
   return (
-    <div className="p-8">
+    <div className="px-4 py-6 sm:px-6 lg:p-8">
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Utilisateurs</h1>

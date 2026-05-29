@@ -111,7 +111,7 @@ export default function ValiderPage() {
   const owner = (p: PendingProperty) => p.submitter ?? p.owner;
 
   return (
-    <div className="p-8">
+    <div className="px-4 py-6 sm:px-6 lg:p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Biens à valider</h1>
         <p className="text-sm text-slate-500 mt-0.5">

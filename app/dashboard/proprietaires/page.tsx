@@ -58,14 +58,14 @@ export default function ProprietairesPage() {
   const suspended = owners.filter((o) => o.status === "suspended").length;
 
   return (
-    <div className="p-8">
+    <div className="px-4 py-6 sm:px-6 lg:p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Propriétaires</h1>
         <p className="text-sm text-slate-500 mt-0.5">Gestion des comptes propriétaires inscrits</p>
       </div>
 
       {/* Compteurs */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: "En attente", count: pending,   color: "bg-amber-50 text-amber-700 border-amber-100" },
           { label: "Actifs",     count: active,    color: "bg-emerald-50 text-emerald-700 border-emerald-100" },

@@ -45,7 +45,7 @@ export default async function ReservationsPage() {
             </span>
           )}
           {contacted > 0 && (
-            <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+            <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
               {contacted} contacté{contacted > 1 ? "s" : ""}
             </span>
           )}

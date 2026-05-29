@@ -11,7 +11,7 @@ const TYPE_LABELS: Record<string, string> = {
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; dot: string }> = {
   pending:    { label: "En attente", bg: "bg-amber-50",   text: "text-amber-700",  dot: "bg-amber-400"   },
-  processing: { label: "En cours",   bg: "bg-blue-50",    text: "text-blue-700",   dot: "bg-blue-400"    },
+  processing: { label: "En cours",   bg: "bg-slate-100",  text: "text-slate-600",  dot: "bg-slate-400"   },
   delivered:  { label: "Transmis",   bg: "bg-emerald-50", text: "text-emerald-700",dot: "bg-emerald-500" },
 };
 
@@ -183,7 +183,7 @@ export default async function AdminDemandesPage({
                       <form action={markProcessing.bind(null, r.id)}>
                         <button
                           type="submit"
-                          className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100 transition-colors whitespace-nowrap"
+                          className="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 transition-colors whitespace-nowrap"
                         >
                           Prendre en charge
                         </button>

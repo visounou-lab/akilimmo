@@ -80,11 +80,11 @@ function NouvelleDemandeForm() {
               className={[
                 "text-left rounded-xl border-2 p-4 transition-all",
                 type === t.value
-                  ? "border-[#0066CC] bg-[#0066CC]/5"
+                  ? "border-[#C8922A] bg-[rgba(200,146,42,0.05)]"
                   : "border-slate-200 hover:border-slate-300 bg-white",
               ].join(" ")}
             >
-              <p className={`text-sm font-semibold ${type === t.value ? "text-[#0066CC]" : "text-slate-800"}`}>
+              <p className={`text-sm font-semibold ${type === t.value ? "text-[#C8922A]" : "text-slate-800"}`}>
                 {t.label}
               </p>
               <p className="text-xs text-slate-500 mt-0.5">{t.desc}</p>
@@ -103,7 +103,7 @@ function NouvelleDemandeForm() {
             id="property"
             value={propertyId}
             onChange={(e) => setProp(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC] bg-white"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A] bg-white"
           >
             <option value="">— Aucun bien spécifique —</option>
             {properties.map((p) => (
@@ -124,7 +124,7 @@ function NouvelleDemandeForm() {
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
           placeholder="Précisions supplémentaires pour votre conseiller…"
-          className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-[#0066CC]/40 focus:border-[#0066CC]"
+          className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-[rgba(200,146,42,0.25)] focus:border-[#C8922A]"
         />
       </div>
 
@@ -143,7 +143,7 @@ function NouvelleDemandeForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex items-center gap-2 rounded-full bg-[#0066CC] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#004499] disabled:opacity-60 transition-colors"
+          className="inline-flex items-center gap-2 rounded-full bg-[#1C1917] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#2D2420] disabled:opacity-60 transition-colors"
         >
           {status === "loading" ? (
             <>

@@ -49,9 +49,9 @@ export type PropertyCardFull = {
 };
 
 const COUNTRY_OPTIONS = [
-  { value: "TOUS", label: "Tous les pays" },
-  { value: "BENIN", label: "Bénin" },
-  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire" },
+  { value: "TOUS",          label: "Tous",          flag: "🌍" },
+  { value: "BENIN",         label: "Bénin",         flag: "🇧🇯" },
+  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire", flag: "🇨🇮" },
 ] as const;
 
 const PRICE_BRACKETS = [

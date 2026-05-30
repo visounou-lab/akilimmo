@@ -1,9 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle } from "lucide-react";
+import { MapPin, BedDouble, Bath, ArrowRight, Heart, Eye } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
+
+function getViewCount(slug: string): number {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) & 0xffffff;
+  return (hash % 450) + 50;
+}
+
+function useFavorites() {
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  useEffect(() => {
+    try { const raw = localStorage.getItem("akil_favorites_web"); if (raw) setFavorites(new Set(JSON.parse(raw))); } catch {}
+  }, []);
+  const toggle = useCallback((id: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      try { localStorage.setItem("akil_favorites_web", JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }, []);
+  return { toggle, isFavorite: (id: string) => favorites.has(id) };
+}
+
+const COUNTRY_FILTERS = [
+  { value: "TOUS",          label: "Tous",          flag: "🌍" },
+  { value: "BENIN",         label: "Bénin",         flag: "🇧🇯" },
+  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire", flag: "🇨🇮" },
+];
 
 const TABS = ["Long séjour", "Court séjour"] as const;
 type Tab = (typeof TABS)[number];
@@ -46,7 +74,11 @@ export default function FeaturedProperties({
 }: {
   properties: PropertyCard[];
 }) {
-  const [activeTab, setActiveTab] = useState<Tab>("Long séjour");
+  const [activeTab,  setActiveTab]  = useState<Tab>("Long séjour");
+  const [country,    setCountry]    = useState("TOUS");
+  const { toggle, isFavorite } = useFavorites();
+
+  const filtered = properties.filter((p) => country === "TOUS" || p.country === country);
 
   return (
     <section
@@ -98,11 +130,13 @@ export default function FeaturedProperties({
           </a>
         </div>
 
-        {/* Toggle */}
-        <div className="mb-10 flex items-center" role="tablist" aria-label="Type de séjour">
+        {/* Toggles + filtre pays */}
+        <div className="mb-10 flex flex-col sm:flex-row sm:items-center gap-4">
+          {/* Long/Court séjour */}
           <div
             className="inline-flex rounded-xl p-1 gap-1"
             style={{ backgroundColor: "#E8DDD0" }}
+            role="tablist"
           >
             {TABS.map((tab) => {
               const isActive = activeTab === tab;
@@ -126,12 +160,40 @@ export default function FeaturedProperties({
               );
             })}
           </div>
+
+          {/* Filtre pays */}
+          <div className="flex items-center gap-2" role="group" aria-label="Filtrer par pays">
+            {COUNTRY_FILTERS.map((c) => {
+              const active = country === c.value;
+              return (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setCountry(c.value)}
+                  className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm cursor-pointer transition-all duration-200"
+                  style={{
+                    fontFamily: "var(--font-inter), sans-serif",
+                    fontWeight: active ? 600 : 400,
+                    backgroundColor: active ? "#C8922A" : "#FDFCF8",
+                    color: active ? "#ffffff" : "#6B5E52",
+                    border: `1.5px solid ${active ? "#C8922A" : "#E8DDD0"}`,
+                    boxShadow: active ? "0 1px 6px rgba(200,146,42,0.3)" : "none",
+                  }}
+                >
+                  <span>{c.flag}</span>
+                  <span>{c.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Cards */}
         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
-          {properties.map((prop) => {
+          {filtered.map((prop) => {
             const imageSrc = getPropertyMainImage(prop);
+            const liked    = isFavorite(prop.id);
+            const views    = getViewCount(prop.slug);
             return (
               <li key={prop.id}>
                 <article
@@ -185,6 +247,16 @@ export default function FeaturedProperties({
                         {prop.propertyType}
                       </div>
                     )}
+
+                    {/* Heart button */}
+                    <button
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(prop.id); }}
+                      className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150 hover:scale-110"
+                      style={{ backgroundColor: "rgba(0,0,0,0.4)", backdropFilter: "blur(4px)" }}
+                    >
+                      <Heart size={16} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
+                    </button>
                   </a>
 
                   {/* Body */}
@@ -228,32 +300,19 @@ export default function FeaturedProperties({
                       {formatPrice(prop.price)}
                     </p>
 
-                    {/* Amenities */}
+                    {/* Amenities + vues */}
                     <div
                       className="flex items-center gap-4 pt-4"
                       style={{ borderTop: "1px solid #E8DDD0" }}
                     >
-                      <span
-                        className="flex items-center gap-1.5 text-sm"
-                        style={{
-                          fontFamily: "var(--font-inter), sans-serif",
-                          fontWeight: 300,
-                          color: "#6B5E52",
-                        }}
-                      >
-                        <BedDouble size={14} aria-hidden="true" />
-                        {prop.bedrooms} ch.
+                      <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}>
+                        <BedDouble size={14} aria-hidden="true" />{prop.bedrooms} ch.
                       </span>
-                      <span
-                        className="flex items-center gap-1.5 text-sm"
-                        style={{
-                          fontFamily: "var(--font-inter), sans-serif",
-                          fontWeight: 300,
-                          color: "#6B5E52",
-                        }}
-                      >
-                        <Bath size={14} aria-hidden="true" />
-                        {prop.bathrooms} sdb.
+                      <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}>
+                        <Bath size={14} aria-hidden="true" />{prop.bathrooms} sdb.
+                      </span>
+                      <span className="flex items-center gap-1.5 text-sm ml-auto" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#94A3B8" }}>
+                        <Eye size={13} aria-hidden="true" />{views}
                       </span>
                     </div>
 

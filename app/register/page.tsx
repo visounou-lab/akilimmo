@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -32,7 +34,12 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <input type="text" placeholder="Nom complet" value={name} onChange={e => setName(e.target.value)} className="w-full border p-3 rounded" required />
           <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="w-full border p-3 rounded" required />
-          <input type="password" placeholder="Mot de passe" value={password} onChange={e => setPassword(e.target.value)} className="w-full border p-3 rounded" required />
+          <div className="relative">
+            <input type={showPass ? "text" : "password"} placeholder="Mot de passe" value={password} onChange={e => setPassword(e.target.value)} className="w-full border p-3 rounded pr-11" required />
+            <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
           <button type="submit" className="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700">Créer mon compte</button>
         </form>
         <p className="text-center mt-4 text-sm">Déjà un compte ? <a href="/login" className="text-blue-600 hover:underline">Se connecter</a></p>

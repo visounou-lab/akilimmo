@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -13,6 +14,8 @@ function ResetPasswordForm() {
   const [status, setStatus]         = useState<"loading" | "valid" | "expired" | "invalid">("loading");
   const [password, setPassword]     = useState("");
   const [confirm, setConfirm]       = useState("");
+  const [showPass, setShowPass]     = useState(false);
+  const [showConf, setShowConf]     = useState(false);
   const [error, setError]           = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -100,27 +103,31 @@ function ResetPasswordForm() {
       )}
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1.5">Nouveau mot de passe</label>
-        <input
-          type="password"
-          required
-          minLength={8}
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white"
-        />
+        <div className="relative">
+          <input
+            type={showPass ? "text" : "password"}
+            required minLength={8} placeholder="••••••••"
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 pr-11 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition bg-white"
+          />
+          <button type="button" onClick={() => setShowPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
       </div>
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirmer le mot de passe</label>
-        <input
-          type="password"
-          required
-          minLength={8}
-          placeholder="••••••••"
-          value={confirm}
-          onChange={(e) => setConfirm(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition bg-white"
-        />
+        <div className="relative">
+          <input
+            type={showConf ? "text" : "password"}
+            required minLength={8} placeholder="••••••••"
+            value={confirm} onChange={(e) => setConfirm(e.target.value)}
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 pr-11 text-sm text-slate-800 focus:outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition bg-white"
+          />
+          <button type="button" onClick={() => setShowConf(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            {showConf ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
       </div>
       <button
         type="submit"

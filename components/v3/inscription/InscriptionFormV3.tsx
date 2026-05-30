@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, Eye, EyeOff } from "lucide-react";
 
 const COUNTRY_OPTIONS = [
   { value: "BENIN", label: "Bénin", prefix: "+229" },
@@ -44,9 +44,11 @@ export default function InscriptionFormV3() {
     password: "",
     confirmPassword: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [loading,   setLoading]   = useState(false);
+  const [error,     setError]     = useState("");
+  const [success,   setSuccess]   = useState(false);
+  const [showPass,  setShowPass]  = useState(false);
+  const [showConf,  setShowConf]  = useState(false);
 
   function handleCountryChange(value: string) {
     const opt = COUNTRY_OPTIONS.find((o) => o.value === value);
@@ -564,19 +566,23 @@ export default function InscriptionFormV3() {
                     <label htmlFor="v3-password" style={labelStyle}>
                       Mot de passe {requiredMark}
                     </label>
-                    <input
-                      id="v3-password"
-                      type="password"
-                      required
-                      autoComplete="new-password"
-                      placeholder="Minimum 8 caractères"
-                      value={form.password}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, password: e.target.value }))
-                      }
-                      className="v3-field"
-                      style={inputStyle}
-                    />
+                    <div style={{ position: "relative" }}>
+                      <input
+                        id="v3-password"
+                        type={showPass ? "text" : "password"}
+                        required
+                        autoComplete="new-password"
+                        placeholder="Minimum 8 caractères"
+                        value={form.password}
+                        onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                        className="v3-field"
+                        style={{ ...inputStyle, paddingRight: 40 }}
+                      />
+                      <button type="button" onClick={() => setShowPass(v => !v)}
+                        style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94A3B8", padding: 0, display: "flex" }}>
+                        {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Confirmation mot de passe */}
@@ -584,19 +590,23 @@ export default function InscriptionFormV3() {
                     <label htmlFor="v3-confirmPassword" style={labelStyle}>
                       Confirmer le mot de passe {requiredMark}
                     </label>
-                    <input
-                      id="v3-confirmPassword"
-                      type="password"
-                      required
-                      autoComplete="new-password"
-                      placeholder="••••••••"
-                      value={form.confirmPassword}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, confirmPassword: e.target.value }))
-                      }
-                      className="v3-field"
-                      style={inputStyle}
-                    />
+                    <div style={{ position: "relative" }}>
+                      <input
+                        id="v3-confirmPassword"
+                        type={showConf ? "text" : "password"}
+                        required
+                        autoComplete="new-password"
+                        placeholder="••••••••"
+                        value={form.confirmPassword}
+                        onChange={(e) => setForm((f) => ({ ...f, confirmPassword: e.target.value }))}
+                        className="v3-field"
+                        style={{ ...inputStyle, paddingRight: 40 }}
+                      />
+                      <button type="button" onClick={() => setShowConf(v => !v)}
+                        style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94A3B8", padding: 0, display: "flex" }}>
+                        {showConf ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Error */}

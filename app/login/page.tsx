@@ -5,12 +5,14 @@ import { signIn, getSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 function LoginForm() {
-  const [email, setEmail]       = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError]       = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [email,       setEmail]       = useState("");
+  const [password,    setPassword]    = useState("");
+  const [showPass,    setShowPass]    = useState(false);
+  const [error,       setError]       = useState("");
+  const [loading,     setLoading]     = useState(false);
   const router       = useRouter();
   const searchParams = useSearchParams();
   const resetDone    = searchParams.get("reset") === "1";
@@ -120,16 +122,25 @@ function LoginForm() {
           >
             Mot de passe
           </label>
-          <input
-            type="password"
-            required
-            placeholder="••••••••"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            style={inputStyle}
-            onFocus={e => { e.currentTarget.style.borderColor = "#C8922A"; }}
-            onBlur={e => { e.currentTarget.style.borderColor = "rgba(200,146,42,0.25)"; }}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPass ? "text" : "password"}
+              required
+              placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              style={{ ...inputStyle, paddingRight: "44px" }}
+              onFocus={e => { e.currentTarget.style.borderColor = "#C8922A"; }}
+              onBlur={e => { e.currentTarget.style.borderColor = "rgba(200,146,42,0.25)"; }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass(v => !v)}
+              style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94A3B8", padding: 0 }}
+            >
+              {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
         </div>
 
         <div className="flex justify-end">

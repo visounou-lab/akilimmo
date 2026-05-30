@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getYouTubeThumbnailFallback } from "@/lib/youtube";
 
 export async function GET(
   _req: NextRequest,
@@ -21,6 +22,7 @@ export async function GET(
       propertyType: true,
       status: true,
       imageUrl: true,
+      videoUrl: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: [{ isPrimary: "desc" }, { order: "asc" }],
@@ -33,7 +35,12 @@ export async function GET(
   if (!property) return NextResponse.json({ error: "Bien introuvable" }, { status: 404 });
 
   const allImages = property.images.map((i) => i.url);
-  if (allImages.length === 0 && property.imageUrl) allImages.push(property.imageUrl);
+  // Fallback: YouTube thumbnail then imageUrl
+  if (allImages.length === 0) {
+    const ytThumb = getYouTubeThumbnailFallback(property.videoUrl);
+    if (ytThumb && !ytThumb.startsWith("data:")) allImages.push(ytThumb);
+    else if (property.imageUrl) allImages.push(property.imageUrl);
+  }
 
   return NextResponse.json({
     ...property,

@@ -46,5 +46,6 @@ export async function GET(
     ...property,
     price: Number(property.price),
     images: allImages,
+    videoUrl: property.videoUrl ?? null,
   });
 }

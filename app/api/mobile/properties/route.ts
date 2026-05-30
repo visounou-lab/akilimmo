@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getPropertyMainImage } from "@/lib/youtube";
 
 export async function GET(req: NextRequest) {
   const city = req.nextUrl.searchParams.get("city") ?? undefined;
@@ -26,20 +27,26 @@ export async function GET(req: NextRequest) {
       propertyType: true,
       status: true,
       imageUrl: true,
+      videoUrl: true,
       images: {
-        where: { isPrimary: true, status: "APPROVED" },
+        where: { status: "APPROVED" },
+        orderBy: { order: "asc" },
         take: 1,
-        select: { url: true },
+        select: { url: true, status: true, order: true },
       },
     },
   });
 
   return NextResponse.json(
-    properties.map((p) => ({
-      ...p,
-      price: Number(p.price),
-      coverImage: p.images[0]?.url ?? p.imageUrl ?? null,
-      images: undefined,
-    }))
+    properties.map((p) => {
+      const coverImage = getPropertyMainImage(p);
+      return {
+        ...p,
+        price: Number(p.price),
+        coverImage: coverImage.startsWith("data:") ? null : coverImage,
+        images: undefined,
+        videoUrl: undefined,
+      };
+    })
   );
 }

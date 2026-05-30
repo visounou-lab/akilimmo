@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, ArrowRight, Heart, Eye } from "lucide-react";
+import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart, Eye } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 
 function getViewCount(slug: string): number {

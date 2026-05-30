@@ -1,9 +1,37 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, MessageCircle, SearchX } from "lucide-react";
+import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart, Eye } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
+
+function getViewCount(slug: string): number {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) & 0xffffff;
+  return (hash % 450) + 50;
+}
+
+function useFavorites() {
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("akil_favorites_web");
+      if (raw) setFavorites(new Set(JSON.parse(raw)));
+    } catch {}
+  }, []);
+
+  const toggle = useCallback((id: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      try { localStorage.setItem("akil_favorites_web", JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }, []);
+
+  return { favorites, toggle, isFavorite: (id: string) => favorites.has(id) };
+}
 
 export type PropertyCardFull = {
   id: string;
@@ -59,6 +87,7 @@ export default function BiensListClient({
   const [city, setCity] = useState("TOUTES");
   const [priceRange, setPriceRange] = useState("TOUS");
   const [type, setType] = useState("TOUS");
+  const { toggle, isFavorite } = useFavorites();
 
   const cities = useMemo(() => {
     const subset =
@@ -380,6 +409,8 @@ export default function BiensListClient({
             >
               {filtered.map((prop) => {
                 const imageSrc = getPropertyMainImage(prop);
+                const liked    = isFavorite(prop.id);
+                const views    = getViewCount(prop.slug);
                 return (
                   <li key={prop.id}>
                     <article
@@ -440,6 +471,17 @@ export default function BiensListClient({
                             {prop.propertyType}
                           </div>
                         )}
+
+                        {/* Heart button */}
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(prop.id); }}
+                          className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150 hover:scale-110"
+                          style={{ backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}
+                          aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
+                        >
+                          <Heart size={16} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
+                        </button>
                       </a>
 
                       {/* Body */}
@@ -487,32 +529,31 @@ export default function BiensListClient({
                           {formatPrice(prop.price)}
                         </p>
 
-                        {/* Équipements */}
+                        {/* Équipements + vues */}
                         <div
                           className="flex items-center gap-4 pt-4"
                           style={{ borderTop: "1px solid #E8DDD0" }}
                         >
                           <span
                             className="flex items-center gap-1.5 text-sm"
-                            style={{
-                              fontFamily: "var(--font-inter), sans-serif",
-                              fontWeight: 300,
-                              color: "#6B5E52",
-                            }}
+                            style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}
                           >
                             <BedDouble size={14} aria-hidden="true" />
                             {prop.bedrooms} ch.
                           </span>
                           <span
                             className="flex items-center gap-1.5 text-sm"
-                            style={{
-                              fontFamily: "var(--font-inter), sans-serif",
-                              fontWeight: 300,
-                              color: "#6B5E52",
-                            }}
+                            style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}
                           >
                             <Bath size={14} aria-hidden="true" />
                             {prop.bathrooms} sdb.
+                          </span>
+                          <span
+                            className="flex items-center gap-1.5 text-sm ml-auto"
+                            style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#94A3B8" }}
+                          >
+                            <Eye size={13} aria-hidden="true" />
+                            {views}
                           </span>
                         </div>
 

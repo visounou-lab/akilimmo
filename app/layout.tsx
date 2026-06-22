@@ -93,8 +93,9 @@ export default function RootLayout({
     <html
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} h-full antialiased`}
+      style={{ colorScheme: "light" }}
     >
-      <body className="min-h-full bg-slate-50 text-slate-900">
+      <body className="min-h-full bg-slate-50 text-slate-900" style={{ colorScheme: "light" }}>
         <Providers>{children}</Providers>
         <AnalyticsConsent />
       </body>

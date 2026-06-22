@@ -211,12 +211,23 @@ export default function VoituresClient({ vehicles }: Props) {
                 return (
                   <article
                     key={v.id}
-                    className="rounded-2xl overflow-hidden"
+                    className="rounded-2xl overflow-hidden group"
                     style={{
                       backgroundColor: "#FDFCF8",
                       border: "1px solid #E8DDD0",
                       boxShadow: "0 2px 12px rgba(28,25,23,0.06)",
                       opacity: v.available ? 1 : 0.6,
+                      cursor: "pointer",
+                      transition: "box-shadow 0.2s, transform 0.2s",
+                    }}
+                    onClick={() => { window.location.href = `/voitures/${v.id}`; }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(28,25,23,0.14)";
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(28,25,23,0.06)";
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                     }}
                   >
                     {/* Image principale */}

@@ -27,7 +27,7 @@ export default function StatsBar() {
   return (
     <section
       aria-label="Nos engagements"
-      style={{ backgroundColor: "#1B4D3E" }}
+      style={{ backgroundColor: "#1C1917" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <dl className="grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-4">

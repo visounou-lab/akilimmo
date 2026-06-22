@@ -1,12 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, MessageCircle } from "lucide-react";
-import WaCountryPicker from "./WaCountryPicker";
+import { ArrowRight, Search } from "lucide-react";
+import { useState } from "react";
+
+const CITIES = [
+  "Abidjan", "Cotonou", "Cocody", "Angré", "Zone 4",
+  "Abomey-Calavi", "Tokan", "Calavi", "Plateau", "Marcory",
+];
 
 export default function HeroSection() {
+  const [query, setQuery] = useState("");
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = query.trim();
+    if (q) {
+      window.location.href = `/biens?q=${encodeURIComponent(q)}`;
+    } else {
+      window.location.href = "#categories";
+    }
+  }
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -17,19 +34,19 @@ export default function HeroSection() {
           className="object-cover"
           sizes="100vw"
         />
-        {/* Warm earthy overlay — distinct from v2's teal/blue */}
+        {/* Charcoal overlay — Option C */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(150deg, rgba(27,77,62,0.92) 0%, rgba(28,25,23,0.78) 60%, rgba(200,146,42,0.35) 100%)",
+              "linear-gradient(160deg, rgba(28,25,23,0.96) 0%, rgba(28,25,23,0.88) 55%, rgba(28,25,23,0.72) 100%)",
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center w-full">
+        {/* Badge pays */}
         <div
           className="mb-8 inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-xs font-medium tracking-widest uppercase"
           style={{
@@ -40,141 +57,159 @@ export default function HeroSection() {
             letterSpacing: "0.12em",
           }}
         >
-          Côte d&apos;Ivoire · Bénin
+          Bénin · Côte d&apos;Ivoire
         </div>
 
         {/* Headline */}
         <h1
-          className="mb-6"
+          className="mb-4"
           style={{
             fontFamily: "var(--font-playfair), serif",
             fontWeight: 700,
-            fontSize: "clamp(2rem, 5.5vw, 4.2rem)",
+            fontSize: "clamp(2rem, 5.5vw, 4rem)",
             lineHeight: 1.15,
             color: "#FDFCF8",
             letterSpacing: "-0.01em",
           }}
         >
-          Votre logement meublé au pays,
+          Location, vente, voitures &amp; séjours
           <br />
           <em style={{ fontStyle: "italic", color: "#C8922A" }}>
-            sans le stress de la distance.
+            à portée de main en Afrique de l&apos;Ouest.
           </em>
         </h1>
 
-        {/* Slogan */}
-        <p
-          className="mx-auto mb-5 max-w-2xl text-lg sm:text-xl"
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontWeight: 400,
-            fontStyle: "italic",
-            color: "rgba(253,252,248,0.9)",
-            lineHeight: 1.6,
-          }}
-        >
-          Vous êtes loin, nous sommes là.
-        </p>
+        {/* Sous-titre */}
         <p
           className="mx-auto mb-10 max-w-2xl text-base sm:text-lg"
           style={{
             fontFamily: "var(--font-inter), sans-serif",
             fontWeight: 300,
-            color: "rgba(253,252,248,0.7)",
+            color: "rgba(253,252,248,0.65)",
             lineHeight: 1.8,
           }}
         >
-          Villas et appartements meublés vérifiés à Abidjan, Cotonou, Cocody
-          et Abomey-Calavi. Vidéo HD du bien, galerie photos détaillée,
-          réservation simple sur WhatsApp. Pour la diaspora, les expat&apos;s,
-          et tous ceux qui veulent louer en confiance.
+          Appartements meublés vérifiés, villas à vendre, voitures de qualité et séjours
+          clé en main à Abidjan, Cotonou, Angré et Abomey-Calavi.
+          Depuis la diaspora ou sur place — on s&apos;occupe de tout.
         </p>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="#biens"
-            className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-4 text-base font-medium transition-all duration-200"
+        {/* Barre de recherche */}
+        <form
+          onSubmit={handleSearch}
+          className="mx-auto flex flex-col sm:flex-row max-w-2xl gap-2"
+          role="search"
+          aria-label="Rechercher un bien"
+        >
+          <div
+            className="relative flex-1"
+            style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12 }}
+          >
+            <Search
+              size={16}
+              aria-hidden="true"
+              className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ color: "rgba(253,252,248,0.45)" }}
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Ville, quartier… ex: Cocody, Zone 4"
+              list="city-suggestions"
+              className="w-full bg-transparent pl-10 pr-4 py-4 text-sm outline-none"
+              style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                color: "#FDFCF8",
+                border: "1.5px solid rgba(253,252,248,0.2)",
+                borderRadius: 12,
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(200,146,42,0.6)")}
+              onBlur={(e) =>  (e.currentTarget.style.borderColor = "rgba(253,252,248,0.2)")}
+            />
+            <datalist id="city-suggestions">
+              {CITIES.map((c) => <option key={c} value={c} />)}
+            </datalist>
+          </div>
+
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-2 cursor-pointer rounded-xl px-7 py-4 text-sm font-medium transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
-              fontWeight: 500,
-              backgroundColor: "#E07B39",
+              fontWeight: 600,
+              backgroundColor: "#C8922A",
               color: "#ffffff",
-              boxShadow: "0 4px 20px rgba(224,123,57,0.45)",
+              boxShadow: "0 4px 20px rgba(200,146,42,0.45)",
+              whiteSpace: "nowrap",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#C96A28";
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 24px rgba(224,123,57,0.55)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "#E07B39";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(224,123,57,0.45)";
-            }}
-          >
-            Voir les biens disponibles
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
-
-          <WaCountryPicker
-            message="Bonjour, je souhaite en savoir plus sur AKIL IMMO"
-            className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-4 text-base font-medium transition-all duration-200"
-            style={{
-              fontFamily: "var(--font-inter), sans-serif",
-              fontWeight: 500,
-              backgroundColor: "transparent",
-              color: "#FDFCF8",
-              border: "1.5px solid rgba(253,252,248,0.45)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#C8922A";
-              e.currentTarget.style.color = "#C8922A";
+              e.currentTarget.style.backgroundColor = "#A97620";
               e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(253,252,248,0.45)";
-              e.currentTarget.style.color = "#FDFCF8";
+              e.currentTarget.style.backgroundColor = "#C8922A";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            <MessageCircle size={16} aria-hidden="true" />
-            Parler à un conseiller
-          </WaCountryPicker>
-        </div>
+            Rechercher
+            <ArrowRight size={15} aria-hidden="true" />
+          </button>
+        </form>
 
-        {/* Scroll hint */}
-        <div className="mt-14 flex items-center justify-center gap-3">
-          <span
-            style={{
-              display: "block",
-              width: 32,
-              height: 1,
-              backgroundColor: "#C8922A",
-              opacity: 0.6,
-            }}
-            aria-hidden="true"
-          />
-          <p
-            className="text-xs tracking-widest uppercase"
-            style={{
-              fontFamily: "var(--font-inter), sans-serif",
-              color: "rgba(253,252,248,0.45)",
-            }}
-          >
-            Faites défiler
-          </p>
-          <span
-            style={{
-              display: "block",
-              width: 32,
-              height: 1,
-              backgroundColor: "#C8922A",
-              opacity: 0.6,
-            }}
-            aria-hidden="true"
-          />
+        {/* Quick links */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+          {[
+            { label: "Long séjour",   href: "#biens" },
+            { label: "Court séjour",  href: "#biens" },
+            { label: "Cocody",        href: "/biens?q=Cocody" },
+            { label: "Zone 4",        href: "/biens?q=Zone+4" },
+            { label: "Cotonou",       href: "/biens?q=Cotonou" },
+          ].map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              className="rounded-full px-3.5 py-1.5 text-xs cursor-pointer transition-colors duration-150"
+              style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                color: "rgba(253,252,248,0.55)",
+                border: "1px solid rgba(253,252,248,0.18)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#C8922A";
+                e.currentTarget.style.borderColor = "rgba(200,146,42,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "rgba(253,252,248,0.55)";
+                e.currentTarget.style.borderColor = "rgba(253,252,248,0.18)";
+              }}
+            >
+              {label}
+            </a>
+          ))}
         </div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
+        <span
+          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
+          aria-hidden="true"
+        />
+        <a
+          href="#categories"
+          className="text-xs tracking-widest uppercase cursor-pointer"
+          style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            color: "rgba(253,252,248,0.38)",
+          }}
+        >
+          Découvrir
+        </a>
+        <span
+          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
+          aria-hidden="true"
+        />
       </div>
     </section>
   );

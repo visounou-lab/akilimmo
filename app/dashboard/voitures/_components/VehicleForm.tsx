@@ -15,10 +15,9 @@ interface VehicleDefaults {
   images?: string[];
 }
 
-interface PhotoItem {
-  preview: string;
-  file: File;
-}
+type PhotoItem =
+  | { kind: "existing"; url: string }
+  | { kind: "new"; preview: string; file: File };
 
 interface VehicleFormProps {
   action: (formData: FormData) => void | Promise<void>;
@@ -39,16 +38,19 @@ export default function VehicleForm({
   submitLabel = "Enregistrer",
 }: VehicleFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+
+  // Galerie unifiée : existantes + nouvelles
+  const [photos, setPhotos] = useState<PhotoItem[]>(
+    (defaultValues.images ?? []).map((url) => ({ kind: "existing", url }))
+  );
   const [dragIndex, setDragIndex] = useState<number | null>(null);
-  const [keepImages, setKeepImages] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const existingImages = defaultValues.images ?? [];
-
+  /* ── Ajout de nouveaux fichiers ── */
   function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
     const items: PhotoItem[] = files.map((f) => ({
+      kind: "new",
       preview: URL.createObjectURL(f),
       file: f,
     }));
@@ -56,13 +58,16 @@ export default function VehicleForm({
     e.target.value = "";
   }
 
+  /* ── Suppression d'une photo ── */
   function removePhoto(index: number) {
     setPhotos((prev) => {
-      URL.revokeObjectURL(prev[index].preview);
+      const item = prev[index];
+      if (item.kind === "new") URL.revokeObjectURL(item.preview);
       return prev.filter((_, i) => i !== index);
     });
   }
 
+  /* ── Drag & drop ── */
   function handleDragStart(index: number) {
     setDragIndex(index);
   }
@@ -83,15 +88,31 @@ export default function VehicleForm({
     setDragIndex(null);
   }
 
+  /* ── Soumission ── */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
+
     const form = e.currentTarget;
     const formData = new FormData(form);
+
+    // Supprime les champs images bruts (on gère manuellement)
     formData.delete("images");
-    for (const photo of photos) {
-      formData.append("images", photo.file);
+
+    // Calcule l'ordre final et upload les nouvelles uniquement
+    const newFiles = photos.filter((p): p is Extract<PhotoItem, { kind: "new" }> => p.kind === "new");
+    let newFileIdx = 0;
+
+    const photoOrder = photos.map((p) => {
+      if (p.kind === "existing") return { kind: "existing", url: p.url };
+      return { kind: "new", fileIndex: newFileIdx++ };
+    });
+
+    formData.set("photoOrder", JSON.stringify(photoOrder));
+    for (const p of newFiles) {
+      formData.append("images", p.file);
     }
+
     try {
       await action(formData);
     } finally {
@@ -102,54 +123,17 @@ export default function VehicleForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
 
-      {/* ── PHOTOS ── */}
+      {/* ── GALERIE PHOTOS ── */}
       <div>
-        <label className={labelClass}>Photos du véhicule</label>
+        <div className="flex items-center justify-between mb-2">
+          <label className={labelClass + " mb-0"}>Photos du véhicule</label>
+          {photos.length > 0 && (
+            <span className="text-xs text-slate-400">
+              {photos.length} photo{photos.length > 1 ? "s" : ""} — glissez pour réorganiser
+            </span>
+          )}
+        </div>
 
-        {/* Photos existantes (mode édition) */}
-        {existingImages.length > 0 && (
-          <div className="mb-5">
-            <p className="text-xs font-medium text-slate-500 mb-2">
-              Photos actuelles ({existingImages.length})
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {existingImages.map((url, i) => (
-                <div
-                  key={url}
-                  className="relative rounded-xl overflow-hidden border-2"
-                  style={{
-                    aspectRatio: "4/3",
-                    borderColor: i === 0 ? "#C8922A" : "#E2E8F0",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt="" className="h-full w-full object-cover" />
-                  {i === 0 && (
-                    <span className="absolute top-2 left-2 rounded-lg bg-[#C8922A] px-2 py-0.5 text-[11px] font-bold text-white shadow">
-                      Principale
-                    </span>
-                  )}
-                  <span className="absolute bottom-2 left-2 rounded-md bg-black/40 px-1.5 py-0.5 text-[11px] font-medium text-white">
-                    {i + 1}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <input type="hidden" name="existingImages" value={existingImages.join(",")} />
-            <label className="mt-3 flex items-center gap-2 text-sm text-slate-600 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={keepImages}
-                onChange={(e) => setKeepImages(e.target.checked)}
-                className="w-4 h-4 rounded accent-[#C8922A]"
-              />
-              <input type="hidden" name="keepImages" value={keepImages ? "true" : "false"} />
-              Conserver les photos existantes (et ajouter les nouvelles)
-            </label>
-          </div>
-        )}
-
-        {/* Zone drop / bouton upload */}
         <input
           ref={fileInputRef}
           type="file"
@@ -160,41 +144,29 @@ export default function VehicleForm({
         />
 
         {photos.length === 0 ? (
+          /* Zone vide */
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-300 py-10 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
+            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-300 py-12 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
             </svg>
             <div className="text-center">
               <p className="text-sm font-medium">Cliquer pour ajouter des photos</p>
-              <p className="text-xs mt-0.5">JPG, PNG ou WebP</p>
+              <p className="text-xs mt-0.5 text-slate-400">JPG, PNG ou WebP</p>
             </div>
           </button>
         ) : (
-          <div>
-            {/* Barre d'actions */}
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-slate-600">
-                {photos.length} photo{photos.length > 1 ? "s" : ""}
-                <span className="text-slate-400 font-normal ml-1">— glissez pour réorganiser, × pour supprimer</span>
-              </p>
-              <button
-                type="button"
-                onClick={() => { photos.forEach((p) => URL.revokeObjectURL(p.preview)); setPhotos([]); }}
-                className="text-xs text-red-400 hover:text-red-600 transition-colors"
-              >
-                Tout supprimer
-              </button>
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {photos.map((photo, i) => {
+              const src = photo.kind === "existing" ? photo.url : photo.preview;
+              const isDragging = dragIndex === i;
 
-            {/* Grille photos avec drag-and-drop */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {photos.map((photo, i) => (
+              return (
                 <div
-                  key={photo.preview}
+                  key={photo.kind === "existing" ? photo.url : photo.preview}
                   draggable
                   onDragStart={() => handleDragStart(i)}
                   onDragOver={(e) => handleDragOver(e, i)}
@@ -202,61 +174,83 @@ export default function VehicleForm({
                   className="relative rounded-xl overflow-hidden select-none"
                   style={{
                     aspectRatio: "4/3",
-                    border: `2px solid ${i === 0 ? "#C8922A" : dragIndex === i ? "#94a3b8" : "#E2E8F0"}`,
-                    opacity: dragIndex === i ? 0.6 : 1,
+                    border: `2px solid ${i === 0 ? "#C8922A" : isDragging ? "#94a3b8" : "#E2E8F0"}`,
+                    opacity: isDragging ? 0.55 : 1,
                     cursor: "grab",
-                    transition: "border-color 0.15s, opacity 0.15s",
+                    transition: "border-color 0.12s, opacity 0.12s",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={photo.preview} alt="" className="h-full w-full object-cover pointer-events-none" />
+                  <img src={src} alt="" className="h-full w-full object-cover pointer-events-none" />
 
                   {/* Badge principale */}
                   {i === 0 && (
-                    <span className="absolute top-2 left-2 rounded-lg bg-[#C8922A] px-2 py-0.5 text-[11px] font-bold text-white shadow-sm">
+                    <span className="absolute top-2 left-2 rounded-lg bg-[#C8922A] px-2 py-0.5 text-[11px] font-bold text-white shadow">
                       Principale
                     </span>
                   )}
 
-                  {/* Numéro d'ordre */}
+                  {/* Numéro */}
                   <span className="absolute bottom-2 left-2 rounded-md bg-black/50 px-1.5 py-0.5 text-[11px] font-semibold text-white">
                     {i + 1}
                   </span>
 
-                  {/* Icône drag */}
-                  <div className="absolute bottom-2 right-8 rounded-md bg-black/40 p-1">
+                  {/* Icône drag (6 points) */}
+                  <div className="absolute bottom-2 right-8 rounded-md bg-black/40 p-1 pointer-events-none">
                     <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M7 2a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zM17 2a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0z" />
+                      <circle cx="6" cy="4" r="1.5"/><circle cx="14" cy="4" r="1.5"/>
+                      <circle cx="6" cy="10" r="1.5"/><circle cx="14" cy="10" r="1.5"/>
+                      <circle cx="6" cy="16" r="1.5"/><circle cx="14" cy="16" r="1.5"/>
                     </svg>
                   </div>
 
-                  {/* Bouton supprimer */}
+                  {/* Bouton × supprimer */}
                   <button
                     type="button"
                     onClick={() => removePhoto(i)}
-                    className="absolute top-2 right-2 rounded-lg bg-black/40 p-1 hover:bg-red-500 transition-colors"
+                    className="absolute top-2 right-2 rounded-lg bg-black/50 p-1 hover:bg-red-500 transition-colors"
                     title="Supprimer cette photo"
                   >
                     <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                </div>
-              ))}
 
-              {/* Case "Ajouter+" */}
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-1.5 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
-                style={{ aspectRatio: "4/3" }}
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
-                <span className="text-xs font-medium">Ajouter</span>
-              </button>
-            </div>
+                  {/* Badge "existante" vs "nouvelle" */}
+                  {photo.kind === "new" && (
+                    <span className="absolute top-2 right-8 rounded-md bg-emerald-500/80 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                      Nouvelle
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Case "+ Ajouter" */}
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-1.5 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
+              style={{ aspectRatio: "4/3" }}
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              <span className="text-xs font-medium">Ajouter</span>
+            </button>
+          </div>
+        )}
+
+        {photos.length > 0 && (
+          <div className="mt-2 flex items-center justify-between">
+            <p className="text-xs text-slate-400">La 1ère photo est la photo principale affichée sur le site</p>
+            <button
+              type="button"
+              onClick={() => { photos.forEach((p) => { if (p.kind === "new") URL.revokeObjectURL(p.preview); }); setPhotos([]); }}
+              className="text-xs text-red-400 hover:text-red-600 transition-colors"
+            >
+              Tout supprimer
+            </button>
           </div>
         )}
       </div>
@@ -339,16 +333,21 @@ export default function VehicleForm({
           className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-sm"
         >
           {submitting ? (
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-            </svg>
+            <>
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+              </svg>
+              Enregistrement…
+            </>
           ) : (
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+            <>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {submitLabel}
+            </>
           )}
-          {submitting ? "Enregistrement…" : submitLabel}
         </button>
         <a href="/dashboard/voitures" className="px-6 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
           Annuler

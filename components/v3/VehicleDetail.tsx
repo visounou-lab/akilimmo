@@ -113,17 +113,17 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
         <div className="grid lg:grid-cols-2 gap-8 items-start">
 
           {/* ── GALERIE ── */}
-          <div>
+          <div style={{ minWidth: 0, width: "100%", overflow: "hidden" }}>
             {/* Image principale */}
             <div
               className="relative rounded-2xl overflow-hidden mb-3"
-              style={{ aspectRatio: "16/10", backgroundColor: "#E8DDD0" }}
+              style={{ position: "relative", width: "100%", paddingTop: "62.5%", backgroundColor: "#E8DDD0" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={allImages[activeIndex]}
                 alt={`${vehicle.name} ${vehicle.color} — photo ${activeIndex + 1}`}
-                className="h-full w-full object-cover"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
               />
 
               {/* Badge disponibilité */}
@@ -174,7 +174,7 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
             {/* Vignettes */}
             {allImages.length > 1 && (
-              <div style={{ display: "flex", gap: "8px", overflowX: "auto", overflowY: "hidden", width: "100%", WebkitOverflowScrolling: "touch" }} className="pb-1">
+              <div style={{ display: "flex", gap: "8px", overflowX: "scroll", overflowY: "hidden", maxWidth: "100%", WebkitOverflowScrolling: "touch" }} className="pb-1">
                 {allImages.map((src, i) => (
                   <button
                     key={i}

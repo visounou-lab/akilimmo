@@ -92,9 +92,9 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
   }
 
   return (
-    <div style={{ backgroundColor: "#F5F0E8", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#F5F0E8", minHeight: "100vh", overflowX: "hidden" }}>
       {/* pb-24 sur mobile pour ne pas être caché par le bouton WA flottant */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 pb-24 sm:pb-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 pb-24 sm:pb-8" style={{ overflowX: "hidden" }}>
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-6">
@@ -174,7 +174,7 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
             {/* Vignettes */}
             {allImages.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-1">
+              <div style={{ display: "flex", gap: "8px", overflowX: "auto", overflowY: "hidden", width: "100%", WebkitOverflowScrolling: "touch" }} className="pb-1">
                 {allImages.map((src, i) => (
                   <button
                     key={i}

@@ -14,25 +14,42 @@ async function requireAdmin() {
 }
 
 function parseFeatures(raw: string): string[] {
-  return raw
-    .split("\n")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  return raw.split("\n").map((s) => s.trim()).filter(Boolean);
+}
+
+type OrderItem =
+  | { kind: "existing"; url: string }
+  | { kind: "new"; fileIndex: number };
+
+async function buildFinalImages(formData: FormData): Promise<string[]> {
+  const orderRaw = formData.get("photoOrder") as string | null;
+  const newFiles = formData.getAll("images") as File[];
+
+  // Upload les nouvelles photos
+  const uploadedUrls: string[] = [];
+  for (const file of newFiles) {
+    if (file && file.size > 0) {
+      const result = await uploadVehicleImage(file);
+      uploadedUrls.push(result.url);
+    }
+  }
+
+  // Si pas d'ordre défini (création simple sans JS), utiliser les uploads dans l'ordre
+  if (!orderRaw) {
+    return uploadedUrls;
+  }
+
+  const order = JSON.parse(orderRaw) as OrderItem[];
+  return order.map((item) => {
+    if (item.kind === "existing") return item.url;
+    return uploadedUrls[item.fileIndex] ?? "";
+  }).filter(Boolean);
 }
 
 export async function createVehicle(formData: FormData) {
   await requireAdmin();
 
-  const files = formData.getAll("images") as File[];
-  const uploaded: string[] = [];
-
-  for (const file of files) {
-    if (file && file.size > 0) {
-      const result = await uploadVehicleImage(file);
-      uploaded.push(result.url);
-    }
-  }
-
+  const images = await buildFinalImages(formData);
   const featuresRaw = (formData.get("features") as string) ?? "";
 
   await prisma.vehicle.create({
@@ -45,8 +62,8 @@ export async function createVehicle(formData: FormData) {
       features:  parseFeatures(featuresRaw),
       priceDay:  parseInt(formData.get("priceDay") as string, 10),
       priceLong: parseInt(formData.get("priceLong") as string, 10),
-      imageUrl:  uploaded[0] ?? null,
-      images:    uploaded,
+      imageUrl:  images[0] ?? null,
+      images,
       available: formData.get("available") === "on",
       city:      "Abidjan",
       country:   "COTE_D_IVOIRE",
@@ -61,28 +78,7 @@ export async function createVehicle(formData: FormData) {
 export async function updateVehicle(id: string, formData: FormData) {
   await requireAdmin();
 
-  const files = formData.getAll("images") as File[];
-  const newUploaded: string[] = [];
-
-  for (const file of files) {
-    if (file && file.size > 0) {
-      const result = await uploadVehicleImage(file);
-      newUploaded.push(result.url);
-    }
-  }
-
-  const keepExisting = formData.get("keepImages") === "true";
-  const existingImages = ((formData.get("existingImages") as string) || "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-  const finalImages = keepExisting
-    ? [...existingImages, ...newUploaded]
-    : newUploaded.length > 0
-    ? newUploaded
-    : existingImages;
-
+  const images = await buildFinalImages(formData);
   const featuresRaw = (formData.get("features") as string) ?? "";
 
   await prisma.vehicle.update({
@@ -96,8 +92,8 @@ export async function updateVehicle(id: string, formData: FormData) {
       features:  parseFeatures(featuresRaw),
       priceDay:  parseInt(formData.get("priceDay") as string, 10),
       priceLong: parseInt(formData.get("priceLong") as string, 10),
-      imageUrl:  finalImages[0] ?? null,
-      images:    finalImages,
+      imageUrl:  images[0] ?? null,
+      images,
       available: formData.get("available") === "on",
     },
   });

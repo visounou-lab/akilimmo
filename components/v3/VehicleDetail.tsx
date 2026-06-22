@@ -188,26 +188,32 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
             {/* Prix */}
             <div
-              className="rounded-2xl p-4 sm:p-5 grid grid-cols-2"
+              className="rounded-2xl overflow-hidden"
               style={{ backgroundColor: "#FDFCF8", border: "1.5px solid #E8DDD0" }}
             >
-              <div className="text-center py-2 pr-4">
-                <p className="text-xs mb-1" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
-                  Court séjour
-                </p>
-                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "clamp(1.1rem, 4vw, 1.4rem)", color: "#1C1917", whiteSpace: "nowrap" }}>
-                  {formatXOF(vehicle.priceDay)}
-                  <span className="text-xs font-normal text-slate-400"> XOF/j</span>
-                </p>
-              </div>
-              <div className="text-center py-2 pl-4" style={{ borderLeft: "1px solid #E8DDD0" }}>
-                <p className="text-xs mb-1" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
-                  Long séjour
-                </p>
-                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "clamp(1.1rem, 4vw, 1.4rem)", color: "#C8922A", whiteSpace: "nowrap" }}>
-                  {formatXOF(vehicle.priceLong)}
-                  <span className="text-xs font-normal text-slate-400"> XOF/j</span>
-                </p>
+              {/* Mobile : empilé · Desktop : côte à côte */}
+              <div className="grid grid-cols-1 sm:grid-cols-2">
+                <div className="text-center px-5 py-4" style={{ borderBottom: "1px solid #E8DDD0" }}>
+                  <p className="text-xs mb-1.5" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
+                    Court séjour
+                  </p>
+                  <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "1.5rem", color: "#1C1917" }}>
+                    {formatXOF(vehicle.priceDay)}
+                    <span className="text-sm font-normal text-slate-400"> XOF/j</span>
+                  </p>
+                </div>
+                <div
+                  className="text-center px-5 py-4"
+                  style={{ borderTop: "none" }}
+                >
+                  <p className="text-xs mb-1.5" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
+                    Long séjour
+                  </p>
+                  <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "1.5rem", color: "#C8922A" }}>
+                    {formatXOF(vehicle.priceLong)}
+                    <span className="text-sm font-normal text-slate-400"> XOF/j</span>
+                  </p>
+                </div>
               </div>
             </div>
 

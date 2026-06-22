@@ -94,30 +94,30 @@ export default function HeroSection() {
           Depuis la diaspora ou sur place — on s&apos;occupe de tout.
         </p>
 
-        {/* Barre de recherche */}
+        {/* Barre de recherche — toujours en ligne pour éviter le problème de clavier mobile */}
         <form
           onSubmit={handleSearch}
-          className="mx-auto flex flex-col sm:flex-row max-w-2xl gap-2"
+          className="mx-auto flex flex-row max-w-2xl gap-2"
           role="search"
           aria-label="Rechercher un bien"
         >
           <div
-            className="relative flex-1"
+            className="relative flex-1 min-w-0"
             style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12 }}
           >
             <Search
-              size={16}
+              size={15}
               aria-hidden="true"
-              className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+              className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
               style={{ color: "rgba(253,252,248,0.45)" }}
             />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ville, quartier… ex: Cocody, Zone 4"
+              placeholder="Ville ou quartier…"
               list="city-suggestions"
-              className="w-full bg-transparent pl-10 pr-4 py-4 text-sm outline-none"
+              className="w-full bg-transparent pl-9 pr-3 py-3.5 text-sm outline-none"
               style={{
                 fontFamily: "var(--font-inter), sans-serif",
                 color: "#FDFCF8",
@@ -132,9 +132,11 @@ export default function HeroSection() {
             </datalist>
           </div>
 
+          {/* Desktop : texte + icône — Mobile : icône seule */}
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 cursor-pointer rounded-xl px-7 py-4 text-sm font-medium transition-all duration-200"
+            aria-label="Rechercher"
+            className="flex items-center justify-center gap-2 cursor-pointer rounded-xl px-4 sm:px-6 py-3.5 text-sm font-medium transition-all duration-200 shrink-0"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
               fontWeight: 600,
@@ -152,8 +154,9 @@ export default function HeroSection() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            Rechercher
-            <ArrowRight size={15} aria-hidden="true" />
+            <span className="hidden sm:inline">Rechercher</span>
+            <Search size={16} aria-hidden="true" className="sm:hidden" />
+            <ArrowRight size={15} aria-hidden="true" className="hidden sm:inline" />
           </button>
         </form>
 

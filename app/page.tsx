@@ -29,6 +29,7 @@ export default async function V3Page() {
       videoUrl: true,
       propertyType: true,
       stayType: true,
+      likesCount: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },

@@ -2,29 +2,46 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart, Eye } from "lucide-react";
+import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 
-function getViewCount(slug: string): number {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) & 0xffffff;
-  return (hash % 450) + 50;
-}
+function useFavorites(properties: PropertyCard[]) {
+  const [favorites,  setFavorites]  = useState<Set<string>>(new Set());
+  const [likeCounts, setLikeCounts] = useState<Record<string, number>>({});
 
-function useFavorites() {
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   useEffect(() => {
+    const counts: Record<string, number> = {};
+    properties.forEach((p) => { counts[p.id] = p.likesCount ?? 0; });
+    setLikeCounts(counts);
     try { const raw = localStorage.getItem("akil_favorites_web"); if (raw) setFavorites(new Set(JSON.parse(raw))); } catch {}
-  }, []);
-  const toggle = useCallback((id: string) => {
+  }, [properties]);
+
+  const toggle = useCallback(async (id: string, slug: string) => {
+    const wasLiked = favorites.has(id);
     setFavorites((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      wasLiked ? next.delete(id) : next.add(id);
       try { localStorage.setItem("akil_favorites_web", JSON.stringify([...next])); } catch {}
       return next;
     });
-  }, []);
-  return { toggle, isFavorite: (id: string) => favorites.has(id) };
+    setLikeCounts((prev) => ({
+      ...prev,
+      [id]: Math.max(0, (prev[id] ?? 0) + (wasLiked ? -1 : 1)),
+    }));
+    try {
+      await fetch(`/api/property/${slug}/like`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: wasLiked ? "unlike" : "like" }),
+      });
+    } catch {}
+  }, [favorites]);
+
+  return {
+    toggle,
+    isFavorite:   (id: string) => favorites.has(id),
+    getLikeCount: (id: string) => likeCounts[id] ?? 0,
+  };
 }
 
 const COUNTRY_FILTERS = [
@@ -49,6 +66,7 @@ export type PropertyCard = {
   videoUrl: string | null;
   propertyType: string | null;
   stayType: string;
+  likesCount: number;
   images: { url: string; status: string; order: number }[];
 };
 
@@ -77,7 +95,7 @@ export default function FeaturedProperties({
 }) {
   const [activeTab,  setActiveTab]  = useState<Tab>("Long séjour");
   const [country,    setCountry]    = useState("TOUS");
-  const { toggle, isFavorite } = useFavorites();
+  const { toggle, isFavorite, getLikeCount } = useFavorites(properties);
 
   const tabKey = activeTab === "Long séjour" ? "long" : "short";
   const filtered = properties.filter((p) => {
@@ -197,9 +215,9 @@ export default function FeaturedProperties({
         {/* Cards */}
         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {filtered.map((prop) => {
-            const imageSrc = getPropertyMainImage(prop);
-            const liked    = isFavorite(prop.id);
-            const views    = getViewCount(prop.slug);
+            const imageSrc  = getPropertyMainImage(prop);
+            const liked     = isFavorite(prop.id);
+            const likeCount = getLikeCount(prop.id);
             return (
               <li key={prop.id}>
                 <article
@@ -254,14 +272,20 @@ export default function FeaturedProperties({
                       </div>
                     )}
 
-                    {/* Heart button */}
+                    {/* Heart button avec compteur */}
                     <button
                       type="button"
-                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(prop.id); }}
-                      className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150 hover:scale-110"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(prop.id, prop.slug); }}
+                      className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full px-2.5 py-1.5 transition-all duration-150 hover:scale-105"
                       style={{ backgroundColor: "rgba(0,0,0,0.4)", backdropFilter: "blur(4px)" }}
+                      aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
                     >
-                      <Heart size={16} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
+                      <Heart size={14} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
+                      {likeCount > 0 && (
+                        <span className="text-xs font-medium" style={{ color: liked ? "#EF4444" : "#ffffff", lineHeight: 1 }}>
+                          {likeCount}
+                        </span>
+                      )}
                     </button>
                   </a>
 
@@ -317,9 +341,12 @@ export default function FeaturedProperties({
                       <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}>
                         <Bath size={14} aria-hidden="true" />{prop.bathrooms} sdb.
                       </span>
-                      <span className="flex items-center gap-1.5 text-sm ml-auto" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#94A3B8" }}>
-                        <Eye size={13} aria-hidden="true" />{views}
-                      </span>
+                      {likeCount > 0 && (
+                        <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: "#EF4444", fontFamily: "var(--font-inter), sans-serif" }}>
+                          <Heart size={12} fill="#EF4444" color="#EF4444" />
+                          {likeCount}
+                        </span>
+                      )}
                     </div>
 
                     {/* WhatsApp CTA */}

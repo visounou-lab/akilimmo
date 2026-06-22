@@ -48,6 +48,7 @@ export type PropertyCard = {
   imageUrl: string | null;
   videoUrl: string | null;
   propertyType: string | null;
+  stayType: string;
   images: { url: string; status: string; order: number }[];
 };
 
@@ -78,7 +79,12 @@ export default function FeaturedProperties({
   const [country,    setCountry]    = useState("TOUS");
   const { toggle, isFavorite } = useFavorites();
 
-  const filtered = properties.filter((p) => country === "TOUS" || p.country === country);
+  const tabKey = activeTab === "Long séjour" ? "long" : "short";
+  const filtered = properties.filter((p) => {
+    const matchCountry = country === "TOUS" || p.country === country;
+    const matchStay    = p.stayType === tabKey || p.stayType === "both";
+    return matchCountry && matchStay;
+  });
 
   return (
     <section

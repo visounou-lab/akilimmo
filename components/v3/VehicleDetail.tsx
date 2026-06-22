@@ -46,7 +46,8 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
   return (
     <div style={{ backgroundColor: "#F5F0E8", minHeight: "100vh" }}>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+      {/* pb-24 sur mobile pour ne pas être caché par le bouton WA flottant */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 pb-24 sm:pb-8">
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-6">
@@ -187,25 +188,25 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
 
             {/* Prix */}
             <div
-              className="rounded-2xl p-5 grid grid-cols-2 gap-4"
+              className="rounded-2xl p-4 sm:p-5 grid grid-cols-2"
               style={{ backgroundColor: "#FDFCF8", border: "1.5px solid #E8DDD0" }}
             >
-              <div className="text-center">
+              <div className="text-center py-2 pr-4">
                 <p className="text-xs mb-1" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
                   Court séjour
                 </p>
-                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "1.4rem", color: "#1C1917" }}>
+                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "clamp(1.1rem, 4vw, 1.4rem)", color: "#1C1917", whiteSpace: "nowrap" }}>
                   {formatXOF(vehicle.priceDay)}
-                  <span className="text-sm font-normal text-slate-400"> XOF/j</span>
+                  <span className="text-xs font-normal text-slate-400"> XOF/j</span>
                 </p>
               </div>
-              <div className="text-center" style={{ borderLeft: "1px solid #E8DDD0" }}>
+              <div className="text-center py-2 pl-4" style={{ borderLeft: "1px solid #E8DDD0" }}>
                 <p className="text-xs mb-1" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
                   Long séjour
                 </p>
-                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "1.4rem", color: "#C8922A" }}>
+                <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "clamp(1.1rem, 4vw, 1.4rem)", color: "#C8922A", whiteSpace: "nowrap" }}>
                   {formatXOF(vehicle.priceLong)}
-                  <span className="text-sm font-normal text-slate-400"> XOF/j</span>
+                  <span className="text-xs font-normal text-slate-400"> XOF/j</span>
                 </p>
               </div>
             </div>

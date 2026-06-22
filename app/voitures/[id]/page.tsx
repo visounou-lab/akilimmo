@@ -30,7 +30,7 @@ export default async function VehiclePage({ params }: Props) {
       <main id="main-content" className="pt-16">
         <VehicleDetail vehicle={vehicle} />
       </main>
-      <Footer />
+      <Footer showContactCTA={false} />
     </>
   );
 }

@@ -15,6 +15,11 @@ interface VehicleDefaults {
   images?: string[];
 }
 
+interface PhotoItem {
+  preview: string;
+  file: File;
+}
+
 interface VehicleFormProps {
   action: (formData: FormData) => void | Promise<void>;
   defaultValues?: VehicleDefaults;
@@ -34,45 +39,109 @@ export default function VehicleForm({
   submitLabel = "Enregistrer",
 }: VehicleFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [newPreviews, setNewPreviews] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [keepImages, setKeepImages] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   const existingImages = defaultValues.images ?? [];
 
   function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
-    setNewPreviews(files.map((f) => URL.createObjectURL(f)));
+    const items: PhotoItem[] = files.map((f) => ({
+      preview: URL.createObjectURL(f),
+      file: f,
+    }));
+    setPhotos((prev) => [...prev, ...items]);
+    e.target.value = "";
+  }
+
+  function removePhoto(index: number) {
+    setPhotos((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
+  }
+
+  function handleDragStart(index: number) {
+    setDragIndex(index);
+  }
+
+  function handleDragOver(e: React.DragEvent, index: number) {
+    e.preventDefault();
+    if (dragIndex === null || dragIndex === index) return;
+    setPhotos((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(dragIndex, 1);
+      next.splice(index, 0, moved);
+      return next;
+    });
+    setDragIndex(index);
+  }
+
+  function handleDragEnd() {
+    setDragIndex(null);
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    formData.delete("images");
+    for (const photo of photos) {
+      formData.append("images", photo.file);
+    }
+    try {
+      await action(formData);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
-    <form action={action} className="space-y-6">
-      {/* Images */}
+    <form onSubmit={handleSubmit} className="space-y-6">
+
+      {/* ── PHOTOS ── */}
       <div>
         <label className={labelClass}>Photos du véhicule</label>
 
+        {/* Photos existantes (mode édition) */}
         {existingImages.length > 0 && (
-          <div className="mb-3">
-            <p className="text-xs text-slate-500 mb-2">Photos actuelles ({existingImages.length})</p>
-            <div className="grid grid-cols-4 gap-2">
+          <div className="mb-5">
+            <p className="text-xs font-medium text-slate-500 mb-2">
+              Photos actuelles ({existingImages.length})
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {existingImages.map((url, i) => (
-                <div key={i} className="relative rounded-lg overflow-hidden border border-slate-200">
+                <div
+                  key={url}
+                  className="relative rounded-xl overflow-hidden border-2"
+                  style={{
+                    aspectRatio: "4/3",
+                    borderColor: i === 0 ? "#C8922A" : "#E2E8F0",
+                  }}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt="" className="h-20 w-full object-cover" />
+                  <img src={url} alt="" className="h-full w-full object-cover" />
                   {i === 0 && (
-                    <span className="absolute top-1 left-1 rounded bg-[#1C1917] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                    <span className="absolute top-2 left-2 rounded-lg bg-[#C8922A] px-2 py-0.5 text-[11px] font-bold text-white shadow">
                       Principale
                     </span>
                   )}
+                  <span className="absolute bottom-2 left-2 rounded-md bg-black/40 px-1.5 py-0.5 text-[11px] font-medium text-white">
+                    {i + 1}
+                  </span>
                 </div>
               ))}
             </div>
             <input type="hidden" name="existingImages" value={existingImages.join(",")} />
-            <label className="mt-2 flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
+            <label className="mt-3 flex items-center gap-2 text-sm text-slate-600 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={keepImages}
                 onChange={(e) => setKeepImages(e.target.checked)}
-                className="rounded"
+                className="w-4 h-4 rounded accent-[#C8922A]"
               />
               <input type="hidden" name="keepImages" value={keepImages ? "true" : "false"} />
               Conserver les photos existantes (et ajouter les nouvelles)
@@ -80,191 +149,208 @@ export default function VehicleForm({
           </div>
         )}
 
+        {/* Zone drop / bouton upload */}
         <input
           ref={fileInputRef}
           type="file"
-          name="images"
           accept="image/jpeg,image/png,image/webp"
           multiple
           onChange={handleFilesChange}
           className="hidden"
         />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-          </svg>
-          {existingImages.length > 0 ? "Ajouter d'autres photos" : "Ajouter des photos"}
-        </button>
-        <p className="text-xs text-slate-400 mt-1.5">JPG, PNG ou WebP · la 1ère photo sera la principale</p>
 
-        {newPreviews.length > 0 && (
-          <div className="mt-3">
-            <p className="text-xs text-slate-500 mb-2">Nouvelles photos ({newPreviews.length})</p>
-            <div className="grid grid-cols-4 gap-2">
-              {newPreviews.map((src, i) => (
-                <div key={i} className="relative rounded-lg overflow-hidden border border-slate-200">
+        {photos.length === 0 ? (
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-300 py-10 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
+          >
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            <div className="text-center">
+              <p className="text-sm font-medium">Cliquer pour ajouter des photos</p>
+              <p className="text-xs mt-0.5">JPG, PNG ou WebP</p>
+            </div>
+          </button>
+        ) : (
+          <div>
+            {/* Barre d'actions */}
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-medium text-slate-600">
+                {photos.length} photo{photos.length > 1 ? "s" : ""}
+                <span className="text-slate-400 font-normal ml-1">— glissez pour réorganiser, × pour supprimer</span>
+              </p>
+              <button
+                type="button"
+                onClick={() => { photos.forEach((p) => URL.revokeObjectURL(p.preview)); setPhotos([]); }}
+                className="text-xs text-red-400 hover:text-red-600 transition-colors"
+              >
+                Tout supprimer
+              </button>
+            </div>
+
+            {/* Grille photos avec drag-and-drop */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {photos.map((photo, i) => (
+                <div
+                  key={photo.preview}
+                  draggable
+                  onDragStart={() => handleDragStart(i)}
+                  onDragOver={(e) => handleDragOver(e, i)}
+                  onDragEnd={handleDragEnd}
+                  className="relative rounded-xl overflow-hidden select-none"
+                  style={{
+                    aspectRatio: "4/3",
+                    border: `2px solid ${i === 0 ? "#C8922A" : dragIndex === i ? "#94a3b8" : "#E2E8F0"}`,
+                    opacity: dragIndex === i ? 0.6 : 1,
+                    cursor: "grab",
+                    transition: "border-color 0.15s, opacity 0.15s",
+                  }}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" className="h-20 w-full object-cover" />
+                  <img src={photo.preview} alt="" className="h-full w-full object-cover pointer-events-none" />
+
+                  {/* Badge principale */}
                   {i === 0 && (
-                    <span className="absolute top-1 left-1 rounded bg-[#C8922A] px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                    <span className="absolute top-2 left-2 rounded-lg bg-[#C8922A] px-2 py-0.5 text-[11px] font-bold text-white shadow-sm">
                       Principale
                     </span>
                   )}
+
+                  {/* Numéro d'ordre */}
+                  <span className="absolute bottom-2 left-2 rounded-md bg-black/50 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+                    {i + 1}
+                  </span>
+
+                  {/* Icône drag */}
+                  <div className="absolute bottom-2 right-8 rounded-md bg-black/40 p-1">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M7 2a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zM17 2a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0zm0 6a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+
+                  {/* Bouton supprimer */}
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(i)}
+                    className="absolute top-2 right-2 rounded-lg bg-black/40 p-1 hover:bg-red-500 transition-colors"
+                    title="Supprimer cette photo"
+                  >
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
                 </div>
               ))}
+
+              {/* Case "Ajouter+" */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="rounded-xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-1.5 text-slate-400 hover:border-[#C8922A] hover:text-[#C8922A] transition-colors"
+                style={{ aspectRatio: "4/3" }}
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                <span className="text-xs font-medium">Ajouter</span>
+              </button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Nom + Variante */}
+      {/* ── NOM + CATÉGORIE ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Nom du véhicule <span className="text-red-400">*</span></label>
-          <input
-            type="text"
-            name="name"
-            required
-            defaultValue={defaultValues.name}
-            placeholder="ex : KIA Sportage"
-            className={inputClass}
-          />
+          <input type="text" name="name" required defaultValue={defaultValues.name} placeholder="ex : KIA Sportage" className={inputClass} />
         </div>
         <div>
           <label className={labelClass}>Catégorie</label>
-          <input
-            type="text"
-            name="variant"
-            defaultValue={defaultValues.variant ?? "SUV"}
-            placeholder="SUV, Berline…"
-            className={inputClass}
-          />
+          <input type="text" name="variant" defaultValue={defaultValues.variant ?? "SUV"} placeholder="SUV, Berline…" className={inputClass} />
         </div>
       </div>
 
-      {/* Couleur + Places */}
+      {/* ── COULEUR + PLACES ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Couleur <span className="text-red-400">*</span></label>
-          <input
-            type="text"
-            name="color"
-            required
-            defaultValue={defaultValues.color}
-            placeholder="ex : Blanc"
-            className={inputClass}
-          />
+          <input type="text" name="color" required defaultValue={defaultValues.color} placeholder="ex : Blanc perle" className={inputClass} />
         </div>
         <div>
           <label className={labelClass}>Nombre de places</label>
-          <input
-            type="number"
-            name="seats"
-            min={1}
-            max={9}
-            defaultValue={defaultValues.seats ?? 5}
-            className={inputClass}
-          />
+          <input type="number" name="seats" min={1} max={9} defaultValue={defaultValues.seats ?? 5} className={inputClass} />
         </div>
       </div>
 
-      {/* Carburant */}
+      {/* ── MOTORISATION ── */}
       <div>
         <label className={labelClass}>Motorisation</label>
-        <input
-          type="text"
-          name="fuel"
-          defaultValue={defaultValues.fuel ?? "Essence · Automatique"}
-          placeholder="ex : Essence · Automatique"
-          className={inputClass}
-        />
+        <input type="text" name="fuel" defaultValue={defaultValues.fuel ?? "Essence · Automatique"} placeholder="ex : Essence · Automatique" className={inputClass} />
       </div>
 
-      {/* Équipements */}
+      {/* ── ÉQUIPEMENTS ── */}
       <div>
         <label className={labelClass}>
-          Équipements{" "}
-          <span className="text-slate-400 font-normal">(un par ligne)</span>
+          Équipements <span className="text-slate-400 font-normal">(un par ligne)</span>
         </label>
         <textarea
           name="features"
-          rows={4}
+          rows={5}
           defaultValue={(defaultValues.features ?? []).join("\n")}
-          placeholder={"Climatisation\nBluetooth\nCaméra de recul\nGPS"}
+          placeholder={"Climatisation\nBluetooth\nCaméra de recul\nGPS\n4×4 AWD"}
           className={inputClass + " resize-none"}
         />
       </div>
 
-      {/* Prix */}
+      {/* ── PRIX ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Prix court séjour <span className="text-red-400">*</span></label>
           <div className="relative">
-            <input
-              type="number"
-              name="priceDay"
-              required
-              min={0}
-              step={1000}
-              defaultValue={defaultValues.priceDay ?? 70000}
-              className={inputClass + " pr-20"}
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
-              XOF / jour
-            </span>
+            <input type="number" name="priceDay" required min={0} step={1000} defaultValue={defaultValues.priceDay ?? 70000} className={inputClass + " pr-20"} />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">XOF / jour</span>
           </div>
         </div>
         <div>
           <label className={labelClass}>Prix long séjour <span className="text-red-400">*</span></label>
           <div className="relative">
-            <input
-              type="number"
-              name="priceLong"
-              required
-              min={0}
-              step={1000}
-              defaultValue={defaultValues.priceLong ?? 60000}
-              className={inputClass + " pr-20"}
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
-              XOF / jour
-            </span>
+            <input type="number" name="priceLong" required min={0} step={1000} defaultValue={defaultValues.priceLong ?? 60000} className={inputClass + " pr-20"} />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">XOF / jour</span>
           </div>
         </div>
       </div>
 
-      {/* Disponibilité */}
+      {/* ── DISPONIBILITÉ ── */}
       <div>
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            name="available"
-            defaultChecked={defaultValues.available ?? true}
-            className="w-4 h-4 rounded accent-[#C8922A]"
-          />
+        <label className="flex items-center gap-3 cursor-pointer select-none">
+          <input type="checkbox" name="available" defaultChecked={defaultValues.available ?? true} className="w-4 h-4 rounded accent-[#C8922A]" />
           <span className="text-sm font-medium text-slate-700">Véhicule disponible à la location</span>
         </label>
       </div>
 
-      {/* Boutons */}
+      {/* ── BOUTONS ── */}
       <div className="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] text-white text-sm font-semibold transition-colors shadow-sm"
+          disabled={submitting}
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#2D2420] disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-sm"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-          {submitLabel}
+          {submitting ? (
+            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+          {submitting ? "Enregistrement…" : submitLabel}
         </button>
-        <a
-          href="/dashboard/voitures"
-          className="px-6 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
-        >
+        <a href="/dashboard/voitures" className="px-6 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
           Annuler
         </a>
       </div>

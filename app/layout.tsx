@@ -34,6 +34,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.akilimmo.com"),
   title: {
     default: "AKIL IMMO — Location Appartements & Villas au Bénin et Côte d'Ivoire",
     template: "%s | AKIL IMMO",

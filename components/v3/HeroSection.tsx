@@ -94,69 +94,70 @@ export default function HeroSection() {
           Depuis la diaspora ou sur place — on s&apos;occupe de tout.
         </p>
 
-        {/* Barre de recherche — toujours en ligne pour éviter le problème de clavier mobile */}
+        {/* Barre de recherche unifiée — un seul bloc, bouton intégré à droite */}
         <form
           onSubmit={handleSearch}
-          className="mx-auto flex flex-row max-w-2xl gap-2"
           role="search"
           aria-label="Rechercher un bien"
+          className="mx-auto max-w-xl"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            backgroundColor: "rgba(255,255,255,0.10)",
+            border: "1.5px solid rgba(253,252,248,0.22)",
+            borderRadius: 14,
+            padding: "5px 5px 5px 14px",
+            backdropFilter: "blur(8px)",
+          }}
+          onFocus={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(200,146,42,0.6)";
+          }}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(253,252,248,0.22)";
+            }
+          }}
         >
-          <div
-            className="relative flex-1 min-w-0"
-            style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12 }}
-          >
-            <Search
-              size={15}
-              aria-hidden="true"
-              className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ color: "rgba(253,252,248,0.45)" }}
-            />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ville ou quartier…"
-              list="city-suggestions"
-              className="w-full bg-transparent pl-9 pr-3 py-3.5 text-sm outline-none"
-              style={{
-                fontFamily: "var(--font-inter), sans-serif",
-                color: "#FDFCF8",
-                border: "1.5px solid rgba(253,252,248,0.2)",
-                borderRadius: 12,
-              }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(200,146,42,0.6)")}
-              onBlur={(e) =>  (e.currentTarget.style.borderColor = "rgba(253,252,248,0.2)")}
-            />
-            <datalist id="city-suggestions">
-              {CITIES.map((c) => <option key={c} value={c} />)}
-            </datalist>
-          </div>
+          <Search
+            size={15}
+            aria-hidden="true"
+            style={{ color: "rgba(253,252,248,0.4)", flexShrink: 0 }}
+          />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Ville ou quartier… ex: Cocody, Zone 4"
+            list="city-suggestions"
+            className="flex-1 min-w-0 bg-transparent outline-none text-sm"
+            style={{
+              fontFamily: "var(--font-inter), sans-serif",
+              color: "#FDFCF8",
+              paddingTop: 10,
+              paddingBottom: 10,
+            }}
+          />
+          <datalist id="city-suggestions">
+            {CITIES.map((c) => <option key={c} value={c} />)}
+          </datalist>
 
-          {/* Desktop : texte + icône — Mobile : icône seule */}
           <button
             type="submit"
             aria-label="Rechercher"
-            className="flex items-center justify-center gap-2 cursor-pointer rounded-xl px-4 sm:px-6 py-3.5 text-sm font-medium transition-all duration-200 shrink-0"
+            className="flex items-center justify-center gap-1.5 cursor-pointer rounded-[10px] text-sm font-semibold shrink-0 transition-all duration-150"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
-              fontWeight: 600,
               backgroundColor: "#C8922A",
               color: "#ffffff",
-              boxShadow: "0 4px 20px rgba(200,146,42,0.45)",
+              padding: "10px 18px",
               whiteSpace: "nowrap",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#A97620";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "#C8922A";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#A97620")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#C8922A")}
           >
-            <span className="hidden sm:inline">Rechercher</span>
-            <Search size={16} aria-hidden="true" className="sm:hidden" />
-            <ArrowRight size={15} aria-hidden="true" className="hidden sm:inline" />
+            <span className="hidden xs:inline sm:inline">Rechercher</span>
+            <ArrowRight size={14} aria-hidden="true" />
           </button>
         </form>
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Home } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Louer",    href: "/biens" },
@@ -30,10 +30,9 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="/"
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer shrink-0"
             aria-label="AKIL IMMO — Accueil"
           >
-            {/* Gold accent bar */}
             <span
               style={{
                 display: "block",
@@ -58,8 +57,8 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-7" aria-label="Navigation principale">
+          {/* Desktop nav — liens services */}
+          <nav className="hidden md:flex items-center gap-6" aria-label="Navigation principale">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (
@@ -71,12 +70,12 @@ export default function Navbar() {
                   style={{
                     fontFamily: "var(--font-inter), sans-serif",
                     fontWeight: active ? 500 : 400,
-                    color: active ? "#C8922A" : "rgba(253,252,248,0.75)",
+                    color: active ? "#C8922A" : "rgba(253,252,248,0.72)",
                     letterSpacing: "0.02em",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "#C8922A")}
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = active ? "#C8922A" : "rgba(253,252,248,0.75)")
+                    (e.currentTarget.style.color = active ? "#C8922A" : "rgba(253,252,248,0.72)")
                   }
                 >
                   {link.label}
@@ -85,29 +84,43 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* CTA desktop */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* CTA desktop — deux boutons */}
+          <div className="hidden md:flex items-center gap-2 shrink-0">
+            {/* Lien discret "Comment ça marche" */}
             <a
-              href="#contact"
+              href="/comment-ca-marche"
+              className="text-xs cursor-pointer px-3 py-2 transition-colors duration-150"
+              style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                color: "rgba(253,252,248,0.5)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(253,252,248,0.9)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(253,252,248,0.5)")}
+            >
+              Comment ça marche
+            </a>
+            {/* CTA principal — Devenir propriétaire */}
+            <a
+              href="/inscription"
               className="flex items-center gap-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200"
               style={{
                 fontFamily: "var(--font-inter), sans-serif",
-                fontWeight: 500,
-                backgroundColor: "#E07B39",
+                fontWeight: 600,
+                backgroundColor: "#C8922A",
                 color: "#ffffff",
-                letterSpacing: "0.02em",
+                letterSpacing: "0.01em",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#C96A28";
+                e.currentTarget.style.backgroundColor = "#A97620";
                 e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#E07B39";
+                e.currentTarget.style.backgroundColor = "#C8922A";
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
-              <Phone size={14} aria-hidden="true" />
-              Nous contacter
+              <Home size={13} aria-hidden="true" />
+              Devenir propriétaire
             </a>
           </div>
 
@@ -128,7 +141,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div
-          className="md:hidden border-t px-4 pb-4 pt-2"
+          className="md:hidden border-t px-4 pb-5 pt-2"
           style={{ backgroundColor: "#1C1917", borderColor: "rgba(200,146,42,0.25)" }}
         >
           {NAV_LINKS.map((link) => {
@@ -150,18 +163,38 @@ export default function Navbar() {
               </a>
             );
           })}
+
+          {/* Séparateur */}
+          <div
+            className="my-3"
+            style={{ height: 1, backgroundColor: "rgba(200,146,42,0.15)" }}
+            aria-hidden="true"
+          />
+
           <a
-            href="#contact"
+            href="/comment-ca-marche"
             onClick={() => setOpen(false)}
-            className="mt-3 flex items-center gap-2 justify-center cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium"
+            className="block py-2.5 text-sm cursor-pointer"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
-              backgroundColor: "#E07B39",
+              color: "rgba(253,252,248,0.6)",
+            }}
+          >
+            Comment ça marche
+          </a>
+
+          <a
+            href="/inscription"
+            onClick={() => setOpen(false)}
+            className="mt-3 flex items-center gap-2 justify-center cursor-pointer rounded-lg px-4 py-3 text-sm font-semibold"
+            style={{
+              fontFamily: "var(--font-inter), sans-serif",
+              backgroundColor: "#C8922A",
               color: "#ffffff",
             }}
           >
-            <Phone size={14} aria-hidden="true" />
-            Nous contacter
+            <Home size={14} aria-hidden="true" />
+            Devenir propriétaire
           </a>
         </div>
       )}

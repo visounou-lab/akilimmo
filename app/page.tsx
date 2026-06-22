@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Navbar from "../components/v3/Navbar";
 import HeroSection from "../components/v3/HeroSection";
+import CategoriesSection from "../components/v3/CategoriesSection";
 import StatsBar from "../components/v3/StatsBar";
 import HowItWorks from "../components/v3/HowItWorks";
 import FeaturedProperties from "../components/v3/FeaturedProperties";
@@ -45,26 +46,29 @@ export default async function V3Page() {
     <>
       <Navbar />
       <main id="main-content">
-        {/* 1. Hero émotionnel */}
+        {/* 1. Hero charbon avec barre de recherche (Option C) */}
         <HeroSection />
 
-        {/* 2. Chiffres de confiance */}
-        <StatsBar />
+        {/* 2. Nos 4 catégories de services */}
+        <CategoriesSection />
 
-        {/* 3. Comment ça marche */}
-        <HowItWorks />
+        {/* 3. Chiffres de confiance */}
+        <StatsBar />
 
         {/* 4. Biens disponibles — données réelles depuis la DB */}
         <FeaturedProperties properties={properties} />
 
-        {/* 5. Recrutement propriétaires & agences */}
+        {/* 5. Comment ça marche */}
+        <HowItWorks />
+
+        {/* 6. Recrutement propriétaires & agences */}
         <PartnerSection />
 
-        {/* 6. Phase de lancement */}
+        {/* 7. Phase de lancement */}
         <LaunchSection />
       </main>
 
-      {/* 7. Footer CTA + WhatsApp flottant */}
+      {/* 8. Footer CTA + WhatsApp flottant */}
       <Footer />
     </>
   );

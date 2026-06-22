@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Louer", href: "/biens" },
-  { label: "Court séjour", href: "/biens" },
-  { label: "Comment ça marche", href: "/comment-ca-marche" },
-  { label: "Devenir partenaire", href: "/inscription" },
+  { label: "Louer",    href: "/biens" },
+  { label: "Vendre",   href: "#contact" },
+  { label: "Voitures", href: "#contact" },
+  { label: "Séjours",  href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -23,7 +23,7 @@ export default function Navbar() {
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50"
-      style={{ backgroundColor: "#1B4D3E", borderBottom: "1px solid rgba(200,146,42,0.2)" }}
+      style={{ backgroundColor: "#1C1917", borderBottom: "1px solid rgba(200,146,42,0.2)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -129,7 +129,7 @@ export default function Navbar() {
       {open && (
         <div
           className="md:hidden border-t px-4 pb-4 pt-2"
-          style={{ backgroundColor: "#1B4D3E", borderColor: "rgba(200,146,42,0.25)" }}
+          style={{ backgroundColor: "#1C1917", borderColor: "rgba(200,146,42,0.25)" }}
         >
           {NAV_LINKS.map((link) => {
             const active = isActive(link.href);

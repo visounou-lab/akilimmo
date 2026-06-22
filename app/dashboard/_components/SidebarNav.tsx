@@ -86,6 +86,15 @@ const navItems = [
     ),
   },
   {
+    label: "Voitures",
+    href: "/dashboard/voitures",
+    icon: (
+      <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0zM3 10l1.5-4.5A2 2 0 016.4 4h11.2a2 2 0 011.9 1.5L21 10M3 10h18M3 10H1m20 0h2M5 10V7m14 3V7" />
+      </svg>
+    ),
+  },
+  {
     label: "Messages",
     href: "/dashboard/messages",
     icon: (

@@ -36,3 +36,20 @@ export async function uploadImage(file: File): Promise<UploadResult> {
       .end(buffer);
   });
 }
+
+export async function uploadVehicleImage(file: File): Promise<UploadResult> {
+  const bytes  = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        { folder: "akilimmo/voitures", resource_type: "image" },
+        (error, result) => {
+          if (error || !result) return reject(error ?? new Error("Upload failed"));
+          resolve({ url: result.secure_url, publicId: result.public_id });
+        }
+      )
+      .end(buffer);
+  });
+}

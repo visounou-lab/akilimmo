@@ -246,6 +246,25 @@ model DocumentRequest {
   @@index([status])
 }
 
+model Vehicle {
+  id          String   @id @default(cuid())
+  name        String
+  variant     String   @default("SUV")
+  color       String
+  seats       Int      @default(5)
+  fuel        String   @default("Essence · Automatique")
+  features    String[]
+  priceDay    Int
+  priceLong   Int
+  imageUrl    String?
+  images      String[]
+  available   Boolean  @default(true)
+  city        String   @default("Abidjan")
+  country     Country  @default(COTE_D_IVOIRE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model ReservationRequest {
   id           String   @id @default(cuid())
   propertyId   String

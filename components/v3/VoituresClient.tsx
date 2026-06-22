@@ -5,59 +5,26 @@ import { MapPin, Users, Fuel, Shield, MessageCircle, ArrowRight, CheckCircle, XC
 
 const WA_CI = "2250710259146";
 
-const VEHICLES = [
-  {
-    id: "kia-sportage",
-    name: "KIA Sportage",
-    year: "AWD · SUV",
-    color: "Blanc perle",
-    seats: 5,
-    fuel: "Essence · Automatique",
-    // Remplace ces URLs par les URLs Cloudinary après upload
-    images: [
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
-    ],
-    priceDay: 70000,
-    priceLong: 60000,
-    features: ["Climatisation", "Bluetooth", "Caméra de recul", "GPS", "4×4 AWD", "Vitres teintées"],
-    available: true,
-  },
-  {
-    id: "hyundai-tucson",
-    name: "Hyundai Tucson",
-    year: "SUV Premium",
-    color: "Rouge bordeaux",
-    seats: 5,
-    fuel: "Essence · Automatique",
-    images: [
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
-    ],
-    priceDay: 70000,
-    priceLong: 60000,
-    features: ["Climatisation", "Bluetooth", "Sièges cuir", "GPS", "Toit panoramique", "Vitres teintées"],
-    available: true,
-  },
-  {
-    id: "kia-seltos",
-    name: "KIA Seltos",
-    year: "AWD · SUV Compact",
-    color: "Blanc perle",
-    seats: 5,
-    fuel: "Essence · Automatique",
-    images: [
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80",
-    ],
-    priceDay: 70000,
-    priceLong: 60000,
-    features: ["Climatisation", "Écran tactile", "Caméra 360°", "4×4 AWD", "Design moderne", "Intérieur neuf"],
-    available: true,
-  },
-];
+export interface VehicleData {
+  id: string;
+  name: string;
+  variant: string;
+  color: string;
+  seats: number;
+  fuel: string;
+  features: string[];
+  priceDay: number;
+  priceLong: number;
+  imageUrl: string | null;
+  images: string[];
+  available: boolean;
+}
 
-function waLink(vehicle: (typeof VEHICLES)[number]): string {
+interface Props {
+  vehicles: VehicleData[];
+}
+
+function waLink(vehicle: VehicleData): string {
   const msg = encodeURIComponent(
     `Bonjour, je souhaite louer le ${vehicle.name} (${vehicle.color}) via AKIL IMMO. Pouvez-vous me confirmer la disponibilité ?`
   );
@@ -68,7 +35,9 @@ function formatXOF(n: number): string {
   return new Intl.NumberFormat("fr-FR").format(n);
 }
 
-export default function VoituresClient() {
+const PLACEHOLDER = "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80";
+
+export default function VoituresClient({ vehicles }: Props) {
   return (
     <>
       {/* ── Hero ── */}
@@ -76,7 +45,6 @@ export default function VoituresClient() {
         className="relative py-24 lg:py-32 text-center overflow-hidden"
         style={{ backgroundColor: "#1C1917" }}
       >
-        {/* Subtle grid pattern */}
         <div
           className="absolute inset-0 opacity-5"
           style={{
@@ -129,7 +97,6 @@ export default function VoituresClient() {
             Réservation rapide sur WhatsApp.
           </p>
 
-          {/* Prix rapides */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
             {[
               { label: "Court séjour", price: "70 000 XOF/jour" },
@@ -220,147 +187,168 @@ export default function VoituresClient() {
             </h2>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {VEHICLES.map((v) => (
-              <article
-                key={v.id}
-                className="rounded-2xl overflow-hidden"
-                style={{
-                  backgroundColor: "#FDFCF8",
-                  border: "1px solid #E8DDD0",
-                  boxShadow: "0 2px 12px rgba(28,25,23,0.06)",
-                }}
+          {vehicles.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-4xl mb-4">🚗</p>
+              <p style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52", fontSize: "1.05rem" }}>
+                Les véhicules seront bientôt disponibles.
+              </p>
+              <a
+                href={`https://wa.me/${WA_CI}?text=${encodeURIComponent("Bonjour, je souhaite avoir des informations sur la location de véhicules AKIL IMMO à Abidjan.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white"
+                style={{ backgroundColor: "#25D366" }}
               >
-                {/* Image principale */}
-                <div className="relative" style={{ aspectRatio: "16/10" }}>
-                  <Image
-                    src={v.images[0]}
-                    alt={`${v.name} ${v.color} — location à Abidjan`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  {/* Badge disponible */}
-                  <div
-                    className="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium"
-                    style={{ backgroundColor: "#16A34A", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
+                <MessageCircle size={15} />
+                Nous contacter sur WhatsApp
+              </a>
+            </div>
+          ) : (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {vehicles.map((v) => {
+                const mainImage = v.imageUrl ?? v.images[0] ?? PLACEHOLDER;
+                return (
+                  <article
+                    key={v.id}
+                    className="rounded-2xl overflow-hidden"
+                    style={{
+                      backgroundColor: "#FDFCF8",
+                      border: "1px solid #E8DDD0",
+                      boxShadow: "0 2px 12px rgba(28,25,23,0.06)",
+                      opacity: v.available ? 1 : 0.6,
+                    }}
                   >
-                    Disponible
-                  </div>
-                  {/* Badge type */}
-                  <div
-                    className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium"
-                    style={{ backgroundColor: "rgba(200,146,42,0.9)", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    SUV
-                  </div>
-                </div>
-
-                {/* Corps */}
-                <div className="p-5">
-                  {/* Nom + couleur */}
-                  <div className="flex items-start justify-between mb-1">
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-playfair), serif",
-                        fontWeight: 700,
-                        fontSize: "1.15rem",
-                        color: "#1C1917",
-                      }}
-                    >
-                      {v.name}
-                    </h3>
-                  </div>
-                  <p className="text-xs mb-4" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
-                    {v.year} · {v.color}
-                  </p>
-
-                  {/* Specs */}
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
-                      <Users size={14} aria-hidden="true" />
-                      {v.seats} places
-                    </span>
-                    <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
-                      <Fuel size={14} aria-hidden="true" />
-                      {v.fuel}
-                    </span>
-                  </div>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {v.features.slice(0, 4).map((f) => (
-                      <span
-                        key={f}
-                        className="rounded-full px-2.5 py-0.5 text-xs"
+                    {/* Image principale */}
+                    <div className="relative" style={{ aspectRatio: "16/10" }}>
+                      <Image
+                        src={mainImage}
+                        alt={`${v.name} ${v.color} — location à Abidjan`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div
+                        className="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium"
                         style={{
+                          backgroundColor: v.available ? "#16A34A" : "#EF4444",
+                          color: "#ffffff",
                           fontFamily: "var(--font-inter), sans-serif",
-                          backgroundColor: "rgba(200,146,42,0.1)",
-                          color: "#A97620",
-                          border: "1px solid rgba(200,146,42,0.25)",
                         }}
                       >
-                        {f}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Prix */}
-                  <div
-                    className="rounded-xl p-4 mb-5 flex items-center justify-between"
-                    style={{ backgroundColor: "#F5F0E8" }}
-                  >
-                    <div className="text-center">
-                      <p className="text-xs mb-0.5" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
-                        Court séjour
-                      </p>
-                      <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, color: "#1C1917", fontSize: "1rem" }}>
-                        {formatXOF(v.priceDay)}<span className="text-xs font-normal"> XOF/j</span>
-                      </p>
+                        {v.available ? "Disponible" : "Indisponible"}
+                      </div>
+                      <div
+                        className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium"
+                        style={{ backgroundColor: "rgba(200,146,42,0.9)", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
+                      >
+                        {v.variant}
+                      </div>
                     </div>
-                    <div style={{ width: 1, height: 32, backgroundColor: "#E8DDD0" }} aria-hidden="true" />
-                    <div className="text-center">
-                      <p className="text-xs mb-0.5" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
-                        Long séjour
-                      </p>
-                      <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, color: "#C8922A", fontSize: "1rem" }}>
-                        {formatXOF(v.priceLong)}<span className="text-xs font-normal"> XOF/j</span>
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* CTA WhatsApp */}
-                  <a
-                    href={waLink(v)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center gap-2 cursor-pointer rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200"
-                    style={{
-                      fontFamily: "var(--font-inter), sans-serif",
-                      fontWeight: 500,
-                      color: "#ffffff",
-                      backgroundColor: "#25D366",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1FAB52")}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#25D366")}
-                  >
-                    <MessageCircle size={15} aria-hidden="true" />
-                    Réserver sur WhatsApp
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+                    {/* Corps */}
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-1">
+                        <h3
+                          style={{
+                            fontFamily: "var(--font-playfair), serif",
+                            fontWeight: 700,
+                            fontSize: "1.15rem",
+                            color: "#1C1917",
+                          }}
+                        >
+                          {v.name}
+                        </h3>
+                      </div>
+                      <p className="text-xs mb-4" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
+                        {v.variant} · {v.color}
+                      </p>
+
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
+                          <Users size={14} aria-hidden="true" />
+                          {v.seats} places
+                        </span>
+                        <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
+                          <Fuel size={14} aria-hidden="true" />
+                          {v.fuel}
+                        </span>
+                      </div>
+
+                      {v.features.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-5">
+                          {v.features.slice(0, 4).map((f) => (
+                            <span
+                              key={f}
+                              className="rounded-full px-2.5 py-0.5 text-xs"
+                              style={{
+                                fontFamily: "var(--font-inter), sans-serif",
+                                backgroundColor: "rgba(200,146,42,0.1)",
+                                color: "#A97620",
+                                border: "1px solid rgba(200,146,42,0.25)",
+                              }}
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div
+                        className="rounded-xl p-4 mb-5 flex items-center justify-between"
+                        style={{ backgroundColor: "#F5F0E8" }}
+                      >
+                        <div className="text-center">
+                          <p className="text-xs mb-0.5" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
+                            Court séjour
+                          </p>
+                          <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, color: "#1C1917", fontSize: "1rem" }}>
+                            {formatXOF(v.priceDay)}<span className="text-xs font-normal"> XOF/j</span>
+                          </p>
+                        </div>
+                        <div style={{ width: 1, height: 32, backgroundColor: "#E8DDD0" }} aria-hidden="true" />
+                        <div className="text-center">
+                          <p className="text-xs mb-0.5" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#6B5E52" }}>
+                            Long séjour
+                          </p>
+                          <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, color: "#C8922A", fontSize: "1rem" }}>
+                            {formatXOF(v.priceLong)}<span className="text-xs font-normal"> XOF/j</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <a
+                        href={v.available ? waLink(v) : undefined}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-disabled={!v.available}
+                        className="flex w-full items-center justify-center gap-2 cursor-pointer rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200"
+                        style={{
+                          fontFamily: "var(--font-inter), sans-serif",
+                          fontWeight: 500,
+                          color: "#ffffff",
+                          backgroundColor: v.available ? "#25D366" : "#9CA3AF",
+                          pointerEvents: v.available ? "auto" : "none",
+                        }}
+                        onMouseEnter={(e) => { if (v.available) e.currentTarget.style.backgroundColor = "#1FAB52"; }}
+                        onMouseLeave={(e) => { if (v.available) e.currentTarget.style.backgroundColor = "#25D366"; }}
+                      >
+                        <MessageCircle size={15} aria-hidden="true" />
+                        {v.available ? "Réserver sur WhatsApp" : "Indisponible"}
+                      </a>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
       {/* ── Bloc conditions ── */}
       <section className="py-16" style={{ backgroundColor: "#1C1917" }}>
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <div
-            className="mx-auto mb-6 flex items-center justify-center gap-3"
-            aria-hidden="true"
-          >
+          <div className="mx-auto mb-6 flex items-center justify-center gap-3" aria-hidden="true">
             <span style={{ display: "block", width: 40, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }} />
             <Shield size={18} style={{ color: "#C8922A" }} />
             <span style={{ display: "block", width: 40, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }} />

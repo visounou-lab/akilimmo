@@ -14,7 +14,7 @@ export default async function V3Page() {
   const raw = await prisma.property.findMany({
     where: { status: "AVAILABLE", publishStatus: "published" },
     orderBy: { createdAt: "desc" },
-    take: 3,
+    take: 18,
     select: {
       id: true,
       slug: true,
@@ -27,6 +27,7 @@ export default async function V3Page() {
       imageUrl: true,
       videoUrl: true,
       propertyType: true,
+      stayType: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },

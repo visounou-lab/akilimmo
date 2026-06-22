@@ -22,7 +22,7 @@ const CATEGORIES = [
   {
     emoji: "🚗",
     title: "Location de voitures",
-    desc: "Véhicules récents, bien entretenus, disponibles à l'aéroport ou en ville. Avec ou sans chauffeur.",
+    desc: "Véhicules récents et bien entretenus disponibles à Abidjan et Cotonou — à l'aéroport, en ville, avec ou sans chauffeur.",
     href: "#contact",
     badge: "Bientôt",
     accent: "#C8922A",
@@ -30,7 +30,7 @@ const CATEGORIES = [
   {
     emoji: "🛏️",
     title: "Séjours clé en main",
-    desc: "Logements thématiques pour les fêtes du Vodoun, les vacances en famille ou les voyages d'affaires entre Bénin et CI.",
+    desc: "Logements confortables pour les vacances en famille, les voyages d'affaires ou les courts séjours entre le Bénin et la Côte d'Ivoire.",
     href: "#contact",
     badge: "Bientôt",
     accent: "#C8922A",

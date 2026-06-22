@@ -30,6 +30,7 @@ export default async function V3Page() {
       propertyType: true,
       stayType: true,
       likesCount: true,
+      viewCount: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },

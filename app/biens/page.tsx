@@ -35,6 +35,7 @@ export default async function V3BiensPage({
       videoUrl: true,
       propertyType: true,
       likesCount: true,
+      viewCount: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },

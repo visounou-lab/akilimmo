@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart } from "lucide-react";
+import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart, Eye } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 
 function useFavorites(properties: PropertyCardFull[]) {
@@ -66,6 +66,7 @@ export type PropertyCardFull = {
   videoUrl: string | null;
   propertyType: string | null;
   likesCount: number;
+  viewCount: number;
   images: { url: string; status: string; order: number }[];
 };
 
@@ -346,6 +347,7 @@ export default function BiensListClient({
                 const imageSrc  = getPropertyMainImage(prop);
                 const liked     = isFavorite(prop.id);
                 const likeCount = getLikeCount(prop.id);
+                const views     = prop.viewCount;
 
                 return (
                   <li key={prop.id}>
@@ -439,9 +441,14 @@ export default function BiensListClient({
                             <Bath size={14} aria-hidden="true" />
                             {prop.bathrooms} sdb.
                           </span>
-                          {/* Likes total dans le footer de carte */}
+                          {/* Vues réelles */}
+                          <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
+                            <Eye size={12} aria-hidden="true" />
+                            {views}
+                          </span>
+                          {/* Likes */}
                           {likeCount > 0 && (
-                            <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: "#EF4444", fontFamily: "var(--font-inter), sans-serif" }}>
+                            <span className="flex items-center gap-1 text-xs" style={{ color: "#EF4444", fontFamily: "var(--font-inter), sans-serif" }}>
                               <Heart size={12} fill="#EF4444" color="#EF4444" />
                               {likeCount}
                             </span>

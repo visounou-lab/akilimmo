@@ -12,6 +12,7 @@ import { SITE_URL, countryLabel } from "@/lib/share";
 import { MapPin, BedDouble, Bath } from "lucide-react";
 import BreadcrumbV3 from "../../../components/v3/biens/BreadcrumbV3";
 import ContactCardV3 from "../../../components/v3/biens/ContactCardV3";
+import ViewTracker from "../../../components/v3/biens/ViewTracker";
 
 export const revalidate = 3600;
 
@@ -102,6 +103,8 @@ export default async function V3BienDetailPage({ params }: Props) {
   return (
     <>
       <Navbar />
+      {/* Compteur de vues — déclenché côté client, 1 fois par session */}
+      <ViewTracker slug={bien.slug} />
       <main id="main-content" className="pt-16" style={{ backgroundColor: "#FDFCF8" }}>
 
         {/* ── Breadcrumb ── */}

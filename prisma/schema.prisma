@@ -136,6 +136,7 @@ model Property {
   propertyType  String?
   stayType      String          @default("long")
   likesCount    Int             @default(0)
+  viewCount     Int             @default(0)
   publishStatus String          @default("published")
   adminNote     String?
   contracts            Contract[]

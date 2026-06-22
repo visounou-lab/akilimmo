@@ -135,6 +135,7 @@ model Property {
   submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
   propertyType  String?
   stayType      String          @default("long")
+  likesCount    Int             @default(0)
   publishStatus String          @default("published")
   adminNote     String?
   contracts            Contract[]

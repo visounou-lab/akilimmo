@@ -12,7 +12,13 @@ export const metadata: Metadata = {
     "Villas et appartements meublés vérifiés à la location au Bénin et en Côte d'Ivoire. Filtrez par pays et par ville pour trouver votre logement idéal.",
 };
 
-export default async function V3BiensPage() {
+export default async function V3BiensPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+
   const raw = await prisma.property.findMany({
     where: { status: "AVAILABLE", publishStatus: "published" },
     orderBy: { createdAt: "desc" },
@@ -28,6 +34,7 @@ export default async function V3BiensPage() {
       imageUrl: true,
       videoUrl: true,
       propertyType: true,
+      likesCount: true,
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },
@@ -45,7 +52,7 @@ export default async function V3BiensPage() {
     <>
       <Navbar />
       <main id="main-content" className="pt-16">
-        <BiensListClient properties={properties} />
+        <BiensListClient properties={properties} initialSearch={q ?? ""} />
       </main>
       <Footer />
     </>

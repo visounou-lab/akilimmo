@@ -22,10 +22,10 @@ const CATEGORIES = [
   {
     emoji: "🚗",
     title: "Location de voitures",
-    desc: "Véhicules récents et bien entretenus disponibles à Abidjan et Cotonou — à l'aéroport, en ville, avec ou sans chauffeur.",
-    href: "#contact",
-    badge: "Bientôt",
-    accent: "#C8922A",
+    desc: "SUV récents et bien entretenus disponibles à Abidjan — KIA Sportage, Hyundai Tucson, KIA Seltos. Réservation rapide sur WhatsApp.",
+    href: "/voitures",
+    badge: null,
+    accent: "#1B4D3E",
   },
   {
     emoji: "🛏️",

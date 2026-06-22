@@ -35,7 +35,7 @@ export default async function VoituresPage() {
       <main id="main-content" className="pt-16">
         <VoituresClient vehicles={vehicles} />
       </main>
-      <Footer />
+      <Footer showContactCTA={false} />
     </>
   );
 }

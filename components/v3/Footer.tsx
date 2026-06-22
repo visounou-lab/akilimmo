@@ -44,13 +44,13 @@ const NAV_COLUMNS = [
   },
 ];
 
-export default function Footer() {
+export default function Footer({ showContactCTA = true }: { showContactCTA?: boolean }) {
   const year = new Date().getFullYear();
 
   return (
     <footer aria-label="Pied de page AKIL IMMO">
       {/* CTA band */}
-      <div
+      {showContactCTA && <div
         id="contact"
         className="py-16 px-4 text-center"
         style={{ backgroundColor: "#1B4D3E" }}
@@ -148,7 +148,7 @@ export default function Footer() {
             Envoyer un email
           </a>
         </div>
-      </div>
+      </div>}
 
       {/* Main footer */}
       <div

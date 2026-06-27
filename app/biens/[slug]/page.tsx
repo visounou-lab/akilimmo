@@ -179,12 +179,16 @@ export default async function V3BienDetailPage({ params }: Props) {
                   >
                     {bien.title}
                   </h1>
-                  <p
-                    className="flex items-center gap-1.5"
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(`${bien.address}, ${bien.city}, ${cLabel}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 hover:underline"
                     style={{
                       fontFamily: "var(--font-inter), sans-serif",
                       fontSize: "0.9rem",
                       color: "#6B5E52",
+                      width: "fit-content",
                     }}
                   >
                     <MapPin
@@ -193,7 +197,7 @@ export default async function V3BienDetailPage({ params }: Props) {
                       style={{ color: "#C8922A", flexShrink: 0 }}
                     />
                     {bien.address}, {bien.city} — {cLabel}
-                  </p>
+                  </a>
                 </div>
 
                 {/* Stats */}
@@ -272,6 +276,33 @@ export default async function V3BienDetailPage({ params }: Props) {
                   >
                     {bien.description}
                   </p>
+                </div>
+
+                {/* Localisation */}
+                <div>
+                  <p style={sectionTitle}>LOCALISATION</p>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(`${bien.address}, ${bien.city}, ${cLabel}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mb-4 flex items-center gap-1.5 hover:underline"
+                    style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "0.875rem", color: "#6B5E52", width: "fit-content" }}
+                  >
+                    <MapPin size={13} style={{ color: "#C8922A", flexShrink: 0 }} />
+                    {bien.address}, {bien.city} — {cLabel}
+                  </a>
+                  <div
+                    className="overflow-hidden rounded-2xl"
+                    style={{ border: "1.5px solid rgba(200,146,42,0.25)", aspectRatio: "16/9" }}
+                  >
+                    <iframe
+                      title={`Localisation — ${bien.title}`}
+                      src={`https://maps.google.com/maps?q=${encodeURIComponent(`${bien.address}, ${bien.city}, ${cLabel}`)}&output=embed&z=15`}
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
                 </div>
 
                 {/* Partage */}

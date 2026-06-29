@@ -31,7 +31,7 @@ const NAV_COLUMNS = [
     links: [
       { label: "Devenir partenaire", href: "/inscription" },
       { label: "Espace propriétaire", href: "/owner/dashboard" },
-      { label: "Espace agence", href: "/inscription" },
+      { label: "Espace agence", href: "/agence-partenaire" },
     ],
   },
   {

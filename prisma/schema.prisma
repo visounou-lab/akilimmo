@@ -67,6 +67,10 @@ model User {
   resetToken     String?        @unique
   resetExpires   DateTime?
   status         String         @default("pending")
+  referralCode   String?        @unique
+  referredById   String?
+  referredBy     User?          @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals      User[]         @relation("UserReferrals")
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   accounts       Account[]
@@ -79,6 +83,7 @@ model User {
   notifications       Notification[]
   documentRequests    DocumentRequest[]
   uploadedImages      PropertyImage[] @relation("uploadedImages")
+  referralEarnings    ReferralEarning[] @relation("ReferralEarnings")
 }
 
 model Account {
@@ -263,6 +268,22 @@ model Vehicle {
   country     Country  @default(COTE_D_IVOIRE)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model ReferralEarning {
+  id          String   @id @default(cuid())
+  referrerId  String
+  referrer    User     @relation("ReferralEarnings", fields: [referrerId], references: [id])
+  referredId  String
+  paymentId   String?
+  amount      Decimal
+  percentage  Decimal
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+
+  @@index([referrerId])
+  @@index([referredId])
+  @@index([status])
 }
 
 model AgentApplication {

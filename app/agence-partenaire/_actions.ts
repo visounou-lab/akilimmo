@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { transporter } from "@/lib/mailer";
+import { notifyNewAgentApplication } from "@/lib/telegram";
 
 export async function submitAgentApplication(formData: FormData) {
   const agencyName   = (formData.get("agencyName") as string).trim();
@@ -49,6 +50,8 @@ export async function submitAgentApplication(formData: FormData) {
       </div>
     `,
   });
+
+  void notifyNewAgentApplication({ agencyName, contactName, email, city, country, documentType });
 
   return { success: true };
 }

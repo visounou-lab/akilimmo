@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { uploadImage } from "@/lib/cloudinary";
 import { sendNewPropertyNotification } from "@/lib/mailer";
+import { notifyPropertySubmitted } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { uniquePropertySlug } from "@/lib/slug";
 
@@ -66,6 +67,11 @@ export async function submitProperty(formData: FormData) {
     title:      property.title,
     city:       property.city,
     propertyId: property.id,
+  });
+  void notifyPropertySubmitted({
+    title:     property.title,
+    ownerName: user?.name ?? "Propriétaire",
+    city:      property.city,
   });
 
   revalidatePath("/owner/dashboard/biens");

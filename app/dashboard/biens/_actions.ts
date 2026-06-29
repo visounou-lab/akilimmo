@@ -224,7 +224,7 @@ export async function uploadPropertyImages(
 
       const isFirst = existingCount === 0 && i === 0;
       await prisma.propertyImage.create({
-        data: { propertyId, url, publicId, isPrimary: isFirst, order: existingCount + i, alt: null },
+        data: { propertyId, url, publicId, isPrimary: isFirst, order: existingCount + i, alt: null, status: "APPROVED" },
       });
       if (isFirst) {
         await prisma.property.update({ where: { id: propertyId }, data: { imageUrl: url } });
@@ -348,6 +348,33 @@ export async function reorderPropertyImages(
 
   revalidatePath(`/dashboard/biens/${propertyId}/edit`);
   revalidatePath(`/biens/${property.slug}`);
+
+  return { success: true };
+}
+
+// ─── approve all images ───────────────────────────────────────────────────────
+
+export async function approveAllPropertyImages(
+  propertyId: string
+): Promise<{ success: boolean }> {
+  const session = await auth();
+  if (!session?.user) return { success: false };
+  const userId = (session.user as { id: string }).id;
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { role: true } });
+  if (user?.role !== "ADMIN") return { success: false };
+
+  const property = await prisma.property.findUnique({ where: { id: propertyId }, select: { slug: true } });
+  if (!property) return { success: false };
+
+  await prisma.propertyImage.updateMany({
+    where: { propertyId, status: "PENDING" },
+    data:  { status: "APPROVED" },
+  });
+
+  revalidatePath(`/dashboard/biens/${propertyId}/edit`);
+  revalidatePath(`/biens/${property.slug}`);
+  revalidatePath("/biens");
+  revalidatePath("/");
 
   return { success: true };
 }

@@ -31,10 +31,16 @@ export async function PATCH(
   if (!property) return NextResponse.json({ error: "Bien introuvable" }, { status: 404 });
 
   if (action === "publish") {
-    await prisma.property.update({
-      where: { id },
-      data:  { publishStatus: "published", adminNote: null },
-    });
+    await prisma.$transaction([
+      prisma.property.update({
+        where: { id },
+        data:  { publishStatus: "published", adminNote: null },
+      }),
+      prisma.propertyImage.updateMany({
+        where: { propertyId: id, status: "PENDING" },
+        data:  { status: "APPROVED" },
+      }),
+    ]);
     const recipient = property.submitter ?? property.owner;
     const firstName = recipient.name?.split(" ")[0] ?? "Propriétaire";
     const email     = recipient.email;

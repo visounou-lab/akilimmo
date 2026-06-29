@@ -158,12 +158,37 @@ export default function AgencePartenairePage() {
                   fontWeight: 500,
                   fontSize: "0.9375rem",
                   color: "#1C1917",
-                  marginBottom: "1rem",
+                  marginBottom: "1.25rem",
                 }}
               >
-                Conformément à la réglementation ivoirienne sur les démarcheurs immobiliers,
-                tout agent partenaire AKIL IMMO doit justifier d&apos;une activité légale.
+                AKIL IMMO opère en <strong>Côte d&apos;Ivoire</strong> et au <strong>Bénin</strong>.
+                Conformément aux réglementations en vigueur dans chaque pays sur l&apos;exercice des activités
+                immobilières, tout agent partenaire doit justifier d&apos;une activité légalement déclarée.
               </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                {/* CI */}
+                <div style={{ border: "1px solid rgba(200,146,42,0.2)", borderRadius: 12, padding: "1rem" }}>
+                  <p style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 600, fontSize: "0.8rem", color: "#C8922A", marginBottom: "0.5rem" }}>
+                    🇨🇮 Côte d&apos;Ivoire
+                  </p>
+                  <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
+                    <li>Registre de commerce valide, <strong>OU</strong></li>
+                    <li>Carte d&apos;exercice de démarchage immobilier</li>
+                  </ul>
+                </div>
+                {/* Bénin */}
+                <div style={{ border: "1px solid rgba(200,146,42,0.2)", borderRadius: 12, padding: "1rem" }}>
+                  <p style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 600, fontSize: "0.8rem", color: "#C8922A", marginBottom: "0.5rem" }}>
+                    🇧🇯 Bénin
+                  </p>
+                  <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
+                    <li>Registre de commerce valide, <strong>OU</strong></li>
+                    <li>Autorisation d&apos;exercice délivrée par le ministère compétent</li>
+                  </ul>
+                </div>
+              </div>
+
               <ul
                 style={{
                   fontFamily: "var(--font-inter), sans-serif",
@@ -175,10 +200,8 @@ export default function AgencePartenairePage() {
                   margin: 0,
                 }}
               >
-                <li>Registre de commerce en cours de validité, <strong>OU</strong></li>
-                <li>Carte d&apos;exercice de démarchage immobilier délivrée par les autorités compétentes</li>
                 <li>Téléphone professionnel joignable</li>
-                <li>Zone d&apos;activité déclarée (ville/quartier)</li>
+                <li>Zone d&apos;activité déclarée (ville / quartiers couverts)</li>
               </ul>
               <div
                 className="mt-4 rounded-xl px-4 py-3"

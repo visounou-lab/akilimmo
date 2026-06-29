@@ -30,8 +30,8 @@ const NAV_COLUMNS = [
     title: "Partenaires",
     links: [
       { label: "Devenir partenaire", href: "/inscription" },
-      { label: "Espace propriétaire", href: "#" },
-      { label: "Espace agence", href: "#" },
+      { label: "Espace propriétaire", href: "/owner/dashboard" },
+      { label: "Espace agence", href: "/inscription" },
     ],
   },
   {

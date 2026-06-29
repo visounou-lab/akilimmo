@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNewReservationEmail } from "@/lib/mailer";
+import { notifyNewReservation } from "@/lib/telegram";
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
@@ -63,7 +64,15 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Fire-and-forget email — ne bloque pas la réponse
+    // Notifications fire-and-forget
+    void notifyNewReservation({
+      bienTitle:   reservation.property.title,
+      clientName:  clientName.trim(),
+      clientPhone: clientPhone.trim(),
+      checkIn:     new Date(checkIn).toLocaleDateString("fr-FR"),
+      checkOut:    new Date(checkOut).toLocaleDateString("fr-FR"),
+      totalPrice:  Number(totalPrice),
+    });
     sendNewReservationEmail({
       clientName:    clientName.trim(),
       clientPhone:   clientPhone.trim(),

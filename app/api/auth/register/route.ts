@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { sendVerificationEmail, sendNewOwnerNotification } from "@/lib/mailer";
+import { notifyNewOwner } from "@/lib/telegram";
 import { rateLimit } from "@/lib/ratelimit";
 
 export async function POST(req: NextRequest) {
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
 
     await sendVerificationEmail(email, verifyToken);
     await sendNewOwnerNotification({ name: `${firstName} ${lastName}`, email, country, city });
+    void notifyNewOwner({ name: `${firstName} ${lastName}`, email, country, city });
 
     return NextResponse.json({ message: "Compte créé. Vérifiez votre email." }, { status: 201 });
   } catch (error) {

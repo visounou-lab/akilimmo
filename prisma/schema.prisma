@@ -265,6 +265,24 @@ model Vehicle {
   updatedAt   DateTime @updatedAt
 }
 
+model AgentApplication {
+  id           String   @id @default(cuid())
+  agencyName   String
+  contactName  String
+  email        String
+  phone        String
+  city         String
+  country      Country
+  documentType String
+  message      String?
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status])
+  @@index([email])
+}
+
 model ReservationRequest {
   id           String   @id @default(cuid())
   propertyId   String

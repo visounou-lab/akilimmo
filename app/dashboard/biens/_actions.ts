@@ -158,7 +158,11 @@ export async function updateProperty(id: string, formData: FormData) {
     }
   }
 
+  const updatedSlug = slugData.slug ?? existing.slug;
   revalidatePath("/dashboard/biens");
+  revalidatePath(`/biens/${updatedSlug}`);
+  revalidatePath("/biens");
+  revalidatePath("/");
   redirect("/dashboard/biens");
 }
 

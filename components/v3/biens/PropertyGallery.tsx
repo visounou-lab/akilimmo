@@ -130,9 +130,9 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
             src={active.url}
             alt={active.alt ?? `Photo ${activeIdx + 1}`}
             fill
+            unoptimized
             className="object-cover"
             priority={activeIdx === 0}
-            sizes="(max-width: 768px) 100vw, 1100px"
           />
 
           {/* Clickable overlay → lightbox */}
@@ -233,8 +233,8 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
                   src={img.url}
                   alt={img.alt ?? `Miniature ${idx + 1}`}
                   fill
+                  unoptimized
                   className="object-cover"
-                  sizes="120px"
                 />
               </button>
             ))}
@@ -286,8 +286,8 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
               src={lbImage.url}
               alt={lbImage.alt ?? `Photo ${lightboxIdx + 1}`}
               fill
+              unoptimized
               className="object-contain"
-              sizes="90vw"
             />
           </div>
 

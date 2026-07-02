@@ -33,3 +33,11 @@ export function trackPageView(url: string) {
     page_path: url,
   });
 }
+
+export function trackWhatsAppClick(sourcePage: string) {
+  trackEvent("whatsapp_click", { source_page: sourcePage });
+}
+
+export function trackOwnerFormSubmit() {
+  trackEvent("form_submit", { form_name: "inscription_proprietaire" });
+}

@@ -109,6 +109,20 @@ export default function RootLayout({
               'value': 1.0,
               'currency': 'USD'
             });
+            window.gtag_report_conversion = function(url) {
+              var callback = function () {
+                if (typeof(url) !== 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                'send_to': 'AW-18250749686/dR1yCPekhcIcEPat0f5D',
+                'value': 1.0,
+                'currency': 'USD',
+                'event_callback': callback
+              });
+              return false;
+            };
           `}
         </Script>
         <Providers>{children}</Providers>

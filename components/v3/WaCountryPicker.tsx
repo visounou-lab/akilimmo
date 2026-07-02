@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 export const WA = {
   BENIN:        { number: "2290197598682", flag: "🇧🇯", label: "Bénin",         phone: "+229 01 97 59 86 82" },
@@ -19,6 +20,8 @@ export function waUrl(country: WaCountry, text?: string): string {
 interface WaCountryPickerProps {
   /** Message pre-filled in WhatsApp */
   message?: string;
+  /** Source page identifier for GA4 tracking */
+  sourcePage?: string;
   /** Button content */
   children: React.ReactNode;
   className?: string;
@@ -29,6 +32,7 @@ interface WaCountryPickerProps {
 
 export default function WaCountryPicker({
   message = "Bonjour, je souhaite en savoir plus sur AKIL IMMO",
+  sourcePage = "unknown",
   children,
   className,
   style,
@@ -75,7 +79,7 @@ export default function WaCountryPicker({
               target="_blank"
               rel="noopener noreferrer"
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => { trackWhatsAppClick(sourcePage); setOpen(false); }}
               className="flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors"
               style={{
                 backgroundColor: "#FDFCF8",

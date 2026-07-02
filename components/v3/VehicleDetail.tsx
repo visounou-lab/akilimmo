@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Users, Fuel, MessageCircle, CheckCircle, XCircle, ArrowLeft, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 const WA_CI = "2250710259146";
 
@@ -288,6 +289,7 @@ export default function VehicleDetail({ vehicle }: { vehicle: Vehicle }) {
               href={vehicle.available ? waUrl : undefined}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => vehicle.available && trackWhatsAppClick("voitures_detail")}
               className="flex w-full items-center justify-center gap-2.5 rounded-2xl px-6 py-4 text-base font-semibold transition-all duration-200"
               style={{
                 backgroundColor: vehicle.available ? "#25D366" : "#9CA3AF",

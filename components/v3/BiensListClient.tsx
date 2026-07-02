@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 function useFavorites(properties: PropertyCardFull[]) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -450,6 +451,7 @@ export default function BiensListClient({
                           href={waHref(prop)}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => trackWhatsAppClick("biens_liste")}
                           className="mt-4 flex w-full items-center justify-center gap-2 cursor-pointer rounded-lg px-4 py-3 text-sm transition-all duration-200"
                           style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 500, color: "#E07B39", border: "1.5px solid #E07B39", backgroundColor: "transparent" }}
                           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#E07B39"; e.currentTarget.style.color = "#ffffff"; }}

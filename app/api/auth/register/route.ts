@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     await sendVerificationEmail(email, verifyToken);
     await sendNewOwnerNotification({ name: `${firstName} ${lastName}`, email, country, city });
-    void notifyNewOwner({ name: `${firstName} ${lastName}`, email, country, city });
+    await notifyNewOwner({ name: `${firstName} ${lastName}`, email, country, city });
 
     return NextResponse.json({ message: "Compte créé. Vérifiez votre email." }, { status: 201 });
   } catch (error) {

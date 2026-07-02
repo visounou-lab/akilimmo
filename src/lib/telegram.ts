@@ -1,19 +1,27 @@
 const TOKEN   = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+function esc(text: string): string {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 async function send(text: string): Promise<void> {
   if (!TOKEN || !CHAT_ID) {
     console.warn("[Telegram] TELEGRAM_BOT_TOKEN ou TELEGRAM_CHAT_ID non configuré");
     return;
   }
   try {
-    await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+    const res = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: "HTML" }),
     });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      console.error("[Telegram] Erreur API:", res.status, JSON.stringify(body));
+    }
   } catch (e) {
-    console.error("[Telegram] Erreur envoi:", e);
+    console.error("[Telegram] Erreur réseau:", e);
   }
 }
 
@@ -26,9 +34,9 @@ export async function notifyNewOwner(data: {
   const flag = data.country === "COTE_D_IVOIRE" ? "🇨🇮" : "🇧🇯";
   await send(
     `🏠 <b>Nouveau propriétaire inscrit</b>\n\n` +
-    `👤 ${data.name}\n` +
-    `📧 ${data.email}\n` +
-    `${flag} ${data.city}\n\n` +
+    `👤 ${esc(data.name)}\n` +
+    `📧 ${esc(data.email)}\n` +
+    `${flag} ${esc(data.city)}\n\n` +
     `👉 https://www.akilimmo.com/dashboard/proprietaires`
   );
 }
@@ -45,10 +53,10 @@ export async function notifyNewAgentApplication(data: {
   const doc  = data.documentType === "registre_commerce" ? "Registre de commerce" : "Carte d'exercice";
   await send(
     `🤝 <b>Nouvelle candidature agent partenaire</b>\n\n` +
-    `🏢 ${data.agencyName}\n` +
-    `👤 ${data.contactName}\n` +
-    `📧 ${data.email}\n` +
-    `${flag} ${data.city}\n` +
+    `🏢 ${esc(data.agencyName)}\n` +
+    `👤 ${esc(data.contactName)}\n` +
+    `📧 ${esc(data.email)}\n` +
+    `${flag} ${esc(data.city)}\n` +
     `📄 ${doc}`
   );
 }
@@ -63,8 +71,8 @@ export async function notifyNewReservation(data: {
 }) {
   await send(
     `📅 <b>Nouvelle demande de réservation</b>\n\n` +
-    `🏠 ${data.bienTitle}\n` +
-    `👤 ${data.clientName} — ${data.clientPhone}\n` +
+    `🏠 ${esc(data.bienTitle)}\n` +
+    `👤 ${esc(data.clientName)} — ${esc(data.clientPhone)}\n` +
     `📆 ${data.checkIn} → ${data.checkOut}\n` +
     `💰 ${new Intl.NumberFormat("fr-FR").format(data.totalPrice)} XOF\n\n` +
     `👉 https://www.akilimmo.com/dashboard/reservations`
@@ -78,9 +86,9 @@ export async function notifyPropertySubmitted(data: {
 }) {
   await send(
     `📋 <b>Bien soumis à valider</b>\n\n` +
-    `🏠 ${data.title}\n` +
-    `👤 ${data.ownerName}\n` +
-    `📍 ${data.city}\n\n` +
+    `🏠 ${esc(data.title)}\n` +
+    `👤 ${esc(data.ownerName)}\n` +
+    `📍 ${esc(data.city)}\n\n` +
     `👉 https://www.akilimmo.com/dashboard/valider`
   );
 }

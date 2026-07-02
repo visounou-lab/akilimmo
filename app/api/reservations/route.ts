@@ -64,8 +64,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Notifications fire-and-forget
-    void notifyNewReservation({
+    await notifyNewReservation({
       bienTitle:   reservation.property.title,
       clientName:  clientName.trim(),
       clientPhone: clientPhone.trim(),

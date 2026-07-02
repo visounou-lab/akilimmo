@@ -1,8 +1,5 @@
-// Google Ads Tag (AW-17185310519) — installé le 21/04/2026
-// Campagne active : Bénin + Côte d'Ivoire, budget 10 USD/jour
-// Permet : pages vues, audiences de retargeting
-// À venir V2 : actions de conversion (formulaire contact, WhatsApp)
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -97,6 +94,18 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-slate-50 text-slate-900" style={{ colorScheme: "light" }}>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18250749686"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18250749686');
+          `}
+        </Script>
         <Providers>{children}</Providers>
         <AnalyticsConsent />
       </body>

@@ -99,11 +99,8 @@ export default function FeaturedProperties({
   const [country,    setCountry]    = useState("TOUS");
   const { toggle, isFavorite, getLikeCount } = useFavorites(properties);
 
-  const tabKey = activeTab === "Long séjour" ? "long" : "short";
   const filtered = properties.filter((p) => {
-    const matchCountry = country === "TOUS" || p.country === country;
-    const matchStay    = p.stayType === tabKey || p.stayType === "both";
-    return matchCountry && matchStay;
+    return country === "TOUS" || p.country === country;
   });
 
   return (

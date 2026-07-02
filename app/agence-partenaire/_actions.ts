@@ -51,7 +51,7 @@ export async function submitAgentApplication(formData: FormData) {
     `,
   });
 
-  void notifyNewAgentApplication({ agencyName, contactName, email, city, country, documentType });
+  await notifyNewAgentApplication({ agencyName, contactName, email, city, country, documentType });
 
   return { success: true };
 }

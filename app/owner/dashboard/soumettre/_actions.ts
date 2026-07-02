@@ -68,7 +68,7 @@ export async function submitProperty(formData: FormData) {
     city:       property.city,
     propertyId: property.id,
   });
-  void notifyPropertySubmitted({
+  await notifyPropertySubmitted({
     title:     property.title,
     ownerName: user?.name ?? "Propriétaire",
     city:      property.city,

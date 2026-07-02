@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 interface Props {
   propertyId: string;
@@ -76,6 +77,7 @@ export default function ReservationFormV3({
   const canReserve = !!(clientName && clientPhone && checkIn && checkOut && duration > 0);
 
   function openWA(text: string) {
+    trackWhatsAppClick("bien_detail");
     window.open(
       `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`,
       "_blank",

@@ -96,6 +96,7 @@ export default function PageHero() {
 
           <WaCountryPicker
             message="Bonjour, je souhaite en savoir plus sur la mise en location avec AKIL IMMO"
+            sourcePage="comment_ca_marche"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-4 text-base transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",

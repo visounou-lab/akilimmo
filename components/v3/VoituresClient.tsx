@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { MapPin, Users, Fuel, Shield, MessageCircle, ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 const WA_CI = "2250710259146";
 
@@ -197,6 +198,7 @@ export default function VoituresClient({ vehicles }: Props) {
                 href={`https://wa.me/${WA_CI}?text=${encodeURIComponent("Bonjour, je souhaite avoir des informations sur la location de véhicules AKIL IMMO à Abidjan.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("voitures")}
                 className="mt-6 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white"
                 style={{ backgroundColor: "#25D366" }}
               >
@@ -332,6 +334,7 @@ export default function VoituresClient({ vehicles }: Props) {
                         href={v.available ? waLink(v) : undefined}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => v.available && trackWhatsAppClick("voitures")}
                         aria-disabled={!v.available}
                         className="flex w-full items-center justify-center gap-2 cursor-pointer rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200"
                         style={{
@@ -402,6 +405,7 @@ export default function VoituresClient({ vehicles }: Props) {
             href={`https://wa.me/${WA_CI}?text=${encodeURIComponent("Bonjour, j'aimerais louer un véhicule à Abidjan via AKIL IMMO. Quelles sont les disponibilités ?")}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("voitures")}
             className="mt-10 inline-flex items-center gap-2 cursor-pointer rounded-xl px-7 py-3.5 text-sm font-semibold transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",

@@ -84,6 +84,7 @@ export default function CtaFinal() {
 
         <WaCountryPicker
           message="Bonjour, je souhaite mettre mon bien en location avec AKIL IMMO"
+          sourcePage="comment_ca_marche"
           className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm transition-all duration-200"
           style={{
             fontFamily: "var(--font-inter), sans-serif",

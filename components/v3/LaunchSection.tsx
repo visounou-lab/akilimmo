@@ -186,6 +186,7 @@ export default function LaunchSection() {
 
           <WaCountryPicker
             message="Bonjour, je souhaite en savoir plus sur AKIL IMMO"
+            sourcePage="accueil"
             className="flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200"
             style={{
               fontFamily: "var(--font-inter), sans-serif",

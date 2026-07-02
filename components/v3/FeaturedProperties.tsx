@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 function useFavorites(properties: PropertyCard[]) {
   const [favorites,  setFavorites]  = useState<Set<string>>(new Set());
@@ -353,6 +354,7 @@ export default function FeaturedProperties({
                       href={waHref(prop)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackWhatsAppClick("accueil")}
                       className="mt-4 flex w-full items-center justify-center gap-2 cursor-pointer rounded-lg px-4 py-3 text-sm transition-all duration-200"
                       style={{
                         fontFamily: "var(--font-inter), sans-serif",

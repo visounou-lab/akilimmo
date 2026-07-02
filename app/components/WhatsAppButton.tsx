@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 const WA_ICON = (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -37,7 +38,7 @@ export default function WhatsAppButton() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-lg border border-slate-100 hover:bg-green-50 hover:text-green-700 transition-colors whitespace-nowrap"
-                onClick={() => setOpen(false)}
+                onClick={() => { trackWhatsAppClick("global"); setOpen(false); }}
               >
                 <span>{c.flag}</span>
                 {c.label}

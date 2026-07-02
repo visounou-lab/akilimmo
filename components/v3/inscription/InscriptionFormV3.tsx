@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Check, Eye, EyeOff } from "lucide-react";
+import { trackOwnerFormSubmit } from "@/lib/analytics";
 
 const COUNTRY_OPTIONS = [
   { value: "BENIN", label: "Bénin", prefix: "+229" },
@@ -88,6 +89,7 @@ export default function InscriptionFormV3() {
         setError(data.error ?? "Erreur lors de l'inscription");
       } else {
         setSuccess(true);
+        trackOwnerFormSubmit();
       }
     } catch {
       setError("Erreur réseau. Veuillez réessayer.");

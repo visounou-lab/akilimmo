@@ -131,6 +131,8 @@ model User {
   reviewedVerifications   VerificationCase[]     @relation("VerificationReviewer")
   verificationAuditLogs   VerificationAuditLog[] @relation("VerificationAuditActor")
   agentApplication        AgentApplication?
+  listingReports          ListingReport[]        @relation("ListingReportReporter")
+  reviewedListingReports  ListingReport[]        @relation("ListingReportReviewer")
 }
 
 model Account {
@@ -197,6 +199,7 @@ model Property {
   documentRequests    DocumentRequest[]
   reservationRequests ReservationRequest[]
   verificationCases   VerificationCase[]
+  listingReports      ListingReport[]
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
 }
@@ -404,6 +407,30 @@ model VerificationAuditLog {
   @@index([verificationCaseId, createdAt])
   @@index([actorId])
   @@index([action])
+}
+
+model ListingReport {
+  id           String    @id @default(cuid())
+  propertyId   String
+  property     Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  reporterId   String?
+  reporter     User?     @relation("ListingReportReporter", fields: [reporterId], references: [id], onDelete: SetNull)
+  reporterEmail String?
+  reason       String
+  details      String?
+  status       String    @default("OPEN")
+  priority     String    @default("NORMAL")
+  sourceHash   String?
+  reviewedById String?
+  reviewedBy   User?     @relation("ListingReportReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt   DateTime?
+  resolution   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([propertyId, status])
+  @@index([status, createdAt])
+  @@index([sourceHash, createdAt])
 }
 
 model AgentApplication {

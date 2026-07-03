@@ -112,6 +112,15 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Signalements",
+    href: "/dashboard/signalements",
+    icon: (
+      <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 5v16m0-16h11l-1 4 1 4H5" />
+      </svg>
+    ),
+  },
 ];
 
 export default function SidebarNav({ onClose }: { onClose?: () => void }) {

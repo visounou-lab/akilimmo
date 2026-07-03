@@ -13,6 +13,7 @@ import { MapPin, BedDouble, Bath } from "lucide-react";
 import BreadcrumbV3 from "../../../components/v3/biens/BreadcrumbV3";
 import ContactCardV3 from "../../../components/v3/biens/ContactCardV3";
 import ViewTracker from "../../../components/v3/biens/ViewTracker";
+import ReportListingButton from "../../../components/v3/biens/ReportListingButton";
 import TrustBadge from "../../../components/v3/TrustBadge";
 import { derivePropertyTrust } from "@/lib/trust-badges";
 
@@ -413,6 +414,9 @@ export default async function V3BienDetailPage({ params }: Props) {
 
                 {/* Card contact + retour */}
                 <ContactCardV3 waNumber={waNumber} phoneDisplay={phoneDisplay} />
+                <div className="text-center">
+                  <ReportListingButton slug={bien.slug} title={bien.title} />
+                </div>
 
               </div>
             </div>

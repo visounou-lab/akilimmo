@@ -53,10 +53,10 @@ export async function POST(req: NextRequest) {
         referredById: referrer?.id,
         ...(isRoleCandidate && {
           verificationCases: {
-            create: {
-              type: "IDENTITY" as const,
-              status: "NOT_SUBMITTED" as const,
-            },
+            create: [
+              { type: "IDENTITY" as const, status: "NOT_SUBMITTED" as const },
+              { type: "OWNER_AUTHORITY" as const, status: "NOT_SUBMITTED" as const },
+            ],
           },
         }),
       },

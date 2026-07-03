@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import VerificationDocumentsForm from "./VerificationDocumentsForm";
 
 const STATUS_LABELS = {
   NOT_SUBMITTED: "Justificatifs à transmettre",
@@ -10,6 +11,12 @@ const STATUS_LABELS = {
   REJECTED: "Documents à corriger",
   EXPIRED: "Vérification expirée",
   SUSPENDED: "Vérification suspendue",
+} as const;
+
+const CASE_LABELS = {
+  IDENTITY: "Identité",
+  OWNER_AUTHORITY: "Droit sur le bien",
+  PROFESSIONAL: "Qualité professionnelle",
 } as const;
 
 export default async function VerificationPage() {
@@ -24,18 +31,30 @@ export default async function VerificationPage() {
       emailVerified: true,
       requestedRole: true,
       verificationCases: {
-        where: { type: "IDENTITY" },
+        where: { type: { in: ["IDENTITY", "OWNER_AUTHORITY", "PROFESSIONAL"] } },
         orderBy: { createdAt: "desc" },
-        take: 1,
-        select: { status: true, rejectionReason: true },
+        select: {
+          type: true,
+          status: true,
+          rejectionReason: true,
+          documents: { select: { type: true } },
+        },
       },
     },
   });
   if (!user) redirect("/login");
-  if (!user.requestedRole) redirect("/tenant/dashboard");
+  if (user.requestedRole !== "OWNER" && user.requestedRole !== "AGENT") {
+    redirect("/tenant/dashboard");
+  }
 
-  const verification = user.verificationCases[0];
-  const status = verification?.status ?? "NOT_SUBMITTED";
+  const identityVerification = user.verificationCases.find((item) => item.type === "IDENTITY");
+  const status = identityVerification?.status ?? "NOT_SUBMITTED";
+  const editableCaseTypes = user.verificationCases
+    .filter((item) => ["NOT_SUBMITTED", "REJECTED", "EXPIRED"].includes(item.status))
+    .map((item) => item.type);
+  const existingDocumentTypes = user.verificationCases.flatMap((item) =>
+    item.documents.map((document) => document.type),
+  );
 
   return (
     <main className="min-h-screen bg-[#F5F0E8] px-4 py-16">
@@ -65,15 +84,29 @@ export default async function VerificationPage() {
           </div>
         </div>
 
-        {verification?.rejectionReason && (
-          <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-            {verification.rejectionReason}
-          </p>
-        )}
+        {user.verificationCases
+          .filter((item) => item.status === "REJECTED" && item.rejectionReason)
+          .map((item) => (
+            <p
+              key={item.type}
+              className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+            >
+              <strong>
+                {CASE_LABELS[item.type as keyof typeof CASE_LABELS] ?? "Vérification"} :
+              </strong>{" "}
+              {item.rejectionReason}
+            </p>
+          ))}
+
+        <VerificationDocumentsForm
+          requestedRole={user.requestedRole}
+          existingDocumentTypes={existingDocumentTypes}
+          editableCaseTypes={editableCaseTypes}
+        />
 
         <p className="mt-7 text-sm leading-6 text-[#6B5E52]">
-          Le dépôt sécurisé des justificatifs sera disponible à l’étape suivante.
-          Ne transmettez pas vos pièces d’identité par WhatsApp.
+          Vos fichiers sont privés et réservés aux personnes habilitées à examiner votre dossier.
+          Ne transmettez jamais vos pièces d’identité par WhatsApp.
         </p>
 
         <Link

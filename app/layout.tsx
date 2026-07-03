@@ -78,7 +78,10 @@ export const metadata: Metadata = {
     canonical: "https://www.akilimmo.com",
   },
   verification: {
-    google: "vJrgCkTnDkAHuO0Ml0HDX8uud9WxemENqUZGVMRLTrE",
+    google: [
+      "vJrgCkTnDkAHuO0Ml0HDX8uud9WxemENqUZGVMRLTrE",
+      "ZtaM7Xo46vkb5lQVeY4MtywFBnFdz9bnnXA-5P-Vrr0",
+    ],
   },
 };
 

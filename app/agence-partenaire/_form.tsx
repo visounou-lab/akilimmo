@@ -1,166 +1,232 @@
 "use client";
 
-import { useActionState } from "react";
-import { submitAgentApplication } from "./_actions";
+import Link from "next/link";
+import { useState } from "react";
+import { CheckCircle2, ShieldCheck } from "lucide-react";
 
-type State = { success?: boolean; error?: string } | null;
+type FormState = { status: "idle" | "loading" | "success" | "error"; message: string };
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.75rem 1rem",
-  borderRadius: 10,
-  border: "1.5px solid rgba(200,146,42,0.3)",
-  backgroundColor: "#FDFCF8",
-  fontFamily: "var(--font-inter), sans-serif",
-  fontSize: "0.9rem",
-  color: "#1C1917",
-  outline: "none",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontFamily: "var(--font-inter), sans-serif",
-  fontSize: "0.8rem",
-  fontWeight: 500,
-  color: "#6B5E52",
-  marginBottom: "0.4rem",
-};
+const inputClass =
+  "min-h-11 w-full rounded-xl border border-[#DCCDBD] bg-[#FDFCF8] px-4 py-3 text-base text-[#1C1917] outline-none transition-colors duration-200 placeholder:text-[#8A7C70] focus:border-[#1B4D3E] focus:ring-2 focus:ring-[#1B4D3E]/20";
 
 export default function AgentApplicationForm() {
-  const [state, action, pending] = useActionState<State, FormData>(submitAgentApplication, null);
+  const [state, setState] = useState<FormState>({ status: "idle", message: "" });
 
-  if (state?.success) {
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    if (data.get("password") !== data.get("confirmPassword")) {
+      setState({ status: "error", message: "Les deux mots de passe ne correspondent pas." });
+      return;
+    }
+
+    setState({ status: "loading", message: "" });
+    const response = await fetch("/api/auth/register-agent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        agencyName: data.get("agencyName"),
+        firstName: data.get("firstName"),
+        lastName: data.get("lastName"),
+        email: data.get("email"),
+        phone: data.get("phone"),
+        country: data.get("country"),
+        city: data.get("city"),
+        password: data.get("password"),
+        referralCode: data.get("referralCode"),
+        acceptedTerms: data.get("acceptedTerms") === "on",
+      }),
+    });
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string; message?: string }
+      | null;
+
+    if (!response.ok) {
+      setState({
+        status: "error",
+        message: payload?.error ?? "Inscription impossible. Réessayez.",
+      });
+      return;
+    }
+    setState({
+      status: "success",
+      message: payload?.message ?? "Compte créé. Vérifiez votre boîte email.",
+    });
+    form.reset();
+  }
+
+  if (state.status === "success") {
     return (
-      <div
-        className="rounded-2xl p-8 text-center"
-        style={{ backgroundColor: "#FDFCF8", border: "1.5px solid rgba(200,146,42,0.3)" }}
-      >
-        <p className="text-3xl mb-4">✅</p>
-        <h3
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontWeight: 700,
-            fontSize: "1.3rem",
-            color: "#1C1917",
-            marginBottom: "0.75rem",
-          }}
-        >
-          Candidature enregistrée !
-        </h3>
-        <p
-          style={{
-            fontFamily: "var(--font-inter), sans-serif",
-            fontWeight: 300,
-            fontSize: "0.9rem",
-            color: "#6B5E52",
-            lineHeight: 1.65,
-          }}
-        >
-          Votre agence est sur la liste d&apos;attente. L&apos;équipe AKIL IMMO vous contactera
-          dès le lancement officiel du programme partenaire pour valider votre dossier.
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
+        <CheckCircle2 className="mx-auto text-emerald-700" size={42} aria-hidden="true" />
+        <h3 className="mt-4 font-serif text-2xl font-bold text-[#1C1917]">Compte agent créé</h3>
+        <p className="mx-auto mt-3 max-w-md leading-7 text-[#475569]">{state.message}</p>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#475569]">
+          Après confirmation, connectez-vous : vous serez dirigé vers le dépôt privé de votre
+          pièce d’identité, carte professionnelle, RCCM et assurance.
         </p>
+        <Link
+          href="/login"
+          className="mt-6 inline-flex min-h-11 cursor-pointer items-center justify-center rounded-xl bg-[#1B4D3E] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#12382D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4D3E] focus-visible:ring-offset-2"
+        >
+          Aller à la connexion
+        </Link>
       </div>
     );
   }
 
   return (
     <form
-      action={action}
-      className="space-y-5"
-      style={{
-        backgroundColor: "#FDFCF8",
-        border: "1.5px solid rgba(200,146,42,0.25)",
-        borderRadius: 20,
-        padding: "2rem",
-        boxShadow: "0 4px 24px rgba(28,25,23,0.07)",
-      }}
+      onSubmit={submit}
+      className="space-y-6 rounded-2xl border border-[#E2D6C8] bg-[#FDFCF8] p-6 shadow-sm sm:p-8"
     >
-      {state?.error && (
-        <div
-          className="rounded-xl px-4 py-3 text-sm"
-          style={{ backgroundColor: "rgba(239,68,68,0.07)", border: "1px solid rgba(239,68,68,0.2)", color: "#B91C1C", fontFamily: "var(--font-inter), sans-serif" }}
-        >
-          {state.error}
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label style={labelStyle}>Nom de l&apos;agence *</label>
-          <input name="agencyName" required placeholder="IMMO PLUS CI" style={inputStyle} />
-        </div>
-        <div>
-          <label style={labelStyle}>Nom du responsable *</label>
-          <input name="contactName" required placeholder="Jean Kouassi" style={inputStyle} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label style={labelStyle}>Email professionnel *</label>
-          <input name="email" type="email" required placeholder="contact@agence.ci" style={inputStyle} />
-        </div>
-        <div>
-          <label style={labelStyle}>Téléphone *</label>
-          <input name="phone" type="tel" required placeholder="+225 07 00 00 00 00" style={inputStyle} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label style={labelStyle}>Pays *</label>
-          <select name="country" required style={inputStyle}>
-            <option value="">-- Sélectionner --</option>
-            <option value="COTE_D_IVOIRE">Côte d&apos;Ivoire</option>
-            <option value="BENIN">Bénin</option>
-          </select>
-        </div>
-        <div>
-          <label style={labelStyle}>Ville d&apos;activité *</label>
-          <input name="city" required placeholder="Abidjan" style={inputStyle} />
-        </div>
-      </div>
-
-      <div>
-        <label style={labelStyle}>Document officiel disponible *</label>
-        <select name="documentType" required style={inputStyle}>
-          <option value="">-- Sélectionner --</option>
-          <option value="registre_commerce">Registre de commerce</option>
-          <option value="carte_exercice">Carte d&apos;exercice de démarchage</option>
-        </select>
-        <p style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "0.75rem", color: "#94A3B8", marginTop: "0.3rem" }}>
-          Le document vous sera demandé lors de la validation de votre dossier.
+      <div className="flex gap-3 rounded-xl border border-[#1B4D3E]/20 bg-[#EAF3EF] p-4">
+        <ShieldCheck className="mt-0.5 shrink-0 text-[#1B4D3E]" size={22} aria-hidden="true" />
+        <p className="text-sm leading-6 text-[#334E45]">
+          Cette inscription ne donne aucun badge automatiquement. Votre rôle agent restera
+          verrouillé jusqu’à la validation humaine de tous les justificatifs.
         </p>
       </div>
 
-      <div>
-        <label style={labelStyle}>Message (facultatif)</label>
-        <textarea
-          name="message"
-          rows={3}
-          placeholder="Décrivez brièvement votre activité, votre zone de couverture..."
-          style={{ ...inputStyle, resize: "vertical" }}
+      {state.status === "error" && (
+        <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {state.message}
+        </p>
+      )}
+
+      <fieldset className="space-y-5">
+        <legend className="mb-4 font-serif text-xl font-bold text-[#1C1917]">
+          Identité et activité
+        </legend>
+        <div>
+          <label htmlFor="agencyName" className="mb-2 block text-sm font-medium text-[#3D3530]">
+            Nom de l’agence ou de l’activité *
+          </label>
+          <input id="agencyName" name="agencyName" required maxLength={120} className={inputClass} />
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Prénom *
+            </label>
+            <input id="firstName" name="firstName" autoComplete="given-name" required maxLength={80} className={inputClass} />
+          </div>
+          <div>
+            <label htmlFor="lastName" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Nom *
+            </label>
+            <input id="lastName" name="lastName" autoComplete="family-name" required maxLength={80} className={inputClass} />
+          </div>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="agentEmail" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Email professionnel *
+            </label>
+            <input id="agentEmail" name="email" type="email" autoComplete="email" required className={inputClass} />
+          </div>
+          <div>
+            <label htmlFor="agentPhone" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Téléphone *
+            </label>
+            <input id="agentPhone" name="phone" type="tel" autoComplete="tel" required maxLength={30} className={inputClass} />
+          </div>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="agentCountry" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Pays d’activité *
+            </label>
+            <select id="agentCountry" name="country" required className={`${inputClass} cursor-pointer`}>
+              <option value="">Sélectionner</option>
+              <option value="COTE_D_IVOIRE">Côte d’Ivoire</option>
+              <option value="BENIN">Bénin</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="agentCity" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Ville principale *
+            </label>
+            <input id="agentCity" name="city" required maxLength={100} className={inputClass} />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-5 border-t border-[#E2D6C8] pt-6">
+        <legend className="mb-4 font-serif text-xl font-bold text-[#1C1917]">
+          Sécurité du compte
+        </legend>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="agentPassword" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Mot de passe *
+            </label>
+            <input
+              id="agentPassword"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              minLength={10}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="mb-2 block text-sm font-medium text-[#3D3530]">
+              Confirmer *
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              minLength={10}
+              className={inputClass}
+            />
+          </div>
+        </div>
+        <p className="text-xs leading-5 text-[#5F554C]">
+          10 caractères minimum, avec une majuscule, une minuscule et un chiffre.
+        </p>
+        <div>
+          <label htmlFor="agentReferral" className="mb-2 block text-sm font-medium text-[#3D3530]">
+            Code de parrainage <span className="font-normal">(facultatif)</span>
+          </label>
+          <input id="agentReferral" name="referralCode" maxLength={40} className={inputClass} />
+          <p className="mt-2 text-xs leading-5 text-[#5F554C]">
+            Le code enregistre le parrain, mais ne remplace aucune vérification.
+          </p>
+        </div>
+      </fieldset>
+
+      <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-[#475569]">
+        <input
+          name="acceptedTerms"
+          type="checkbox"
+          required
+          className="mt-1 h-5 w-5 shrink-0 accent-[#1B4D3E]"
         />
-      </div>
+        <span>
+          J’accepte les{" "}
+          <Link href="/mentions-legales" className="font-medium text-[#1B4D3E] underline">
+            conditions
+          </Link>{" "}
+          et la{" "}
+          <Link href="/confidentialite" className="font-medium text-[#1B4D3E] underline">
+            politique de confidentialité
+          </Link>
+          .
+        </span>
+      </label>
 
       <button
         type="submit"
-        disabled={pending}
-        style={{
-          width: "100%",
-          padding: "0.875rem",
-          borderRadius: 12,
-          border: "none",
-          backgroundColor: pending ? "#A8998A" : "#C8922A",
-          color: "#FDFCF8",
-          fontFamily: "var(--font-inter), sans-serif",
-          fontWeight: 600,
-          fontSize: "0.9375rem",
-          cursor: pending ? "not-allowed" : "pointer",
-          transition: "background-color 0.15s",
-        }}
+        disabled={state.status === "loading"}
+        className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-xl bg-[#C8922A] px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#A97518] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {pending ? "Envoi en cours…" : "Rejoindre la liste d'attente"}
+        {state.status === "loading" ? "Création sécurisée…" : "Créer mon compte agent"}
       </button>
     </form>
   );

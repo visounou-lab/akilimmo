@@ -96,8 +96,14 @@ export async function PATCH(
     ]);
     const firstName = owner.name?.split(" ")[0] ?? "Propriétaire";
     if (owner.email) {
-      await sendWelcomeEmail(owner.email, firstName);
-      await sendPropertySubmitReminderEmail(owner.email, firstName);
+      await sendWelcomeEmail(
+        owner.email,
+        firstName,
+        targetRole === "AGENT" ? "agent" : "propriétaire",
+      );
+      if (targetRole === "OWNER") {
+        await sendPropertySubmitReminderEmail(owner.email, firstName);
+      }
     }
     return NextResponse.json({ message: "Compte activé" });
   }

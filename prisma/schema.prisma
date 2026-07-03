@@ -130,6 +130,7 @@ model User {
   verificationCases       VerificationCase[]     @relation("VerificationSubject")
   reviewedVerifications   VerificationCase[]     @relation("VerificationReviewer")
   verificationAuditLogs   VerificationAuditLog[] @relation("VerificationAuditActor")
+  agentApplication        AgentApplication?
 }
 
 model Account {
@@ -407,6 +408,8 @@ model VerificationAuditLog {
 
 model AgentApplication {
   id           String   @id @default(cuid())
+  userId       String?  @unique
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   agencyName   String
   contactName  String
   email        String

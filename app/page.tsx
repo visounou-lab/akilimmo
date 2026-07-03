@@ -5,6 +5,7 @@ import CategoriesSection from "../components/v3/CategoriesSection";
 import StatsBar from "../components/v3/StatsBar";
 import HowItWorks from "../components/v3/HowItWorks";
 import FeaturedProperties from "../components/v3/FeaturedProperties";
+import AkiSection from "../components/v3/AkiSection";
 import PartnerSection from "../components/v3/PartnerSection";
 import LaunchSection from "../components/v3/LaunchSection";
 import Footer from "../components/v3/Footer";
@@ -62,6 +63,9 @@ export default async function V3Page() {
 
         {/* 5. Comment ça marche */}
         <HowItWorks />
+
+        {/* 5bis. Rencontrez AKI, notre mascotte */}
+        <AkiSection />
 
         {/* 6. Recrutement propriétaires & agences */}
         <PartnerSection />

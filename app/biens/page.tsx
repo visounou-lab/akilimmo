@@ -6,11 +6,25 @@ import BiensListClient from "../../components/v3/BiensListClient";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Biens disponibles — Appartements et Villas | AKIL IMMO",
-  description:
-    "Villas et appartements meublés vérifiés à la location au Bénin et en Côte d'Ivoire. Filtrez par pays et par ville pour trouver votre logement idéal.",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}): Promise<Metadata> {
+  const { q } = await searchParams;
+
+  return {
+    title: "Biens disponibles — Appartements et Villas | AKIL IMMO",
+    description:
+      "Villas et appartements meublés vérifiés à la location au Bénin et en Côte d'Ivoire. Filtrez par pays et par ville pour trouver votre logement idéal.",
+    // La page canonique reste toujours /biens sans filtre : Google ne doit jamais
+    // indexer une variante filtrée (?q=...) comme une page distincte, sinon ces
+    // URL vides ou trop spécifiques finissent par remplacer /biens dans les
+    // résultats de recherche.
+    alternates: { canonical: "/biens" },
+    robots: q ? { index: false, follow: true } : { index: true, follow: true },
+  };
+}
 
 export default async function V3BiensPage({
   searchParams,

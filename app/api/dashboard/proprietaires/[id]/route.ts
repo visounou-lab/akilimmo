@@ -51,20 +51,6 @@ export async function PATCH(
     }
 
     const targetRole = owner.requestedRole ?? owner.role;
-    if (targetRole === "OWNER") {
-      const authorityApproved = owner.verificationCases.some(
-        (item) =>
-          item.type === "OWNER_AUTHORITY" &&
-          item.status === "APPROVED" &&
-          (!item.expiresAt || item.expiresAt > new Date()),
-      );
-      if (!authorityApproved) {
-        return NextResponse.json(
-          { error: "Le droit de publier ou gérer un bien doit être validé avant activation." },
-          { status: 409 },
-        );
-      }
-    }
     if (targetRole === "AGENT") {
       const professionalApproved = owner.verificationCases.some(
         (item) =>

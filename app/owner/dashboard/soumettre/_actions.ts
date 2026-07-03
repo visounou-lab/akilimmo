@@ -13,6 +13,29 @@ export async function submitProperty(formData: FormData) {
   const userId  = (session?.user as { id?: string })?.id;
   if (!userId) throw new Error("Non authentifié");
 
+  const ownerAccount = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      role: true,
+      status: true,
+      verificationCases: {
+        where: { type: "IDENTITY", status: "APPROVED" },
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { expiresAt: true },
+      },
+    },
+  });
+  const identity = ownerAccount?.verificationCases[0];
+  if (
+    ownerAccount?.role !== "OWNER" ||
+    ownerAccount.status !== "active" ||
+    !identity ||
+    (identity.expiresAt && identity.expiresAt <= new Date())
+  ) {
+    throw new Error("Votre identité doit être vérifiée avant de publier un bien.");
+  }
+
   const files = formData.getAll("images") as File[];
   const uploaded: { url: string; publicId: string }[] = [];
   for (const file of files) {

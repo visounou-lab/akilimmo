@@ -49,8 +49,14 @@ export default async function VerificationPage() {
 
   const identityVerification = user.verificationCases.find((item) => item.type === "IDENTITY");
   const status = identityVerification?.status ?? "NOT_SUBMITTED";
+  const requiredCaseTypes =
+    user.requestedRole === "AGENT" ? ["IDENTITY", "PROFESSIONAL"] : ["IDENTITY"];
   const editableCaseTypes = user.verificationCases
-    .filter((item) => ["NOT_SUBMITTED", "REJECTED", "EXPIRED"].includes(item.status))
+    .filter(
+      (item) =>
+        requiredCaseTypes.includes(item.type) &&
+        ["NOT_SUBMITTED", "REJECTED", "EXPIRED"].includes(item.status),
+    )
     .map((item) => item.type);
   const existingDocumentTypes = user.verificationCases.flatMap((item) =>
     item.documents.map((document) => document.type),
@@ -85,7 +91,12 @@ export default async function VerificationPage() {
         </div>
 
         {user.verificationCases
-          .filter((item) => item.status === "REJECTED" && item.rejectionReason)
+          .filter(
+            (item) =>
+              requiredCaseTypes.includes(item.type) &&
+              item.status === "REJECTED" &&
+              item.rejectionReason,
+          )
           .map((item) => (
             <p
               key={item.type}

@@ -181,9 +181,9 @@ export default function AgencePartenairePage() {
                     Côte d&apos;Ivoire
                   </p>
                   <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
-                    <li>Carte professionnelle ou autorisation d&apos;exercice</li>
-                    <li>Registre de commerce valide</li>
-                    <li>Assurance professionnelle</li>
+                    <li>Carte professionnelle ou autorisation d&apos;exercice, <strong>OU</strong></li>
+                    <li>RCCM valide mentionnant l&apos;activité immobilière</li>
+                    <li>Assurance professionnelle recommandée</li>
                   </ul>
                 </div>
                 {/* Bénin */}
@@ -192,9 +192,9 @@ export default function AgencePartenairePage() {
                     Bénin
                   </p>
                   <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
-                    <li>Carte professionnelle ou autorisation d&apos;exercice</li>
-                    <li>Registre de commerce valide</li>
-                    <li>Assurance professionnelle</li>
+                    <li>Carte professionnelle ou autorisation d&apos;exercice, <strong>OU</strong></li>
+                    <li>RCCM valide mentionnant l&apos;activité immobilière</li>
+                    <li>Assurance professionnelle recommandée</li>
                   </ul>
                 </div>
               </div>

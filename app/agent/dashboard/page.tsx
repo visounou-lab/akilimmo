@@ -93,12 +93,20 @@ export default async function AgentDashboardPage() {
               ajoutés progressivement. Un code partagé ne génère jamais de paiement sans transaction
               éligible et validée.
             </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href="/agent/dashboard/soumettre"
+              className="mt-5 inline-flex min-h-11 cursor-pointer items-center rounded-xl bg-[#1B4D3E] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#12382D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4D3E] focus-visible:ring-offset-2"
+            >
+              Soumettre un bien
+            </Link>
             <Link
               href="/biens"
-              className="mt-5 inline-flex min-h-11 cursor-pointer items-center rounded-xl bg-[#1B4D3E] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#12382D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4D3E] focus-visible:ring-offset-2"
+              className="mt-5 inline-flex min-h-11 cursor-pointer items-center rounded-xl border border-[#1B4D3E] px-5 py-3 text-sm font-semibold text-[#1B4D3E]"
             >
               Consulter les biens
             </Link>
+            </div>
           </div>
         </div>
       </main>

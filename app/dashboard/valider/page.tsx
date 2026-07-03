@@ -51,6 +51,7 @@ export default function ValiderPage() {
   const [editId, setEditId]           = useState<string | null>(null);
   const [editFields, setEditFields]   = useState<EditFields | null>(null);
   const [saving, setSaving]           = useState(false);
+  const [actionError, setActionError] = useState("");
 
   const fetch_ = useCallback(async () => {
     setLoading(true);
@@ -63,11 +64,16 @@ export default function ValiderPage() {
 
   async function doAction(id: string, action: "publish" | "reject", note?: string) {
     setActionId(id);
-    await fetch(`/api/dashboard/valider/${id}`, {
+    setActionError("");
+    const response = await fetch(`/api/dashboard/valider/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action, note }),
     });
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setActionError(payload?.error ?? "Action impossible.");
+    }
     setActionId(null);
     setRejectModal(null);
     setRejectNote("");
@@ -118,6 +124,11 @@ export default function ValiderPage() {
           {loading ? "…" : `${properties.length} bien${properties.length !== 1 ? "s" : ""} en attente de validation`}
         </p>
       </div>
+      {actionError && (
+        <p role="alert" className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {actionError}
+        </p>
+      )}
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-slate-400 text-sm">Chargement…</div>

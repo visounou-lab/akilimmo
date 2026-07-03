@@ -24,7 +24,7 @@ interface Owner {
   requestedRole: "OWNER" | "AGENT" | null;
   status: string;
   verificationCases: {
-    type: "IDENTITY" | "OWNER_AUTHORITY" | "PROFESSIONAL";
+    type: "IDENTITY" | "PROFESSIONAL";
     status: string;
     expiresAt: string | null;
   }[];
@@ -110,14 +110,6 @@ export default function ProprietairesPage() {
                     item.status === "APPROVED" &&
                     (!item.expiresAt || new Date(item.expiresAt) > new Date()),
                 );
-                const authorityApproved =
-                  o.requestedRole !== "OWNER" ||
-                  o.verificationCases.some(
-                    (item) =>
-                      item.type === "OWNER_AUTHORITY" &&
-                      item.status === "APPROVED" &&
-                      (!item.expiresAt || new Date(item.expiresAt) > new Date()),
-                  );
                 const professionalApproved =
                   o.requestedRole !== "AGENT" ||
                   o.verificationCases.some(
@@ -126,8 +118,7 @@ export default function ProprietairesPage() {
                       item.status === "APPROVED" &&
                       (!item.expiresAt || new Date(item.expiresAt) > new Date()),
                   );
-                const canActivate =
-                  o.isVerified && identityApproved && authorityApproved && professionalApproved;
+                const canActivate = o.isVerified && identityApproved && professionalApproved;
                 return (
                   <tr key={o.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-4 py-3.5">

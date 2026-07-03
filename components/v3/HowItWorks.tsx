@@ -1,31 +1,31 @@
 "use client";
 
-import { Search, Video, CalendarCheck } from "lucide-react";
+import { ClipboardCheck, Images, UserCheck } from "lucide-react";
 
 const STEPS = [
   {
-    icon: Search,
+    icon: ClipboardCheck,
     step: "01",
-    title: "Vous explorez en ligne",
+    title: "Le dossier est examiné",
     description:
-      "Parcourez nos villas et appartements meublés vérifiés. Vidéos HD du bien, galerie photos détaillée, plans, équipements, quartier — tout est transparent. Court ou long séjour, vous filtrez selon votre besoin.",
-    ariaLabel: "Étape 1 : explorez les biens en ligne",
+      "Notre équipe relit les informations transmises : description, localisation, prix, capacité et équipements annoncés.",
+    ariaLabel: "Étape 1 : examen des informations du bien",
   },
   {
-    icon: Video,
+    icon: Images,
     step: "02",
-    title: "Vous visitez en virtuel",
+    title: "Les médias sont contrôlés",
     description:
-      "Chaque bien dispose d'une vidéo complète intégrée et d'une galerie photos HD. Vous découvrez le logement comme si vous y étiez, à votre rythme, depuis n'importe où dans le monde.",
-    ariaLabel: "Étape 2 : visite virtuelle du bien",
+      "Les photos et vidéos sont vérifiées avant leur affichage. Les contenus insuffisants ou incohérents peuvent être refusés.",
+    ariaLabel: "Étape 2 : contrôle des photos et vidéos",
   },
   {
-    icon: CalendarCheck,
+    icon: UserCheck,
     step: "03",
-    title: "Vous réservez sur WhatsApp",
+    title: "Un humain décide",
     description:
-      "Formulaire de contact intégré avec calendrier de disponibilités. Un échange WhatsApp avec le propriétaire ou l'agence pour finaliser. Réservation rapide, sans intermédiaire physique.",
-    ariaLabel: "Étape 3 : réservation via WhatsApp",
+      "Un administrateur publie, demande une correction ou refuse l'annonce. Aucun bien soumis par un partenaire n'est publié automatiquement.",
+    ariaLabel: "Étape 3 : décision de publication par un administrateur",
   },
 ];
 
@@ -34,12 +34,12 @@ export default function HowItWorks() {
     <section
       id="comment-ca-marche"
       aria-labelledby="hiw-heading"
-      className="py-20 lg:py-28"
+      className="py-16 lg:py-20"
       style={{ backgroundColor: "#FDFCF8" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           {/* Gold ornament */}
           <div
             className="mx-auto mb-5 flex items-center justify-center gap-3"
@@ -66,7 +66,7 @@ export default function HowItWorks() {
               letterSpacing: "0.14em",
             }}
           >
-            Simple · Transparent · Sécurisé
+            Notre méthode de contrôle
           </p>
           <h2
             id="hiw-heading"
@@ -79,7 +79,7 @@ export default function HowItWorks() {
               lineHeight: 1.15,
             }}
           >
-            Comment ça marche ?
+            Avant publication, chaque annonce est relue.
           </h2>
           <p
             className="mt-4 mx-auto max-w-xl text-base"
@@ -90,8 +90,8 @@ export default function HowItWorks() {
               lineHeight: 1.75,
             }}
           >
-            Trois étapes claires pour investir au pays sans jamais quitter votre
-            ville de résidence.
+            Nous contrôlons la qualité et la cohérence des informations reçues
+            avant de présenter un bien sur AKIL IMMO.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function HowItWorks() {
             <li
               key={step}
               aria-label={ariaLabel}
-              className="relative flex flex-col items-center text-center rounded-2xl p-8 transition-all duration-200 cursor-default"
+              className="relative flex flex-col items-center text-center rounded-2xl p-6 lg:p-8 transition-all duration-200 cursor-default"
               style={{
                 backgroundColor: "#F5F0E8",
                 border: "1px solid #E8DDD0",
@@ -176,6 +176,19 @@ export default function HowItWorks() {
             </li>
           ))}
         </ol>
+
+        <p
+          className="mx-auto mt-8 max-w-3xl text-center text-sm"
+          style={{
+            fontFamily: "var(--font-inter), sans-serif",
+            color: "#6B5E52",
+            lineHeight: 1.7,
+          }}
+        >
+          Cette revue améliore la fiabilité de l&apos;annonce, sans remplacer une
+          expertise technique ou juridique. Pour tout point décisif, notre équipe
+          vous aide à obtenir une confirmation avant réservation.
+        </p>
       </div>
     </section>
   );

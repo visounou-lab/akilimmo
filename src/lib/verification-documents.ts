@@ -48,11 +48,7 @@ export function hasRequiredDocuments(
     return available.has("OWNERSHIP_EVIDENCE") || available.has("MANAGEMENT_MANDATE");
   }
   if (type === "PROFESSIONAL") {
-    return (
-      available.has("PROFESSIONAL_CARD") &&
-      available.has("BUSINESS_REGISTRATION") &&
-      available.has("PROFESSIONAL_INSURANCE")
-    );
+    return available.has("PROFESSIONAL_CARD") || available.has("BUSINESS_REGISTRATION");
   }
   return false;
 }

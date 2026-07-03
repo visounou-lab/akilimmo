@@ -27,10 +27,8 @@ export async function POST() {
     return NextResponse.json({ error: "Confirmez d'abord votre adresse email." }, { status: 409 });
   }
 
-  const requiredTypes: VerificationType[] = [
-    "IDENTITY",
-    account.requestedRole === "AGENT" ? "PROFESSIONAL" : "OWNER_AUTHORITY",
-  ];
+  const requiredTypes: VerificationType[] =
+    account.requestedRole === "AGENT" ? ["IDENTITY", "PROFESSIONAL"] : ["IDENTITY"];
   const cases = requiredTypes.map((type) =>
     account.verificationCases.find((item) => item.type === type),
   );

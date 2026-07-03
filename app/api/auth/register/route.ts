@@ -66,10 +66,7 @@ export async function POST(req: NextRequest) {
         verifyToken,
         verifyExpires,
         verificationCases: {
-          create: [
-            { type: "IDENTITY", status: "NOT_SUBMITTED" },
-            { type: "OWNER_AUTHORITY", status: "NOT_SUBMITTED" },
-          ],
+          create: [{ type: "IDENTITY", status: "NOT_SUBMITTED" }],
         },
       },
     });

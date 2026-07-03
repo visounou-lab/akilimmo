@@ -24,21 +24,7 @@ const IDENTITY_SLOT: DocumentSlot = {
   help: "Carte nationale, passeport ou titre d’identité valide.",
 };
 
-const OWNER_SLOTS: DocumentSlot[] = [
-  IDENTITY_SLOT,
-  {
-    caseType: "OWNER_AUTHORITY",
-    documentType: "OWNERSHIP_EVIDENCE",
-    label: "Preuve de propriété",
-    help: "Acte, titre, attestation reconnue ou document équivalent.",
-  },
-  {
-    caseType: "OWNER_AUTHORITY",
-    documentType: "MANAGEMENT_MANDATE",
-    label: "Ou mandat de gestion",
-    help: "À utiliser si vous représentez le propriétaire du bien.",
-  },
-];
+const OWNER_SLOTS: DocumentSlot[] = [IDENTITY_SLOT];
 
 const AGENT_SLOTS: DocumentSlot[] = [
   IDENTITY_SLOT,
@@ -46,19 +32,19 @@ const AGENT_SLOTS: DocumentSlot[] = [
     caseType: "PROFESSIONAL",
     documentType: "PROFESSIONAL_CARD",
     label: "Carte professionnelle",
-    help: "Carte professionnelle d’agent immobilier en cours de validité.",
+    help: "Carte professionnelle en cours de validité. Un seul justificatif professionnel suffit.",
   },
   {
     caseType: "PROFESSIONAL",
     documentType: "BUSINESS_REGISTRATION",
     label: "Registre de commerce",
-    help: "RCCM ou document officiel d’immatriculation de l’agence.",
+    help: "RCCM mentionnant l’activité immobilière et le responsable. Alternative à la carte.",
   },
   {
     caseType: "PROFESSIONAL",
     documentType: "PROFESSIONAL_INSURANCE",
     label: "Assurance professionnelle",
-    help: "Attestation couvrant les risques liés à l’activité.",
+    help: "Facultatif à l’inscription, recommandé pour renforcer votre profil.",
   },
 ];
 
@@ -104,10 +90,8 @@ export default function VerificationDocumentsForm({
   const hasIdentity = uploaded.has("IDENTITY_DOCUMENT");
   const hasRoleEvidence =
     requestedRole === "AGENT"
-      ? ["PROFESSIONAL_CARD", "BUSINESS_REGISTRATION", "PROFESSIONAL_INSURANCE"].every((type) =>
-          uploaded.has(type),
-        )
-      : uploaded.has("OWNERSHIP_EVIDENCE") || uploaded.has("MANAGEMENT_MANDATE");
+      ? uploaded.has("PROFESSIONAL_CARD") || uploaded.has("BUSINESS_REGISTRATION")
+      : true;
   const ready = hasIdentity && hasRoleEvidence;
 
   async function submit() {
@@ -151,8 +135,9 @@ export default function VerificationDocumentsForm({
         {slots.map((slot) => {
           const isUploaded = uploaded.has(slot.documentType);
           const isEditable = editableCaseTypes.includes(slot.caseType);
-          const isOwnerAlternative =
-            requestedRole === "OWNER" && slot.caseType === "OWNER_AUTHORITY";
+          const isProfessionalAlternative =
+            requestedRole === "AGENT" &&
+            ["PROFESSIONAL_CARD", "BUSINESS_REGISTRATION"].includes(slot.documentType);
           return (
             <label
               key={slot.documentType}
@@ -166,7 +151,7 @@ export default function VerificationDocumentsForm({
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-semibold text-[#1C1917]">
                   {slot.label}
-                  {isOwnerAlternative ? " (un seul des deux suffit)" : ""}
+                  {isProfessionalAlternative ? " (un seul des deux suffit)" : ""}
                 </span>
                 <span className="mt-1 block text-xs leading-5 text-[#6B5E52]">{slot.help}</span>
               </span>

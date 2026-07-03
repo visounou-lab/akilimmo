@@ -32,7 +32,7 @@ export async function GET() {
       requestedRole: true,
       status: true,
       verificationCases: {
-        where: { type: { in: ["IDENTITY", "OWNER_AUTHORITY", "PROFESSIONAL"] } },
+        where: { type: { in: ["IDENTITY", "PROFESSIONAL"] } },
         orderBy: { createdAt: "desc" },
         select: { type: true, status: true, expiresAt: true },
       },

@@ -31,10 +31,12 @@ function LoginForm() {
     }
 
     const session = await getSession();
-    const user = session?.user as { role?: string; status?: string } | undefined;
+    const user = session?.user as { role?: string; requestedRole?: string; status?: string } | undefined;
 
     if (user?.role === "ADMIN") {
       router.push("/dashboard");
+    } else if (user?.requestedRole === "OWNER" || user?.requestedRole === "AGENT") {
+      router.push("/verification");
     } else if (user?.role === "OWNER") {
       router.push("/owner/dashboard");
     } else {

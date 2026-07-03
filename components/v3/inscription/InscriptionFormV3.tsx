@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Check, Eye, EyeOff } from "lucide-react";
 import { trackOwnerFormSubmit } from "@/lib/analytics";
@@ -44,12 +44,18 @@ export default function InscriptionFormV3() {
     city: "",
     password: "",
     confirmPassword: "",
+    referralCode: "",
   });
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState("");
   const [success,   setSuccess]   = useState(false);
   const [showPass,  setShowPass]  = useState(false);
   const [showConf,  setShowConf]  = useState(false);
+
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("ref");
+    if (code) setForm((current) => ({ ...current, referralCode: code.toUpperCase() }));
+  }, []);
 
   function handleCountryChange(value: string) {
     const opt = COUNTRY_OPTIONS.find((o) => o.value === value);
@@ -82,6 +88,7 @@ export default function InscriptionFormV3() {
           country: form.country,
           city: form.city,
           password: form.password,
+          referralCode: form.referralCode || undefined,
         }),
       });
       const data = await res.json();
@@ -561,6 +568,29 @@ export default function InscriptionFormV3() {
                       className="v3-field"
                       style={inputStyle}
                     />
+                  </div>
+
+                  {/* Parrainage */}
+                  <div>
+                    <label htmlFor="v3-referralCode" style={labelStyle}>
+                      Code de parrainage{" "}
+                      <span style={{ color: "#6B5E52", fontWeight: 300 }}>(facultatif)</span>
+                    </label>
+                    <input
+                      id="v3-referralCode"
+                      type="text"
+                      autoComplete="off"
+                      placeholder="ex : AKI-12AB34CD56"
+                      value={form.referralCode}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, referralCode: e.target.value.toUpperCase() }))
+                      }
+                      className="v3-field"
+                      style={inputStyle}
+                    />
+                    <p className="mt-1.5 text-xs" style={{ color: "#6B5E52" }}>
+                      Le code enregistre votre parrain, mais ne remplace jamais la vérification de votre identité.
+                    </p>
                   </div>
 
                   {/* Mot de passe */}

@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { sendVerificationEmail, sendNewOwnerNotification } from "@/lib/mailer";
 import { notifyNewOwner } from "@/lib/telegram";
 import { rateLimit } from "@/lib/ratelimit";
+import { createUniqueReferralCode, findEligibleReferrer, normalizeReferralCode } from "@/lib/referral";
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { firstName, lastName, email, phone, country, city, password } = await req.json();
+    const { firstName, lastName, email, phone, country, city, password, referralCode } = await req.json();
 
     if (!firstName || !lastName || !email || !phone || !country || !city || !password) {
       return NextResponse.json({ error: "Tous les champs sont requis" }, { status: 400 });
@@ -34,6 +35,19 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 12);
     const verifyToken = crypto.randomUUID();
     const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const normalizedReferralCode = normalizeReferralCode(referralCode);
+    const referrer = normalizedReferralCode
+      ? await findEligibleReferrer(normalizedReferralCode)
+      : null;
+
+    if (normalizedReferralCode && !referrer) {
+      return NextResponse.json(
+        { error: "Ce code de parrainage est invalide ou son titulaire n'est pas encore vérifié." },
+        { status: 400 },
+      );
+    }
+
+    const personalReferralCode = await createUniqueReferralCode();
 
     await prisma.user.create({
       data: {
@@ -43,11 +57,20 @@ export async function POST(req: NextRequest) {
         country: country as "BENIN" | "COTE_D_IVOIRE",
         city,
         password: hashedPassword,
-        role: "OWNER",
+        role: "TENANT",
+        requestedRole: "OWNER",
         isVerified: false,
         status: "pending",
+        referralCode: personalReferralCode,
+        referredById: referrer?.id,
         verifyToken,
         verifyExpires,
+        verificationCases: {
+          create: {
+            type: "IDENTITY",
+            status: "NOT_SUBMITTED",
+          },
+        },
       },
     });
 
@@ -55,7 +78,13 @@ export async function POST(req: NextRequest) {
     await sendNewOwnerNotification({ name: `${firstName} ${lastName}`, email, country, city });
     await notifyNewOwner({ name: `${firstName} ${lastName}`, email, country, city });
 
-    return NextResponse.json({ message: "Compte créé. Vérifiez votre email." }, { status: 201 });
+    return NextResponse.json(
+      {
+        message: "Compte créé. Vérifiez votre email puis transmettez vos justificatifs.",
+        referralRecorded: Boolean(referrer),
+      },
+      { status: 201 },
+    );
   } catch (error) {
     console.error("Register error:", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });

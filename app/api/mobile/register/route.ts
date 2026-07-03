@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { createUniqueReferralCode, findEligibleReferrer, normalizeReferralCode } from "@/lib/referral";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, password, role } = await req.json();
+    const { name, email, phone, password, role, referralCode } = await req.json();
 
     if (!name?.trim() || !email?.trim() || !password?.trim()) {
       return NextResponse.json({ error: "Nom, email et mot de passe sont requis." }, { status: 400 });
@@ -24,6 +25,20 @@ export async function POST(req: NextRequest) {
     }
 
     const hashed = await bcrypt.hash(password, 12);
+    const normalizedReferralCode = normalizeReferralCode(referralCode);
+    const referrer = normalizedReferralCode
+      ? await findEligibleReferrer(normalizedReferralCode)
+      : null;
+
+    if (normalizedReferralCode && !referrer) {
+      return NextResponse.json(
+        { error: "Code de parrainage invalide ou parrain non vérifié." },
+        { status: 400 },
+      );
+    }
+
+    const isRoleCandidate = role === "OWNER";
+    const personalReferralCode = await createUniqueReferralCode();
 
     await prisma.user.create({
       data: {
@@ -31,8 +46,19 @@ export async function POST(req: NextRequest) {
         email:    email.toLowerCase().trim(),
         phone:    phone?.trim() || null,
         password: hashed,
-        role,
-        status:   "pending",
+        role: "TENANT",
+        requestedRole: isRoleCandidate ? "OWNER" : null,
+        status: isRoleCandidate ? "pending" : "active",
+        referralCode: personalReferralCode,
+        referredById: referrer?.id,
+        ...(isRoleCandidate && {
+          verificationCases: {
+            create: {
+              type: "IDENTITY" as const,
+              status: "NOT_SUBMITTED" as const,
+            },
+          },
+        }),
       },
     });
 

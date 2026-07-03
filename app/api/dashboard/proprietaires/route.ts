@@ -17,7 +17,9 @@ export async function GET() {
   }
 
   const owners = await prisma.user.findMany({
-    where: { role: "OWNER" },
+    where: {
+      OR: [{ role: "OWNER" }, { requestedRole: { in: ["OWNER", "AGENT"] } }],
+    },
     orderBy: { createdAt: "desc" },
     select: {
       id: true,
@@ -27,7 +29,13 @@ export async function GET() {
       city: true,
       phone: true,
       isVerified: true,
+      requestedRole: true,
       status: true,
+      verificationCases: {
+        where: { type: { in: ["IDENTITY", "PROFESSIONAL"] } },
+        orderBy: { createdAt: "desc" },
+        select: { type: true, status: true, expiresAt: true },
+      },
       createdAt: true,
     },
   });

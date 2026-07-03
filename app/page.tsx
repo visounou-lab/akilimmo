@@ -52,7 +52,7 @@ export default async function V3Page() {
         {/* 1. Hero charbon avec barre de recherche (Option C) */}
         <HeroSection />
 
-        {/* 2. Nos 4 catégories de services */}
+        {/* 2. Nos 3 catégories de services */}
         <CategoriesSection />
 
         {/* 3. Chiffres de confiance */}

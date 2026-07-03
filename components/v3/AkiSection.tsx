@@ -1,26 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import { Search, ShieldCheck, KeyRound } from "lucide-react";
+import { BadgeCheck, ShieldCheck, KeyRound } from "lucide-react";
 
 const TRAITS = [
   {
-    icon: Search,
-    title: "Il cherche pour vous",
+    icon: BadgeCheck,
+    title: "Une sélection attentive",
     description:
-      "AKI parcourt notre catalogue et repère les biens qui correspondent vraiment à votre besoin, sans perte de temps.",
+      "Notre équipe privilégie des logements documentés avec des informations claires et utiles.",
   },
   {
     icon: ShieldCheck,
-    title: "Il vérifie chaque bien",
+    title: "Des informations contrôlées",
     description:
-      "Photos, vidéos, équipements, quartier — rien n'est mis en ligne avant d'être contrôlé par notre équipe.",
+      "Photos, vidéos, équipements et localisation sont examinés avant la mise en avant du bien.",
   },
   {
     icon: KeyRound,
-    title: "Il vous remet la clé",
+    title: "Un suivi jusqu'aux clés",
     description:
-      "Une fois la réservation confirmée, AKI reste le symbole d'un dossier suivi jusqu'à la remise des clés.",
+      "AKI symbolise l'accompagnement assuré par notre équipe, du premier contact à la remise des clés.",
   },
 ];
 
@@ -28,15 +28,15 @@ export default function AkiSection() {
   return (
     <section
       aria-labelledby="aki-heading"
-      className="py-20 lg:py-28 overflow-hidden"
+      className="py-14 lg:py-20 overflow-hidden"
       style={{ backgroundColor: "#F5F0E8" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
           {/* Visuel AKI */}
           <div className="order-2 lg:order-1 flex justify-center">
             <div
-              className="relative w-full max-w-sm rounded-3xl"
+              className="relative w-full max-w-xs rounded-3xl"
               style={{
                 backgroundColor: "#FBEEE2",
                 border: "1px solid #E8DDD0",
@@ -49,7 +49,7 @@ export default function AkiSection() {
                 width={1254}
                 height={1254}
                 className="w-full h-auto rounded-3xl"
-                sizes="(max-width: 1024px) 90vw, 420px"
+                sizes="(max-width: 1024px) 80vw, 320px"
               />
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function AkiSection() {
                 letterSpacing: "0.14em",
               }}
             >
-              Notre mascotte
+              Le gardien de notre promesse
             </p>
             <h2
               id="aki-heading"
@@ -78,9 +78,9 @@ export default function AkiSection() {
                 lineHeight: 1.2,
               }}
             >
-              Rencontrez <em style={{ fontStyle: "italic", color: "#1B4D3E" }}>AKI</em>.
+              Voici <em style={{ fontStyle: "italic", color: "#1B4D3E" }}>AKI</em>.
               <br />
-              Chaque bien mérite d&apos;être vérifié.
+              Le symbole de notre vigilance.
             </h2>
             <p
               className="mb-8 max-w-lg text-base"
@@ -91,12 +91,12 @@ export default function AkiSection() {
                 lineHeight: 1.8,
               }}
             >
-              AKI incarne notre promesse : des logements meublés sélectionnés avec
-              soin, du premier contact jusqu&apos;à la remise des clés — que vous
-              soyez à Cotonou, à Abidjan, ou à des milliers de kilomètres.
+              AKI ne remplace pas nos conseillers : il représente leur engagement
+              à vous présenter des informations claires et à suivre votre dossier,
+              que vous soyez sur place ou à des milliers de kilomètres.
             </p>
 
-            <ul className="space-y-5" role="list">
+            <ul className="space-y-4" role="list">
               {TRAITS.map(({ icon: Icon, title, description }) => (
                 <li key={title} className="flex gap-4">
                   <div

@@ -1,10 +1,10 @@
-import { ShieldCheck, MapPin, MessageCircle, KeyRound } from "lucide-react";
+import { FileCheck2, MapPin, MessageCircle, KeyRound } from "lucide-react";
 
 const PILLARS = [
   {
-    icon: ShieldCheck,
-    title: "Agence certifiée",
-    desc: "Biens vérifiés & contrats sécurisés",
+    icon: FileCheck2,
+    title: "Biens documentés",
+    desc: "Photos, vidéos et informations utiles",
   },
   {
     icon: MapPin,
@@ -13,13 +13,13 @@ const PILLARS = [
   },
   {
     icon: MessageCircle,
-    title: "Réponse sous 24h",
-    desc: "Accompagnement personnalisé",
+    title: "Contact direct",
+    desc: "Un conseiller vous répond sur WhatsApp",
   },
   {
     icon: KeyRound,
-    title: "Prise en charge totale",
-    desc: "De la recherche à la remise des clés",
+    title: "Suivi humain",
+    desc: "Du premier contact à la remise des clés",
   },
 ];
 

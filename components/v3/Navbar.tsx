@@ -6,9 +6,8 @@ import { Menu, X, Home } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Louer",    href: "/biens" },
-  { label: "Vendre",   href: "#contact" },
   { label: "Voitures", href: "/voitures" },
-  { label: "Séjours",  href: "#contact" },
+  { label: "Séjours",  href: "/sejours" },
 ];
 
 export default function Navbar() {

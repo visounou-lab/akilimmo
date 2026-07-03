@@ -72,7 +72,7 @@ export default function HeroSection() {
             letterSpacing: "-0.01em",
           }}
         >
-          Location, vente, voitures &amp; séjours
+          Locations, voitures &amp; séjours
           <br />
           <em style={{ fontStyle: "italic", color: "#C8922A" }}>
             à portée de main en Afrique de l&apos;Ouest.
@@ -89,7 +89,7 @@ export default function HeroSection() {
             lineHeight: 1.8,
           }}
         >
-          Appartements meublés vérifiés, villas à vendre, voitures de qualité et séjours
+          Appartements et villas meublés vérifiés, voitures de qualité et séjours
           clé en main à Abidjan, Cotonou, Angré et Abomey-Calavi.
           Depuis la diaspora ou sur place — on s&apos;occupe de tout.
         </p>

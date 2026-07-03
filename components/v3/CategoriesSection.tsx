@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BedDouble, CarFront, House, Landmark } from "lucide-react";
+import { ArrowRight, BedDouble, CarFront, House } from "lucide-react";
 
 const CATEGORIES = [
   {
@@ -10,14 +10,6 @@ const CATEGORIES = [
     href: "#biens",
     badge: null,
     accent: "#1B4D3E",
-  },
-  {
-    icon: Landmark,
-    title: "Vente immobilière",
-    desc: "Maisons, villas et terrains à vendre à Abidjan, Angré, Cotonou et Abomey-Calavi. Investissez en toute confiance.",
-    href: "/#contact",
-    badge: "Bientôt",
-    accent: "#C8922A",
   },
   {
     icon: CarFront,
@@ -74,7 +66,7 @@ export default function CategoriesSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             return (

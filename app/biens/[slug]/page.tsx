@@ -13,6 +13,8 @@ import { MapPin, BedDouble, Bath } from "lucide-react";
 import BreadcrumbV3 from "../../../components/v3/biens/BreadcrumbV3";
 import ContactCardV3 from "../../../components/v3/biens/ContactCardV3";
 import ViewTracker from "../../../components/v3/biens/ViewTracker";
+import TrustBadge from "../../../components/v3/TrustBadge";
+import { derivePropertyTrust } from "@/lib/trust-badges";
 
 export const revalidate = 3600;
 
@@ -22,6 +24,19 @@ const getProperty = cache(async (slug: string) => {
   return prisma.property.findUnique({
     where: { slug },
     include: {
+      owner: {
+        select: {
+          role: true,
+          verificationCases: {
+            where: { type: { in: ["IDENTITY", "PROFESSIONAL"] } },
+            select: { type: true, status: true, expiresAt: true },
+          },
+        },
+      },
+      verificationCases: {
+        where: { type: { in: ["LISTING_REVIEW", "PHYSICAL_VISIT"] } },
+        select: { type: true, status: true, expiresAt: true },
+      },
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },
@@ -81,6 +96,11 @@ export default async function V3BienDetailPage({ params }: Props) {
     bien.country === "COTE_D_IVOIRE" ? "+225 07 10 25 91 46" : "+229 01 97 59 86 82";
   const cLabel = countryLabel(bien.country);
   const pageUrl = `${SITE_URL}/biens/${bien.slug}`;
+  const trust = derivePropertyTrust({
+    ownerRole: bien.owner.role,
+    ownerVerifications: bien.owner.verificationCases,
+    propertyVerifications: bien.verificationCases,
+  });
 
   const sectionTitle: React.CSSProperties = {
     fontFamily: "var(--font-inter), sans-serif",
@@ -179,6 +199,20 @@ export default async function V3BienDetailPage({ params }: Props) {
                   >
                     {bien.title}
                   </h1>
+                  {(trust.listingReviewed ||
+                    trust.publisherIdentityVerified ||
+                    trust.publisherProfessionalVerified ||
+                    trust.physicalVisitVerified) && (
+                    <div className="mb-4 flex flex-wrap gap-2" aria-label="Contrôles de confiance">
+                      {trust.listingReviewed && <TrustBadge kind="listing-reviewed" />}
+                      {trust.publisherProfessionalVerified ? (
+                        <TrustBadge kind="agent-verified" />
+                      ) : (
+                        trust.publisherIdentityVerified && <TrustBadge kind="identity-verified" />
+                      )}
+                      {trust.physicalVisitVerified && <TrustBadge kind="physical-visit" />}
+                    </div>
+                  )}
                   <a
                     href={`https://maps.google.com/?q=${encodeURIComponent(`${bien.address}, ${bien.city}, ${cLabel}`)}`}
                     target="_blank"

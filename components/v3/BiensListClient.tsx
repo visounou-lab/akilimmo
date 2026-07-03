@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import TrustBadge from "./TrustBadge";
 
 function useFavorites(properties: PropertyCardFull[]) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -69,6 +70,12 @@ export type PropertyCardFull = {
   likesCount: number;
   viewCount: number;
   images: { url: string; status: string; order: number }[];
+  trust: {
+    listingReviewed: boolean;
+    physicalVisitVerified: boolean;
+    publisherIdentityVerified: boolean;
+    publisherProfessionalVerified: boolean;
+  };
 };
 
 const COUNTRY_OPTIONS = [
@@ -427,6 +434,11 @@ export default function BiensListClient({
 
                       {/* Body */}
                       <div className="p-5">
+                        {prop.trust.listingReviewed && (
+                          <div className="mb-3">
+                            <TrustBadge kind="listing-reviewed" compact />
+                          </div>
+                        )}
                         <div
                           className="flex items-center gap-1.5 mb-2"
                           style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "0.8rem", color: "#6B5E52" }}

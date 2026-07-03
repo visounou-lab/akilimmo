@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -97,37 +96,6 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-slate-50 text-slate-900" style={{ colorScheme: "light" }}>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18250749686"
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-18250749686');
-            gtag('event', 'conversion', {
-              'send_to': 'AW-18250749686/dR1yCPekhcIcEPat0f5D',
-              'value': 1.0,
-              'currency': 'USD'
-            });
-            window.gtag_report_conversion = function(url) {
-              var callback = function () {
-                if (typeof(url) !== 'undefined') {
-                  window.location = url;
-                }
-              };
-              gtag('event', 'conversion', {
-                'send_to': 'AW-18250749686/dR1yCPekhcIcEPat0f5D',
-                'value': 1.0,
-                'currency': 'USD',
-                'event_callback': callback
-              });
-              return false;
-            };
-          `}
-        </Script>
         <Providers>{children}</Providers>
         <AnalyticsConsent />
       </body>

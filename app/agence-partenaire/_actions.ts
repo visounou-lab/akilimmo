@@ -4,7 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { transporter } from "@/lib/mailer";
 import { notifyNewAgentApplication } from "@/lib/telegram";
 
-export async function submitAgentApplication(formData: FormData) {
+export async function submitAgentApplication(
+  _previousState: { success?: boolean; error?: string } | null,
+  formData: FormData
+) {
   const agencyName   = (formData.get("agencyName") as string).trim();
   const contactName  = (formData.get("contactName") as string).trim();
   const email        = (formData.get("email") as string).trim().toLowerCase();

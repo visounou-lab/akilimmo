@@ -4,10 +4,11 @@ import { getYouTubeThumbnailFallback } from "@/lib/youtube";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params;
   const property = await prisma.property.findUnique({
-    where: { slug: params.slug, publishStatus: "published" },
+    where: { slug, publishStatus: "published" },
     select: {
       id: true,
       slug: true,

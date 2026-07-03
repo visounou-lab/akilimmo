@@ -29,7 +29,7 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="/"
-            className="flex items-center gap-3 cursor-pointer shrink-0"
+            className="flex items-center gap-3 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
             aria-label="AKIL IMMO — Accueil"
           >
             <span
@@ -65,7 +65,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className="text-sm cursor-pointer transition-colors duration-200"
+                  className="text-sm cursor-pointer transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
                   style={{
                     fontFamily: "var(--font-inter), sans-serif",
                     fontWeight: active ? 500 : 400,
@@ -88,7 +88,7 @@ export default function Navbar() {
             {/* Lien discret "Comment ça marche" */}
             <a
               href="/comment-ca-marche"
-              className="text-xs cursor-pointer px-3 py-2 transition-colors duration-150"
+              className="text-xs cursor-pointer px-3 py-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
               style={{
                 fontFamily: "var(--font-inter), sans-serif",
                 color: "rgba(253,252,248,0.5)",
@@ -101,7 +101,7 @@ export default function Navbar() {
             {/* CTA principal — Devenir propriétaire */}
             <a
               href="/inscription"
-              className="flex items-center gap-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200"
+              className="flex items-center gap-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
               style={{
                 fontFamily: "var(--font-inter), sans-serif",
                 fontWeight: 600,
@@ -128,7 +128,7 @@ export default function Navbar() {
             type="button"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
-            className="md:hidden cursor-pointer rounded-md p-2 transition-colors duration-200"
+            className="md:hidden min-h-11 min-w-11 cursor-pointer rounded-md p-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A]"
             style={{ color: "#FDFCF8" }}
             onClick={() => setOpen((v) => !v)}
           >

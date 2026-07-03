@@ -23,7 +23,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[760px] h-[88vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -165,7 +165,7 @@ export default function HeroSection() {
         <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
           {[
             { label: "Long séjour",   href: "#biens" },
-            { label: "Court séjour",  href: "#biens" },
+            { label: "Court séjour",  href: "/sejours" },
             { label: "Cocody",        href: "/biens?q=Cocody" },
             { label: "Zone 4",        href: "/biens?q=Zone+4" },
             { label: "Cotonou",       href: "/biens?q=Cotonou" },
@@ -173,7 +173,7 @@ export default function HeroSection() {
             <a
               key={label}
               href={href}
-              className="rounded-full px-3.5 py-1.5 text-xs cursor-pointer transition-colors duration-150"
+              className="rounded-full px-3.5 py-1.5 text-xs cursor-pointer transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
               style={{
                 fontFamily: "var(--font-inter), sans-serif",
                 color: "rgba(253,252,248,0.55)",

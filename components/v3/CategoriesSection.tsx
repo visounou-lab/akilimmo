@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BedDouble, CarFront, House, Landmark } from "lucide-react";
 
 const CATEGORIES = [
   {
-    emoji: "🏠",
+    icon: House,
     title: "Location meublée",
     desc: "Appartements et villas entièrement meublés pour long séjour ou court séjour. Tout inclus — eau, électricité, Wi-Fi.",
     href: "#biens",
@@ -12,15 +12,15 @@ const CATEGORIES = [
     accent: "#1B4D3E",
   },
   {
-    emoji: "🏡",
+    icon: Landmark,
     title: "Vente immobilière",
     desc: "Maisons, villas et terrains à vendre à Abidjan, Angré, Cotonou et Abomey-Calavi. Investissez en toute confiance.",
-    href: "#contact",
+    href: "/#contact",
     badge: "Bientôt",
     accent: "#C8922A",
   },
   {
-    emoji: "🚗",
+    icon: CarFront,
     title: "Location de voitures",
     desc: "SUV récents et bien entretenus disponibles à Abidjan — KIA Sportage, Hyundai Tucson, KIA Seltos. Réservation rapide sur WhatsApp.",
     href: "/voitures",
@@ -28,10 +28,10 @@ const CATEGORIES = [
     accent: "#1B4D3E",
   },
   {
-    emoji: "🛏️",
+    icon: BedDouble,
     title: "Séjours clé en main",
     desc: "Logements confortables pour les vacances en famille, les voyages d'affaires ou les courts séjours entre le Bénin et la Côte d'Ivoire.",
-    href: "#contact",
+    href: "/sejours",
     badge: "Bientôt",
     accent: "#C8922A",
   },
@@ -75,11 +75,13 @@ export default function CategoriesSection() {
 
         {/* Cards grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {CATEGORIES.map((cat) => (
+          {CATEGORIES.map((cat) => {
+            const Icon = cat.icon;
+            return (
             <a
               key={cat.title}
               href={cat.href}
-              className="group relative flex flex-col rounded-2xl p-6 cursor-pointer transition-all duration-200"
+              className="group relative flex flex-col rounded-2xl p-6 cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2"
               style={{
                 backgroundColor: "#FDFCF8",
                 border: "1.5px solid #E8DDD0",
@@ -112,16 +114,16 @@ export default function CategoriesSection() {
                 </span>
               )}
 
-              {/* Emoji icon */}
+              {/* Icône */}
               <div
-                className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl text-2xl"
+                className="mb-4 flex items-center justify-center w-12 h-12 rounded-xl"
                 style={{
                   backgroundColor: cat.badge
                     ? "rgba(200,146,42,0.08)"
                     : "rgba(27,77,62,0.08)",
                 }}
               >
-                {cat.emoji}
+                <Icon size={23} color={cat.accent} strokeWidth={1.7} aria-hidden="true" />
               </div>
 
               {/* Title */}
@@ -153,11 +155,13 @@ export default function CategoriesSection() {
                 className="mt-5 flex items-center gap-1.5 text-sm font-medium transition-colors duration-150"
                 style={{ color: cat.badge ? "#C8922A" : "#1B4D3E" }}
               >
-                {cat.badge ? "Être notifié" : "Voir les biens"}
+                {cat.badge
+                  ? cat.href === "/sejours" ? "Découvrir le lancement" : "Être notifié"
+                  : cat.href === "/voitures" ? "Voir les voitures" : "Voir les biens"}
                 <ArrowRight size={13} aria-hidden="true" />
               </div>
             </a>
-          ))}
+          )})}
         </div>
       </div>
     </section>

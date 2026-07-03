@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import TrustBadge from "./TrustBadge";
 
 function useFavorites(properties: PropertyCard[]) {
   const [favorites,  setFavorites]  = useState<Set<string>>(new Set());
@@ -67,6 +68,12 @@ export type PropertyCard = {
   likesCount: number;
   viewCount: number;
   images: { url: string; status: string; order: number }[];
+  trust: {
+    listingReviewed: boolean;
+    physicalVisitVerified: boolean;
+    publisherIdentityVerified: boolean;
+    publisherProfessionalVerified: boolean;
+  };
 };
 
 
@@ -280,8 +287,13 @@ export default function FeaturedProperties({
                     </button>
                   </a>
 
-                  {/* Body */}
-                  <div className="p-5">
+                      {/* Body */}
+                      <div className="p-5">
+                        {prop.trust.listingReviewed && (
+                          <div className="mb-3">
+                            <TrustBadge kind="listing-reviewed" compact />
+                          </div>
+                        )}
                     {/* Location */}
                     <div
                       className="flex items-center gap-1.5 mb-2"

@@ -110,23 +110,29 @@ export async function updateProperty(id: string, formData: FormData) {
       ? { slug: await uniquePropertySlug(title, city, id) }
       : {};
 
-  await prisma.property.update({
-    where: { id },
-    data: {
-      ...slugData,
-      title,
-      description: formData.get("description") as string,
-      country:     formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
-      city,
-      address:     formData.get("address") as string,
-      price:       parseFloat(formData.get("price") as string),
-      status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
-      bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
-      bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
-      imageUrl,
-      videoUrl,
-    },
-  });
+  await prisma.$transaction([
+    prisma.property.update({
+      where: { id },
+      data: {
+        ...slugData,
+        title,
+        description: formData.get("description") as string,
+        country:     formData.get("country") as "BENIN" | "COTE_D_IVOIRE",
+        city,
+        address:     formData.get("address") as string,
+        price:       parseFloat(formData.get("price") as string),
+        status:      formData.get("status") as "AVAILABLE" | "RESERVED" | "RENTED" | "OFF_MARKET",
+        bedrooms:    parseInt(formData.get("bedrooms") as string, 10),
+        bathrooms:   parseInt(formData.get("bathrooms") as string, 10),
+        imageUrl,
+        videoUrl,
+      },
+    }),
+    prisma.verificationCase.updateMany({
+      where: { propertyId: id, type: "LISTING_REVIEW", status: "APPROVED" },
+      data: { status: "NOT_SUBMITTED", reviewedById: null, reviewedAt: null },
+    }),
+  ]);
 
   if (uploaded.length > 0) {
     const existingCount = await prisma.propertyImage.count({ where: { propertyId: id } });

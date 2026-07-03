@@ -9,6 +9,7 @@ import AkiSection from "../components/v3/AkiSection";
 import PartnerSection from "../components/v3/PartnerSection";
 import LaunchSection from "../components/v3/LaunchSection";
 import Footer from "../components/v3/Footer";
+import { derivePropertyTrust } from "@/lib/trust-badges";
 
 export const revalidate = 60;
 
@@ -32,6 +33,19 @@ export default async function V3Page() {
       stayType: true,
       likesCount: true,
       viewCount: true,
+      owner: {
+        select: {
+          role: true,
+          verificationCases: {
+            where: { type: { in: ["IDENTITY", "PROFESSIONAL"] } },
+            select: { type: true, status: true, expiresAt: true },
+          },
+        },
+      },
+      verificationCases: {
+        where: { type: { in: ["LISTING_REVIEW", "PHYSICAL_VISIT"] } },
+        select: { type: true, status: true, expiresAt: true },
+      },
       images: {
         where: { status: "APPROVED" },
         orderBy: { order: "asc" },
@@ -43,6 +57,11 @@ export default async function V3Page() {
   const properties = raw.map((p) => ({
     ...p,
     price: Number(p.price),
+    trust: derivePropertyTrust({
+      ownerRole: p.owner.role,
+      ownerVerifications: p.owner.verificationCases,
+      propertyVerifications: p.verificationCases,
+    }),
   }));
 
   return (

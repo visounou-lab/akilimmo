@@ -8,8 +8,49 @@ datasource db {
 
 enum Role {
   ADMIN
+  AGENT
   OWNER
   TENANT
+}
+
+enum VerificationStatus {
+  NOT_SUBMITTED
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+  SUSPENDED
+}
+
+enum VerificationType {
+  IDENTITY
+  PROFESSIONAL
+  OWNER_AUTHORITY
+  AGENT_MANDATE
+  LISTING_REVIEW
+  PHYSICAL_VISIT
+}
+
+enum VerificationDocumentType {
+  IDENTITY_DOCUMENT
+  PROFESSIONAL_CARD
+  BUSINESS_REGISTRATION
+  TAX_REGISTRATION
+  PROFESSIONAL_INSURANCE
+  OWNERSHIP_EVIDENCE
+  MANAGEMENT_MANDATE
+  AGENT_MANDATE
+  ADDRESS_EVIDENCE
+  OTHER
+}
+
+enum ReferralQualificationStatus {
+  LOCKED
+  ELIGIBLE
+  APPROVED
+  PAID
+  REJECTED
+  CANCELLED
 }
 
 enum Country {
@@ -51,39 +92,44 @@ enum ImageStatus {
 }
 
 model User {
-  id             String         @id @default(cuid())
-  name           String?
-  email          String         @unique
-  emailVerified  DateTime?
-  image          String?
-  password       String?
-  role           Role           @default(TENANT)
-  phone          String?
-  country        Country?
-  city           String?
-  isVerified     Boolean        @default(false)
-  verifyToken    String?        @unique
-  verifyExpires  DateTime?
-  resetToken     String?        @unique
-  resetExpires   DateTime?
-  status         String         @default("pending")
-  referralCode   String?        @unique
-  referredById   String?
-  referredBy     User?          @relation("UserReferrals", fields: [referredById], references: [id])
-  referrals      User[]         @relation("UserReferrals")
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  accounts       Account[]
-  sessions       Session[]
-  properties          Property[]     @relation("OwnerProperties")
-  submittedProperties Property[]     @relation("SubmittedProperties")
-  contracts           Contract[]     @relation("TenantContracts")
-  ownedContracts      Contract[]     @relation("OwnerContracts")
-  payments            Payment[]
-  notifications       Notification[]
-  documentRequests    DocumentRequest[]
-  uploadedImages      PropertyImage[] @relation("uploadedImages")
-  referralEarnings    ReferralEarning[] @relation("ReferralEarnings")
+  id                      String                 @id @default(cuid())
+  name                    String?
+  email                   String                 @unique
+  emailVerified           DateTime?
+  image                   String?
+  password                String?
+  role                    Role                   @default(TENANT)
+  requestedRole           Role?
+  phone                   String?
+  country                 Country?
+  city                    String?
+  isVerified              Boolean                @default(false)
+  verifyToken             String?                @unique
+  verifyExpires           DateTime?
+  resetToken              String?                @unique
+  resetExpires            DateTime?
+  status                  String                 @default("pending")
+  referralCode            String?                @unique
+  referredById            String?
+  referredBy              User?                  @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals               User[]                 @relation("UserReferrals")
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  accounts                Account[]
+  sessions                Session[]
+  properties              Property[]             @relation("OwnerProperties")
+  submittedProperties     Property[]             @relation("SubmittedProperties")
+  contracts               Contract[]             @relation("TenantContracts")
+  ownedContracts          Contract[]             @relation("OwnerContracts")
+  payments                Payment[]
+  notifications           Notification[]
+  documentRequests        DocumentRequest[]
+  uploadedImages          PropertyImage[]        @relation("uploadedImages")
+  referralEarnings        ReferralEarning[]      @relation("ReferralEarnings")
+  referralRewardsReceived ReferralEarning[]      @relation("ReferralRewardsReceived")
+  verificationCases       VerificationCase[]     @relation("VerificationSubject")
+  reviewedVerifications   VerificationCase[]     @relation("VerificationReviewer")
+  verificationAuditLogs   VerificationAuditLog[] @relation("VerificationAuditActor")
 }
 
 model Account {
@@ -121,36 +167,37 @@ model VerificationToken {
 }
 
 model Property {
-  id            String          @id @default(cuid())
-  slug          String          @unique
-  title         String
-  description   String
-  country       Country
-  city          String
-  address       String
-  price         Decimal
-  status        PropertyStatus  @default(AVAILABLE)
-  bedrooms      Int
-  bathrooms     Int
-  imageUrl      String?
-  videoUrl      String?
-  ownerId       String
-  owner         User            @relation("OwnerProperties", fields: [ownerId], references: [id])
-  submittedBy   String?
-  submitter     User?           @relation("SubmittedProperties", fields: [submittedBy], references: [id])
-  propertyType  String?
-  stayType      String          @default("long")
-  likesCount    Int             @default(0)
-  viewCount     Int             @default(0)
-  publishStatus String          @default("published")
-  adminNote     String?
-  contracts            Contract[]
-  notifications        Notification[]
-  images               PropertyImage[]
-  documentRequests     DocumentRequest[]
-  reservationRequests  ReservationRequest[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id                  String               @id @default(cuid())
+  slug                String               @unique
+  title               String
+  description         String
+  country             Country
+  city                String
+  address             String
+  price               Decimal
+  status              PropertyStatus       @default(AVAILABLE)
+  bedrooms            Int
+  bathrooms           Int
+  imageUrl            String?
+  videoUrl            String?
+  ownerId             String
+  owner               User                 @relation("OwnerProperties", fields: [ownerId], references: [id])
+  submittedBy         String?
+  submitter           User?                @relation("SubmittedProperties", fields: [submittedBy], references: [id])
+  propertyType        String?
+  stayType            String               @default("long")
+  likesCount          Int                  @default(0)
+  viewCount           Int                  @default(0)
+  publishStatus       String               @default("published")
+  adminNote           String?
+  contracts           Contract[]
+  notifications       Notification[]
+  images              PropertyImage[]
+  documentRequests    DocumentRequest[]
+  reservationRequests ReservationRequest[]
+  verificationCases   VerificationCase[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 model PropertyImage {
@@ -194,31 +241,31 @@ model Contract {
 }
 
 model Payment {
-  id                  String        @id @default(cuid())
-  contract            Contract      @relation(fields: [contractId], references: [id])
-  contractId          String
-  payer               User          @relation(fields: [payerId], references: [id])
-  payerId             String
-  amount              Decimal
-  status              PaymentStatus @default(PENDING)
-  dueDate             DateTime
-  paidAt              DateTime?
+  id         String        @id @default(cuid())
+  contract   Contract      @relation(fields: [contractId], references: [id])
+  contractId String
+  payer      User          @relation(fields: [payerId], references: [id])
+  payerId    String
+  amount     Decimal
+  status     PaymentStatus @default(PENDING)
+  dueDate    DateTime
+  paidAt     DateTime?
 
   // Wave payment fields
-  paymentMethod       String?       // "wave", "orange_money", "bank_transfer"
-  waveTransactionId   String?       @unique // Wave transaction ID
-  waveReference       String?       // Wave reference/receipt
-  waveStatus          String?       // wave_completed, wave_failed, wave_pending
+  paymentMethod     String? // "wave", "orange_money", "bank_transfer"
+  waveTransactionId String? @unique // Wave transaction ID
+  waveReference     String? // Wave reference/receipt
+  waveStatus        String? // wave_completed, wave_failed, wave_pending
 
   // Fees & calculations
-  grossAmount         Decimal?      // Montant brut (avant frais AKIL IMMO)
-  akilimmoFeeAmount   Decimal?      // Commission AKIL IMMO (6%)
-  netAmount           Decimal?      // Montant net propriétaire
+  grossAmount       Decimal? // Montant brut (avant frais AKIL IMMO)
+  akilimmoFeeAmount Decimal? // Commission AKIL IMMO (6%)
+  netAmount         Decimal? // Montant net propriétaire
 
   // Metadata
-  payerPhone          String?       // Store phone for Wave/Orange Money
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  payerPhone String? // Store phone for Wave/Orange Money
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Notification {
@@ -252,38 +299,110 @@ model DocumentRequest {
 }
 
 model Vehicle {
-  id          String   @id @default(cuid())
-  name        String
-  variant     String   @default("SUV")
-  color       String
-  seats       Int      @default(5)
-  fuel        String   @default("Essence · Automatique")
-  features    String[]
-  priceDay    Int
-  priceLong   Int
-  imageUrl    String?
-  images      String[]
-  available   Boolean  @default(true)
-  city        String   @default("Abidjan")
-  country     Country  @default(COTE_D_IVOIRE)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  variant   String   @default("SUV")
+  color     String
+  seats     Int      @default(5)
+  fuel      String   @default("Essence · Automatique")
+  features  String[]
+  priceDay  Int
+  priceLong Int
+  imageUrl  String?
+  images    String[]
+  available Boolean  @default(true)
+  city      String   @default("Abidjan")
+  country   Country  @default(COTE_D_IVOIRE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ReferralEarning {
-  id          String   @id @default(cuid())
-  referrerId  String
-  referrer    User     @relation("ReferralEarnings", fields: [referrerId], references: [id])
-  referredId  String
-  paymentId   String?
-  amount      Decimal
-  percentage  Decimal
-  status      String   @default("pending")
-  createdAt   DateTime @default(now())
+  id                  String                      @id @default(cuid())
+  referrerId          String
+  referrer            User                        @relation("ReferralEarnings", fields: [referrerId], references: [id])
+  referredId          String
+  referred            User                        @relation("ReferralRewardsReceived", fields: [referredId], references: [id])
+  paymentId           String?
+  amount              Decimal
+  percentage          Decimal
+  status              String                      @default("pending")
+  qualificationStatus ReferralQualificationStatus @default(LOCKED)
+  qualifiedAt         DateTime?
+  lockedUntil         DateTime?
+  approvedAt          DateTime?
+  rejectedAt          DateTime?
+  rejectionReason     String?
+  createdAt           DateTime                    @default(now())
 
   @@index([referrerId])
   @@index([referredId])
   @@index([status])
+  @@index([qualificationStatus])
+}
+
+model VerificationCase {
+  id              String                 @id @default(cuid())
+  type            VerificationType
+  status          VerificationStatus     @default(NOT_SUBMITTED)
+  subjectUserId   String
+  subjectUser     User                   @relation("VerificationSubject", fields: [subjectUserId], references: [id], onDelete: Cascade)
+  propertyId      String?
+  property        Property?              @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  reviewedById    String?
+  reviewedBy      User?                  @relation("VerificationReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  submittedAt     DateTime?
+  reviewedAt      DateTime?
+  expiresAt       DateTime?
+  rejectionReason String?
+  suspendedReason String?
+  documents       VerificationDocument[]
+  auditLogs       VerificationAuditLog[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@index([subjectUserId, type, status])
+  @@index([propertyId, type, status])
+  @@index([reviewedById])
+  @@index([expiresAt])
+}
+
+model VerificationDocument {
+  id                 String                   @id @default(cuid())
+  verificationCaseId String
+  verificationCase   VerificationCase         @relation(fields: [verificationCaseId], references: [id], onDelete: Cascade)
+  type               VerificationDocumentType
+  storageKey         String
+  originalName       String?
+  mimeType           String?
+  sizeBytes          Int?
+  checksum           String?
+  issuedAt           DateTime?
+  expiresAt          DateTime?
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+
+  @@index([verificationCaseId])
+  @@index([type])
+  @@index([expiresAt])
+}
+
+model VerificationAuditLog {
+  id                 String              @id @default(cuid())
+  verificationCaseId String?
+  verificationCase   VerificationCase?   @relation(fields: [verificationCaseId], references: [id], onDelete: SetNull)
+  actorId            String?
+  actor              User?               @relation("VerificationAuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  action             String
+  fromStatus         VerificationStatus?
+  toStatus           VerificationStatus?
+  reason             String?
+  metadata           Json?
+  createdAt          DateTime            @default(now())
+
+  @@index([verificationCaseId, createdAt])
+  @@index([actorId])
+  @@index([action])
 }
 
 model AgentApplication {

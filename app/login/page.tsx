@@ -37,6 +37,8 @@ function LoginForm() {
       router.push("/dashboard");
     } else if (user?.requestedRole === "OWNER" || user?.requestedRole === "AGENT") {
       router.push("/verification");
+    } else if (user?.role === "AGENT") {
+      router.push("/agent/dashboard");
     } else if (user?.role === "OWNER") {
       router.push("/owner/dashboard");
     } else {

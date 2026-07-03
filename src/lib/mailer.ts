@@ -169,7 +169,15 @@ export async function sendPasswordResetEmail(to: string, firstName: string, toke
   });
 }
 
-export async function sendWelcomeEmail(to: string, firstName: string) {
+export async function sendWelcomeEmail(
+  to: string,
+  firstName: string,
+  accountType: "propriétaire" | "agent" = "propriétaire",
+) {
+  const accountMessage =
+    accountType === "agent"
+      ? "Votre compte agent est maintenant <strong>actif</strong>. Vos justificatifs ont été validés et votre badge agent peut désormais être affiché."
+      : "Votre compte propriétaire est maintenant <strong>actif</strong>. Vous pouvez dès à présent vous connecter et soumettre vos biens à la location.";
   await transporter.sendMail({
     from: process.env.SMTP_FROM,
     to,
@@ -182,7 +190,7 @@ export async function sendWelcomeEmail(to: string, firstName: string) {
         <div style="background:#ffffff;padding:32px;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 12px 12px">
           <h2 style="margin:0 0 16px;color:#0066CC;font-size:22px">Bienvenue sur AKIL IMMO !</h2>
           <p style="color:#374151;margin:0 0 12px">Bonjour ${escapeHtml(firstName)},</p>
-          <p style="color:#374151;margin:0 0 12px">Votre compte propriétaire est maintenant <strong>actif</strong>. Vous pouvez dès à présent vous connecter et soumettre vos biens à la location.</p>
+          <p style="color:#374151;margin:0 0 12px">${accountMessage}</p>
           <a href="https://www.akilimmo.com/login" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
             Se connecter
           </a>

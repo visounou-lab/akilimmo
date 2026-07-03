@@ -2,11 +2,19 @@ import type { Metadata } from "next";
 import Navbar from "../../components/v3/Navbar";
 import Footer from "../../components/v3/Footer";
 import AgentApplicationForm from "./_form";
+import {
+  BadgeDollarSign,
+  Building2,
+  ChartNoAxesCombined,
+  Headphones,
+  Landmark,
+  ShieldCheck,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Devenir Agent Immo Partenaire — AKIL IMMO",
   description:
-    "Rejoignez le réseau d'agents immobiliers partenaires d'AKIL IMMO. Profitez de commissions attractives sur chaque location conclue grâce à votre réseau. Inscription en liste d'attente ouverte.",
+    "Créez votre compte agent AKIL IMMO et transmettez vos justificatifs professionnels dans un espace sécurisé.",
 };
 
 export default function AgencePartenairePage() {
@@ -22,7 +30,7 @@ export default function AgencePartenairePage() {
               className="inline-block mb-5 rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase"
               style={{ backgroundColor: "rgba(200,146,42,0.15)", color: "#C8922A", border: "1px solid rgba(200,146,42,0.3)" }}
             >
-              Programme en cours de lancement
+              Inscriptions sécurisées ouvertes
             </span>
             <h1
               style={{
@@ -66,32 +74,32 @@ export default function AgencePartenairePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
-                  icon: "💰",
+                  icon: BadgeDollarSign,
                   title: "Commission attractive",
                   desc: "Percevez une commission sur chaque location conclue grâce à votre réseau. Tarifs préférentiels pour les agents certifiés.",
                 },
                 {
-                  icon: "🏠",
+                  icon: Building2,
                   title: "Accès à notre catalogue",
                   desc: "Accédez à tous nos biens disponibles en Côte d'Ivoire et au Bénin. Proposez-les directement à vos clients.",
                 },
                 {
-                  icon: "📊",
+                  icon: ChartNoAxesCombined,
                   title: "Tableau de bord dédié",
                   desc: "Suivez vos apports, vos commissions et vos transactions en temps réel depuis votre espace agent.",
                 },
                 {
-                  icon: "🔒",
+                  icon: ShieldCheck,
                   title: "Sécurité et conformité",
                   desc: "Travaillez dans un cadre légal conforme aux exigences du gouvernement ivoirien pour les démarcheurs immobiliers.",
                 },
                 {
-                  icon: "⚡",
+                  icon: Landmark,
                   title: "Paiements rapides",
                   desc: "Commissions versées rapidement après la confirmation de la location. Traçabilité complète de chaque transaction.",
                 },
                 {
-                  icon: "🤝",
+                  icon: Headphones,
                   title: "Support dédié",
                   desc: "Un interlocuteur AKIL IMMO disponible pour vous accompagner dans vos démarches et répondre à vos questions.",
                 },
@@ -106,7 +114,7 @@ export default function AgencePartenairePage() {
                     boxShadow: "0 2px 12px rgba(28,25,23,0.05)",
                   }}
                 >
-                  <span className="text-2xl mb-3 block">{item.icon}</span>
+                  <item.icon className="mb-3 text-[#C8922A]" size={26} aria-hidden="true" />
                   <h3
                     style={{
                       fontFamily: "var(--font-playfair), serif",
@@ -170,21 +178,23 @@ export default function AgencePartenairePage() {
                 {/* CI */}
                 <div style={{ border: "1px solid rgba(200,146,42,0.2)", borderRadius: 12, padding: "1rem" }}>
                   <p style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 600, fontSize: "0.8rem", color: "#C8922A", marginBottom: "0.5rem" }}>
-                    🇨🇮 Côte d&apos;Ivoire
+                    Côte d&apos;Ivoire
                   </p>
                   <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
-                    <li>Registre de commerce valide, <strong>OU</strong></li>
-                    <li>Carte d&apos;exercice de démarchage immobilier</li>
+                    <li>Carte professionnelle ou autorisation d&apos;exercice</li>
+                    <li>Registre de commerce valide</li>
+                    <li>Assurance professionnelle</li>
                   </ul>
                 </div>
                 {/* Bénin */}
                 <div style={{ border: "1px solid rgba(200,146,42,0.2)", borderRadius: 12, padding: "1rem" }}>
                   <p style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 600, fontSize: "0.8rem", color: "#C8922A", marginBottom: "0.5rem" }}>
-                    🇧🇯 Bénin
+                    Bénin
                   </p>
                   <ul style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "#6B5E52", lineHeight: 2, paddingLeft: "1.1rem", margin: 0 }}>
-                    <li>Registre de commerce valide, <strong>OU</strong></li>
-                    <li>Autorisation d&apos;exercice délivrée par le ministère compétent</li>
+                    <li>Carte professionnelle ou autorisation d&apos;exercice</li>
+                    <li>Registre de commerce valide</li>
+                    <li>Assurance professionnelle</li>
                   </ul>
                 </div>
               </div>
@@ -215,7 +225,7 @@ export default function AgencePartenairePage() {
                     margin: 0,
                   }}
                 >
-                  Le document officiel vous sera demandé lors de la validation de votre candidature.
+                  Les documents seront transmis uniquement dans votre espace privé après confirmation de l&apos;email.
                   Aucun partenariat ne sera activé sans vérification préalable.
                 </p>
               </div>
@@ -231,7 +241,7 @@ export default function AgencePartenairePage() {
                 className="mb-3 text-xs font-semibold tracking-widest uppercase"
                 style={{ fontFamily: "var(--font-inter), sans-serif", color: "#C8922A" }}
               >
-                LISTE D&apos;ATTENTE
+                OUVERTURE DU DOSSIER
               </p>
               <h2
                 style={{
@@ -241,7 +251,7 @@ export default function AgencePartenairePage() {
                   color: "#1C1917",
                 }}
               >
-                Pré-inscrivez votre agence
+                Créez votre compte agent
               </h2>
               <p
                 style={{
@@ -252,8 +262,8 @@ export default function AgencePartenairePage() {
                   marginTop: "0.5rem",
                 }}
               >
-                Le programme agent partenaire sera lancé officiellement sous peu.
-                Inscrivez-vous maintenant pour être parmi les premiers contactés.
+                L’inscription ouvre un dossier, mais n’active ni le rôle agent ni les commissions.
+                L’activation intervient seulement après contrôle complet.
               </p>
             </div>
             <AgentApplicationForm />

@@ -20,7 +20,10 @@ export default async function EditBienPage({ params }: Props) {
   const pendingCount = (property as any).images?.filter((img: any) => img.status === "PENDING").length ?? 0;
 
   const boundAction = updateProperty.bind(null, id);
-  const boundApprove = approveAllPropertyImages.bind(null, id);
+  const boundApprove = async () => {
+    "use server";
+    await approveAllPropertyImages(id);
+  };
 
   return (
     <div className="p-8 max-w-3xl">

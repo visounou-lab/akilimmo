@@ -1,6 +1,7 @@
 "use client";
 
 import { useReducedMotion, motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import Link from "next/link";
 
 const services = [
@@ -48,17 +49,17 @@ const services = [
 export default function ServicesSection() {
   const prefersReduced = useReducedMotion();
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: prefersReduced ? 0 : 0.15 } },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: prefersReduced ? 0 : 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  const headingVariants = {
+  const headingVariants: Variants = {
     hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   };

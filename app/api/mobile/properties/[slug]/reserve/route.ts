@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
     const { clientName, clientPhone, checkIn, checkOut, duration, totalPrice, message, locationType } = await req.json();
 
     if (!clientName || !clientPhone || !checkIn || !checkOut) {
@@ -13,7 +14,7 @@ export async function POST(
     }
 
     const property = await prisma.property.findUnique({
-      where: { slug: params.slug, publishStatus: "published" },
+      where: { slug, publishStatus: "published" },
       select: { id: true },
     });
 

@@ -4,8 +4,9 @@ import { verifyMobileToken } from "@/lib/mobile-auth";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const user = verifyMobileToken(req);
   if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
@@ -16,7 +17,7 @@ export async function PATCH(
 
   // Verify the request belongs to one of the owner's properties
   const request = await prisma.reservationRequest.findFirst({
-    where: { id: params.id, property: { ownerId: user.id } },
+    where: { id, property: { ownerId: user.id } },
   });
 
   if (!request) {
@@ -24,7 +25,7 @@ export async function PATCH(
   }
 
   const updated = await prisma.reservationRequest.update({
-    where: { id: params.id },
+    where: { id },
     data: { status },
     select: { id: true, status: true },
   });

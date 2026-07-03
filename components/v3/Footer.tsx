@@ -12,16 +12,15 @@ const NAV_COLUMNS = [
   {
     title: "Biens",
     links: [
-      { label: "Louer (long séjour)", href: "#biens" },
-      { label: "Court séjour", href: "#biens" },
-      { label: "Tous nos biens", href: "#biens" },
+      { label: "Louer (long séjour)", href: "/biens" },
+      { label: "Court séjour", href: "/sejours" },
+      { label: "Tous nos biens", href: "/biens" },
     ],
   },
   {
     title: "AKIL IMMO",
     links: [
       { label: "Comment ça marche", href: "/comment-ca-marche" },
-      { label: "Témoignages", href: "#" },
       { label: "Mentions légales", href: "/mentions-legales" },
       { label: "Confidentialité", href: "/confidentialite" },
     ],
@@ -37,9 +36,9 @@ const NAV_COLUMNS = [
   {
     title: "Pays couverts",
     links: [
-      { label: "Côte d'Ivoire — Abidjan", href: "#biens" },
-      { label: "Bénin — Cotonou", href: "#biens" },
-      { label: "Bénin — Abomey-Calavi", href: "#biens" },
+      { label: "Côte d'Ivoire — Abidjan", href: "/biens?q=Abidjan" },
+      { label: "Bénin — Cotonou", href: "/biens?q=Cotonou" },
+      { label: "Bénin — Abomey-Calavi", href: "/biens?q=Abomey-Calavi" },
     ],
   },
 ];
@@ -242,7 +241,7 @@ export default function Footer({ showContactCTA = true }: { showContactCTA?: boo
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="text-sm cursor-pointer transition-colors duration-150"
+                        className="text-sm cursor-pointer transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
                         style={{
                           fontFamily: "var(--font-inter), sans-serif",
                           fontWeight: 300,

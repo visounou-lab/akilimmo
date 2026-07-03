@@ -46,13 +46,10 @@ function useFavorites(properties: PropertyCard[]) {
 }
 
 const COUNTRY_FILTERS = [
-  { value: "TOUS",          label: "Tous",          flag: "🌍" },
-  { value: "BENIN",         label: "Bénin",         flag: "🇧🇯" },
-  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire", flag: "🇨🇮" },
+  { value: "TOUS",          label: "Tous" },
+  { value: "BENIN",         label: "Bénin" },
+  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire" },
 ];
-
-const TABS = ["Long séjour", "Court séjour"] as const;
-type Tab = (typeof TABS)[number];
 
 export type PropertyCard = {
   id: string;
@@ -95,7 +92,6 @@ export default function FeaturedProperties({
 }: {
   properties: PropertyCard[];
 }) {
-  const [activeTab,  setActiveTab]  = useState<Tab>("Long séjour");
   const [country,    setCountry]    = useState("TOUS");
   const { toggle, isFavorite, getLikeCount } = useFavorites(properties);
 
@@ -155,33 +151,30 @@ export default function FeaturedProperties({
 
         {/* Toggles + filtre pays */}
         <div className="mb-10 flex flex-col sm:flex-row sm:items-center gap-4">
-          {/* Long/Court séjour */}
+          {/* Offre de séjour */}
           <div
             className="inline-flex rounded-xl p-1 gap-1"
             style={{ backgroundColor: "#E8DDD0" }}
-            role="tablist"
           >
-            {TABS.map((tab) => {
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveTab(tab)}
-                  className="rounded-lg px-5 py-2 text-sm cursor-pointer transition-all duration-200"
-                  style={{
-                    fontFamily: "var(--font-inter), sans-serif",
-                    fontWeight: isActive ? 500 : 400,
-                    backgroundColor: isActive ? "#1B4D3E" : "transparent",
-                    color: isActive ? "#FDFCF8" : "#6B5E52",
-                    boxShadow: isActive ? "0 1px 4px rgba(27,77,62,0.25)" : "none",
-                  }}
-                >
-                  {tab}
-                </button>
-              );
-            })}
+            <span
+              className="rounded-lg px-5 py-2 text-sm"
+              style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                fontWeight: 500,
+                backgroundColor: "#1B4D3E",
+                color: "#FDFCF8",
+                boxShadow: "0 1px 4px rgba(27,77,62,0.25)",
+              }}
+            >
+              Long séjour
+            </span>
+            <a
+              href="/sejours"
+              className="rounded-lg px-5 py-2 text-sm cursor-pointer text-[#6B5E52] transition-colors hover:text-[#1B4D3E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A]"
+              style={{ fontFamily: "var(--font-inter), sans-serif" }}
+            >
+              Court séjour · bientôt
+            </a>
           </div>
 
           {/* Filtre pays */}
@@ -203,7 +196,6 @@ export default function FeaturedProperties({
                     boxShadow: active ? "0 1px 6px rgba(200,146,42,0.3)" : "none",
                   }}
                 >
-                  <span>{c.flag}</span>
                   <span>{c.label}</span>
                 </button>
               );

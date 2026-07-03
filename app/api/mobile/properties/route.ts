@@ -6,7 +6,10 @@ export async function GET(req: NextRequest) {
   const city     = req.nextUrl.searchParams.get("city")     ?? undefined;
   const type     = req.nextUrl.searchParams.get("type")     ?? undefined;
   const stayType = req.nextUrl.searchParams.get("stayType") ?? undefined;
-  const country  = req.nextUrl.searchParams.get("country")  ?? undefined;
+  const rawCountry = req.nextUrl.searchParams.get("country");
+  const country = rawCountry === "BENIN" || rawCountry === "COTE_D_IVOIRE"
+    ? rawCountry
+    : undefined;
 
   const properties = await prisma.property.findMany({
     where: {

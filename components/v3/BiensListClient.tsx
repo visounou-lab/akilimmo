@@ -72,16 +72,16 @@ export type PropertyCardFull = {
 };
 
 const COUNTRY_OPTIONS = [
-  { value: "TOUS",          label: "Tous",          flag: "🌍" },
-  { value: "BENIN",         label: "Bénin",         flag: "🇧🇯" },
-  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire", flag: "🇨🇮" },
+  { value: "TOUS",          label: "Tous" },
+  { value: "BENIN",         label: "Bénin" },
+  { value: "COTE_D_IVOIRE", label: "Côte d'Ivoire" },
 ] as const;
 
 const PRICE_BRACKETS = [
-  { value: "TOUS",              label: "Tous prix" },
-  { value: "0-50000",           label: "< 50 000 XOF" },
-  { value: "50000-150000",      label: "50k – 150k" },
-  { value: "150000-999999999",  label: "> 150 000 XOF" },
+  { value: "TOUS",              label: "Tous les prix / nuit" },
+  { value: "0-50000",           label: "< 50 000 XOF / nuit" },
+  { value: "50000-150000",      label: "50k – 150k XOF / nuit" },
+  { value: "150000-999999999",  label: "> 150 000 XOF / nuit" },
 ] as const;
 
 const WA_NUMBERS: Record<string, string> = {
@@ -142,6 +142,12 @@ export default function BiensListClient({
       return true;
     });
   }, [properties, country, city, type, priceRange, search]);
+  const hasActiveFilters =
+    country !== "TOUS" ||
+    city !== "TOUTES" ||
+    priceRange !== "TOUS" ||
+    type !== "TOUS" ||
+    search.trim() !== "";
 
   function handleCountryChange(val: string) {
     setCountry(val);
@@ -161,22 +167,22 @@ export default function BiensListClient({
       {/* ── Hero éditorial ── */}
       <section
         aria-label="En-tête de la liste des biens"
-        className="py-20 lg:py-28 text-center"
+        className="py-10 sm:py-12 lg:py-14 text-center"
         style={{ backgroundColor: "#FDFCF8" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p
-            className="mb-4 text-xs font-medium tracking-widest uppercase"
+            className="mb-3 text-xs font-medium tracking-widest uppercase"
             style={{ fontFamily: "var(--font-inter), sans-serif", color: "#C8922A", letterSpacing: "0.16em" }}
           >
             Disponibles maintenant
           </p>
           <h1
-            className="mb-5 mx-auto"
+            className="mb-3 mx-auto"
             style={{
               fontFamily: "var(--font-playfair), serif",
               fontWeight: 700,
-              fontSize: "clamp(2rem, 5vw, 3.2rem)",
+              fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
               color: "#1C1917",
               letterSpacing: "-0.015em",
               lineHeight: 1.15,
@@ -216,7 +222,7 @@ export default function BiensListClient({
                     type="button"
                     onClick={() => handleCountryChange(opt.value)}
                     aria-pressed={active}
-                    className="cursor-pointer rounded-full px-4 py-2 text-sm transition-all duration-200"
+                    className="min-h-11 cursor-pointer rounded-full px-4 py-2 text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2"
                     style={{
                       fontFamily: "var(--font-inter), sans-serif",
                       fontWeight: active ? 500 : 400,
@@ -250,6 +256,16 @@ export default function BiensListClient({
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </span>
             </div>
+
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="min-h-11 cursor-pointer rounded-full px-4 py-2 text-sm font-medium text-[#6B5E52] underline decoration-[#C8922A]/50 underline-offset-4 transition-colors hover:text-[#1B4D3E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A]"
+              >
+                Réinitialiser
+              </button>
+            )}
 
             {/* Select type */}
             {types.length > 2 && (
@@ -315,7 +331,7 @@ export default function BiensListClient({
       {/* ── Grille de biens ── */}
       <section
         aria-label="Liste des biens disponibles"
-        className="py-14 lg:py-20"
+        className="py-10 lg:py-14"
         style={{ backgroundColor: "#F5F0E8" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -23,13 +23,63 @@ export async function PATCH(
   const { id } = await params;
   const { action } = await req.json();
 
-  const owner = await prisma.user.findUnique({ where: { id } });
+  const owner = await prisma.user.findUnique({
+    where: { id },
+    include: {
+      verificationCases: {
+        where: { type: { in: ["IDENTITY", "PROFESSIONAL"] } },
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
   if (!owner) {
     return NextResponse.json({ error: "Utilisateur introuvable" }, { status: 404 });
   }
 
   if (action === "activate") {
-    await prisma.user.update({ where: { id }, data: { status: "active" } });
+    const identityApproved = owner.verificationCases.some(
+      (item) =>
+        item.type === "IDENTITY" &&
+        item.status === "APPROVED" &&
+        (!item.expiresAt || item.expiresAt > new Date()),
+    );
+    if (!owner.isVerified || !identityApproved) {
+      return NextResponse.json(
+        { error: "L'email et l'identité doivent être vérifiés avant activation." },
+        { status: 409 },
+      );
+    }
+
+    const targetRole = owner.requestedRole ?? owner.role;
+    if (targetRole === "AGENT") {
+      const professionalApproved = owner.verificationCases.some(
+        (item) =>
+          item.type === "PROFESSIONAL" &&
+          item.status === "APPROVED" &&
+          (!item.expiresAt || item.expiresAt > new Date()),
+      );
+      if (!professionalApproved) {
+        return NextResponse.json(
+          { error: "Les justificatifs professionnels doivent être validés avant activation." },
+          { status: 409 },
+        );
+      }
+    }
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id },
+        data: { role: targetRole, requestedRole: null, status: "active" },
+      }),
+      prisma.verificationAuditLog.create({
+        data: {
+          actorId: (session.user as { id: string }).id,
+          action: "ROLE_ACTIVATED",
+          reason: `Activation du rôle ${targetRole}`,
+          metadata: { subjectUserId: id, role: targetRole },
+        },
+      }),
+    ]);
     const firstName = owner.name?.split(" ")[0] ?? "Propriétaire";
     if (owner.email) {
       await sendWelcomeEmail(owner.email, firstName);

@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
-          select: { id: true, email: true, name: true, password: true, role: true, status: true },
+          select: { id: true, email: true, name: true, password: true, role: true, requestedRole: true, status: true },
         });
 
         if (!user || !user.password) return null;
@@ -34,6 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email:  user.email,
           name:   user.name,
           role:   user.role,
+          requestedRole: user.requestedRole,
           status: user.status,
         };
       },
@@ -47,6 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id     = user.id;
         token.role   = (user as any).role;
+        token.requestedRole = (user as any).requestedRole;
         token.status = (user as any).status;
       }
       return token;
@@ -57,12 +59,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const dbUser = await prisma.user.findUnique({
             where:  { id: token.id as string },
-            select: { role: true, status: true },
+            select: { role: true, requestedRole: true, status: true },
           });
           (session.user as any).role   = dbUser?.role   ?? token.role;
+          (session.user as any).requestedRole = dbUser?.requestedRole ?? token.requestedRole;
           (session.user as any).status = dbUser?.status ?? token.status;
         } catch {
           (session.user as any).role   = token.role;
+          (session.user as any).requestedRole = token.requestedRole;
           (session.user as any).status = token.status;
         }
       }

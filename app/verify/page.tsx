@@ -75,10 +75,10 @@ function VerifyContent() {
           Vous recevrez un email dès que votre compte sera activé.
         </p>
         <Link
-          href="/"
+          href="/login"
           className="inline-flex items-center justify-center rounded-full bg-[#0066CC] text-white px-6 py-3 text-sm font-semibold hover:bg-[#004499] transition"
         >
-          Retour à l&apos;accueil
+          Continuer vers la vérification
         </Link>
       </>
     );

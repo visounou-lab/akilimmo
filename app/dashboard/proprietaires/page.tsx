@@ -21,7 +21,13 @@ interface Owner {
   city: string | null;
   phone: string | null;
   isVerified: boolean;
+  requestedRole: "OWNER" | "AGENT" | null;
   status: string;
+  verificationCases: {
+    type: "IDENTITY" | "PROFESSIONAL";
+    status: string;
+    expiresAt: string | null;
+  }[];
   createdAt: string;
 }
 
@@ -98,6 +104,21 @@ export default function ProprietairesPage() {
             <tbody className="divide-y divide-gray-50">
               {owners.map((o) => {
                 const st = STATUS_CONFIG[o.status] ?? STATUS_CONFIG.pending;
+                const identityApproved = o.verificationCases.some(
+                  (item) =>
+                    item.type === "IDENTITY" &&
+                    item.status === "APPROVED" &&
+                    (!item.expiresAt || new Date(item.expiresAt) > new Date()),
+                );
+                const professionalApproved =
+                  o.requestedRole !== "AGENT" ||
+                  o.verificationCases.some(
+                    (item) =>
+                      item.type === "PROFESSIONAL" &&
+                      item.status === "APPROVED" &&
+                      (!item.expiresAt || new Date(item.expiresAt) > new Date()),
+                  );
+                const canActivate = o.isVerified && identityApproved && professionalApproved;
                 return (
                   <tr key={o.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-4 py-3.5">
@@ -141,10 +162,15 @@ export default function ProprietairesPage() {
                         {o.status !== "active" && (
                           <button
                             onClick={() => doAction(o.id, "activate")}
-                            disabled={actionLoading === o.id + "activate"}
+                            disabled={!canActivate || actionLoading === o.id + "activate"}
+                            title={!canActivate ? "Validation de l'identité requise" : undefined}
                             className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-medium transition disabled:opacity-50"
                           >
-                            {actionLoading === o.id + "activate" ? "…" : "✅ Activer"}
+                            {actionLoading === o.id + "activate"
+                              ? "…"
+                              : canActivate
+                                ? "Activer"
+                                : "Justificatifs requis"}
                           </button>
                         )}
                         {o.status !== "suspended" && (

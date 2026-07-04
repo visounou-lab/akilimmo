@@ -92,3 +92,37 @@ export async function notifyPropertySubmitted(data: {
     `👉 https://www.akilimmo.com/dashboard/valider`
   );
 }
+
+const REPORT_REASON_LABELS: Record<string, string> = {
+  FAKE_LISTING: "Logement potentiellement inexistant",
+  SCAM_REQUEST: "Demande d'argent ou tentative d'arnaque",
+  WRONG_INFORMATION: "Informations ou photos trompeuses",
+  UNAVAILABLE: "Logement durablement indisponible",
+  OTHER: "Autre problème",
+};
+
+export async function notifyListingReport(data: {
+  reportId: string;
+  reason: string;
+  details: string;
+  priority: string;
+  propertyTitle: string;
+  propertySlug: string;
+  reporterEmail: string | null;
+}) {
+  const urgency = data.priority === "HIGH" ? "URGENT" : "À examiner";
+  const reason = REPORT_REASON_LABELS[data.reason] ?? data.reason;
+  const reporter = data.reporterEmail
+    ? `\nContact : ${esc(data.reporterEmail)}`
+    : "\nContact : non renseigné";
+
+  await send(
+    `<b>${urgency} — Nouveau signalement</b>\n\n` +
+    `Bien : ${esc(data.propertyTitle)}\n` +
+    `Motif : ${esc(reason)}\n` +
+    `Détails : ${esc(data.details)}${reporter}\n\n` +
+    `Annonce : https://www.akilimmo.com/biens/${encodeURIComponent(data.propertySlug)}\n` +
+    `Modération : https://www.akilimmo.com/dashboard/signalements\n` +
+    `Référence : ${esc(data.reportId)}`,
+  );
+}

@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { rateLimit } from "@/lib/ratelimit";
+import { sendListingReportAlert } from "@/lib/mailer";
+import { notifyListingReport } from "@/lib/telegram";
 
 const REASONS = ["FAKE_LISTING", "SCAM_REQUEST", "WRONG_INFORMATION", "UNAVAILABLE", "OTHER"] as const;
 
@@ -45,7 +47,7 @@ export async function POST(
   const { slug } = await params;
   const property = await prisma.property.findUnique({
     where: { slug },
-    select: { id: true, publishStatus: true },
+    select: { id: true, title: true, slug: true, publishStatus: true },
   });
   if (!property || property.publishStatus !== "published") {
     return NextResponse.json({ error: "Annonce introuvable." }, { status: 404 });
@@ -66,7 +68,7 @@ export async function POST(
   });
   if (recentDuplicate) return NextResponse.json({ success: true });
 
-  await prisma.listingReport.create({
+  const report = await prisma.listingReport.create({
     data: {
       propertyId: property.id,
       reporterId,
@@ -76,6 +78,29 @@ export async function POST(
       priority: ["FAKE_LISTING", "SCAM_REQUEST"].includes(reason) ? "HIGH" : "NORMAL",
       sourceHash,
     },
+    select: { id: true, priority: true },
+  });
+
+  const alert = {
+    reportId: report.id,
+    reason,
+    details,
+    priority: report.priority,
+    propertyTitle: property.title,
+    propertySlug: property.slug,
+    reporterEmail: email,
+  };
+  const alertResults = await Promise.allSettled([
+    notifyListingReport(alert),
+    sendListingReportAlert(alert),
+  ]);
+  alertResults.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.error(
+        `[ListingReport] ${index === 0 ? "Telegram" : "email"} alert failed for ${report.id}:`,
+        result.reason,
+      );
+    }
   });
 
   return NextResponse.json({ success: true }, { status: 201 });

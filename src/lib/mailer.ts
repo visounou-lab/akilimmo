@@ -662,3 +662,71 @@ export async function sendDocumentRequest(data: {
     ].filter(Boolean).join("\n"),
   });
 }
+
+const LISTING_REPORT_REASON_LABELS: Record<string, string> = {
+  FAKE_LISTING: "Logement potentiellement inexistant",
+  SCAM_REQUEST: "Demande d'argent ou tentative d'arnaque",
+  WRONG_INFORMATION: "Informations ou photos trompeuses",
+  UNAVAILABLE: "Logement durablement indisponible",
+  OTHER: "Autre problème",
+};
+
+export async function sendListingReportAlert(data: {
+  reportId: string;
+  reason: string;
+  details: string;
+  priority: string;
+  propertyTitle: string;
+  propertySlug: string;
+  reporterEmail: string | null;
+}): Promise<void> {
+  const reason = LISTING_REPORT_REASON_LABELS[data.reason] ?? data.reason;
+  const urgent = data.priority === "HIGH";
+  const listingUrl = `https://www.akilimmo.com/biens/${encodeURIComponent(data.propertySlug)}`;
+  const dashboardUrl = "https://www.akilimmo.com/dashboard/signalements";
+  const recipient = process.env.ADMIN_ALERT_EMAIL || "info@akilimmo.com";
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: recipient,
+    replyTo: data.reporterEmail || undefined,
+    subject: `${urgent ? "[URGENT] " : ""}Nouveau signalement — ${data.propertyTitle}`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;color:#292524">
+        <div style="background:#1C1917;padding:22px 28px;border-radius:12px 12px 0 0">
+          <strong style="color:#ffffff;font-size:20px">AKIL IMMO — Sécurité</strong>
+        </div>
+        <div style="padding:28px;border:1px solid #E7E5E4;border-top:0;border-radius:0 0 12px 12px">
+          <p style="display:inline-block;margin:0 0 18px;padding:6px 10px;border-radius:999px;background:${urgent ? "#FEE2E2" : "#FEF3C7"};color:${urgent ? "#B91C1C" : "#92400E"};font-weight:700;font-size:12px">
+            ${urgent ? "PRIORITÉ HAUTE" : "À EXAMINER"}
+          </p>
+          <h1 style="margin:0 0 18px;font-size:22px">${escapeHtml(reason)}</h1>
+          <table style="width:100%;border-collapse:collapse;background:#FAFAF9;border-radius:10px">
+            <tr><td style="padding:10px 12px;font-weight:700;width:130px">Annonce</td><td style="padding:10px 12px">${escapeHtml(data.propertyTitle)}</td></tr>
+            <tr><td style="padding:10px 12px;font-weight:700">Déclarant</td><td style="padding:10px 12px">${data.reporterEmail ? escapeHtml(data.reporterEmail) : "Non renseigné"}</td></tr>
+            <tr><td style="padding:10px 12px;font-weight:700">Référence</td><td style="padding:10px 12px;font-family:monospace">${escapeHtml(data.reportId)}</td></tr>
+          </table>
+          <div style="margin-top:18px;padding:16px;border-left:4px solid #DC2626;background:#FEF2F2;white-space:pre-wrap;line-height:1.6">${escapeHtml(data.details)}</div>
+          <p style="margin:24px 0 0">
+            <a href="${dashboardUrl}" style="display:inline-block;background:#B91C1C;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700">Examiner le signalement</a>
+            <a href="${listingUrl}" style="display:inline-block;margin-left:8px;color:#1B4D3E;padding:12px 8px;font-weight:700">Voir l'annonce</a>
+          </p>
+          <p style="margin-top:22px;color:#78716C;font-size:13px">Ne suspendez pas automatiquement un compte : vérifiez les éléments avant toute décision.</p>
+        </div>
+      </div>
+    `,
+    text: [
+      `${urgent ? "URGENT — " : ""}Nouveau signalement AKIL IMMO`,
+      "",
+      `Annonce : ${data.propertyTitle}`,
+      `Motif : ${reason}`,
+      `Déclarant : ${data.reporterEmail || "Non renseigné"}`,
+      `Référence : ${data.reportId}`,
+      "",
+      data.details,
+      "",
+      `Annonce : ${listingUrl}`,
+      `Modération : ${dashboardUrl}`,
+    ].join("\n"),
+  });
+}

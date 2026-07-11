@@ -7,6 +7,7 @@ import { sendNewPropertyNotification } from "@/lib/mailer";
 import { notifyPropertySubmitted } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { uniquePropertySlug } from "@/lib/slug";
+import { normalizePropertyType, normalizeStayType } from "@/lib/mobile-normalize";
 
 export async function submitProperty(formData: FormData) {
   const session = await auth();
@@ -65,7 +66,8 @@ export async function submitProperty(formData: FormData) {
       bathrooms:     parseInt(formData.get("bathrooms") as string, 10),
       imageUrl:      uploaded[0]?.url ?? null,
       videoUrl,
-      propertyType:  propertyTypeRaw,
+      propertyType:  normalizePropertyType(propertyTypeRaw),
+      stayType:      normalizeStayType(formData.get("stayType")),
       ownerId:       userId,
       submittedBy:   userId,
       publishStatus: "pending_review",

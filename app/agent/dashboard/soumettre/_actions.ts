@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { uniquePropertySlug } from "@/lib/slug";
 import { rateLimit } from "@/lib/ratelimit";
+import { normalizePropertyType, normalizeStayType } from "@/lib/mobile-normalize";
 
 function requiredText(formData: FormData, key: string, max = 500): string {
   const value = String(formData.get(key) ?? "").trim();
@@ -77,7 +78,8 @@ export async function submitAgentProperty(formData: FormData) {
         price,
         bedrooms,
         bathrooms,
-        propertyType: requiredText(formData, "type", 50),
+        propertyType: normalizePropertyType(requiredText(formData, "type", 50)),
+        stayType: normalizeStayType(formData.get("stayType")),
         ownerId: agentId,
         submittedBy: agentId,
         imageUrl: uploaded[0].url,

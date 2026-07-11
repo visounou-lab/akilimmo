@@ -39,7 +39,8 @@ export default function AgentPropertySubmissionPage() {
         <form onSubmit={submit} className="mt-8 space-y-6 rounded-3xl border border-[#E2D6C8] bg-[#FDFCF8] p-6 sm:p-8">
           <div className="grid gap-5 sm:grid-cols-2">
             <Field label="Titre du bien"><input name="title" required maxLength={160} className={input} /></Field>
-            <Field label="Type"><select name="type" required className={input}><option value="appartement">Appartement</option><option value="villa">Villa</option><option value="studio">Studio</option><option value="bureau">Bureau</option></select></Field>
+            <Field label="Type"><select name="type" required className={input}><option value="apartment">Appartement</option><option value="villa">Villa</option><option value="house">Maison</option><option value="studio">Studio</option><option value="office">Bureau</option></select></Field>
+            <Field label="Type de séjour"><select name="stayType" required className={input}><option value="short">Court séjour (à la nuit)</option><option value="long">Long séjour (longue durée)</option></select></Field>
             <Field label="Pays"><select name="country" required className={input}><option value="BENIN">Bénin</option><option value="COTE_D_IVOIRE">Côte d’Ivoire</option></select></Field>
             <Field label="Ville"><input name="city" required maxLength={100} className={input} /></Field>
           </div>

@@ -80,10 +80,11 @@ export default function SoumettreePage() {
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5">Type <span className="text-red-400">*</span></label>
             <select name="type" required className={inputClass}>
-              <option value="appartement">Appartement</option>
+              <option value="apartment">Appartement</option>
               <option value="villa">Villa</option>
-              <option value="bureau">Bureau</option>
+              <option value="house">Maison</option>
               <option value="studio">Studio</option>
+              <option value="office">Bureau</option>
             </select>
           </div>
           <div>
@@ -91,6 +92,13 @@ export default function SoumettreePage() {
             <select name="country" required className={inputClass}>
               <option value="BENIN">Bénin</option>
               <option value="COTE_D_IVOIRE">Côte d&apos;Ivoire</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Type de séjour <span className="text-red-400">*</span></label>
+            <select name="stayType" required className={inputClass}>
+              <option value="short">Court séjour (à la nuit)</option>
+              <option value="long">Long séjour (longue durée)</option>
             </select>
           </div>
         </div>

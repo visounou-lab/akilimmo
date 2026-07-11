@@ -27,7 +27,7 @@ export async function GET(
       images: {
         where: { status: "APPROVED" },
         orderBy: [{ isPrimary: "desc" }, { order: "asc" }],
-        take: 8,
+        take: 30,
         select: { url: true, isPrimary: true },
       },
     },

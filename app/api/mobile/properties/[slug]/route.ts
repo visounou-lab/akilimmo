@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeThumbnailFallback } from "@/lib/youtube";
+import { normalizePropertyType, cleanText } from "@/lib/mobile-normalize";
 
 export async function GET(
   _req: NextRequest,
@@ -45,6 +46,10 @@ export async function GET(
 
   return NextResponse.json({
     ...property,
+    title: cleanText(property.title),
+    city: cleanText(property.city),
+    address: cleanText(property.address),
+    propertyType: normalizePropertyType(property.propertyType),
     price: Number(property.price),
     images: allImages,
     videoUrl: property.videoUrl ?? null,

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getPropertyMainImage } from "@/lib/youtube";
+import { normalizePropertyType, propertyTypeVariants, cleanText } from "@/lib/mobile-normalize";
 
 export async function GET(req: NextRequest) {
   const city     = req.nextUrl.searchParams.get("city")     ?? undefined;
@@ -16,7 +17,7 @@ export async function GET(req: NextRequest) {
       publishStatus: "published",
       status: { in: ["AVAILABLE", "RESERVED"] },
       ...(city     ? { city:       { contains: city, mode: "insensitive" } } : {}),
-      ...(type     ? { propertyType: type }     : {}),
+      ...(type     ? { propertyType: { in: propertyTypeVariants(type), mode: "insensitive" } } : {}),
       ...(stayType ? { stayType }               : {}),
       ...(country  ? { country }                : {}),
     },
@@ -49,6 +50,9 @@ export async function GET(req: NextRequest) {
       const coverImage = getPropertyMainImage(p);
       return {
         ...p,
+        title: cleanText(p.title),
+        city: cleanText(p.city),
+        propertyType: normalizePropertyType(p.propertyType),
         price: Number(p.price),
         coverImage: coverImage.startsWith("data:") ? null : coverImage,
         images: undefined,

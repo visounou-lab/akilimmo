@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BedDouble, CarFront, House } from "lucide-react";
+import { ArrowRight, BedDouble, CarFront, House, Map } from "lucide-react";
 
 const CATEGORIES = [
   {
@@ -8,6 +8,14 @@ const CATEGORIES = [
     title: "Location meublée",
     desc: "Appartements et villas entièrement meublés pour long séjour ou court séjour. Tout inclus — eau, électricité, Wi-Fi.",
     href: "#biens",
+    badge: null,
+    accent: "#1B4D3E",
+  },
+  {
+    icon: Map,
+    title: "Vente de terrains",
+    desc: "Parcelles à vendre au Bénin et en Côte d'Ivoire, avec statut juridique vérifié (titre foncier, ACD). Terrains viabilisés ou nus.",
+    href: "/terrains",
     badge: null,
     accent: "#1B4D3E",
   },

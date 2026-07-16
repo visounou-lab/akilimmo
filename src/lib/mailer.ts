@@ -104,6 +104,33 @@ export async function sendNewPropertyNotification(data: {
   });
 }
 
+export async function sendNewLandNotification(data: {
+  ownerName: string;
+  title: string;
+  city: string;
+  surface: number;
+}) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: "david@akilimmo.com",
+    subject: "Nouveau terrain soumis — AKIL IMMO",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <h2 style="color:#0066CC">Nouveau terrain à valider</h2>
+        <ul style="color:#374151;line-height:1.8">
+          <li><strong>Propriétaire :</strong> ${escapeHtml(data.ownerName)}</li>
+          <li><strong>Titre :</strong> ${escapeHtml(data.title)}</li>
+          <li><strong>Ville :</strong> ${escapeHtml(data.city)}</li>
+          <li><strong>Superficie :</strong> ${data.surface} m²</li>
+        </ul>
+        <a href="https://www.akilimmo.com/dashboard/terrains/valider" style="display:inline-block;background:#0066CC;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px">
+          Valider le terrain
+        </a>
+      </div>
+    `,
+  });
+}
+
 export async function sendPropertyApprovedEmail(to: string, firstName: string, title: string) {
   await transporter.sendMail({
     from: process.env.SMTP_FROM,
@@ -140,6 +167,50 @@ export async function sendPropertyRejectedEmail(to: string, firstName: string, t
         </blockquote>
         <p style="color:#374151">Vous pouvez modifier votre bien et le resoumettre depuis votre espace propriétaire.</p>
         <a href="https://www.akilimmo.com/owner/dashboard/biens" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+          Mon espace
+        </a>
+        <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendLandApprovedEmail(to: string, firstName: string, title: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: `Votre terrain "${title}" est en ligne — AKIL IMMO`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
+        <h2 style="color:#0066CC">Votre terrain est publié ! 🎉</h2>
+        <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
+        <p style="color:#374151">Votre terrain <strong>${escapeHtml(title)}</strong> est maintenant en ligne sur AKIL IMMO et visible par tous les acheteurs potentiels.</p>
+        <a href="https://www.akilimmo.com/terrains" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
+          Voir sur le site
+        </a>
+        <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendLandRejectedEmail(to: string, firstName: string, title: string, note: string) {
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to,
+    subject: `Votre terrain "${title}" — Révision nécessaire`,
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px">
+        <img src="https://www.akilimmo.com/logo.png" alt="AKIL IMMO" style="height:48px;margin-bottom:24px" />
+        <h2 style="color:#DC2626">Terrain non publié</h2>
+        <p style="color:#374151">Bonjour ${escapeHtml(firstName)},</p>
+        <p style="color:#374151">Votre terrain <strong>${escapeHtml(title)}</strong> n'a pas pu être publié pour la raison suivante :</p>
+        <blockquote style="border-left:4px solid #DC2626;padding:12px 16px;margin:16px 0;background:#FEF2F2;color:#374151">
+          ${escapeHtml(note)}
+        </blockquote>
+        <p style="color:#374151">Vous pouvez modifier votre terrain et le resoumettre depuis votre espace propriétaire.</p>
+        <a href="https://www.akilimmo.com/owner/dashboard/terrains" style="display:inline-block;background:#0066CC;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">
           Mon espace
         </a>
         <p style="color:#374151;margin-top:24px">L'équipe AKIL IMMO</p>

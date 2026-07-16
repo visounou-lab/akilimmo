@@ -93,6 +93,35 @@ export async function notifyPropertySubmitted(data: {
   );
 }
 
+export async function notifyLandSubmitted(data: {
+  title: string;
+  ownerName: string;
+  city: string;
+  surface: number;
+}) {
+  await send(
+    `🌍 <b>Terrain soumis à valider</b>\n\n` +
+    `📐 ${esc(data.title)} — ${data.surface} m²\n` +
+    `👤 ${esc(data.ownerName)}\n` +
+    `📍 ${esc(data.city)}\n\n` +
+    `👉 https://www.akilimmo.com/dashboard/terrains/valider`
+  );
+}
+
+export async function notifyNewLandInquiry(data: {
+  landTitle: string;
+  clientName: string;
+  clientPhone: string;
+}) {
+  await send(
+    `📩 <b>Nouvelle demande — Terrain</b>\n\n` +
+    `🌍 ${esc(data.landTitle)}\n` +
+    `👤 ${esc(data.clientName)}\n` +
+    `📞 ${esc(data.clientPhone)}\n\n` +
+    `👉 https://www.akilimmo.com/dashboard/terrains/demandes`
+  );
+}
+
 const REPORT_REASON_LABELS: Record<string, string> = {
   FAKE_LISTING: "Logement potentiellement inexistant",
   SCAM_REQUEST: "Demande d'argent ou tentative d'arnaque",

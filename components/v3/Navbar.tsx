@@ -6,6 +6,7 @@ import { Menu, X, Home } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Louer",    href: "/biens" },
+  { label: "Terrains", href: "/terrains" },
   { label: "Voitures", href: "/voitures" },
   { label: "Séjours",  href: "/sejours" },
 ];

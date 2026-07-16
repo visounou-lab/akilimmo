@@ -5,6 +5,7 @@ import CategoriesSection from "../components/v3/CategoriesSection";
 import StatsBar from "../components/v3/StatsBar";
 import HowItWorks from "../components/v3/HowItWorks";
 import FeaturedProperties from "../components/v3/FeaturedProperties";
+import FeaturedTerrains from "../components/v3/FeaturedTerrains";
 import AkiSection from "../components/v3/AkiSection";
 import PartnerSection from "../components/v3/PartnerSection";
 import LaunchSection from "../components/v3/LaunchSection";
@@ -64,6 +65,27 @@ export default async function V3Page() {
     }),
   }));
 
+  const rawTerrains = await prisma.land.findMany({
+    where: { status: "AVAILABLE", publishStatus: "published" },
+    orderBy: { createdAt: "desc" },
+    take: 6,
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      city: true,
+      country: true,
+      price: true,
+      surface: true,
+      titleType: true,
+      serviced: true,
+      imageUrl: true,
+      images: true,
+    },
+  });
+
+  const terrains = rawTerrains.map((t) => ({ ...t, price: Number(t.price) }));
+
   return (
     <>
       <Navbar />
@@ -79,6 +101,9 @@ export default async function V3Page() {
 
         {/* 4. Biens disponibles — données réelles depuis la DB */}
         <FeaturedProperties properties={properties} />
+
+        {/* 4bis. Terrains à vendre — affiché seulement s'il y en a */}
+        {terrains.length > 0 && <FeaturedTerrains terrains={terrains} />}
 
         {/* 5. Comment ça marche */}
         <HowItWorks />

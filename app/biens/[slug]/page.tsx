@@ -8,6 +8,7 @@ import PropertyGallery from "../../../components/v3/biens/PropertyGallery";
 import ReservationFormV3 from "../../../components/v3/biens/ReservationFormV3";
 import ShareButtonsV3 from "../../../components/v3/biens/ShareButtonsV3";
 import { extractYouTubeId, getPropertyMainImage } from "@/lib/youtube";
+import { propertyTypeLabel } from "@/lib/mobile-normalize";
 import { SITE_URL, countryLabel } from "@/lib/share";
 import { MapPin, BedDouble, Bath } from "lucide-react";
 import BreadcrumbV3 from "../../../components/v3/biens/BreadcrumbV3";
@@ -268,7 +269,7 @@ export default async function V3BienDetailPage({ params }: Props) {
                     </strong>{" "}
                     Salle{bien.bathrooms > 1 ? "s" : ""} de bain
                   </span>
-                  {bien.propertyType && (
+                  {propertyTypeLabel(bien.propertyType) && (
                     <span
                       className="rounded-full px-3 py-1 text-xs font-medium"
                       style={{
@@ -278,7 +279,7 @@ export default async function V3BienDetailPage({ params }: Props) {
                         border: "1px solid rgba(200,146,42,0.3)",
                       }}
                     >
-                      {bien.propertyType}
+                      {propertyTypeLabel(bien.propertyType)}
                     </span>
                   )}
                 </div>

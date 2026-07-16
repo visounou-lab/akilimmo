@@ -5,7 +5,12 @@ import Image from "next/image";
 import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { normalizePropertyType, propertyTypeLabel } from "@/lib/mobile-normalize";
 import TrustBadge from "./TrustBadge";
+
+// N'affiche le compteur de « j'aime » que lorsqu'il traduit une vraie
+// popularité — en dessous, le cœur reste un favori personnel sans chiffre.
+const LIKE_DISPLAY_THRESHOLD = 12;
 
 function useFavorites(properties: PropertyCardFull[]) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -126,9 +131,21 @@ export default function BiensListClient({
     return ["TOUTES", ...Array.from(new Set(subset.map((p) => p.city))).sort()];
   }, [properties, country]);
 
+  // Regroupe les types par clé canonique : "apartment" et "appartement"
+  // deviennent une seule option « Appartement ».
   const types = useMemo(() => {
-    const all = properties.map((p) => p.propertyType).filter(Boolean) as string[];
-    return ["TOUS", ...Array.from(new Set(all)).sort()];
+    const byCanonical = new Map<string, string>();
+    properties.forEach((p) => {
+      const canonical = normalizePropertyType(p.propertyType);
+      const label = propertyTypeLabel(p.propertyType);
+      if (canonical && label) byCanonical.set(canonical, label);
+    });
+    return [
+      { value: "TOUS", label: "Tous les types" },
+      ...[...byCanonical.entries()]
+        .sort((a, b) => a[1].localeCompare(b[1]))
+        .map(([value, label]) => ({ value, label })),
+    ];
   }, [properties]);
 
   const filtered = useMemo(() => {
@@ -136,7 +153,7 @@ export default function BiensListClient({
     return properties.filter((p) => {
       if (country !== "TOUS" && p.country !== country) return false;
       if (city !== "TOUTES" && p.city !== city) return false;
-      if (type !== "TOUS" && p.propertyType !== type) return false;
+      if (type !== "TOUS" && normalizePropertyType(p.propertyType) !== type) return false;
       if (priceRange !== "TOUS") {
         const [minStr, maxStr] = priceRange.split("-");
         if (p.price < Number(minStr) || p.price > Number(maxStr)) return false;
@@ -286,7 +303,7 @@ export default function BiensListClient({
                   style={{ fontFamily: "var(--font-inter), sans-serif", backgroundColor: "#FDFCF8", color: "#1B4D3E", border: "1.5px solid #1B4D3E" }}
                 >
                   {types.map((t) => (
-                    <option key={t} value={t}>{t === "TOUS" ? "Tous les types" : t}</option>
+                    <option key={t.value} value={t.value}>{t.label}</option>
                   ))}
                 </select>
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" aria-hidden="true" style={{ color: "#1B4D3E" }}>
@@ -406,12 +423,12 @@ export default function BiensListClient({
                         >
                           Disponible
                         </div>
-                        {prop.propertyType && (
+                        {propertyTypeLabel(prop.propertyType) && (
                           <div
                             className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium"
                             style={{ backgroundColor: "rgba(200,146,42,0.9)", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
                           >
-                            {prop.propertyType}
+                            {propertyTypeLabel(prop.propertyType)}
                           </div>
                         )}
 
@@ -424,7 +441,7 @@ export default function BiensListClient({
                           aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
                         >
                           <Heart size={14} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
-                          {likeCount > 0 && (
+                          {likeCount >= LIKE_DISPLAY_THRESHOLD && (
                             <span className="text-xs font-medium" style={{ color: liked ? "#EF4444" : "#ffffff", lineHeight: 1 }}>
                               {likeCount}
                             </span>
@@ -469,10 +486,12 @@ export default function BiensListClient({
                             <Bath size={14} aria-hidden="true" />
                             {prop.bathrooms} sdb.
                           </span>
-                          <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: liked ? "#EF4444" : "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
-                            <Heart size={12} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#94A3B8"} />
-                            {likeCount}
-                          </span>
+                          {likeCount >= LIKE_DISPLAY_THRESHOLD && (
+                            <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: liked ? "#EF4444" : "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
+                              <Heart size={12} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#94A3B8"} />
+                              {likeCount}
+                            </span>
+                          )}
                         </div>
 
                         <a

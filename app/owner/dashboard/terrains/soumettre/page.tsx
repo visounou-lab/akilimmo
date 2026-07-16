@@ -147,6 +147,42 @@ export default function SoumettreTerrainPage() {
           <input type="url" name="videoUrl" placeholder="https://youtube.com/..." className={inputClass} />
         </div>
 
+        {/* ── Vérification du titre ── */}
+        <div className="rounded-2xl border border-[#C8922A]/30 bg-[rgba(200,146,42,0.05)] p-5 space-y-4">
+          <div className="flex items-start gap-2.5">
+            <svg className="w-5 h-5 text-[#C8922A] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-slate-800">Faites vérifier votre titre — vendez plus vite</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Les terrains avec titre vérifié inspirent bien plus confiance aux acheteurs.
+                Vos documents restent <strong>strictement confidentiels</strong> : jamais publiés, consultés uniquement par notre équipe de vérification.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              Référence du titre <span className="text-slate-400 font-normal">(optionnel)</span>
+            </label>
+            <input type="text" name="titleRef" placeholder="ex : TF n°1234 RB / Cotonou" className={inputClass} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              Documents du titre <span className="text-slate-400 font-normal">(privé — PDF, JPEG ou PNG, max 8 Mo)</span>
+            </label>
+            <label className="flex flex-col items-center justify-center border-2 border-dashed border-[#C8922A]/40 rounded-xl p-6 cursor-pointer hover:bg-[rgba(200,146,42,0.06)] transition">
+              <svg className="w-7 h-7 text-[#C8922A] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span className="text-sm text-slate-500">Titre foncier, ACD, plan de bornage, convention…</span>
+              <input type="file" name="titleDocs" accept="application/pdf,image/jpeg,image/png" multiple className="hidden" />
+            </label>
+          </div>
+        </div>
+
         {/* Photos */}
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1.5">

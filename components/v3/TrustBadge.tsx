@@ -1,12 +1,18 @@
-import { BadgeCheck, ClipboardCheck, MapPinCheck } from "lucide-react";
+import { BadgeCheck, ClipboardCheck, MapPinCheck, ScrollText } from "lucide-react";
 
 export type TrustBadgeKind =
   | "listing-reviewed"
   | "identity-verified"
   | "agent-verified"
-  | "physical-visit";
+  | "physical-visit"
+  | "title-verified";
 
 const CONFIG = {
+  "title-verified": {
+    label: "Titre vérifié",
+    description: "Le titre de propriété de ce terrain a été contrôlé sur pièce par AKIL IMMO.",
+    icon: ScrollText,
+  },
   "listing-reviewed": {
     label: "Annonce contrôlée",
     description: "Le contenu, les photos et les informations de cette annonce ont été examinés.",

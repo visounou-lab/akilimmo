@@ -157,7 +157,8 @@ export default function CategoriesSection() {
               >
                 {cat.badge
                   ? cat.href === "/sejours" ? "Découvrir le lancement" : "Être notifié"
-                  : cat.href === "/voitures" ? "Voir les voitures" : "Voir les biens"}
+                  : cat.href === "/voitures" ? "Voir les voitures"
+                  : cat.href === "/terrains" ? "Voir les terrains" : "Voir les biens"}
                 <ArrowRight size={13} aria-hidden="true" />
               </div>
             </a>

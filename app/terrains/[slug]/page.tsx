@@ -7,9 +7,19 @@ import Footer from "../../../components/v3/Footer";
 import PropertyGallery from "../../../components/v3/biens/PropertyGallery";
 import ContactCardV3 from "../../../components/v3/biens/ContactCardV3";
 import TerrainInquiryForm from "../../../components/v3/terrains/TerrainInquiryForm";
+import TrustBadge from "../../../components/v3/TrustBadge";
 import { extractYouTubeId } from "@/lib/youtube";
 import { SITE_URL, countryLabel } from "@/lib/share";
 import { MapPin, Maximize, ShieldCheck, Plug } from "lucide-react";
+
+// Masque partiellement la référence du titre : prouve qu'AKIL IMMO la détient
+// sans exposer publiquement le numéro complet.
+function maskTitleRef(ref: string): string {
+  const trimmed = ref.trim();
+  if (trimmed.length <= 4) return trimmed;
+  const head = trimmed.slice(0, Math.min(4, trimmed.length - 2));
+  return `${head}${"•".repeat(Math.max(2, trimmed.length - head.length - 1))}${trimmed.slice(-1)}`;
+}
 
 export const revalidate = 3600;
 
@@ -67,6 +77,10 @@ export default async function TerrainDetailPage({ params }: Props) {
   const price = Number(land.price);
   const priceFmt = new Intl.NumberFormat("fr-FR").format(price);
   const surfaceFmt = new Intl.NumberFormat("fr-FR").format(land.surface);
+  const titleVerified = land.titleVerification === "VERIFIED";
+  const titleVerifiedAtFmt = land.titleVerifiedAt
+    ? new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "long", year: "numeric" }).format(land.titleVerifiedAt)
+    : null;
   const youtubeId = extractYouTubeId(land.videoUrl);
   const waNumber =
     land.country === "COTE_D_IVOIRE" ? "2250710259146" : "2290197598682";
@@ -154,6 +168,11 @@ export default async function TerrainDetailPage({ params }: Props) {
                   }}>
                     {land.title}
                   </h1>
+                  {land.titleVerification === "VERIFIED" && (
+                    <div className="mb-4">
+                      <TrustBadge kind="title-verified" />
+                    </div>
+                  )}
                   <a
                     href={`https://maps.google.com/?q=${encodeURIComponent(`${land.address}, ${land.city}, ${cLabel}`)}`}
                     target="_blank" rel="noopener noreferrer"
@@ -229,6 +248,62 @@ export default async function TerrainDetailPage({ params }: Props) {
                     — Statut juridique vérifié
                   </div>
                 </div>
+
+                {/* Panneau de confiance — vérification du titre */}
+                {titleVerified ? (
+                  <div
+                    className="rounded-2xl p-5"
+                    style={{ backgroundColor: "#EAF3EF", border: "1.5px solid rgba(18,56,45,0.25)" }}
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <ShieldCheck size={20} aria-hidden="true" style={{ color: "#12382D" }} />
+                      <p style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 700, fontSize: "1.05rem", color: "#12382D" }}>
+                        Titre vérifié par AKIL IMMO
+                      </p>
+                    </div>
+                    <ul className="space-y-2 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", color: "#1C3A30" }}>
+                      <li className="flex justify-between gap-3">
+                        <span style={{ color: "#4B6157" }}>Type de titre</span>
+                        <span style={{ fontWeight: 600 }}>{TITLE_LABEL[land.titleType] ?? land.titleType}</span>
+                      </li>
+                      {land.titleRef && (
+                        <li className="flex justify-between gap-3">
+                          <span style={{ color: "#4B6157" }}>Référence</span>
+                          <span style={{ fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>{maskTitleRef(land.titleRef)}</span>
+                        </li>
+                      )}
+                      {titleVerifiedAtFmt && (
+                        <li className="flex justify-between gap-3">
+                          <span style={{ color: "#4B6157" }}>Vérifié le</span>
+                          <span style={{ fontWeight: 600 }}>{titleVerifiedAtFmt}</span>
+                        </li>
+                      )}
+                    </ul>
+                    {land.titleVerificationNote && (
+                      <p className="mt-3 pt-3 text-sm" style={{ borderTop: "1px solid rgba(18,56,45,0.15)", color: "#1C3A30", fontFamily: "var(--font-inter), sans-serif", lineHeight: 1.6 }}>
+                        {land.titleVerificationNote}
+                      </p>
+                    )}
+                    <p className="mt-3 text-xs" style={{ color: "#4B6157", fontFamily: "var(--font-inter), sans-serif", lineHeight: 1.6 }}>
+                      Notre équipe a contrôlé le titre sur pièce. La référence complète et les justificatifs sont communiqués aux acheteurs sérieux, après prise de contact.
+                    </p>
+                  </div>
+                ) : (
+                  <div
+                    className="rounded-2xl p-5"
+                    style={{ backgroundColor: "#FDFCF8", border: "1.5px solid #E8DDD0" }}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <ShieldCheck size={18} aria-hidden="true" style={{ color: "#A89B8C" }} />
+                      <p style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 600, fontSize: "0.9rem", color: "#6B5E52" }}>
+                        Titre non encore vérifié
+                      </p>
+                    </div>
+                    <p className="text-xs" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif", lineHeight: 1.6 }}>
+                      Ce terrain n&apos;a pas encore fait l&apos;objet d&apos;un contrôle de titre par AKIL IMMO. Nous vous recommandons d&apos;exiger et de vérifier les documents avant tout paiement. Contactez-nous, nous pouvons vous accompagner.
+                    </p>
+                  </div>
+                )}
 
                 {/* Formulaire de demande */}
                 <TerrainInquiryForm landId={land.id} landTitle={land.title} landCountry={land.country} />

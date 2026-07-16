@@ -34,6 +34,7 @@ export async function GET(req: NextRequest) {
       surface: true,
       titleType: true,
       serviced: true,
+      titleVerification: true,
       status: true,
       imageUrl: true,
       images: true,

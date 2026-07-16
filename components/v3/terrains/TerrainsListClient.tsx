@@ -14,6 +14,7 @@ export interface TerrainCard {
   surface: number;
   titleType: string;
   serviced: boolean;
+  titleVerification: string;
   imageUrl: string | null;
   images: string[];
 }
@@ -133,11 +134,24 @@ export default function TerrainsListClient({ terrains }: Props) {
           {filtered.length === 0 ? (
             <div className="py-20 text-center">
               <p style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.3rem", color: "#1C1917" }}>
-                Aucun terrain ne correspond à votre recherche.
+                {terrains.length === 0
+                  ? "Les premiers terrains arrivent très bientôt."
+                  : "Aucun terrain ne correspond à votre recherche."}
               </p>
               <p className="mt-2 text-sm" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
-                De nouveaux terrains sont ajoutés régulièrement — revenez bientôt.
+                {terrains.length === 0
+                  ? "Vous vendez un terrain ? Publiez-le gratuitement et touchez des acheteurs vérifiés."
+                  : "De nouveaux terrains sont ajoutés régulièrement — revenez bientôt."}
               </p>
+              {terrains.length === 0 && (
+                <a
+                  href="/inscription"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                  style={{ backgroundColor: "#C8922A", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
+                >
+                  Mettre mon terrain en vente
+                </a>
+              )}
             </div>
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -163,13 +177,23 @@ export default function TerrainsListClient({ terrains }: Props) {
                           <Maximize size={32} aria-hidden="true" />
                         </div>
                       )}
-                      <span
-                        className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
-                        style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8" }}
-                      >
-                        <ShieldCheck size={12} aria-hidden="true" style={{ color: "#C8922A" }} />
-                        {TITLE_LABEL[t.titleType] ?? t.titleType}
-                      </span>
+                      <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+                        {t.titleVerification === "VERIFIED" && (
+                          <span
+                            className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
+                            style={{ backgroundColor: "#12382D", color: "#EAF3EF" }}
+                          >
+                            <ShieldCheck size={12} aria-hidden="true" style={{ color: "#5FD3A3" }} />
+                            Titre vérifié
+                          </span>
+                        )}
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
+                          style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8" }}
+                        >
+                          {TITLE_LABEL[t.titleType] ?? t.titleType}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="p-4 flex flex-col flex-1">

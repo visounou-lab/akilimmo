@@ -2,11 +2,12 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { uploadImage } from "@/lib/cloudinary";
+import { uploadImage, uploadPrivateVerificationDocument } from "@/lib/cloudinary";
 import { sendNewLandNotification } from "@/lib/mailer";
 import { notifyLandSubmitted } from "@/lib/telegram";
 import { revalidatePath } from "next/cache";
 import { uniqueLandSlug } from "@/lib/slug";
+import { detectVerificationFile, MAX_VERIFICATION_FILE_SIZE } from "@/lib/verification-documents";
 
 const TITLE_TYPES = [
   "TITRE_FONCIER",
@@ -58,6 +59,33 @@ export async function submitLand(formData: FormData) {
     }
   }
 
+  // Documents privés du titre (preuves) — stockés en Cloudinary « authenticated ».
+  const titleFiles = formData.getAll("titleDocs") as File[];
+  const titleDocs: {
+    storageKey: string;
+    originalName: string | null;
+    mimeType: string;
+    sizeBytes: number;
+  }[] = [];
+  for (const file of titleFiles) {
+    if (!file || file.size === 0) continue;
+    if (file.size > MAX_VERIFICATION_FILE_SIZE) {
+      throw new Error("Un document dépasse la taille maximale autorisée (8 Mo).");
+    }
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const detected = detectVerificationFile(buffer);
+    if (!detected) {
+      throw new Error("Documents du titre : formats acceptés = PDF, JPEG ou PNG.");
+    }
+    const { storageKey } = await uploadPrivateVerificationDocument(buffer, detected.extension);
+    titleDocs.push({
+      storageKey,
+      originalName: file.name || null,
+      mimeType: detected.mimeType,
+      sizeBytes: file.size,
+    });
+  }
+
   const title = (formData.get("title") as string)?.trim();
   const city  = (formData.get("city") as string)?.trim();
   if (!title || !city) throw new Error("Titre et ville sont requis.");
@@ -69,6 +97,7 @@ export async function submitLand(formData: FormData) {
 
   const slug     = await uniqueLandSlug(title, city);
   const videoUrl = (formData.get("videoUrl") as string | null)?.trim() || null;
+  const titleRef = (formData.get("titleRef") as string | null)?.trim() || null;
 
   const land = await prisma.land.create({
     data: {
@@ -85,9 +114,22 @@ export async function submitLand(formData: FormData) {
       imageUrl:      uploaded[0]?.url ?? null,
       images:        uploaded.map((u) => u.url),
       videoUrl,
+      titleRef,
+      // Le titre passe « en cours de contrôle » dès qu'une preuve est fournie ;
+      // il ne deviendra VERIFIED que sur validation humaine d'un admin.
+      titleVerification: titleDocs.length > 0 ? "PENDING" : "UNVERIFIED",
       ownerId:       userId,
       submittedBy:   userId,
       publishStatus: "pending_review",
+      documents: titleDocs.length > 0 ? {
+        create: titleDocs.map((d) => ({
+          type:         "TITLE_DEED" as const,
+          storageKey:   d.storageKey,
+          originalName: d.originalName,
+          mimeType:     d.mimeType,
+          sizeBytes:    d.sizeBytes,
+        })),
+      } : undefined,
     },
   });
 

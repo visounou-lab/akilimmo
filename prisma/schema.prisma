@@ -86,6 +86,24 @@ enum LandTitleType {
   AUTRE
 }
 
+// État de la vérification du titre foncier d'un terrain — visible par l'acheteur.
+// Ne passe à VERIFIED que sur preuve réelle (document du titre contrôlé).
+enum LandTitleVerification {
+  UNVERIFIED // aucun document / non contrôlé
+  PENDING    // documents soumis, contrôle en cours
+  VERIFIED   // titre contrôlé avec preuve
+  REJECTED   // incohérence détectée au contrôle
+}
+
+// Types de documents de preuve (stockés en privé, jamais publics).
+enum LandDocumentType {
+  TITLE_DEED     // Titre foncier / ACD
+  SURVEY_PLAN    // Plan de bornage / levé topographique
+  SALE_AGREEMENT // Convention de vente / acte notarié
+  OWNER_ID       // Pièce d'identité du vendeur
+  OTHER
+}
+
 enum PaymentStatus {
   PENDING
   PAID
@@ -136,6 +154,7 @@ model User {
   submittedProperties     Property[]             @relation("SubmittedProperties")
   lands                   Land[]                 @relation("OwnerLands")
   submittedLands          Land[]                 @relation("SubmittedLands")
+  verifiedLandTitles      Land[]                 @relation("LandTitleVerifier")
   contracts               Contract[]             @relation("TenantContracts")
   ownedContracts          Contract[]             @relation("OwnerContracts")
   payments                Payment[]
@@ -508,6 +527,15 @@ model Land {
   titleType     LandTitleType @default(AUTRE)
   serviced      Boolean       @default(false) // viabilisé (eau/électricité à proximité)
   status        LandStatus    @default(AVAILABLE)
+
+  // ── Preuve de vérification du titre ──
+  titleVerification     LandTitleVerification @default(UNVERIFIED)
+  titleRef              String? // référence du titre contrôlé (ex. "TF n°1234 RB"), affichée masquée
+  titleVerificationNote String? // ce qui a été contrôlé, visible acheteur
+  titleVerifiedAt       DateTime?
+  titleVerifiedById     String?
+  titleVerifiedBy       User?           @relation("LandTitleVerifier", fields: [titleVerifiedById], references: [id], onDelete: SetNull)
+  documents             LandDocument[]
   imageUrl      String?
   images        String[] // URLs Cloudinary (galerie)
   videoUrl      String?
@@ -526,6 +554,23 @@ model Land {
   @@index([status, publishStatus])
   @@index([ownerId])
   @@index([createdAt])
+}
+
+// Document de preuve rattaché à un terrain (titre foncier, plan de bornage…).
+// Stocké en Cloudinary « authenticated » : jamais servi publiquement, seuls
+// les admins peuvent générer un lien de téléchargement signé et temporaire.
+model LandDocument {
+  id           String           @id @default(cuid())
+  landId       String
+  land         Land             @relation(fields: [landId], references: [id], onDelete: Cascade)
+  type         LandDocumentType @default(TITLE_DEED)
+  storageKey   String // public_id Cloudinary (type authenticated)
+  originalName String?
+  mimeType     String?
+  sizeBytes    Int?
+  createdAt    DateTime         @default(now())
+
+  @@index([landId])
 }
 
 // Demande de contact d'un acheteur intéressé par un terrain.

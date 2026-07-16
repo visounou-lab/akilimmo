@@ -71,6 +71,21 @@ enum ContractStatus {
   TERMINATED
 }
 
+enum LandStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  OFF_MARKET
+}
+
+enum LandTitleType {
+  TITRE_FONCIER      // Titre foncier (le plus sûr)
+  ACD                // Attestation de Cession Définitive (Côte d'Ivoire)
+  LETTRE_ATTRIBUTION // Lettre d'attribution
+  CONVENTION_VENTE   // Convention de vente
+  AUTRE
+}
+
 enum PaymentStatus {
   PENDING
   PAID
@@ -119,6 +134,8 @@ model User {
   sessions                Session[]
   properties              Property[]             @relation("OwnerProperties")
   submittedProperties     Property[]             @relation("SubmittedProperties")
+  lands                   Land[]                 @relation("OwnerLands")
+  submittedLands          Land[]                 @relation("SubmittedLands")
   contracts               Contract[]             @relation("TenantContracts")
   ownedContracts          Contract[]             @relation("OwnerContracts")
   payments                Payment[]
@@ -470,6 +487,61 @@ model ReservationRequest {
   updatedAt    DateTime @updatedAt
 
   @@index([propertyId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ── Vente de terrains ──────────────────────────────────────────────
+// Un terrain est une VENTE (prix total), à distinguer de la location de
+// biens (Property, prix par nuit/mois). Pas de chambres/SDB ; à la place
+// une superficie, un statut juridique et un état de viabilisation.
+model Land {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  title         String
+  description   String
+  country       Country
+  city          String
+  address       String
+  price         Decimal // prix de vente total (XOF)
+  surface       Int // superficie en m²
+  titleType     LandTitleType @default(AUTRE)
+  serviced      Boolean       @default(false) // viabilisé (eau/électricité à proximité)
+  status        LandStatus    @default(AVAILABLE)
+  imageUrl      String?
+  images        String[] // URLs Cloudinary (galerie)
+  videoUrl      String?
+  ownerId       String
+  owner         User          @relation("OwnerLands", fields: [ownerId], references: [id])
+  submittedBy   String?
+  submitter     User?         @relation("SubmittedLands", fields: [submittedBy], references: [id])
+  publishStatus String        @default("pending_review") // draft | pending_review | published | rejected
+  adminNote     String?
+  likesCount    Int           @default(0)
+  viewCount     Int           @default(0)
+  inquiries     LandInquiry[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status, publishStatus])
+  @@index([ownerId])
+  @@index([createdAt])
+}
+
+// Demande de contact d'un acheteur intéressé par un terrain.
+model LandInquiry {
+  id          String   @id @default(cuid())
+  landId      String
+  land        Land     @relation(fields: [landId], references: [id], onDelete: Cascade)
+  clientName  String
+  clientPhone String
+  clientEmail String?
+  message     String?
+  status      String   @default("pending") // pending | contacted | closed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([landId])
   @@index([status])
   @@index([createdAt])
 }

@@ -34,3 +34,27 @@ export async function uniquePropertySlug(
     candidate = `${base}-${n++}`;
   }
 }
+
+export async function uniqueLandSlug(
+  title: string,
+  city: string,
+  excludeId?: string
+): Promise<string> {
+  const citySlug  = slugify(city);
+  const titleSlug = slugify(title);
+  const base = titleSlug.endsWith(citySlug)
+    ? titleSlug
+    : `${titleSlug}-${citySlug}`;
+  let candidate = base;
+  let n = 2;
+
+  while (true) {
+    const existing = await prisma.land.findUnique({
+      where: { slug: candidate },
+      select: { id: true },
+    });
+
+    if (!existing || existing.id === excludeId) return candidate;
+    candidate = `${base}-${n++}`;
+  }
+}

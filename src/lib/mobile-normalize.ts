@@ -27,6 +27,28 @@ export function normalizePropertyType(raw: string | null | undefined): string | 
   return PROPERTY_TYPE_MAP[key] ?? key;
 }
 
+/** Libellés français propres par type canonique, pour un affichage cohérent. */
+const PROPERTY_TYPE_LABELS_FR: Record<string, string> = {
+  apartment: "Appartement",
+  villa: "Villa",
+  house: "Maison",
+  studio: "Studio",
+  office: "Bureau",
+};
+
+/**
+ * Libellé français affichable d'un type de bien, quelle que soit la variante
+ * saisie en base ("apartment" comme "appartement" → "Appartement").
+ */
+export function propertyTypeLabel(raw: string | null | undefined): string | null {
+  const canonical = normalizePropertyType(raw);
+  if (!canonical) return null;
+  return (
+    PROPERTY_TYPE_LABELS_FR[canonical] ??
+    canonical.charAt(0).toUpperCase() + canonical.slice(1)
+  );
+}
+
 /**
  * Variantes brutes connues d'un type canonique, pour filtrer en base
  * des valeurs saisies librement (ex. "apartment" → ["apartment", "appartement", "appart"]).

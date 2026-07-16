@@ -5,7 +5,12 @@ import Image from "next/image";
 import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { propertyTypeLabel } from "@/lib/mobile-normalize";
 import TrustBadge from "./TrustBadge";
+
+// Cf. BiensListClient : le compteur de « j'aime » ne s'affiche qu'au-delà
+// d'un seuil de vraie popularité.
+const LIKE_DISPLAY_THRESHOLD = 12;
 
 function useFavorites(properties: PropertyCard[]) {
   const [favorites,  setFavorites]  = useState<Set<string>>(new Set());
@@ -257,7 +262,7 @@ export default function FeaturedProperties({
                       Disponible
                     </div>
                     {/* Type badge */}
-                    {prop.propertyType && (
+                    {propertyTypeLabel(prop.propertyType) && (
                       <div
                         className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium"
                         style={{
@@ -266,7 +271,7 @@ export default function FeaturedProperties({
                           fontFamily: "var(--font-inter), sans-serif",
                         }}
                       >
-                        {prop.propertyType}
+                        {propertyTypeLabel(prop.propertyType)}
                       </div>
                     )}
 
@@ -279,7 +284,7 @@ export default function FeaturedProperties({
                       aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
                     >
                       <Heart size={14} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#ffffff"} />
-                      {likeCount > 0 && (
+                      {likeCount >= LIKE_DISPLAY_THRESHOLD && (
                         <span className="text-xs font-medium" style={{ color: liked ? "#EF4444" : "#ffffff", lineHeight: 1 }}>
                           {likeCount}
                         </span>
@@ -344,10 +349,12 @@ export default function FeaturedProperties({
                       <span className="flex items-center gap-1.5 text-sm" style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 300, color: "#6B5E52" }}>
                         <Bath size={14} aria-hidden="true" />{prop.bathrooms} sdb.
                       </span>
-                      <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: liked ? "#EF4444" : "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
-                        <Heart size={13} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#94A3B8"} />
-                        {likeCount}
-                      </span>
+                      {likeCount >= LIKE_DISPLAY_THRESHOLD && (
+                        <span className="flex items-center gap-1 text-xs ml-auto" style={{ color: liked ? "#EF4444" : "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
+                          <Heart size={13} fill={liked ? "#EF4444" : "none"} color={liked ? "#EF4444" : "#94A3B8"} />
+                          {likeCount}
+                        </span>
+                      )}
                     </div>
 
                     {/* WhatsApp CTA */}

@@ -14,6 +14,7 @@ export interface TerrainCard {
   surface: number;
   titleType: string;
   serviced: boolean;
+  titleVerification: string;
   imageUrl: string | null;
   images: string[];
 }
@@ -176,13 +177,23 @@ export default function TerrainsListClient({ terrains }: Props) {
                           <Maximize size={32} aria-hidden="true" />
                         </div>
                       )}
-                      <span
-                        className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
-                        style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8" }}
-                      >
-                        <ShieldCheck size={12} aria-hidden="true" style={{ color: "#C8922A" }} />
-                        {TITLE_LABEL[t.titleType] ?? t.titleType}
-                      </span>
+                      <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+                        {t.titleVerification === "VERIFIED" && (
+                          <span
+                            className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
+                            style={{ backgroundColor: "#12382D", color: "#EAF3EF" }}
+                          >
+                            <ShieldCheck size={12} aria-hidden="true" style={{ color: "#5FD3A3" }} />
+                            Titre vérifié
+                          </span>
+                        )}
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold"
+                          style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8" }}
+                        >
+                          {TITLE_LABEL[t.titleType] ?? t.titleType}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="p-4 flex flex-col flex-1">

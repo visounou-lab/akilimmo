@@ -79,6 +79,7 @@ export default async function V3Page() {
       surface: true,
       titleType: true,
       serviced: true,
+      titleVerification: true,
       imageUrl: true,
       images: true,
     },

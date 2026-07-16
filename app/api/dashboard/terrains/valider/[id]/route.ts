@@ -81,5 +81,36 @@ export async function PATCH(
     return NextResponse.json({ message: "Modifié" });
   }
 
+  if (action === "verify_title") {
+    const adminId = (session.user as { id: string }).id;
+    const ref  = (body.titleRef as string | undefined)?.trim() || land.titleRef || null;
+    const note = (body.note as string | undefined)?.trim() || null;
+    await prisma.land.update({
+      where: { id },
+      data: {
+        titleVerification:     "VERIFIED",
+        titleRef:              ref,
+        titleVerificationNote: note,
+        titleVerifiedAt:       new Date(),
+        titleVerifiedById:     adminId,
+      },
+    });
+    return NextResponse.json({ message: "Titre vérifié" });
+  }
+
+  if (action === "reject_title") {
+    const note = (body.note as string | undefined)?.trim() || null;
+    await prisma.land.update({
+      where: { id },
+      data: {
+        titleVerification:     "REJECTED",
+        titleVerificationNote: note,
+        titleVerifiedAt:       new Date(),
+        titleVerifiedById:     (session.user as { id: string }).id,
+      },
+    });
+    return NextResponse.json({ message: "Titre rejeté" });
+  }
+
   return NextResponse.json({ error: "Action invalide" }, { status: 400 });
 }

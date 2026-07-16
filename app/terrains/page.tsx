@@ -27,6 +27,7 @@ export default async function TerrainsPage() {
       surface: true,
       titleType: true,
       serviced: true,
+      titleVerification: true,
       imageUrl: true,
       images: true,
     },

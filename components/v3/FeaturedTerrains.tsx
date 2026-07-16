@@ -122,12 +122,22 @@ export default function FeaturedTerrains({ terrains }: { terrains: TerrainCard[]
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                    <div
-                      className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
-                      style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8", fontFamily: "var(--font-inter), sans-serif" }}
-                    >
-                      <ShieldCheck size={12} aria-hidden="true" style={{ color: "#C8922A" }} />
-                      {TITLE_LABEL[t.titleType] ?? t.titleType}
+                    <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+                      {t.titleVerification === "VERIFIED" && (
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
+                          style={{ backgroundColor: "#12382D", color: "#EAF3EF", fontFamily: "var(--font-inter), sans-serif" }}
+                        >
+                          <ShieldCheck size={12} aria-hidden="true" style={{ color: "#5FD3A3" }} />
+                          Titre vérifié
+                        </span>
+                      )}
+                      <span
+                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
+                        style={{ backgroundColor: "rgba(28,25,23,0.85)", color: "#FDFCF8", fontFamily: "var(--font-inter), sans-serif" }}
+                      >
+                        {TITLE_LABEL[t.titleType] ?? t.titleType}
+                      </span>
                     </div>
                     {t.serviced && (
                       <div

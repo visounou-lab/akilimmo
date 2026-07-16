@@ -19,6 +19,11 @@ export async function GET() {
       id: true, title: true, city: true, country: true, address: true, price: true,
       surface: true, titleType: true, serviced: true, description: true,
       imageUrl: true, images: true, videoUrl: true, adminNote: true, createdAt: true,
+      titleVerification: true, titleRef: true, titleVerificationNote: true,
+      documents: {
+        orderBy: { createdAt: "asc" },
+        select: { id: true, type: true, originalName: true, mimeType: true, createdAt: true },
+      },
       submitter: { select: { name: true, email: true } },
       owner:     { select: { name: true, email: true } },
     },

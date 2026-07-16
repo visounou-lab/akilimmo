@@ -133,11 +133,24 @@ export default function TerrainsListClient({ terrains }: Props) {
           {filtered.length === 0 ? (
             <div className="py-20 text-center">
               <p style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.3rem", color: "#1C1917" }}>
-                Aucun terrain ne correspond à votre recherche.
+                {terrains.length === 0
+                  ? "Les premiers terrains arrivent très bientôt."
+                  : "Aucun terrain ne correspond à votre recherche."}
               </p>
               <p className="mt-2 text-sm" style={{ color: "#6B5E52", fontFamily: "var(--font-inter), sans-serif" }}>
-                De nouveaux terrains sont ajoutés régulièrement — revenez bientôt.
+                {terrains.length === 0
+                  ? "Vous vendez un terrain ? Publiez-le gratuitement et touchez des acheteurs vérifiés."
+                  : "De nouveaux terrains sont ajoutés régulièrement — revenez bientôt."}
               </p>
+              {terrains.length === 0 && (
+                <a
+                  href="/inscription"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors"
+                  style={{ backgroundColor: "#C8922A", color: "#ffffff", fontFamily: "var(--font-inter), sans-serif" }}
+                >
+                  Mettre mon terrain en vente
+                </a>
+              )}
             </div>
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -117,6 +117,25 @@ body {
   }
 }
 
+/*
+ * Two-column layouts collapse to a single column on small screens. These use a
+ * class (not inline styles) because inline styles cannot carry media queries.
+ */
+.sand-hero-grid,
+.sand-split-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 920px) {
+  .sand-hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+  .sand-split-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
+
 /* Header responsive behaviour: swap the burger for the full nav on wider screens. */
 @media (min-width: 900px) {
   .sand-nav-desktop {

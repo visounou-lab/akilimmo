@@ -22,11 +22,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Hero */}
       <section style={{ background: "linear-gradient(180deg, #eef3fc 0%, var(--color-sand-bg) 100%)" }}>
         <div
-          className="sand-container"
+          className="sand-container sand-hero-grid"
           style={{
-            display: "grid",
             gap: "2.5rem",
-            gridTemplateColumns: "minmax(0, 1.1fr) minmax(0, 0.9fr)",
             alignItems: "center",
             paddingBlock: "clamp(2.5rem, 6vw, 4.5rem)",
           }}
@@ -107,7 +105,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Full calculator */}
       <Section muted id="rechner">
-        <div style={{ display: "grid", gap: "2rem", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)", alignItems: "start" }}>
+        <div className="sand-split-grid" style={{ gap: "2rem", alignItems: "start" }}>
           <SectionHeading title={t("kreditrechner.title")} subtitle={t("kreditrechner.subtitle")} />
           <Calculator locale={locale} />
         </div>

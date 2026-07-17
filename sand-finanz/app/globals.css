@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/*
+ * SAND FINANZ GRUPPE — design system
+ * Original tokens for the SAND brand (navy primary, blue CTA, discreet accent).
+ * No third-party assets, code or styling are reused.
+ */
+@theme {
+  --color-sand-navy: #18305f;
+  --color-sand-navy-700: #1f3d76;
+  --color-sand-cta: #2666eb;
+  --color-sand-cta-600: #1f56cc;
+  --color-sand-accent: #ff6a00;
+  --color-sand-bg: #f6f8fc;
+  --color-sand-ink: #111827;
+  --color-sand-muted: #55617a;
+  --color-sand-border: #e2e8f2;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --radius-card: 20px;
+  --radius-field: 12px;
+
+  --shadow-card: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 24px rgba(24, 48, 95, 0.06);
+  --shadow-cta: 0 8px 20px rgba(38, 102, 235, 0.28);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-sand-bg);
+  color: var(--color-sand-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Accessible, always-visible focus ring for keyboard navigation (WCAG). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-sand-cta);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .sand-container {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .sand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: var(--radius-field);
+    padding: 0.8rem 1.4rem;
+    transition: transform 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .sand-btn:active {
+    transform: translateY(1px);
+  }
+
+  .sand-btn-primary {
+    background: var(--color-sand-cta);
+    color: #fff;
+    box-shadow: var(--shadow-cta);
+  }
+  .sand-btn-primary:hover {
+    background: var(--color-sand-cta-600);
+  }
+
+  .sand-btn-ghost {
+    background: transparent;
+    color: var(--color-sand-navy);
+    border: 1px solid var(--color-sand-border);
+  }
+  .sand-btn-ghost:hover {
+    border-color: var(--color-sand-cta);
+    color: var(--color-sand-cta);
+  }
+
+  .sand-card {
+    background: #fff;
+    border: 1px solid var(--color-sand-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .sand-field {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--color-sand-border);
+    border-radius: var(--radius-field);
+    padding: 0.7rem 0.9rem;
+    font-size: 1rem;
+    color: var(--color-sand-ink);
+  }
+  .sand-field:focus {
+    border-color: var(--color-sand-cta);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 102, 235, 0.15);
+  }
+
+  .sand-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-sand-cta);
+  }
+}
+
+/* Header responsive behaviour: swap the burger for the full nav on wider screens. */
+@media (min-width: 900px) {
+  .sand-nav-desktop {
+    display: flex !important;
+  }
+  .sand-cta-desktop {
+    display: inline-flex !important;
+  }
+  .sand-menu-btn {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

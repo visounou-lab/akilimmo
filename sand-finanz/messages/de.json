@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "siteName": "SAND FINANZ GRUPPE",
+    "tagline": "Finanzierung, die zu Ihrem Vorhaben passt.",
+    "description": "Stellen Sie Ihr Projekt online vor. Wir prüfen Ihre Anfrage transparent und erstellen nach vollständiger Prüfung ein individuelles Angebot."
+  },
+  "nav": {
+    "startseite": "Startseite",
+    "leistungen": "Leistungen",
+    "kreditrechner": "Kreditrechner",
+    "ablauf": "Ablauf",
+    "ueberUns": "Über uns",
+    "faq": "FAQ",
+    "kontakt": "Kontakt",
+    "antrag": "Jetzt beantragen",
+    "menu": "Menü",
+    "close": "Schließen",
+    "language": "Sprache"
+  },
+  "common": {
+    "requestFinancing": "Finanzierung anfragen",
+    "discoverSolutions": "Lösungen entdecken",
+    "learnMore": "Mehr erfahren",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "unbindingBadge": "Unverbindliche Anfrage",
+    "securityNote": "Verschlüsselte Übertragung · Vertrauliche Bearbeitung",
+    "placeholderNotice": "Platzhalterinhalt — vor Veröffentlichung durch SAND FINANZ zu prüfen und freizugeben."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "SAND FINANZ GRUPPE",
+      "title": "Finanzierung, die zu Ihrem Vorhaben passt.",
+      "subtitle": "Stellen Sie Ihr Projekt online vor. Wir prüfen Ihre Anfrage transparent und erstellen nach vollständiger Prüfung ein individuelles Angebot.",
+      "guarantee1": "Transparente Prüfung",
+      "guarantee2": "100 % online",
+      "guarantee3": "Vertrauliche Bearbeitung",
+      "warning": "Eine Finanzierung setzt eine positive Prüfung Ihrer Unterlagen und Rückzahlungsfähigkeit voraus."
+    },
+    "stats": {
+      "title": "Klare Eckdaten",
+      "note": "Die folgenden Werte werden zentral verwaltet und dienen nur der Orientierung.",
+      "minAmount": "Mindestbetrag",
+      "maxTerm": "Maximale Laufzeit",
+      "decision": "Entscheidung",
+      "decisionValue": "Nur nach vollständiger Prüfung",
+      "months": "Monate"
+    },
+    "solutions": {
+      "title": "Unsere Finanzierungslösungen",
+      "subtitle": "Wählen Sie den Rahmen, der zu Ihrem Vorhaben passt. Angebote werden nur nach Prüfung erstellt.",
+      "personalTitle": "Privatkredit",
+      "personalText": "Flexible Finanzierung für persönliche Vorhaben mit klaren Konditionen.",
+      "autoTitle": "Autofinanzierung",
+      "autoText": "Finanzieren Sie Neu- oder Gebrauchtwagen mit planbaren Raten.",
+      "renovationTitle": "Renovierung",
+      "renovationText": "Modernisierung und Sanierung Ihres Wohnraums.",
+      "businessTitle": "Unternehmen",
+      "businessText": "Investitionen und Betriebsmittel für Ihr Unternehmen.",
+      "studyTitle": "Studium",
+      "studyText": "Finanzierung von Ausbildung und Weiterbildung.",
+      "energyTitle": "Energie",
+      "energyText": "Photovoltaik, Wärmepumpe und energetische Maßnahmen."
+    },
+    "advantages": {
+      "title": "Warum SAND FINANZ GRUPPE",
+      "item1Title": "100 % online",
+      "item1Text": "Anfrage und Unterlagen vollständig digital einreichen.",
+      "item2Title": "Lesbare Konditionen",
+      "item2Text": "Verständliche Angaben zu Betrag, Laufzeit und Kosten.",
+      "item3Title": "Persönliche Begleitung",
+      "item3Text": "Wir begleiten Ihre Anfrage über den gesamten Prozess.",
+      "item4Title": "Dokumentensicherheit",
+      "item4Text": "Verschlüsselte Übertragung und vertrauliche Aufbewahrung."
+    },
+    "processTeaser": {
+      "title": "In drei Schritten zur Entscheidung",
+      "step1": "Anfrage stellen",
+      "step2": "Unterlagen prüfen",
+      "step3": "Entscheidung & Auszahlung nach Vertrag"
+    },
+    "ctaFinal": {
+      "title": "Bereit, Ihr Vorhaben vorzustellen?",
+      "subtitle": "Starten Sie Ihre unverbindliche Anfrage. Sie erhalten eine Eingangsbestätigung — ohne automatische Zusage.",
+      "button": "Finanzierung anfragen"
+    },
+    "testimonials": {
+      "title": "Stimmen",
+      "note": "Dieser Bereich wird über die Administration gepflegt. Es werden keine erfundenen Bewertungen angezeigt.",
+      "empty": "Noch keine freigegebenen Erfahrungsberichte."
+    }
+  },
+  "leistungen": {
+    "title": "Unsere Leistungen",
+    "subtitle": "Ein Überblick über die Finanzierungsarten. Verfügbarkeit, Beträge und Konditionen werden nur nach Prüfung bestätigt.",
+    "note": "Die tatsächlich angebotenen Produkte und Länder werden erst nach interner Freigabe veröffentlicht."
+  },
+  "kreditrechner": {
+    "title": "Kreditrechner",
+    "subtitle": "Berechnen Sie eine unverbindliche Beispielrate. Die Werte dienen ausschließlich der Orientierung."
+  },
+  "ablauf": {
+    "title": "So funktioniert es",
+    "subtitle": "Von der Anfrage bis zur Auszahlung — transparent und nachvollziehbar.",
+    "step1Title": "1. Anfrage",
+    "step1Text": "Sie stellen Ihr Vorhaben online vor und laden die erforderlichen Unterlagen hoch.",
+    "step2Title": "2. Analyse",
+    "step2Text": "Wir prüfen Ihre Angaben, Unterlagen und Rückzahlungsfähigkeit sorgfältig.",
+    "step3Title": "3. Entscheidung & Auszahlung",
+    "step3Text": "Nach positiver Prüfung erhalten Sie ein Angebot. Die Auszahlung erfolgt nach Vertragsunterzeichnung und Freigabe."
+  },
+  "unterlagen": {
+    "title": "Erforderliche Unterlagen",
+    "subtitle": "Die konkrete Liste hängt vom Produkt und Land ab und wird im Antrag angezeigt.",
+    "item1": "Gültiges Ausweisdokument",
+    "item2": "Adressnachweis",
+    "item3": "Einkommensnachweis",
+    "item4": "Bankverbindung (IBAN)",
+    "item5": "Produktspezifische Nachweise",
+    "securityNote": "Wir fragen niemals nach Bankpasswörtern, PIN, 2FA-Codes oder Zugriff auf Ihr Bankkonto."
+  },
+  "ueberUns": {
+    "title": "Über SAND FINANZ GRUPPE",
+    "subtitle": "Verantwortungsvolle Finanzierung mit Transparenz und Sorgfalt.",
+    "body": "SAND FINANZ GRUPPE begleitet Finanzierungsanfragen strukturiert und transparent. Alle rechtlichen Angaben zur Gesellschaft — Firmierung, Rechtsform, Anschrift, Registernummer und gesetzliche Vertretung — werden ausschließlich nach interner Freigabe im Impressum veröffentlicht.",
+    "responsibleTitle": "Verantwortungsvolle Kreditvergabe",
+    "responsibleText": "Wir prüfen die Rückzahlungsfähigkeit und vermeiden jede irreführende Darstellung. Eine Finanzierung ist nie garantiert."
+  },
+  "faq": {
+    "title": "Häufige Fragen",
+    "subtitle": "Antworten zu Anfrage, Prüfung und Sicherheit.",
+    "items": [
+      {
+        "q": "Ist die Anfrage verbindlich?",
+        "a": "Nein. Ihre Anfrage ist unverbindlich. Ein Angebot entsteht erst nach vollständiger Prüfung Ihrer Unterlagen."
+      },
+      {
+        "q": "Erhalte ich eine automatische Zusage?",
+        "a": "Nein. Es gibt keine automatische Zusage. Jede Entscheidung folgt einer individuellen Prüfung."
+      },
+      {
+        "q": "Wie werden meine Daten geschützt?",
+        "a": "Die Übertragung ist verschlüsselt, Unterlagen werden vertraulich und privat gespeichert."
+      },
+      {
+        "q": "Fragen Sie nach meinen Bankzugangsdaten?",
+        "a": "Niemals. Wir fragen nicht nach Passwörtern, PIN oder 2FA-Codes."
+      },
+      {
+        "q": "Welche Sprachen werden unterstützt?",
+        "a": "Die Website ist auf Deutsch, Polnisch, Schwedisch und Tschechisch verfügbar."
+      }
+    ]
+  },
+  "kontakt": {
+    "title": "Kontakt",
+    "subtitle": "Schreiben Sie uns Ihre Frage. Für eine Finanzierungsanfrage nutzen Sie bitte das Antragsformular.",
+    "nameLabel": "Name",
+    "emailLabel": "E-Mail",
+    "messageLabel": "Nachricht",
+    "send": "Nachricht senden",
+    "legalNote": "Offizielle Kontaktdaten werden im Impressum nach interner Freigabe veröffentlicht."
+  },
+  "antrag": {
+    "title": "Finanzierung beantragen",
+    "subtitle": "In wenigen Schritten. Ihre Angaben werden vertraulich behandelt.",
+    "step": "Schritt",
+    "of": "von",
+    "steps": {
+      "project": "Projekt",
+      "identity": "Identität",
+      "situation": "Situation",
+      "consents": "Einwilligungen",
+      "confirmation": "Bestätigung"
+    },
+    "fields": {
+      "productType": "Finanzierungsart",
+      "amount": "Betrag",
+      "term": "Laufzeit (Monate)",
+      "purpose": "Verwendungszweck",
+      "country": "Land",
+      "salutation": "Anrede",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "birthDate": "Geburtsdatum",
+      "nationality": "Staatsangehörigkeit",
+      "address": "Anschrift",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "employment": "Beschäftigung / Tätigkeit",
+      "income": "Monatliches Nettoeinkommen",
+      "expenses": "Monatliche Ausgaben",
+      "housing": "Wohnsituation",
+      "existingLoans": "Bestehende Kredite"
+    },
+    "consents": {
+      "privacy": "Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Daten zur Prüfung meiner Anfrage zu.",
+      "accuracy": "Ich bestätige, dass meine Angaben vollständig und richtig sind.",
+      "contact": "Ich bin damit einverstanden, im Zusammenhang mit meiner Anfrage kontaktiert zu werden.",
+      "marketing": "Optional: Ich möchte Informationen zu Angeboten erhalten."
+    },
+    "confirmation": {
+      "title": "Anfrage übermittelt",
+      "reference": "Ihre Vorgangsnummer",
+      "text": "Vielen Dank. Wir haben Ihre Anfrage erhalten und melden uns nach der Prüfung. Dies ist keine Zusage einer Finanzierung.",
+      "nextTitle": "Nächster Schritt",
+      "nextText": "Sie erhalten eine Eingangsbestätigung per E-Mail. Halten Sie Ihre Unterlagen bereit."
+    },
+    "securityNote": "Wir fragen niemals nach Bankpasswörtern, PIN, 2FA-Codes oder Zugriff auf Ihr Bankkonto.",
+    "errorRequired": "Bitte füllen Sie dieses Pflichtfeld aus.",
+    "errorEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "errorConsent": "Bitte stimmen Sie den erforderlichen Punkten zu.",
+    "submitError": "Die Anfrage konnte nicht übermittelt werden. Bitte versuchen Sie es erneut."
+  },
+  "calculator": {
+    "product": "Finanzierungsart",
+    "amount": "Betrag",
+    "term": "Laufzeit",
+    "months": "Monate",
+    "monthlyPayment": "Monatliche Rate",
+    "nominalRate": "Nominalzins p. a.",
+    "effectiveRate": "Effektiver Jahreszins",
+    "effectiveRateIndicative": "indikativ",
+    "totalInterest": "Zinsen gesamt",
+    "originationFee": "Bearbeitungsgebühr",
+    "totalCost": "Gesamtkosten des Kredits",
+    "totalRepayment": "Rückzahlung gesamt",
+    "showSchedule": "Tilgungsplan anzeigen",
+    "hideSchedule": "Tilgungsplan ausblenden",
+    "scheduleMonth": "Monat",
+    "schedulePayment": "Rate",
+    "scheduleInterest": "Zinsen",
+    "schedulePrincipal": "Tilgung",
+    "scheduleBalance": "Restschuld",
+    "apply": "Diese Finanzierung anfragen",
+    "disclaimer": "Unverbindliche Simulation. Kein verbindliches Angebot. Eine Finanzierung setzt eine positive Prüfung Ihrer Unterlagen und Rückzahlungsfähigkeit voraus.",
+    "rangeHint": "Zulässiger Bereich",
+    "quickTitle": "Schnellrechner"
+  },
+  "footer": {
+    "aboutTitle": "SAND FINANZ GRUPPE",
+    "aboutText": "Verantwortungsvolle Finanzierung mit Transparenz und Sorgfalt.",
+    "legalTitle": "Rechtliches",
+    "servicesTitle": "Leistungen",
+    "responsibleCredit": "Verantwortungsvoll finanzieren: Prüfen Sie Ihre Rückzahlungsfähigkeit. Eine Finanzierung ist nicht garantiert und setzt eine positive Prüfung voraus.",
+    "legalEntityPlaceholder": "Rechtliche Angaben (Firmierung, Anschrift, Register) werden nach interner Freigabe im Impressum veröffentlicht.",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "legal": {
+    "impressum": {
+      "title": "Impressum",
+      "body": "Die vollständigen gesetzlichen Angaben (Firmierung, Rechtsform, Anschrift, Registergericht und -nummer, USt-IdNr., gesetzliche Vertretung, Aufsichts- und Zulassungsangaben) werden hier ausschließlich nach interner rechtlicher Freigabe veröffentlicht. Es werden keine unbestätigten Angaben angezeigt."
+    },
+    "datenschutz": {
+      "title": "Datenschutzerklärung",
+      "body": "Diese Datenschutzerklärung beschreibt die Verarbeitung personenbezogener Daten gemäß DSGVO: Verantwortlicher, Zwecke, Rechtsgrundlagen, Empfänger, Speicherdauer sowie Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Der endgültige Text wird nach rechtlicher Prüfung veröffentlicht."
+    },
+    "cookies": {
+      "title": "Cookie-Richtlinie",
+      "body": "Wir setzen technisch notwendige Cookies. Analyse- und Marketing-Cookies werden nur mit Ihrer Einwilligung verwendet. Die vollständige Auflistung und die Einwilligungsverwaltung werden nach rechtlicher Prüfung veröffentlicht."
+    },
+    "nutzungsbedingungen": {
+      "title": "Nutzungsbedingungen",
+      "body": "Diese Nutzungsbedingungen regeln die Verwendung der Website. Der verbindliche Text wird nach rechtlicher Prüfung veröffentlicht."
+    }
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "text": "Die angeforderte Seite ist nicht verfügbar.",
+    "home": "Zur Startseite"
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "siteName": "SAND FINANZ GRUPPE",
+    "tagline": "Finansowanie dopasowane do Twojego celu.",
+    "description": "Przedstaw swój projekt online. Rozpatrujemy wniosek w sposób przejrzysty i po pełnej weryfikacji przygotowujemy indywidualną ofertę."
+  },
+  "nav": {
+    "startseite": "Strona główna",
+    "leistungen": "Usługi",
+    "kreditrechner": "Kalkulator kredytowy",
+    "ablauf": "Jak to działa",
+    "ueberUns": "O nas",
+    "faq": "FAQ",
+    "kontakt": "Kontakt",
+    "antrag": "Złóż wniosek",
+    "menu": "Menu",
+    "close": "Zamknij",
+    "language": "Język"
+  },
+  "common": {
+    "requestFinancing": "Zapytaj o finansowanie",
+    "discoverSolutions": "Poznaj rozwiązania",
+    "learnMore": "Dowiedz się więcej",
+    "back": "Wstecz",
+    "next": "Dalej",
+    "submit": "Wyślij",
+    "unbindingBadge": "Zapytanie niezobowiązujące",
+    "securityNote": "Szyfrowana transmisja · Poufne przetwarzanie",
+    "placeholderNotice": "Treść zastępcza — do sprawdzenia i zatwierdzenia przez SAND FINANZ przed publikacją."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "SAND FINANZ GRUPPE",
+      "title": "Finansowanie dopasowane do Twojego celu.",
+      "subtitle": "Przedstaw swój projekt online. Rozpatrujemy wniosek w sposób przejrzysty i po pełnej weryfikacji przygotowujemy indywidualną ofertę.",
+      "guarantee1": "Przejrzysta weryfikacja",
+      "guarantee2": "100 % online",
+      "guarantee3": "Poufne przetwarzanie",
+      "warning": "Finansowanie wymaga pozytywnej weryfikacji dokumentów i zdolności do spłaty."
+    },
+    "stats": {
+      "title": "Jasne dane",
+      "note": "Poniższe wartości są zarządzane centralnie i mają charakter orientacyjny.",
+      "minAmount": "Kwota minimalna",
+      "maxTerm": "Maksymalny okres",
+      "decision": "Decyzja",
+      "decisionValue": "Tylko po pełnej weryfikacji",
+      "months": "miesięcy"
+    },
+    "solutions": {
+      "title": "Nasze rozwiązania finansowe",
+      "subtitle": "Wybierz zakres pasujący do Twojego celu. Oferty przygotowujemy wyłącznie po weryfikacji.",
+      "personalTitle": "Kredyt gotówkowy",
+      "personalText": "Elastyczne finansowanie celów prywatnych z jasnymi warunkami.",
+      "autoTitle": "Finansowanie samochodu",
+      "autoText": "Sfinansuj nowy lub używany samochód z przewidywalnymi ratami.",
+      "renovationTitle": "Remont",
+      "renovationText": "Modernizacja i remont Twojego mieszkania.",
+      "businessTitle": "Firma",
+      "businessText": "Inwestycje i środki obrotowe dla Twojej firmy.",
+      "studyTitle": "Studia",
+      "studyText": "Finansowanie edukacji i doskonalenia zawodowego.",
+      "energyTitle": "Energia",
+      "energyText": "Fotowoltaika, pompy ciepła i działania energetyczne."
+    },
+    "advantages": {
+      "title": "Dlaczego SAND FINANZ GRUPPE",
+      "item1Title": "100 % online",
+      "item1Text": "Wniosek i dokumenty w pełni cyfrowo.",
+      "item2Title": "Czytelne warunki",
+      "item2Text": "Zrozumiałe informacje o kwocie, okresie i kosztach.",
+      "item3Title": "Wsparcie osobiste",
+      "item3Text": "Towarzyszymy Twojemu wnioskowi przez cały proces.",
+      "item4Title": "Bezpieczeństwo dokumentów",
+      "item4Text": "Szyfrowana transmisja i poufne przechowywanie."
+    },
+    "processTeaser": {
+      "title": "Trzy kroki do decyzji",
+      "step1": "Złóż wniosek",
+      "step2": "Weryfikacja dokumentów",
+      "step3": "Decyzja i wypłata po umowie"
+    },
+    "ctaFinal": {
+      "title": "Gotowy, aby przedstawić swój projekt?",
+      "subtitle": "Rozpocznij niezobowiązujące zapytanie. Otrzymasz potwierdzenie — bez automatycznej zgody.",
+      "button": "Zapytaj o finansowanie"
+    },
+    "testimonials": {
+      "title": "Opinie",
+      "note": "Ta sekcja jest zarządzana w panelu administracyjnym. Nie wyświetlamy fikcyjnych opinii.",
+      "empty": "Brak zatwierdzonych opinii."
+    }
+  },
+  "leistungen": {
+    "title": "Nasze usługi",
+    "subtitle": "Przegląd rodzajów finansowania. Dostępność, kwoty i warunki potwierdzamy dopiero po weryfikacji.",
+    "note": "Faktycznie oferowane produkty i kraje publikujemy dopiero po wewnętrznym zatwierdzeniu."
+  },
+  "kreditrechner": {
+    "title": "Kalkulator kredytowy",
+    "subtitle": "Oblicz orientacyjną, niezobowiązującą ratę. Wartości mają charakter wyłącznie poglądowy."
+  },
+  "ablauf": {
+    "title": "Jak to działa",
+    "subtitle": "Od wniosku do wypłaty — przejrzyście i zrozumiale.",
+    "step1Title": "1. Wniosek",
+    "step1Text": "Przedstawiasz swój projekt online i przesyłasz wymagane dokumenty.",
+    "step2Title": "2. Analiza",
+    "step2Text": "Dokładnie sprawdzamy dane, dokumenty i zdolność do spłaty.",
+    "step3Title": "3. Decyzja i wypłata",
+    "step3Text": "Po pozytywnej weryfikacji otrzymujesz ofertę. Wypłata następuje po podpisaniu umowy i zatwierdzeniu."
+  },
+  "unterlagen": {
+    "title": "Wymagane dokumenty",
+    "subtitle": "Konkretna lista zależy od produktu i kraju i jest wyświetlana we wniosku.",
+    "item1": "Ważny dokument tożsamości",
+    "item2": "Potwierdzenie adresu",
+    "item3": "Potwierdzenie dochodu",
+    "item4": "Dane bankowe (IBAN)",
+    "item5": "Dokumenty specyficzne dla produktu",
+    "securityNote": "Nigdy nie prosimy o hasła bankowe, PIN, kody 2FA ani dostęp do konta bankowego."
+  },
+  "ueberUns": {
+    "title": "O SAND FINANZ GRUPPE",
+    "subtitle": "Odpowiedzialne finansowanie z przejrzystością i starannością.",
+    "responsibleTitle": "Odpowiedzialne udzielanie kredytów",
+    "responsibleText": "Sprawdzamy zdolność do spłaty i unikamy wprowadzania w błąd. Finansowanie nigdy nie jest gwarantowane."
+  },
+  "faq": {
+    "title": "Najczęstsze pytania",
+    "subtitle": "Odpowiedzi dotyczące wniosku, weryfikacji i bezpieczeństwa.",
+    "items": [
+      {
+        "q": "Czy zapytanie jest wiążące?",
+        "a": "Nie. Twoje zapytanie jest niezobowiązujące. Oferta powstaje dopiero po pełnej weryfikacji dokumentów."
+      },
+      {
+        "q": "Czy otrzymam automatyczną zgodę?",
+        "a": "Nie. Nie ma automatycznej zgody. Każda decyzja wynika z indywidualnej weryfikacji."
+      },
+      {
+        "q": "Jak chronione są moje dane?",
+        "a": "Transmisja jest szyfrowana, a dokumenty przechowywane poufnie i prywatnie."
+      },
+      {
+        "q": "Czy pytacie o dane logowania do banku?",
+        "a": "Nigdy. Nie pytamy o hasła, PIN ani kody 2FA."
+      },
+      {
+        "q": "Jakie języki są obsługiwane?",
+        "a": "Strona jest dostępna w języku niemieckim, polskim, szwedzkim i czeskim."
+      }
+    ]
+  },
+  "kontakt": {
+    "title": "Kontakt",
+    "subtitle": "Napisz do nas swoje pytanie. Aby złożyć wniosek o finansowanie, skorzystaj z formularza wniosku.",
+    "nameLabel": "Imię i nazwisko",
+    "emailLabel": "E-mail",
+    "messageLabel": "Wiadomość",
+    "send": "Wyślij wiadomość",
+    "legalNote": "Oficjalne dane kontaktowe publikujemy w stopce prawnej po wewnętrznym zatwierdzeniu."
+  },
+  "antrag": {
+    "title": "Wniosek o finansowanie",
+    "subtitle": "W kilku krokach. Twoje dane traktujemy poufnie.",
+    "step": "Krok",
+    "of": "z",
+    "steps": {
+      "project": "Projekt",
+      "identity": "Tożsamość",
+      "situation": "Sytuacja",
+      "consents": "Zgody",
+      "confirmation": "Potwierdzenie"
+    },
+    "fields": {
+      "productType": "Rodzaj finansowania",
+      "amount": "Kwota",
+      "term": "Okres (miesiące)",
+      "purpose": "Cel",
+      "country": "Kraj",
+      "salutation": "Zwrot grzecznościowy",
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "birthDate": "Data urodzenia",
+      "nationality": "Obywatelstwo",
+      "address": "Adres",
+      "phone": "Telefon",
+      "email": "E-mail",
+      "employment": "Zatrudnienie / działalność",
+      "income": "Miesięczny dochód netto",
+      "expenses": "Miesięczne wydatki",
+      "housing": "Sytuacja mieszkaniowa",
+      "existingLoans": "Istniejące kredyty"
+    },
+    "consents": {
+      "privacy": "Zapoznałem/am się z polityką prywatności i wyrażam zgodę na przetwarzanie moich danych w celu rozpatrzenia wniosku.",
+      "accuracy": "Potwierdzam, że moje dane są kompletne i prawdziwe.",
+      "contact": "Wyrażam zgodę na kontakt w związku z moim wnioskiem.",
+      "marketing": "Opcjonalnie: chcę otrzymywać informacje o ofertach."
+    },
+    "confirmation": {
+      "title": "Wniosek przesłany",
+      "reference": "Twój numer sprawy",
+      "text": "Dziękujemy. Otrzymaliśmy Twój wniosek i odezwiemy się po weryfikacji. To nie jest zgoda na finansowanie.",
+      "nextTitle": "Następny krok",
+      "nextText": "Otrzymasz potwierdzenie e-mailem. Przygotuj swoje dokumenty."
+    },
+    "securityNote": "Nigdy nie prosimy o hasła bankowe, PIN, kody 2FA ani dostęp do konta bankowego.",
+    "errorRequired": "Wypełnij to pole obowiązkowe.",
+    "errorEmail": "Podaj prawidłowy adres e-mail.",
+    "errorConsent": "Zaakceptuj wymagane punkty.",
+    "submitError": "Nie udało się przesłać wniosku. Spróbuj ponownie."
+  },
+  "calculator": {
+    "product": "Rodzaj finansowania",
+    "amount": "Kwota",
+    "term": "Okres",
+    "months": "miesięcy",
+    "monthlyPayment": "Rata miesięczna",
+    "nominalRate": "Oprocentowanie nominalne rocznie",
+    "effectiveRate": "Rzeczywista roczna stopa (RRSO)",
+    "effectiveRateIndicative": "orientacyjnie",
+    "totalInterest": "Odsetki łącznie",
+    "originationFee": "Prowizja",
+    "totalCost": "Całkowity koszt kredytu",
+    "totalRepayment": "Całkowita spłata",
+    "showSchedule": "Pokaż harmonogram spłat",
+    "hideSchedule": "Ukryj harmonogram spłat",
+    "scheduleMonth": "Miesiąc",
+    "schedulePayment": "Rata",
+    "scheduleInterest": "Odsetki",
+    "schedulePrincipal": "Kapitał",
+    "scheduleBalance": "Saldo",
+    "apply": "Zapytaj o to finansowanie",
+    "disclaimer": "Symulacja niezobowiązująca. To nie jest wiążąca oferta. Finansowanie wymaga pozytywnej weryfikacji dokumentów i zdolności do spłaty.",
+    "rangeHint": "Dozwolony zakres",
+    "quickTitle": "Szybki kalkulator"
+  },
+  "footer": {
+    "aboutTitle": "SAND FINANZ GRUPPE",
+    "aboutText": "Odpowiedzialne finansowanie z przejrzystością i starannością.",
+    "legalTitle": "Informacje prawne",
+    "servicesTitle": "Usługi",
+    "responsibleCredit": "Finansuj odpowiedzialnie: sprawdź swoją zdolność do spłaty. Finansowanie nie jest gwarantowane i wymaga pozytywnej weryfikacji.",
+    "legalEntityPlaceholder": "Dane prawne (firma, adres, rejestr) publikujemy w nocie prawnej po wewnętrznym zatwierdzeniu.",
+    "rights": "Wszelkie prawa zastrzeżone."
+  },
+  "notFound": {
+    "title": "Nie znaleziono strony",
+    "text": "Żądana strona jest niedostępna.",
+    "home": "Na stronę główną"
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "siteName": "SAND FINANZ GRUPPE",
+    "tagline": "Finansiering som passar ditt projekt.",
+    "description": "Presentera ditt projekt online. Vi prövar din ansökan transparent och tar fram ett individuellt erbjudande efter fullständig prövning."
+  },
+  "nav": {
+    "startseite": "Startsida",
+    "leistungen": "Tjänster",
+    "kreditrechner": "Lånekalkylator",
+    "ablauf": "Så fungerar det",
+    "ueberUns": "Om oss",
+    "faq": "Vanliga frågor",
+    "kontakt": "Kontakt",
+    "antrag": "Ansök nu",
+    "menu": "Meny",
+    "close": "Stäng",
+    "language": "Språk"
+  },
+  "common": {
+    "requestFinancing": "Ansök om finansiering",
+    "discoverSolutions": "Utforska lösningar",
+    "learnMore": "Läs mer",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "submit": "Skicka",
+    "unbindingBadge": "Icke bindande förfrågan",
+    "securityNote": "Krypterad överföring · Konfidentiell hantering",
+    "placeholderNotice": "Platshållarinnehåll — ska granskas och godkännas av SAND FINANZ före publicering."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "SAND FINANZ GRUPPE",
+      "title": "Finansiering som passar ditt projekt.",
+      "subtitle": "Presentera ditt projekt online. Vi prövar din ansökan transparent och tar fram ett individuellt erbjudande efter fullständig prövning.",
+      "guarantee1": "Transparent prövning",
+      "guarantee2": "100 % online",
+      "guarantee3": "Konfidentiell hantering",
+      "warning": "Finansiering förutsätter en positiv prövning av dina handlingar och din återbetalningsförmåga."
+    },
+    "stats": {
+      "title": "Tydliga nyckeltal",
+      "note": "Följande värden hanteras centralt och är endast vägledande.",
+      "minAmount": "Minsta belopp",
+      "maxTerm": "Längsta löptid",
+      "decision": "Beslut",
+      "decisionValue": "Endast efter fullständig prövning",
+      "months": "månader"
+    },
+    "solutions": {
+      "title": "Våra finansieringslösningar",
+      "subtitle": "Välj det som passar ditt projekt. Erbjudanden tas fram först efter prövning.",
+      "personalTitle": "Privatlån",
+      "personalText": "Flexibel finansiering för personliga projekt med tydliga villkor.",
+      "autoTitle": "Bilfinansiering",
+      "autoText": "Finansiera ny eller begagnad bil med förutsägbara betalningar.",
+      "renovationTitle": "Renovering",
+      "renovationText": "Modernisering och renovering av ditt boende.",
+      "businessTitle": "Företag",
+      "businessText": "Investeringar och rörelsekapital för ditt företag.",
+      "studyTitle": "Studier",
+      "studyText": "Finansiering av utbildning och vidareutbildning.",
+      "energyTitle": "Energi",
+      "energyText": "Solceller, värmepump och energiåtgärder."
+    },
+    "advantages": {
+      "title": "Varför SAND FINANZ GRUPPE",
+      "item1Title": "100 % online",
+      "item1Text": "Ansökan och handlingar helt digitalt.",
+      "item2Title": "Läsbara villkor",
+      "item2Text": "Begriplig information om belopp, löptid och kostnad.",
+      "item3Title": "Personlig vägledning",
+      "item3Text": "Vi följer din ansökan genom hela processen.",
+      "item4Title": "Dokumentsäkerhet",
+      "item4Text": "Krypterad överföring och konfidentiell förvaring."
+    },
+    "processTeaser": {
+      "title": "Tre steg till beslut",
+      "step1": "Skicka ansökan",
+      "step2": "Prövning av handlingar",
+      "step3": "Beslut och utbetalning efter avtal"
+    },
+    "ctaFinal": {
+      "title": "Redo att presentera ditt projekt?",
+      "subtitle": "Starta din icke bindande förfrågan. Du får en bekräftelse — utan automatiskt godkännande.",
+      "button": "Ansök om finansiering"
+    },
+    "testimonials": {
+      "title": "Röster",
+      "note": "Detta avsnitt hanteras i administrationen. Inga påhittade omdömen visas.",
+      "empty": "Inga godkända omdömen ännu."
+    }
+  },
+  "leistungen": {
+    "title": "Våra tjänster",
+    "subtitle": "En översikt över finansieringstyperna. Tillgänglighet, belopp och villkor bekräftas först efter prövning.",
+    "note": "De produkter och länder som faktiskt erbjuds publiceras först efter intern granskning."
+  },
+  "kreditrechner": {
+    "title": "Lånekalkylator",
+    "subtitle": "Beräkna en icke bindande exempelbetalning. Värdena är endast vägledande."
+  },
+  "ablauf": {
+    "title": "Så fungerar det",
+    "subtitle": "Från ansökan till utbetalning — transparent och begripligt.",
+    "step1Title": "1. Ansökan",
+    "step1Text": "Du presenterar ditt projekt online och laddar upp de handlingar som krävs.",
+    "step2Title": "2. Analys",
+    "step2Text": "Vi granskar noggrant dina uppgifter, handlingar och återbetalningsförmåga.",
+    "step3Title": "3. Beslut och utbetalning",
+    "step3Text": "Efter positiv prövning får du ett erbjudande. Utbetalning sker efter avtalstecknande och godkännande."
+  },
+  "unterlagen": {
+    "title": "Nödvändiga handlingar",
+    "subtitle": "Den exakta listan beror på produkt och land och visas i ansökan.",
+    "item1": "Giltig identitetshandling",
+    "item2": "Adressbevis",
+    "item3": "Inkomstbevis",
+    "item4": "Bankuppgifter (IBAN)",
+    "item5": "Produktspecifika underlag",
+    "securityNote": "Vi frågar aldrig efter banklösenord, PIN, 2FA-koder eller åtkomst till ditt bankkonto."
+  },
+  "ueberUns": {
+    "title": "Om SAND FINANZ GRUPPE",
+    "subtitle": "Ansvarsfull finansiering med transparens och omsorg.",
+    "responsibleTitle": "Ansvarsfull kreditgivning",
+    "responsibleText": "Vi prövar återbetalningsförmågan och undviker all vilseledande framställning. Finansiering är aldrig garanterad."
+  },
+  "faq": {
+    "title": "Vanliga frågor",
+    "subtitle": "Svar om ansökan, prövning och säkerhet.",
+    "items": [
+      {
+        "q": "Är förfrågan bindande?",
+        "a": "Nej. Din förfrågan är icke bindande. Ett erbjudande uppstår först efter fullständig prövning av dina handlingar."
+      },
+      {
+        "q": "Får jag ett automatiskt godkännande?",
+        "a": "Nej. Det finns inget automatiskt godkännande. Varje beslut följer en individuell prövning."
+      },
+      {
+        "q": "Hur skyddas mina uppgifter?",
+        "a": "Överföringen är krypterad och handlingar lagras konfidentiellt och privat."
+      },
+      {
+        "q": "Frågar ni efter mina bankinloggningsuppgifter?",
+        "a": "Aldrig. Vi frågar inte efter lösenord, PIN eller 2FA-koder."
+      },
+      {
+        "q": "Vilka språk stöds?",
+        "a": "Webbplatsen finns på tyska, polska, svenska och tjeckiska."
+      }
+    ]
+  },
+  "kontakt": {
+    "title": "Kontakt",
+    "subtitle": "Skriv din fråga till oss. För en finansieringsansökan, använd ansökningsformuläret.",
+    "nameLabel": "Namn",
+    "emailLabel": "E-post",
+    "messageLabel": "Meddelande",
+    "send": "Skicka meddelande",
+    "legalNote": "Officiella kontaktuppgifter publiceras i den juridiska informationen efter intern granskning."
+  },
+  "antrag": {
+    "title": "Ansök om finansiering",
+    "subtitle": "I några få steg. Dina uppgifter behandlas konfidentiellt.",
+    "step": "Steg",
+    "of": "av",
+    "steps": {
+      "project": "Projekt",
+      "identity": "Identitet",
+      "situation": "Situation",
+      "consents": "Samtycken",
+      "confirmation": "Bekräftelse"
+    },
+    "fields": {
+      "productType": "Finansieringstyp",
+      "amount": "Belopp",
+      "term": "Löptid (månader)",
+      "purpose": "Ändamål",
+      "country": "Land",
+      "salutation": "Tilltal",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "birthDate": "Födelsedatum",
+      "nationality": "Medborgarskap",
+      "address": "Adress",
+      "phone": "Telefon",
+      "email": "E-post",
+      "employment": "Anställning / verksamhet",
+      "income": "Månadsinkomst netto",
+      "expenses": "Månatliga utgifter",
+      "housing": "Boendesituation",
+      "existingLoans": "Befintliga lån"
+    },
+    "consents": {
+      "privacy": "Jag har läst integritetspolicyn och samtycker till behandling av mina uppgifter för prövning av min ansökan.",
+      "accuracy": "Jag intygar att mina uppgifter är fullständiga och korrekta.",
+      "contact": "Jag samtycker till att bli kontaktad angående min ansökan.",
+      "marketing": "Valfritt: Jag vill få information om erbjudanden."
+    },
+    "confirmation": {
+      "title": "Ansökan skickad",
+      "reference": "Ditt ärendenummer",
+      "text": "Tack. Vi har mottagit din ansökan och återkommer efter prövning. Detta är inte ett godkännande av finansiering.",
+      "nextTitle": "Nästa steg",
+      "nextText": "Du får en bekräftelse via e-post. Ha dina handlingar redo."
+    },
+    "securityNote": "Vi frågar aldrig efter banklösenord, PIN, 2FA-koder eller åtkomst till ditt bankkonto.",
+    "errorRequired": "Fyll i detta obligatoriska fält.",
+    "errorEmail": "Ange en giltig e-postadress.",
+    "errorConsent": "Godkänn de obligatoriska punkterna.",
+    "submitError": "Ansökan kunde inte skickas. Försök igen."
+  },
+  "calculator": {
+    "product": "Finansieringstyp",
+    "amount": "Belopp",
+    "term": "Löptid",
+    "months": "månader",
+    "monthlyPayment": "Månadsbetalning",
+    "nominalRate": "Nominell ränta per år",
+    "effectiveRate": "Effektiv ränta",
+    "effectiveRateIndicative": "vägledande",
+    "totalInterest": "Total ränta",
+    "originationFee": "Uppläggningsavgift",
+    "totalCost": "Total kreditkostnad",
+    "totalRepayment": "Total återbetalning",
+    "showSchedule": "Visa amorteringsplan",
+    "hideSchedule": "Dölj amorteringsplan",
+    "scheduleMonth": "Månad",
+    "schedulePayment": "Betalning",
+    "scheduleInterest": "Ränta",
+    "schedulePrincipal": "Amortering",
+    "scheduleBalance": "Saldo",
+    "apply": "Ansök om denna finansiering",
+    "disclaimer": "Icke bindande simulering. Inget bindande erbjudande. Finansiering förutsätter en positiv prövning av dina handlingar och din återbetalningsförmåga.",
+    "rangeHint": "Tillåtet intervall",
+    "quickTitle": "Snabbkalkylator"
+  },
+  "footer": {
+    "aboutTitle": "SAND FINANZ GRUPPE",
+    "aboutText": "Ansvarsfull finansiering med transparens och omsorg.",
+    "legalTitle": "Juridik",
+    "servicesTitle": "Tjänster",
+    "responsibleCredit": "Finansiera ansvarsfullt: pröva din återbetalningsförmåga. Finansiering är inte garanterad och förutsätter en positiv prövning.",
+    "legalEntityPlaceholder": "Juridiska uppgifter (firma, adress, register) publiceras i den juridiska informationen efter intern granskning.",
+    "rights": "Alla rättigheter förbehållna."
+  },
+  "notFound": {
+    "title": "Sidan hittades inte",
+    "text": "Den begärda sidan är inte tillgänglig.",
+    "home": "Till startsidan"
+  }
+}

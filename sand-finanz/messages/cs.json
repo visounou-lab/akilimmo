@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "siteName": "SAND FINANZ GRUPPE",
+    "tagline": "Financování, které odpovídá vašemu záměru.",
+    "description": "Představte svůj projekt online. Vaši žádost posoudíme transparentně a po úplném prověření připravíme individuální nabídku."
+  },
+  "nav": {
+    "startseite": "Úvod",
+    "leistungen": "Služby",
+    "kreditrechner": "Úvěrová kalkulačka",
+    "ablauf": "Jak to funguje",
+    "ueberUns": "O nás",
+    "faq": "Časté dotazy",
+    "kontakt": "Kontakt",
+    "antrag": "Podat žádost",
+    "menu": "Nabídka",
+    "close": "Zavřít",
+    "language": "Jazyk"
+  },
+  "common": {
+    "requestFinancing": "Požádat o financování",
+    "discoverSolutions": "Objevit řešení",
+    "learnMore": "Zjistit více",
+    "back": "Zpět",
+    "next": "Dále",
+    "submit": "Odeslat",
+    "unbindingBadge": "Nezávazná žádost",
+    "securityNote": "Šifrovaný přenos · Důvěrné zpracování",
+    "placeholderNotice": "Zástupný obsah — před zveřejněním k prověření a schválení společností SAND FINANZ."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "SAND FINANZ GRUPPE",
+      "title": "Financování, které odpovídá vašemu záměru.",
+      "subtitle": "Představte svůj projekt online. Vaši žádost posoudíme transparentně a po úplném prověření připravíme individuální nabídku.",
+      "guarantee1": "Transparentní prověření",
+      "guarantee2": "100 % online",
+      "guarantee3": "Důvěrné zpracování",
+      "warning": "Financování předpokládá kladné prověření vašich dokladů a schopnosti splácet."
+    },
+    "stats": {
+      "title": "Jasné údaje",
+      "note": "Následující hodnoty jsou spravovány centrálně a slouží pouze k orientaci.",
+      "minAmount": "Minimální částka",
+      "maxTerm": "Maximální doba",
+      "decision": "Rozhodnutí",
+      "decisionValue": "Až po úplném prověření",
+      "months": "měsíců"
+    },
+    "solutions": {
+      "title": "Naše finanční řešení",
+      "subtitle": "Vyberte rozsah odpovídající vašemu záměru. Nabídky připravujeme až po prověření.",
+      "personalTitle": "Osobní úvěr",
+      "personalText": "Flexibilní financování osobních záměrů s jasnými podmínkami.",
+      "autoTitle": "Financování vozidla",
+      "autoText": "Financujte nové nebo ojeté vozidlo s předvídatelnými splátkami.",
+      "renovationTitle": "Rekonstrukce",
+      "renovationText": "Modernizace a rekonstrukce vašeho bydlení.",
+      "businessTitle": "Podnikání",
+      "businessText": "Investice a provozní prostředky pro vaši firmu.",
+      "studyTitle": "Studium",
+      "studyText": "Financování vzdělávání a dalšího vzdělávání.",
+      "energyTitle": "Energie",
+      "energyText": "Fotovoltaika, tepelná čerpadla a energetická opatření."
+    },
+    "advantages": {
+      "title": "Proč SAND FINANZ GRUPPE",
+      "item1Title": "100 % online",
+      "item1Text": "Žádost a doklady zcela digitálně.",
+      "item2Title": "Čitelné podmínky",
+      "item2Text": "Srozumitelné údaje o částce, době a nákladech.",
+      "item3Title": "Osobní podpora",
+      "item3Text": "Provázíme vaši žádost celým procesem.",
+      "item4Title": "Bezpečnost dokumentů",
+      "item4Text": "Šifrovaný přenos a důvěrné uložení."
+    },
+    "processTeaser": {
+      "title": "Tři kroky k rozhodnutí",
+      "step1": "Podat žádost",
+      "step2": "Prověření dokladů",
+      "step3": "Rozhodnutí a výplata po smlouvě"
+    },
+    "ctaFinal": {
+      "title": "Připraveni představit svůj záměr?",
+      "subtitle": "Zahajte nezávaznou žádost. Obdržíte potvrzení — bez automatického schválení.",
+      "button": "Požádat o financování"
+    },
+    "testimonials": {
+      "title": "Ohlasy",
+      "note": "Tato sekce je spravována v administraci. Nezobrazujeme smyšlené recenze.",
+      "empty": "Zatím žádné schválené ohlasy."
+    }
+  },
+  "leistungen": {
+    "title": "Naše služby",
+    "subtitle": "Přehled druhů financování. Dostupnost, částky a podmínky potvrzujeme až po prověření.",
+    "note": "Skutečně nabízené produkty a země zveřejňujeme až po interním schválení."
+  },
+  "kreditrechner": {
+    "title": "Úvěrová kalkulačka",
+    "subtitle": "Vypočítejte nezávaznou orientační splátku. Hodnoty slouží pouze k orientaci."
+  },
+  "ablauf": {
+    "title": "Jak to funguje",
+    "subtitle": "Od žádosti po výplatu — transparentně a srozumitelně.",
+    "step1Title": "1. Žádost",
+    "step1Text": "Představíte svůj záměr online a nahrajete požadované doklady.",
+    "step2Title": "2. Analýza",
+    "step2Text": "Pečlivě prověříme vaše údaje, doklady a schopnost splácet.",
+    "step3Title": "3. Rozhodnutí a výplata",
+    "step3Text": "Po kladném prověření obdržíte nabídku. Výplata proběhne po podpisu smlouvy a schválení."
+  },
+  "unterlagen": {
+    "title": "Požadované doklady",
+    "subtitle": "Konkrétní seznam závisí na produktu a zemi a zobrazuje se v žádosti.",
+    "item1": "Platný doklad totožnosti",
+    "item2": "Doklad o adrese",
+    "item3": "Doklad o příjmu",
+    "item4": "Bankovní spojení (IBAN)",
+    "item5": "Doklady specifické pro produkt",
+    "securityNote": "Nikdy nežádáme o bankovní hesla, PIN, kódy 2FA ani přístup k vašemu bankovnímu účtu."
+  },
+  "ueberUns": {
+    "title": "O SAND FINANZ GRUPPE",
+    "subtitle": "Odpovědné financování s transparentností a péčí.",
+    "responsibleTitle": "Odpovědné poskytování úvěrů",
+    "responsibleText": "Prověřujeme schopnost splácet a vyhýbáme se jakémukoli zavádějícímu podání. Financování není nikdy zaručeno."
+  },
+  "faq": {
+    "title": "Časté dotazy",
+    "subtitle": "Odpovědi k žádosti, prověření a bezpečnosti.",
+    "items": [
+      {
+        "q": "Je žádost závazná?",
+        "a": "Ne. Vaše žádost je nezávazná. Nabídka vzniká až po úplném prověření vašich dokladů."
+      },
+      {
+        "q": "Dostanu automatické schválení?",
+        "a": "Ne. Automatické schválení neexistuje. Každé rozhodnutí následuje po individuálním prověření."
+      },
+      {
+        "q": "Jak jsou chráněna moje data?",
+        "a": "Přenos je šifrovaný a doklady jsou uloženy důvěrně a soukromě."
+      },
+      {
+        "q": "Ptáte se na mé přihlašovací údaje k bance?",
+        "a": "Nikdy. Neptáme se na hesla, PIN ani kódy 2FA."
+      },
+      {
+        "q": "Jaké jazyky jsou podporovány?",
+        "a": "Web je dostupný v němčině, polštině, švédštině a češtině."
+      }
+    ]
+  },
+  "kontakt": {
+    "title": "Kontakt",
+    "subtitle": "Napište nám svůj dotaz. Pro žádost o financování použijte formulář žádosti.",
+    "nameLabel": "Jméno",
+    "emailLabel": "E-mail",
+    "messageLabel": "Zpráva",
+    "send": "Odeslat zprávu",
+    "legalNote": "Oficiální kontaktní údaje zveřejňujeme v právních informacích po interním schválení."
+  },
+  "antrag": {
+    "title": "Žádost o financování",
+    "subtitle": "V několika krocích. S vašimi údaji zacházíme důvěrně.",
+    "step": "Krok",
+    "of": "z",
+    "steps": {
+      "project": "Projekt",
+      "identity": "Totožnost",
+      "situation": "Situace",
+      "consents": "Souhlasy",
+      "confirmation": "Potvrzení"
+    },
+    "fields": {
+      "productType": "Druh financování",
+      "amount": "Částka",
+      "term": "Doba (měsíce)",
+      "purpose": "Účel",
+      "country": "Země",
+      "salutation": "Oslovení",
+      "firstName": "Jméno",
+      "lastName": "Příjmení",
+      "birthDate": "Datum narození",
+      "nationality": "Státní příslušnost",
+      "address": "Adresa",
+      "phone": "Telefon",
+      "email": "E-mail",
+      "employment": "Zaměstnání / činnost",
+      "income": "Měsíční čistý příjem",
+      "expenses": "Měsíční výdaje",
+      "housing": "Bytová situace",
+      "existingLoans": "Stávající úvěry"
+    },
+    "consents": {
+      "privacy": "Přečetl/a jsem si zásady ochrany osobních údajů a souhlasím se zpracováním svých údajů za účelem prověření žádosti.",
+      "accuracy": "Potvrzuji, že mé údaje jsou úplné a správné.",
+      "contact": "Souhlasím, že mě lze kontaktovat ohledně mé žádosti.",
+      "marketing": "Volitelné: Chci dostávat informace o nabídkách."
+    },
+    "confirmation": {
+      "title": "Žádost odeslána",
+      "reference": "Vaše číslo případu",
+      "text": "Děkujeme. Vaši žádost jsme obdrželi a ozveme se po prověření. Toto není schválení financování.",
+      "nextTitle": "Další krok",
+      "nextText": "Obdržíte potvrzení e-mailem. Připravte si své doklady."
+    },
+    "securityNote": "Nikdy nežádáme o bankovní hesla, PIN, kódy 2FA ani přístup k vašemu bankovnímu účtu.",
+    "errorRequired": "Vyplňte toto povinné pole.",
+    "errorEmail": "Zadejte platnou e-mailovou adresu.",
+    "errorConsent": "Odsouhlaste povinné body.",
+    "submitError": "Žádost se nepodařilo odeslat. Zkuste to prosím znovu."
+  },
+  "calculator": {
+    "product": "Druh financování",
+    "amount": "Částka",
+    "term": "Doba",
+    "months": "měsíců",
+    "monthlyPayment": "Měsíční splátka",
+    "nominalRate": "Nominální úrok p. a.",
+    "effectiveRate": "Roční procentní sazba nákladů (RPSN)",
+    "effectiveRateIndicative": "orientačně",
+    "totalInterest": "Úroky celkem",
+    "originationFee": "Poplatek za poskytnutí",
+    "totalCost": "Celkové náklady úvěru",
+    "totalRepayment": "Celková splátka",
+    "showSchedule": "Zobrazit splátkový kalendář",
+    "hideSchedule": "Skrýt splátkový kalendář",
+    "scheduleMonth": "Měsíc",
+    "schedulePayment": "Splátka",
+    "scheduleInterest": "Úrok",
+    "schedulePrincipal": "Jistina",
+    "scheduleBalance": "Zůstatek",
+    "apply": "Požádat o toto financování",
+    "disclaimer": "Nezávazná simulace. Nejedná se o závaznou nabídku. Financování předpokládá kladné prověření vašich dokladů a schopnosti splácet.",
+    "rangeHint": "Povolený rozsah",
+    "quickTitle": "Rychlá kalkulačka"
+  },
+  "footer": {
+    "aboutTitle": "SAND FINANZ GRUPPE",
+    "aboutText": "Odpovědné financování s transparentností a péčí.",
+    "legalTitle": "Právní informace",
+    "servicesTitle": "Služby",
+    "responsibleCredit": "Financujte odpovědně: prověřte svou schopnost splácet. Financování není zaručeno a předpokládá kladné prověření.",
+    "legalEntityPlaceholder": "Právní údaje (firma, adresa, rejstřík) zveřejňujeme v právních informacích po interním schválení.",
+    "rights": "Všechna práva vyhrazena."
+  },
+  "notFound": {
+    "title": "Stránka nenalezena",
+    "text": "Požadovaná stránka není dostupná.",
+    "home": "Na úvodní stránku"
+  }
+}

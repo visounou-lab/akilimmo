@@ -10,7 +10,6 @@ import {
   calculate,
   formatMoney,
   formatPercent,
-  getCatalog,
   validate,
   type CreditProductVersion,
 } from "@/lib/credit-engine";
@@ -21,14 +20,15 @@ function clamp(n: number, min: number, max: number) {
 
 export function Calculator({
   locale,
+  catalog,
   compact = false,
 }: {
   locale: RouteLocale;
+  catalog: CreditProductVersion[];
   compact?: boolean;
 }) {
   const t = getTranslator(locale);
   const bcp47 = localeConfig[locale].bcp47;
-  const catalog = getCatalog();
 
   const [productId, setProductId] = useState(catalog[0].id);
   const product = useMemo<CreditProductVersion>(

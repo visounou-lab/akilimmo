@@ -1,0 +1,247 @@
+// SAND FINANZ GRUPPE — data model (plan ch. 12) and dossier statuses (ch. 10.1).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- Roles & users -----------------------------------------------------------
+
+enum Role {
+  SUPER_ADMIN
+  ANALYST
+  ADVISOR
+  READ_ONLY
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         Role       @default(READ_ONLY)
+  status       UserStatus @default(ACTIVE)
+  mfaEnabled   Boolean    @default(false)
+  totpSecret   String? // base32 TOTP secret; null until MFA is enrolled
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  assignedApplications Application[]     @relation("AssignedAnalyst")
+  notes                ApplicationNote[]
+  auditLogs            AuditLog[]
+}
+
+// --- Customers & applications ------------------------------------------------
+
+enum Country {
+  DE
+  PL
+  SE
+  CZ
+}
+
+enum ProductType {
+  personal
+  auto
+  renovation
+  business
+  study
+  energy
+}
+
+enum Currency {
+  EUR
+  PLN
+  SEK
+  CZK
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  DOCUMENTS_PENDING
+  UNDER_REVIEW
+  OFFER_PREPARED
+  APPROVED
+  DECLINED
+  CONTRACT_SENT
+  SIGNED
+  DISBURSEMENT_PENDING
+  COMPLETED
+  CANCELLED
+  EXPIRED
+  ON_HOLD
+  FRAUD_REVIEW
+}
+
+model Customer {
+  id                String    @id @default(cuid())
+  salutation        String?
+  firstName         String
+  lastName          String
+  birthDate         String?
+  nationality       String?
+  email             String
+  phone             String?
+  address           String?
+  locale            String    @default("de")
+  consentPrivacyAt  DateTime?
+  consentContactAt  DateTime?
+  consentMarketingAt DateTime?
+  createdAt         DateTime  @default(now())
+
+  applications Application[]
+
+  @@index([email])
+}
+
+model Application {
+  reference    String            @id
+  customer     Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId   String
+  country      Country
+  productType  ProductType
+  currency     Currency
+  amount       Float
+  termMonths   Int
+  purpose      String?
+  status       ApplicationStatus @default(SUBMITTED)
+  assignedTo   User?             @relation("AssignedAnalyst", fields: [assignedToId], references: [id])
+  assignedToId String?
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  financialProfile FinancialProfile?
+  notes            ApplicationNote[]
+  offers           Offer[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model FinancialProfile {
+  id            String      @id @default(cuid())
+  application   Application @relation(fields: [applicationId], references: [reference], onDelete: Cascade)
+  applicationId String      @unique
+  employment    String?
+  income        Float?
+  expenses      Float?
+  housing       String?
+  existingLoans String?
+  createdAt     DateTime    @default(now())
+}
+
+model ApplicationNote {
+  id            String      @id @default(cuid())
+  application   Application @relation(fields: [applicationId], references: [reference], onDelete: Cascade)
+  applicationId String
+  author        User        @relation(fields: [authorId], references: [id])
+  authorId      String
+  body          String
+  createdAt     DateTime    @default(now())
+
+  @@index([applicationId])
+}
+
+// --- Credit parameters (versioned single source of truth) --------------------
+
+enum ProductVersionStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum FeeType {
+  fixed
+  percent
+}
+
+enum RoundingMode {
+  nearest
+  up
+  down
+}
+
+model CreditProductVersion {
+  id                  String               @id @default(cuid())
+  key                 String // stable product key, e.g. "de-personal"
+  version             Int
+  country             Country
+  productType         ProductType
+  currency            Currency
+  minAmount           Float
+  maxAmount           Float
+  minTerm             Int
+  maxTerm             Int
+  nominalRate         Float
+  effectiveRate       Float?
+  originationFeeType  FeeType?
+  originationFeeValue Float?
+  roundingUnit        Float                @default(0.01)
+  roundingMode        RoundingMode         @default(nearest)
+  activeFrom          String
+  activeTo            String?
+  disclaimerKey       String               @default("calculator.disclaimer")
+  status              ProductVersionStatus @default(PUBLISHED)
+  createdAt           DateTime             @default(now())
+
+  offers Offer[]
+
+  @@unique([key, version])
+  @@index([status])
+}
+
+enum OfferStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  EXPIRED
+}
+
+model Offer {
+  id             String               @id @default(cuid())
+  application    Application          @relation(fields: [applicationId], references: [reference], onDelete: Cascade)
+  applicationId  String
+  productVersion CreditProductVersion @relation(fields: [productVersionId], references: [id])
+  productVersionId String
+  principal      Float
+  termMonths     Int
+  monthlyPayment Float
+  totalInterest  Float
+  totalCost      Float
+  effectiveRate  Float
+  validUntil     String?
+  status         OfferStatus          @default(DRAFT)
+  createdAt      DateTime             @default(now())
+
+  @@index([applicationId])
+}
+
+// --- Audit -------------------------------------------------------------------
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actor     User?    @relation(fields: [actorId], references: [id])
+  actorId   String?
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}

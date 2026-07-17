@@ -5,7 +5,7 @@ import { isRouteLocale } from "@/lib/i18n/config";
 import { href } from "@/lib/nav";
 import { Calculator } from "@/components/Calculator";
 import { Section, SectionHeading } from "@/components/ui";
-import { getCatalog } from "@/lib/credit-engine";
+import { getPublishedCatalog } from "@/lib/catalog-server";
 
 const SOLUTION_KEYS = ["personal", "auto", "renovation", "business", "study", "energy"] as const;
 
@@ -13,7 +13,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isRouteLocale(locale)) notFound();
   const t = getTranslator(locale);
-  const catalog = getCatalog();
+  const catalog = await getPublishedCatalog();
   const minAmount = Math.min(...catalog.map((c) => c.minAmount));
   const maxTerm = Math.max(...catalog.map((c) => c.maxTerm));
 
@@ -54,7 +54,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </p>
           </div>
           <div id="quick-calculator">
-            <Calculator locale={locale} compact />
+            <Calculator locale={locale} catalog={catalog} compact />
           </div>
         </div>
       </section>
@@ -107,7 +107,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Section muted id="rechner">
         <div className="sand-split-grid" style={{ gap: "2rem", alignItems: "start" }}>
           <SectionHeading title={t("kreditrechner.title")} subtitle={t("kreditrechner.subtitle")} />
-          <Calculator locale={locale} />
+          <Calculator locale={locale} catalog={catalog} />
         </div>
       </Section>
 

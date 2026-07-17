@@ -87,6 +87,23 @@ export default async function V3Page() {
 
   const terrains = rawTerrains.map((t) => ({ ...t, price: Number(t.price) }));
 
+  // ── Preuve sociale honnête : chiffres réels calculés en direct ──
+  const [propCount, landCount, verifiedTitleCount, propCities, landCities] = await Promise.all([
+    prisma.property.count({ where: { publishStatus: "published" } }),
+    prisma.land.count({ where: { publishStatus: "published" } }),
+    prisma.land.count({ where: { publishStatus: "published", titleVerification: "VERIFIED" } }),
+    prisma.property.findMany({ where: { publishStatus: "published" }, select: { city: true }, distinct: ["city"] }),
+    prisma.land.findMany({ where: { publishStatus: "published" }, select: { city: true }, distinct: ["city"] }),
+  ]);
+  const cityCount = new Set(
+    [...propCities, ...landCities].map((c) => c.city.trim().toLowerCase()).filter(Boolean),
+  ).size;
+  const siteStats = {
+    listingCount: propCount + landCount,
+    verifiedTitleCount,
+    cityCount,
+  };
+
   return (
     <>
       <Navbar />
@@ -97,8 +114,8 @@ export default async function V3Page() {
         {/* 2. Nos 3 catégories de services */}
         <CategoriesSection />
 
-        {/* 3. Chiffres de confiance */}
-        <StatsBar />
+        {/* 3. Chiffres de confiance — réels, calculés en direct */}
+        <StatsBar stats={siteStats} />
 
         {/* 4. Biens disponibles — données réelles depuis la DB */}
         <FeaturedProperties properties={properties} />

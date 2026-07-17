@@ -5,7 +5,7 @@
   "description": "SAND FINANZ GRUPPE — multilingual financing site, credit calculator and application portal.",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && sh -c 'if [ -n \"$DATABASE_URL\" ]; then prisma migrate deploy; else echo \"[build] DATABASE_URL not set — skipping migrations (public site works with fallback catalogue)\"; fi' && next build",
+    "build": "prisma generate && sh -c 'if [ -n \"$DATABASE_URL\" ]; then DIRECT_URL=\"${DIRECT_URL:-$DATABASE_URL}\" prisma migrate deploy; else echo \"[build] DATABASE_URL not set — skipping migrations (public site works with fallback catalogue)\"; fi' && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",

@@ -5,7 +5,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // Runtime (serverless) connection — use a POOLED string on Vercel/Neon.
+  url       = env("DATABASE_URL")
+  // Migrations/introspection — a DIRECT (non-pooled) connection. Falls back to
+  // DATABASE_URL when unset via the shadow of the same value in .env.
+  directUrl = env("DIRECT_URL")
 }
 
 // --- Roles & users -----------------------------------------------------------

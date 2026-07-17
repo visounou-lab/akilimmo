@@ -573,6 +573,19 @@ model LandDocument {
   @@index([landId])
 }
 
+// Lead « liste d'attente » : email laissé par un visiteur intéressé par une
+// offre pas encore ouverte (ex. Séjours). Récontactable au lancement.
+model WaitlistEntry {
+  id        String   @id @default(cuid())
+  email     String
+  source    String   @default("sejours") // page/offre d'origine du lead
+  country   Country?
+  createdAt DateTime @default(now())
+
+  @@unique([email, source])
+  @@index([source, createdAt])
+}
+
 // Demande de contact d'un acheteur intéressé par un terrain.
 model LandInquiry {
   id          String   @id @default(cuid())

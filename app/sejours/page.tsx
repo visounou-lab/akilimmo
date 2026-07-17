@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import Navbar from "../../components/v3/Navbar";
 import Footer from "../../components/v3/Footer";
 import WaCountryPicker from "../../components/v3/WaCountryPicker";
+import WaitlistForm from "../../components/v3/WaitlistForm";
 
 export const metadata = {
   title: "Séjours — Bientôt disponible | AKIL IMMO",
@@ -71,23 +72,30 @@ export default function SejoursPage() {
             >
               Nous préparons une offre de séjours meublés clé en main, pensée
               pour un court passage au pays. Aucune réservation n&apos;est
-              encore ouverte — écrivez-nous sur WhatsApp pour être averti dès
+              encore ouverte — laissez-nous votre email pour être averti dès
               le lancement.
             </p>
 
-            <WaCountryPicker
-              message="Bonjour, je souhaite être informé du lancement des séjours AKIL IMMO"
-              sourcePage="sejours"
-              className="inline-flex items-center gap-2 cursor-pointer rounded-lg px-7 py-3.5 text-sm font-medium transition-all duration-200 hover:brightness-90"
-              style={{
-                fontFamily: "var(--font-inter), sans-serif",
-                fontWeight: 500,
-                backgroundColor: "#C8922A",
-                color: "#ffffff",
-              }}
-            >
-              Être informé sur WhatsApp
-            </WaCountryPicker>
+            {/* Capture email — primaire */}
+            <WaitlistForm source="sejours" />
+
+            {/* WhatsApp — secondaire */}
+            <div className="mt-6">
+              <WaCountryPicker
+                message="Bonjour, je souhaite être informé du lancement des séjours AKIL IMMO"
+                sourcePage="sejours"
+                className="inline-flex items-center gap-2 cursor-pointer text-sm transition-colors duration-200"
+                style={{
+                  fontFamily: "var(--font-inter), sans-serif",
+                  fontWeight: 400,
+                  color: "rgba(253,252,248,0.6)",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "4px",
+                }}
+              >
+                ou prévenez-moi sur WhatsApp
+              </WaCountryPicker>
+            </div>
           </div>
         </section>
       </main>

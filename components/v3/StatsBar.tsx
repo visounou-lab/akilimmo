@@ -1,29 +1,49 @@
-import { FileCheck2, MapPin, MessageCircle, KeyRound } from "lucide-react";
+import { FileCheck2, MapPin, ScrollText, KeyRound } from "lucide-react";
 
-const PILLARS = [
-  {
-    icon: FileCheck2,
-    title: "Biens documentés",
-    desc: "Photos, vidéos et informations utiles",
-  },
-  {
-    icon: MapPin,
-    title: "2 pays couverts",
-    desc: "Côte d'Ivoire · Bénin",
-  },
-  {
-    icon: MessageCircle,
-    title: "Contact direct",
-    desc: "Un conseiller vous répond sur WhatsApp",
-  },
-  {
-    icon: KeyRound,
-    title: "Suivi humain",
-    desc: "Du premier contact à la remise des clés",
-  },
-];
+export type SiteStats = {
+  listingCount: number;      // annonces publiées (biens + terrains)
+  verifiedTitleCount: number; // terrains dont le titre a été vérifié
+  cityCount: number;          // villes couvertes
+};
 
-export default function StatsBar() {
+// Seuil en dessous duquel on préfère un libellé qualitatif à un chiffre trop
+// petit pour être crédible. On ne montre JAMAIS un chiffre faible ou faux.
+const MIN_CREDIBLE = 3;
+
+type Pillar = { icon: typeof FileCheck2; title: string; desc: string };
+
+function buildPillars(stats?: SiteStats): Pillar[] {
+  const listings = stats?.listingCount ?? 0;
+  const titles   = stats?.verifiedTitleCount ?? 0;
+  const cities   = stats?.cityCount ?? 0;
+
+  return [
+    {
+      icon: FileCheck2,
+      title: listings >= MIN_CREDIBLE ? `${listings} annonces contrôlées` : "Annonces contrôlées",
+      desc: "Chaque annonce est examinée avant publication",
+    },
+    {
+      icon: ScrollText,
+      title: titles >= MIN_CREDIBLE ? `${titles} titres vérifiés` : "Titres vérifiés sur pièce",
+      desc: "Le titre foncier est contrôlé par notre équipe",
+    },
+    {
+      icon: MapPin,
+      title: cities >= MIN_CREDIBLE ? `${cities} villes couvertes` : "2 pays couverts",
+      desc: "Côte d'Ivoire · Bénin",
+    },
+    {
+      icon: KeyRound,
+      title: "Suivi humain",
+      desc: "Un conseiller vous accompagne jusqu'aux clés",
+    },
+  ];
+}
+
+export default function StatsBar({ stats }: { stats?: SiteStats }) {
+  const pillars = buildPillars(stats);
+
   return (
     <section
       aria-label="Nos engagements"
@@ -31,7 +51,7 @@ export default function StatsBar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <dl className="grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-4">
-          {PILLARS.map(({ icon: Icon, title, desc }) => (
+          {pillars.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex flex-col items-center text-center">
               <Icon
                 size={26}

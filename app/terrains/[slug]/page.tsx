@@ -287,6 +287,14 @@ export default async function TerrainDetailPage({ params }: Props) {
                     <p className="mt-3 text-xs" style={{ color: "#4B6157", fontFamily: "var(--font-inter), sans-serif", lineHeight: 1.6 }}>
                       Notre équipe a contrôlé le titre sur pièce. La référence complète et les justificatifs sont communiqués aux acheteurs sérieux, après prise de contact.
                     </p>
+                    <a
+                      href={`/terrains/${land.slug}/certificat`}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+                      style={{ color: "#12382D", fontFamily: "var(--font-inter), sans-serif" }}
+                    >
+                      <ShieldCheck size={15} aria-hidden="true" />
+                      Voir le certificat de vérification →
+                    </a>
                   </div>
                 ) : (
                   <div

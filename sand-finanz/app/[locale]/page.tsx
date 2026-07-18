@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslator } from "@/lib/i18n";
-import { isRouteLocale } from "@/lib/i18n/config";
+import { isRouteLocale, localeConfig } from "@/lib/i18n/config";
 import { href } from "@/lib/nav";
 import { Calculator } from "@/components/Calculator";
 import { Section, SectionHeading } from "@/components/ui";
@@ -153,6 +153,5 @@ function Stat({ value, label, small }: { value: string; label: string; small?: b
 }
 
 function localeToBcp(locale: string): string {
-  const map: Record<string, string> = { de: "de-DE", pl: "pl-PL", sv: "sv-SE", cz: "cs-CZ" };
-  return map[locale] ?? "de-DE";
+  return isRouteLocale(locale) ? localeConfig[locale].bcp47 : "de-DE";
 }

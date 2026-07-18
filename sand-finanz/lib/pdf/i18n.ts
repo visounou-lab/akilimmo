@@ -161,8 +161,74 @@ const cs: Dict = {
   contract_title: "Úvěrová smlouva", cert_title: "Potvrzení o registraci",
 };
 
-const BUNDLES: Record<string, Dict> = { de, pl, sv, cs };
-const MAP: Record<RouteLocale, keyof typeof BUNDLES> = { de: "de", pl: "pl", sv: "sv", cz: "cs" };
+const en: Dict = {
+  dossier: "File", page: "Page", of: "of", onlineAccess: "Document available online",
+  borrower: "Borrower", lender: "Lender", signature: "Signature", place: "Place, date",
+  readApproved: "Read and approved", companyStamp: "Company stamp",
+
+  reg_title: "Registration form – Financing request",
+  reg_intro: "To process your request quickly, please confirm the details below.",
+  reg_s1: "1. Personal details",
+  reg_lastName: "Last name", reg_firstName: "First name(s)", reg_address: "Full address",
+  reg_city: "City", reg_postal: "Postal code", reg_country: "Country of residence",
+  reg_phone: "Phone number", reg_email: "E-mail address", reg_occupation: "Current occupation",
+  reg_income: "Monthly net income", reg_iban: "Bank account (IBAN)",
+  reg_s2: "2. Requested financing", reg_amount: "Requested amount", reg_term: "Term",
+  reg_monthly: "Estimated instalment", reg_rate: "Fixed annual rate",
+  reg_purpose: "Purpose / project description", months: "months",
+  reg_s3: "3. Required documents",
+  reg_doc1: "A valid copy of your identity document (ID card, passport)",
+  reg_doc2: "Proof of income (payslip, tax assessment)",
+  reg_doc3: "A recent proof of address (no older than 3 months)",
+  reg_s4: "4. Payment conditions",
+  reg_cond1: "The first instalment is due three months after the funds are paid out.",
+  reg_cond2: "Subsequent instalments are made by bank transfer to the communicated account.",
+  reg_cond3: "Repayment follows the chosen amortisation schedule.",
+  reg_thanks: "Please complete this form carefully and send us the documents promptly.",
+  reg_applicant: "Client / Applicant",
+
+  amort_title: "Amortisation schedule", amort_amount: "Amount", amort_rate: "Annual rate",
+  amort_term: "Term", amort_monthly: "Monthly instalment", amort_start: "Start",
+  amort_no: "No.", amort_date: "Date", amort_payment: "Instalment", amort_principal: "Principal",
+  amort_interest: "Interest", amort_balance: "Balance",
+
+  contract_title: "Loan contract", contract_party1: "Details of Party 1", contract_party2: "Details of Party 2",
+  contract_seat: "Registered office", contract_representedBy: "Represented by", contract_country: "Country",
+  contract_type: "Loan type",
+  contract_intro: "have concluded this loan contract in accordance with the provisions of German law (BGB).",
+  contract_p1role: "(hereinafter \"the Lender\") as the first party.",
+  contract_p2role: "(hereinafter \"the Borrower\") as the second party.",
+  art1_title: "ARTICLE 1: SUBJECT OF THE CONTRACT",
+  art1_1: "The purpose of this contract is to set out the conditions under which the Lender grants the Borrower a loan of {amount} with a term of {term} months.",
+  art1_2: "The loan amount is transferred by bank transfer to the Borrower's account with the following details:",
+  art2_title: "ARTICLE 2: REPAYMENT",
+  art2_1: "The Borrower undertakes to repay the loan and interest through monthly transfers.",
+  art2_2: "The monthly instalment is {monthly}. The first payment is due on {start}.",
+  art3_title: "ARTICLE 3: INTEREST RATE",
+  art3_1: "The parties have agreed on an interest rate of {rate} per year on the borrowed amount. The total interest amounts to {interest}.",
+  art4_title: "ARTICLE 4: LATE PAYMENT",
+  art4_1: "In the event of late payment, the Borrower owes default interest in accordance with the statutory provisions. No unlawful fees are charged.",
+  art5_title: "ARTICLE 5: FINAL PROVISIONS",
+  art5_1: "Any amendment or termination of this contract must be made in writing.",
+  art5_2: "German law applies to all matters not covered.",
+  art5_3: "This contract is drawn up in two copies, one for each party.",
+  contract_holder: "Account holder", contract_bank: "Bank",
+  contract_declaration: "The contracting parties declare that they have read, understood and signed this contract.",
+
+  cert_title: "Deposit certificate", cert_subref: "Certificate number", cert_amount: "Amount",
+  cert_beneficiary: "Beneficiary", cert_reference: "Reference", cert_senderLabel: "Sender / Issuer",
+  cert_beneficiaryLabel: "Beneficiary",
+  cert_senderInfo: "{company}, as sender of the funds, informs you that the amount of:",
+  cert_sentTo: "has been sent to the bank account below, which has not yet been confirmed:",
+  cert_holder: "Account holder", cert_bank: "Bank name", cert_iban: "IBAN", cert_bic: "BIC / SWIFT",
+  cert_country: "Country (beneficiary)",
+  cert_confirm: "{company} confirms that the amount of {amount} is ready to be sent to your bank account once the conditions of the contract are met.",
+  cert_stampNote: "This deposit certificate must be accompanied by the stamp of the recipient of the funds.",
+  cert_date: "Date",
+};
+
+const BUNDLES: Record<string, Dict> = { de, pl, sv, cs, en };
+const MAP: Record<RouteLocale, keyof typeof BUNDLES> = { de: "de", pl: "pl", sv: "sv", cz: "cs", en: "en" };
 
 export function docT(locale: RouteLocale) {
   const primary = BUNDLES[MAP[locale]];

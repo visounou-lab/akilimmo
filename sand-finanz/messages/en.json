@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "siteName": "SAND FINANZ GRUPPE",
+    "tagline": "Financing that fits your project.",
+    "description": "Present your project online. We review your request transparently and, after a complete assessment, prepare an individual offer."
+  },
+  "nav": {
+    "startseite": "Home",
+    "leistungen": "Services",
+    "kreditrechner": "Loan calculator",
+    "ablauf": "How it works",
+    "ueberUns": "About us",
+    "faq": "FAQ",
+    "kontakt": "Contact",
+    "antrag": "Apply now",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "Language"
+  },
+  "common": {
+    "requestFinancing": "Request financing",
+    "discoverSolutions": "Explore solutions",
+    "learnMore": "Learn more",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "unbindingBadge": "Non-binding request",
+    "securityNote": "Encrypted transmission · Confidential handling",
+    "placeholderNotice": "Placeholder content — to be reviewed and approved by SAND FINANZ before publication."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "SAND FINANZ GRUPPE",
+      "title": "Financing that fits your project.",
+      "subtitle": "Present your project online. We review your request transparently and, after a complete assessment, prepare an individual offer.",
+      "guarantee1": "Transparent review",
+      "guarantee2": "100% online",
+      "guarantee3": "Confidential handling",
+      "warning": "Financing requires a positive assessment of your documents and repayment capacity."
+    },
+    "stats": {
+      "title": "Clear key figures",
+      "note": "The following values are managed centrally and are for guidance only.",
+      "minAmount": "Minimum amount",
+      "maxTerm": "Maximum term",
+      "decision": "Decision",
+      "decisionValue": "Only after a full review",
+      "months": "months"
+    },
+    "solutions": {
+      "title": "Our financing solutions",
+      "subtitle": "Choose the option that fits your project. Offers are prepared only after review.",
+      "personalTitle": "Personal loan",
+      "personalText": "Flexible financing for personal projects with clear terms.",
+      "autoTitle": "Car financing",
+      "autoText": "Finance a new or used vehicle with predictable instalments.",
+      "renovationTitle": "Renovation",
+      "renovationText": "Modernisation and renovation of your home.",
+      "businessTitle": "Business",
+      "businessText": "Investments and working capital for your company.",
+      "studyTitle": "Studies",
+      "studyText": "Financing of education and further training.",
+      "energyTitle": "Energy",
+      "energyText": "Photovoltaics, heat pumps and energy measures."
+    },
+    "advantages": {
+      "title": "Why SAND FINANZ GRUPPE",
+      "item1Title": "100% online",
+      "item1Text": "Submit your request and documents fully digitally.",
+      "item2Title": "Readable terms",
+      "item2Text": "Understandable information on amount, term and cost.",
+      "item3Title": "Personal support",
+      "item3Text": "We accompany your request throughout the process.",
+      "item4Title": "Document security",
+      "item4Text": "Encrypted transmission and confidential storage."
+    },
+    "processTeaser": {
+      "title": "Three steps to a decision",
+      "step1": "Submit request",
+      "step2": "Review documents",
+      "step3": "Decision & payout after contract"
+    },
+    "ctaFinal": {
+      "title": "Ready to present your project?",
+      "subtitle": "Start your non-binding request. You will receive a confirmation of receipt — without any automatic approval.",
+      "button": "Request financing"
+    },
+    "testimonials": {
+      "title": "Voices",
+      "note": "This section is managed from the administration. No fabricated reviews are shown.",
+      "empty": "No approved testimonials yet."
+    }
+  },
+  "leistungen": {
+    "title": "Our services",
+    "subtitle": "An overview of the financing types. Availability, amounts and terms are confirmed only after review.",
+    "note": "The products and countries actually offered are published only after internal approval.",
+    "amountLabel": "Amount",
+    "termLabel": "Term",
+    "to": "up to",
+    "months": "months",
+    "fixedRate": "fixed",
+    "apply": "Apply"
+  },
+  "kreditrechner": {
+    "title": "Loan calculator",
+    "subtitle": "Calculate a non-binding sample instalment. The values are for guidance only."
+  },
+  "ablauf": {
+    "title": "How it works",
+    "subtitle": "From request to payout — transparent and easy to follow.",
+    "step1Title": "1. Request",
+    "step1Text": "You present your project online and upload the required documents.",
+    "step2Title": "2. Analysis",
+    "step2Text": "We carefully review your details, documents and repayment capacity.",
+    "step3Title": "3. Decision & payout",
+    "step3Text": "After a positive review you receive an offer. Payout takes place after signing the contract and approval."
+  },
+  "unterlagen": {
+    "title": "Required documents",
+    "subtitle": "The exact list depends on the product and country and is shown in the application.",
+    "item1": "Valid identity document",
+    "item2": "Proof of address",
+    "item3": "Proof of income",
+    "item4": "Bank details (IBAN)",
+    "item5": "Product-specific documents",
+    "securityNote": "We never ask for banking passwords, PINs, 2FA codes or access to your bank account."
+  },
+  "ueberUns": {
+    "title": "About SAND FINANZ GRUPPE",
+    "subtitle": "Responsible financing with transparency and care.",
+    "body": "SAND FINANZ GRUPPE handles financing requests in a structured and transparent way. All legal details of the company — name, legal form, address, registration number and legal representation — are published in the imprint only after internal approval.",
+    "responsibleTitle": "Responsible lending",
+    "responsibleText": "We review repayment capacity and avoid any misleading presentation. Financing is never guaranteed."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "Answers about the request, review and security.",
+    "items": [
+      { "q": "Is the request binding?", "a": "No. Your request is non-binding. An offer is only created after a complete review of your documents." },
+      { "q": "Will I receive an automatic approval?", "a": "No. There is no automatic approval. Every decision follows an individual review." },
+      { "q": "How is my data protected?", "a": "Transmission is encrypted and documents are stored confidentially and privately." },
+      { "q": "Do you ask for my bank login details?", "a": "Never. We do not ask for passwords, PINs or 2FA codes." },
+      { "q": "Which languages are supported?", "a": "The website is available in German, Polish, Swedish, Czech and English." }
+    ]
+  },
+  "kontakt": {
+    "title": "Contact",
+    "subtitle": "Write us your question. For a financing request, please use the application form.",
+    "nameLabel": "Name",
+    "emailLabel": "E-mail",
+    "messageLabel": "Message",
+    "send": "Send message",
+    "legalNote": "Official contact details are published in the imprint after internal approval."
+  },
+  "antrag": {
+    "title": "Apply for financing",
+    "subtitle": "In a few steps. Your details are treated confidentially.",
+    "step": "Step",
+    "of": "of",
+    "steps": {
+      "project": "Project",
+      "identity": "Identity",
+      "situation": "Situation",
+      "consents": "Consents",
+      "confirmation": "Confirmation"
+    },
+    "fields": {
+      "productType": "Financing type",
+      "amount": "Amount",
+      "term": "Term (months)",
+      "purpose": "Purpose",
+      "country": "Country",
+      "salutation": "Salutation",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "birthDate": "Date of birth",
+      "nationality": "Nationality",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "E-mail",
+      "employment": "Employment / activity",
+      "income": "Monthly net income",
+      "expenses": "Monthly expenses",
+      "housing": "Housing situation",
+      "existingLoans": "Existing loans"
+    },
+    "consents": {
+      "privacy": "I have read the privacy policy and consent to the processing of my data to review my request.",
+      "accuracy": "I confirm that my details are complete and correct.",
+      "contact": "I agree to be contacted regarding my request.",
+      "marketing": "Optional: I would like to receive information about offers."
+    },
+    "confirmation": {
+      "title": "Request submitted",
+      "reference": "Your reference number",
+      "text": "Thank you. We have received your request and will get back to you after the review. This is not an approval of financing.",
+      "nextTitle": "Next step",
+      "nextText": "You will receive a confirmation of receipt by e-mail. Please have your documents ready."
+    },
+    "securityNote": "We never ask for banking passwords, PINs, 2FA codes or access to your bank account.",
+    "errorRequired": "Please fill in this required field.",
+    "errorEmail": "Please enter a valid e-mail address.",
+    "errorConsent": "Please agree to the required items.",
+    "submitError": "The request could not be submitted. Please try again."
+  },
+  "calculator": {
+    "product": "Financing type",
+    "amount": "Amount",
+    "term": "Term",
+    "months": "months",
+    "monthlyPayment": "Monthly instalment",
+    "nominalRate": "Nominal rate p.a.",
+    "effectiveRate": "Effective annual rate (APR)",
+    "effectiveRateIndicative": "indicative",
+    "totalInterest": "Total interest",
+    "originationFee": "Origination fee",
+    "totalCost": "Total cost of credit",
+    "totalRepayment": "Total repayment",
+    "showSchedule": "Show amortisation schedule",
+    "hideSchedule": "Hide amortisation schedule",
+    "scheduleMonth": "Month",
+    "schedulePayment": "Instalment",
+    "scheduleInterest": "Interest",
+    "schedulePrincipal": "Principal",
+    "scheduleBalance": "Balance",
+    "apply": "Request this financing",
+    "disclaimer": "Non-binding simulation. Not a binding offer. Financing requires a positive assessment of your documents and repayment capacity.",
+    "rangeHint": "Allowed range",
+    "quickTitle": "Quick calculator"
+  },
+  "footer": {
+    "aboutTitle": "SAND FINANZ GRUPPE",
+    "aboutText": "Responsible financing with transparency and care.",
+    "legalTitle": "Legal",
+    "servicesTitle": "Services",
+    "responsibleCredit": "Finance responsibly: check your repayment capacity. Financing is not guaranteed and requires a positive review.",
+    "legalEntityPlaceholder": "Legal details (company name, address, register) are published in the imprint after internal approval.",
+    "rights": "All rights reserved."
+  },
+  "legal": {
+    "impressum": {
+      "title": "Imprint",
+      "body": "The complete legal information (company name, legal form, address, register court and number, VAT ID, legal representation, supervisory and licensing details) is published here only after internal legal approval. No unconfirmed information is shown."
+    },
+    "datenschutz": {
+      "title": "Privacy policy",
+      "body": "This privacy policy describes the processing of personal data under the GDPR: controller, purposes, legal bases, recipients, retention period and the rights to access, rectification, erasure, restriction, data portability and objection. The final text is published after legal review."
+    },
+    "cookies": {
+      "title": "Cookie policy",
+      "body": "We use technically necessary cookies. Analytics and marketing cookies are used only with your consent. The full list and consent management are published after legal review."
+    },
+    "nutzungsbedingungen": {
+      "title": "Terms of use",
+      "body": "These terms of use govern the use of the website. The binding text is published after legal review."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The requested page is not available.",
+    "home": "To the homepage"
+  }
+}

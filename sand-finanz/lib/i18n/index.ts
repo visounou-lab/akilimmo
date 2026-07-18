@@ -3,10 +3,11 @@ import de from "@/messages/de.json";
 import pl from "@/messages/pl.json";
 import sv from "@/messages/sv.json";
 import cs from "@/messages/cs.json";
+import en from "@/messages/en.json";
 
 type Messages = Record<string, unknown>;
 
-const bundles: Record<"de" | "pl" | "sv" | "cs", Messages> = { de, pl, sv, cs };
+const bundles: Record<"de" | "pl" | "sv" | "cs" | "en", Messages> = { de, pl, sv, cs, en };
 
 function lookup(messages: Messages, key: string): string | undefined {
   const value = key.split(".").reduce<unknown>((acc, part) => {

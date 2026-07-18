@@ -175,7 +175,7 @@ export function ApplicationForm({ locale }: { locale: RouteLocale }) {
           <Field label={t("antrag.fields.amount")} type="number" value={state.amount} error={errors.amount} onChange={(v) => set("amount", v)} />
           <Field label={t("antrag.fields.term")} type="number" value={state.term} error={errors.term} onChange={(v) => set("term", v)} />
           <Select label={t("antrag.fields.country")} value={state.country} error={errors.country} onChange={(v) => set("country", v)}
-            options={[{ value: "DE", label: "DE" }, { value: "PL", label: "PL" }, { value: "SE", label: "SE" }, { value: "CZ", label: "CZ" }]} />
+            options={[{ value: "DE", label: "DE" }, { value: "PL", label: "PL" }, { value: "SE", label: "SE" }, { value: "CZ", label: "CZ" }, { value: "GB", label: "GB" }, { value: "CH", label: "CH" }, { value: "LI", label: "LI" }]} />
           <Field label={t("antrag.fields.purpose")} value={state.purpose} onChange={(v) => set("purpose", v)} textarea />
         </Fieldset>
       )}

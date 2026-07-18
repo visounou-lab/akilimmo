@@ -51,6 +51,9 @@ enum Country {
   PL
   SE
   CZ
+  GB
+  CH
+  LI
 }
 
 enum ProductType {
@@ -67,6 +70,8 @@ enum Currency {
   PLN
   SEK
   CZK
+  GBP
+  CHF
 }
 
 enum ApplicationStatus {

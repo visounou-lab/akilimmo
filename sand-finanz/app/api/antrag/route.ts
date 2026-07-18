@@ -13,8 +13,8 @@ import { writeAudit } from "@/lib/audit";
  */
 
 const PRODUCTS: ProductType[] = ["personal", "auto", "renovation", "business", "study", "energy"];
-const COUNTRIES: Country[] = ["DE", "PL", "SE", "CZ"];
-const CURRENCY_BY_COUNTRY: Record<Country, Currency> = { DE: "EUR", PL: "PLN", SE: "SEK", CZ: "CZK" };
+const COUNTRIES: Country[] = ["DE", "PL", "SE", "CZ", "GB", "CH", "LI"];
+const CURRENCY_BY_COUNTRY: Record<Country, Currency> = { DE: "EUR", PL: "PLN", SE: "SEK", CZ: "CZK", GB: "GBP", CH: "CHF", LI: "CHF" };
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;

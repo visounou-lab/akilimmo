@@ -1,4 +1,4 @@
-export type Country = "DE" | "PL" | "SE" | "CZ";
+export type Country = "DE" | "PL" | "SE" | "CZ" | "GB" | "CH" | "LI";
 
 export type ProductType =
   | "personal"
@@ -8,7 +8,7 @@ export type ProductType =
   | "study"
   | "energy";
 
-export type Currency = "EUR" | "PLN" | "SEK" | "CZK";
+export type Currency = "EUR" | "PLN" | "SEK" | "CZK" | "GBP" | "CHF";
 
 export type FeeType = "fixed" | "percent";
 

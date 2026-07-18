@@ -1,0 +1,154 @@
+import type { RouteLocale } from "@/lib/i18n/config";
+
+type Dict = Record<string, string>;
+
+const de: Dict = {
+  dossier: "Dossier",
+  page: "Seite",
+  of: "von",
+  onlineAccess: "Dokument online abrufbar",
+  borrower: "Kreditnehmer",
+  lender: "Kreditgeber",
+  signature: "Unterschrift",
+  place: "Ort, Datum",
+  readApproved: "Gelesen und genehmigt",
+  companyStamp: "Firmenstempel",
+
+  // Anmeldeformular
+  reg_title: "Anmeldeformular – Finanzierungsanfrage",
+  reg_intro: "Um Ihre Anfrage zügig zu bearbeiten, bestätigen Sie bitte die folgenden Angaben.",
+  reg_s1: "1. Persönliche Angaben",
+  reg_lastName: "Nachname",
+  reg_firstName: "Vorname(n)",
+  reg_address: "Vollständige Anschrift",
+  reg_city: "Stadt",
+  reg_postal: "Postleitzahl",
+  reg_country: "Wohnsitzland",
+  reg_phone: "Telefonnummer",
+  reg_email: "E-Mail-Adresse",
+  reg_occupation: "Aktuelle Tätigkeit",
+  reg_income: "Monatliches Nettoeinkommen",
+  reg_iban: "Bankverbindung (IBAN)",
+  reg_s2: "2. Gewünschte Finanzierung",
+  reg_amount: "Beantragter Betrag",
+  reg_term: "Laufzeit",
+  reg_monthly: "Voraussichtliche Rate",
+  reg_rate: "Fester Jahreszins",
+  reg_purpose: "Verwendungszweck / Projektbeschreibung",
+  months: "Monate",
+
+  // Tilgungsplan
+  amort_title: "Tilgungsplan",
+  amort_amount: "Betrag",
+  amort_rate: "Jahreszins",
+  amort_term: "Laufzeit",
+  amort_monthly: "Monatliche Rate",
+  amort_start: "Beginn",
+  amort_no: "Nr.",
+  amort_date: "Datum",
+  amort_payment: "Rate",
+  amort_principal: "Tilgung",
+  amort_interest: "Zinsen",
+  amort_balance: "Restschuld",
+
+  // Vertrag
+  contract_title: "Kreditvertrag",
+  contract_party1: "Angaben zur Partei 1",
+  contract_party2: "Angaben zur Partei 2",
+  contract_seat: "Sitz",
+  contract_representedBy: "Vertreten durch",
+  contract_country: "Land",
+  contract_type: "Kreditart",
+  contract_intro: "haben diesen Kreditvertrag gemäß den Bestimmungen des deutschen Rechts (BGB) geschlossen.",
+  contract_p1role: "(nachfolgend „der Kreditgeber\") als erste Partei.",
+  contract_p2role: "(nachfolgend „der Kreditnehmer\") als zweite Partei.",
+  art1_title: "ARTIKEL 1: GEGENSTAND DES VERTRAGS",
+  art1_1: "Gegenstand dieses Vertrags ist die Festlegung der Bedingungen, unter denen der Kreditgeber dem Kreditnehmer einen Kredit in Höhe von {amount} mit einer Laufzeit von {term} Monaten gewährt.",
+  art1_2: "Der Kreditbetrag wird per Banküberweisung auf das Konto des Kreditnehmers mit den folgenden Angaben überwiesen:",
+  art2_title: "ARTIKEL 2: RÜCKZAHLUNG",
+  art2_1: "Der Kreditnehmer verpflichtet sich, den Kredit und die Zinsen durch monatliche Überweisungen zurückzuzahlen.",
+  art2_2: "Die monatliche Rate beträgt {monthly}. Die erste Zahlung erfolgt am {start}.",
+  art3_title: "ARTIKEL 3: ZINSSATZ",
+  art3_1: "Die Parteien haben einen Zinssatz von {rate} pro Jahr auf den geliehenen Betrag vereinbart. Die Gesamtsumme der Zinsen beträgt {interest}.",
+  art4_title: "ARTIKEL 4: ZAHLUNGSVERZUG",
+  art4_1: "Bei Zahlungsverzug schuldet der Kreditnehmer Verzugszinsen gemäß den gesetzlichen Bestimmungen. Es werden keine unzulässigen Gebühren erhoben.",
+  art5_title: "ARTIKEL 5: SCHLUSSBESTIMMUNGEN",
+  art5_1: "Änderungen oder Kündigungen dieses Vertrags bedürfen der Schriftform.",
+  art5_2: "Für alle nicht geregelten Fragen gilt deutsches Recht.",
+  art5_3: "Dieser Vertrag wird in zwei Ausfertigungen erstellt, je eine für jede Partei.",
+  contract_holder: "Kontoinhaber",
+  contract_bank: "Bank",
+  contract_declaration: "Die Vertragsparteien erklären, diesen Vertrag gelesen, verstanden und unterzeichnet zu haben.",
+
+  // Einlagenzertifikat
+  cert_title: "Einlagenzertifikat",
+  cert_intro: "Hiermit wird bestätigt, dass das folgende Dossier registriert wurde. Dieses Zertifikat bescheinigt ausschließlich die Registrierung der Anfrage und stellt keine Finanzierungszusage dar.",
+  cert_holder: "Titular",
+  cert_reference: "Referenz",
+  cert_amount: "Betrag der Anfrage",
+  cert_date: "Datum",
+  cert_object: "Gegenstand",
+  cert_note: "Ausschließlich gültig nach positiver Prüfung und Vertragsunterzeichnung.",
+};
+
+const pl: Dict = {
+  dossier: "Sprawa", page: "Strona", of: "z", onlineAccess: "Dokument dostępny online",
+  borrower: "Kredytobiorca", lender: "Kredytodawca", signature: "Podpis", place: "Miejscowość, data",
+  readApproved: "Przeczytano i zaakceptowano", companyStamp: "Pieczęć firmy",
+  reg_title: "Formularz zgłoszeniowy – wniosek o finansowanie", reg_s1: "1. Dane osobowe",
+  reg_lastName: "Nazwisko", reg_firstName: "Imię", reg_address: "Pełny adres", reg_city: "Miasto",
+  reg_postal: "Kod pocztowy", reg_country: "Kraj zamieszkania", reg_phone: "Numer telefonu",
+  reg_email: "Adres e-mail", reg_occupation: "Obecny zawód", reg_income: "Miesięczny dochód netto",
+  reg_iban: "Numer konta (IBAN)", reg_s2: "2. Wnioskowane finansowanie", reg_amount: "Wnioskowana kwota",
+  reg_term: "Okres", reg_monthly: "Szacowana rata", reg_rate: "Stała stopa roczna",
+  reg_purpose: "Cel / opis projektu", months: "miesięcy",
+  amort_title: "Harmonogram spłat", amort_amount: "Kwota", amort_rate: "Stopa roczna", amort_term: "Okres",
+  amort_monthly: "Rata miesięczna", amort_start: "Początek", amort_no: "Nr", amort_date: "Data",
+  amort_payment: "Rata", amort_principal: "Kapitał", amort_interest: "Odsetki", amort_balance: "Saldo",
+  contract_title: "Umowa kredytu", cert_title: "Certyfikat rejestracji",
+};
+
+const sv: Dict = {
+  dossier: "Ärende", page: "Sida", of: "av", onlineAccess: "Dokument tillgängligt online",
+  borrower: "Låntagare", lender: "Långivare", signature: "Underskrift", place: "Ort, datum",
+  readApproved: "Läst och godkänt", companyStamp: "Företagsstämpel",
+  reg_title: "Anmälningsformulär – finansieringsansökan", reg_s1: "1. Personuppgifter",
+  reg_lastName: "Efternamn", reg_firstName: "Förnamn", reg_address: "Fullständig adress", reg_city: "Stad",
+  reg_postal: "Postnummer", reg_country: "Bosättningsland", reg_phone: "Telefonnummer",
+  reg_email: "E-postadress", reg_occupation: "Nuvarande yrke", reg_income: "Månadsinkomst netto",
+  reg_iban: "Kontonummer (IBAN)", reg_s2: "2. Önskad finansiering", reg_amount: "Ansökt belopp",
+  reg_term: "Löptid", reg_monthly: "Beräknad betalning", reg_rate: "Fast årsränta",
+  reg_purpose: "Ändamål / projektbeskrivning", months: "månader",
+  amort_title: "Amorteringsplan", amort_amount: "Belopp", amort_rate: "Årsränta", amort_term: "Löptid",
+  amort_monthly: "Månadsbetalning", amort_start: "Start", amort_no: "Nr", amort_date: "Datum",
+  amort_payment: "Betalning", amort_principal: "Amortering", amort_interest: "Ränta", amort_balance: "Saldo",
+  contract_title: "Låneavtal", cert_title: "Registreringsintyg",
+};
+
+const cs: Dict = {
+  dossier: "Případ", page: "Strana", of: "z", onlineAccess: "Dokument dostupný online",
+  borrower: "Dlužník", lender: "Věřitel", signature: "Podpis", place: "Místo, datum",
+  readApproved: "Přečteno a schváleno", companyStamp: "Razítko společnosti",
+  reg_title: "Registrační formulář – žádost o financování", reg_s1: "1. Osobní údaje",
+  reg_lastName: "Příjmení", reg_firstName: "Jméno", reg_address: "Úplná adresa", reg_city: "Město",
+  reg_postal: "PSČ", reg_country: "Země pobytu", reg_phone: "Telefonní číslo",
+  reg_email: "E-mailová adresa", reg_occupation: "Současné povolání", reg_income: "Měsíční čistý příjem",
+  reg_iban: "Číslo účtu (IBAN)", reg_s2: "2. Požadované financování", reg_amount: "Požadovaná částka",
+  reg_term: "Doba", reg_monthly: "Odhadovaná splátka", reg_rate: "Pevná roční sazba",
+  reg_purpose: "Účel / popis projektu", months: "měsíců",
+  amort_title: "Splátkový kalendář", amort_amount: "Částka", amort_rate: "Roční sazba", amort_term: "Doba",
+  amort_monthly: "Měsíční splátka", amort_start: "Začátek", amort_no: "Č.", amort_date: "Datum",
+  amort_payment: "Splátka", amort_principal: "Jistina", amort_interest: "Úrok", amort_balance: "Zůstatek",
+  contract_title: "Úvěrová smlouva", cert_title: "Potvrzení o registraci",
+};
+
+const BUNDLES: Record<string, Dict> = { de, pl, sv, cs };
+const MAP: Record<RouteLocale, keyof typeof BUNDLES> = { de: "de", pl: "pl", sv: "sv", cz: "cs" };
+
+export function docT(locale: RouteLocale) {
+  const primary = BUNDLES[MAP[locale]];
+  return (key: string, vars?: Record<string, string>): string => {
+    const raw = primary[key] ?? de[key] ?? key;
+    return vars ? raw.replace(/\{(\w+)\}/g, (m, k) => vars[k] ?? m) : raw;
+  };
+}

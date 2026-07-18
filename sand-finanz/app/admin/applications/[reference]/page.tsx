@@ -67,14 +67,17 @@ export default async function ApplicationDetailPage({
         <div style={{ marginTop: "1.25rem" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
             {DOCUMENTS.map((d) => (
-              <Link
+              // eslint-disable-next-line @next/next/no-html-link-for-pages -- PDF stream route, opens in a new tab
+              <a
                 key={d.type}
                 href={`/admin/applications/${app.reference}/dokument/${d.type}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="sand-btn"
                 style={{ background: d.color, color: "#fff" }}
               >
                 📄 {d.label}
-              </Link>
+              </a>
             ))}
           </div>
           <p style={{ marginTop: "0.5rem", fontSize: "0.85rem", color: "var(--color-sand-muted)" }}>

@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   // This is a standalone app nested in a repo that has its own lockfile; pin the
   // file-tracing root here so Next does not infer the parent workspace.
   outputFileTracingRoot: dirname(fileURLToPath(import.meta.url)),
+  // react-pdf uses Node internals; keep it external so Next doesn't try to bundle it.
+  serverExternalPackages: ["@react-pdf/renderer"],
+  // Ensure the PDF fonts are shipped with the serverless functions that render PDFs.
+  outputFileTracingIncludes: {
+    "/admin/applications/[reference]/dokument/[type]": ["./lib/pdf/fonts/**"],
+    "/dokument/[token]": ["./lib/pdf/fonts/**"],
+  },
   async headers() {
     return [
       {

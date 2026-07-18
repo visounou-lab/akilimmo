@@ -94,7 +94,13 @@
   "leistungen": {
     "title": "Unsere Leistungen",
     "subtitle": "Ein Überblick über die Finanzierungsarten. Verfügbarkeit, Beträge und Konditionen werden nur nach Prüfung bestätigt.",
-    "note": "Die tatsächlich angebotenen Produkte und Länder werden erst nach interner Freigabe veröffentlicht."
+    "note": "Die tatsächlich angebotenen Produkte und Länder werden erst nach interner Freigabe veröffentlicht.",
+    "amountLabel": "Betrag",
+    "termLabel": "Laufzeit",
+    "to": "bis",
+    "months": "Monate",
+    "fixedRate": "fest",
+    "apply": "Antrag stellen"
   },
   "kreditrechner": {
     "title": "Kreditrechner",

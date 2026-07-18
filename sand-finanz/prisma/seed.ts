@@ -9,17 +9,27 @@ const prisma = new PrismaClient();
  * compliance-validated figures via the admin before production.
  */
 const CREDIT_VERSIONS = [
-  { key: "de-personal", country: "DE", productType: "personal", currency: "EUR", minAmount: 2000, maxAmount: 50000, minTerm: 12, maxTerm: 84, nominalRate: 0.069 },
-  { key: "de-auto", country: "DE", productType: "auto", currency: "EUR", minAmount: 3000, maxAmount: 80000, minTerm: 12, maxTerm: 96, nominalRate: 0.049 },
-  { key: "de-renovation", country: "DE", productType: "renovation", currency: "EUR", minAmount: 5000, maxAmount: 100000, minTerm: 24, maxTerm: 120, nominalRate: 0.059 },
+  { key: "de-personal", country: "DE", productType: "personal", currency: "EUR", minAmount: 5000, maxAmount: 75000, minTerm: 12, maxTerm: 84, nominalRate: 0.03 },
+  { key: "de-auto", country: "DE", productType: "auto", currency: "EUR", minAmount: 5000, maxAmount: 100000, minTerm: 12, maxTerm: 120, nominalRate: 0.03 },
+  { key: "de-renovation", country: "DE", productType: "renovation", currency: "EUR", minAmount: 5000, maxAmount: 200000, minTerm: 12, maxTerm: 180, nominalRate: 0.03 },
+  { key: "de-business", country: "DE", productType: "business", currency: "EUR", minAmount: 5000, maxAmount: 1000000, minTerm: 12, maxTerm: 240, nominalRate: 0.03 },
+  { key: "de-study", country: "DE", productType: "study", currency: "EUR", minAmount: 5000, maxAmount: 50000, minTerm: 12, maxTerm: 120, nominalRate: 0.03 },
+  { key: "de-energy", country: "DE", productType: "energy", currency: "EUR", minAmount: 5000, maxAmount: 150000, minTerm: 12, maxTerm: 240, nominalRate: 0.03 },
 ] as const;
 
 async function main() {
   // --- Credit product versions ---
   for (const v of CREDIT_VERSIONS) {
+    const values = {
+      minAmount: v.minAmount,
+      maxAmount: v.maxAmount,
+      minTerm: v.minTerm,
+      maxTerm: v.maxTerm,
+      nominalRate: v.nominalRate,
+    };
     await prisma.creditProductVersion.upsert({
       where: { key_version: { key: v.key, version: 1 } },
-      update: {},
+      update: values,
       create: {
         key: v.key,
         version: 1,

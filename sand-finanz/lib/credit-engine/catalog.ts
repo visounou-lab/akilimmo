@@ -2,72 +2,38 @@ import type { CreditProductVersion } from "./types";
 
 /**
  * ============================================================================
- *  PLACEHOLDER CREDIT PARAMETERS — NOT REAL SAND FINANZ OFFERS
+ *  CREDIT PARAMETERS — client-provided example values (to confirm with compliance)
  * ============================================================================
- * Every value below (amounts, terms, rates, fees, product availability) is an
- * EXAMPLE used only to make the calculator functional in staging. None of it
- * may be published as a real offer. Before production, each version must be
- * replaced with figures validated by SAND FINANZ compliance/legal, per the
- * plan's non-negotiable "Exactitude" principle.
- *
- * In a later batch these versions move to the database (CreditProductVersion
- * table) and are edited from the admin back-office. The public calculator and
- * document generation read from the SAME source so results always match.
+ * Amounts, terms and the flat 3 % nominal rate below were provided by SAND
+ * FINANZ as the intended product line-up. They remain subject to final
+ * compliance/legal sign-off before publication (per the plan's "Exactitude"
+ * principle). In production these live in the database (CreditProductVersion)
+ * and are edited from the admin; the public calculator and document generation
+ * read from the SAME source so results always match.
  * ============================================================================
  */
 
+const COMMON = {
+  version: 1,
+  country: "DE" as const,
+  currency: "EUR" as const,
+  minAmount: 5_000,
+  minTerm: 12,
+  nominalRate: 0.03, // 3 % fixe
+  originationFee: null,
+  rounding: { unit: 0.01, mode: "nearest" as const },
+  activeFrom: "2026-01-01",
+  activeTo: null,
+  disclaimerKey: "calculator.disclaimer",
+};
+
 export const PLACEHOLDER_CATALOG: CreditProductVersion[] = [
-  {
-    id: "de-personal",
-    version: 1,
-    country: "DE",
-    productType: "personal",
-    currency: "EUR",
-    minAmount: 2_000,
-    maxAmount: 50_000,
-    minTerm: 12,
-    maxTerm: 84,
-    nominalRate: 0.069, // EXAMPLE 6.9 % — to validate
-    originationFee: null,
-    rounding: { unit: 0.01, mode: "nearest" },
-    activeFrom: "2026-01-01",
-    activeTo: null,
-    disclaimerKey: "calculator.disclaimer",
-  },
-  {
-    id: "de-auto",
-    version: 1,
-    country: "DE",
-    productType: "auto",
-    currency: "EUR",
-    minAmount: 3_000,
-    maxAmount: 80_000,
-    minTerm: 12,
-    maxTerm: 96,
-    nominalRate: 0.049, // EXAMPLE 4.9 % — to validate
-    originationFee: null,
-    rounding: { unit: 0.01, mode: "nearest" },
-    activeFrom: "2026-01-01",
-    activeTo: null,
-    disclaimerKey: "calculator.disclaimer",
-  },
-  {
-    id: "de-renovation",
-    version: 1,
-    country: "DE",
-    productType: "renovation",
-    currency: "EUR",
-    minAmount: 5_000,
-    maxAmount: 100_000,
-    minTerm: 24,
-    maxTerm: 120,
-    nominalRate: 0.059, // EXAMPLE 5.9 % — to validate
-    originationFee: null,
-    rounding: { unit: 0.01, mode: "nearest" },
-    activeFrom: "2026-01-01",
-    activeTo: null,
-    disclaimerKey: "calculator.disclaimer",
-  },
+  { ...COMMON, id: "de-personal", productType: "personal", maxAmount: 75_000, maxTerm: 84 },
+  { ...COMMON, id: "de-auto", productType: "auto", maxAmount: 100_000, maxTerm: 120 },
+  { ...COMMON, id: "de-renovation", productType: "renovation", maxAmount: 200_000, maxTerm: 180 },
+  { ...COMMON, id: "de-business", productType: "business", maxAmount: 1_000_000, maxTerm: 240 },
+  { ...COMMON, id: "de-study", productType: "study", maxAmount: 50_000, maxTerm: 120 },
+  { ...COMMON, id: "de-energy", productType: "energy", maxAmount: 150_000, maxTerm: 240 },
 ];
 
 export function getCatalog(): CreditProductVersion[] {

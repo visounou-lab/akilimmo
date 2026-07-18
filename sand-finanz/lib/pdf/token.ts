@@ -32,8 +32,9 @@ export async function verifyDocToken(token: string): Promise<{ ref: string; type
   }
 }
 
-export function accessUrl(token: string): string {
-  return `${SITE_URL}/dokument/${token}`;
+export function accessUrl(token: string, origin?: string): string {
+  const base = (origin || SITE_URL).replace(/\/$/, "");
+  return `${base}/dokument/${token}`;
 }
 
 /** Returns a PNG data URL for a QR code that links to the online document. */

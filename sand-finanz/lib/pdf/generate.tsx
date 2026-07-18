@@ -11,6 +11,7 @@ import { isRouteLocale, localeConfig, type RouteLocale } from "@/lib/i18n/config
 import { ensureFonts } from "./fonts";
 import { docT } from "./i18n";
 import { signDocToken, accessUrl, qrDataUrl, type DocType } from "./token";
+import { barcodeDataUrl } from "./barcode";
 import { Anmeldeformular, Tilgungsplan, Vertrag, Einlagenzertifikat, type DocCtx, type ScheduleRow } from "./documents";
 
 const DOC_LABEL: Record<DocType, string> = {
@@ -20,7 +21,7 @@ const DOC_LABEL: Record<DocType, string> = {
   einlagenzertifikat: "einlagenzertifikat",
 };
 
-export async function generateDocument(reference: string, type: DocType): Promise<{
+export async function generateDocument(reference: string, type: DocType, origin?: string): Promise<{
   buffer: Buffer;
   filename: string;
   sha256: string;
@@ -71,8 +72,9 @@ export async function generateDocument(reference: string, type: DocType): Promis
   }
 
   const token = await signDocToken(reference, type);
-  const url = accessUrl(token);
+  const url = accessUrl(token, origin);
   const qr = await qrDataUrl(url);
+  const barcode = await barcodeDataUrl(reference);
 
   const ctx: DocCtx = {
     company,
@@ -93,7 +95,9 @@ export async function generateDocument(reference: string, type: DocType): Promis
     bank: { name: app.bankName ?? "", iban: app.iban ?? "", bic: app.bic ?? "" },
     schedule,
     qrDataUrl: qr,
+    barcodeDataUrl: barcode,
     accessCaption: t("onlineAccess"),
+    placeLine: `${c.city ?? ""}${c.city ? ", " : ""}${dateFmt(new Date())}`,
     lender: { name: company.representative ?? "", title: "" },
   };
 

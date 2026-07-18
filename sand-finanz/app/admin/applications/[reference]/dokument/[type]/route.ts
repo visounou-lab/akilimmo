@@ -7,8 +7,14 @@ import type { DocType } from "@/lib/pdf/token";
 
 const TYPES: DocType[] = ["anmeldeformular", "tilgungsplan", "vertrag", "einlagenzertifikat"];
 
+function requestOrigin(req: Request): string {
+  const proto = req.headers.get("x-forwarded-proto") ?? "https";
+  const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
+  return host ? `${proto}://${host}` : new URL(req.url).origin;
+}
+
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ reference: string; type: string }> },
 ) {
   const { reference, type } = await params;
@@ -21,7 +27,7 @@ export async function GET(
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
-  const doc = await generateDocument(reference, type as DocType);
+  const doc = await generateDocument(reference, type as DocType, requestOrigin(req));
   if (!doc) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
   await writeAudit({

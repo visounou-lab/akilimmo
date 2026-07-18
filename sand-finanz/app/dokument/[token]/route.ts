@@ -8,14 +8,17 @@ import { writeAudit } from "@/lib/audit";
  * QR code. The unguessable token is the access control; no login required.
  */
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ token: string }> },
 ) {
   const { token } = await params;
   const payload = await verifyDocToken(token);
   if (!payload) return NextResponse.json({ error: "invalid_or_expired" }, { status: 401 });
 
-  const doc = await generateDocument(payload.ref, payload.type);
+  const proto = req.headers.get("x-forwarded-proto") ?? "https";
+  const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
+  const origin = host ? `${proto}://${host}` : new URL(req.url).origin;
+  const doc = await generateDocument(payload.ref, payload.type, origin);
   if (!doc) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
   await writeAudit({ action: "document.accessed_online", entity: "Application", entityId: payload.ref, metadata: { type: payload.type } });

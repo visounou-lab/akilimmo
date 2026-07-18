@@ -36,6 +36,16 @@ const de: Dict = {
   reg_rate: "Fester Jahreszins",
   reg_purpose: "Verwendungszweck / Projektbeschreibung",
   months: "Monate",
+  reg_s3: "3. Erforderliche Unterlagen",
+  reg_doc1: "Eine gültige Kopie Ihres Ausweisdokuments (Personalausweis, Reisepass)",
+  reg_doc2: "Ein Einkommensnachweis (Gehaltsabrechnung, Steuerbescheid)",
+  reg_doc3: "Ein aktueller Adressnachweis (nicht älter als 3 Monate)",
+  reg_s4: "4. Zahlungsbedingungen",
+  reg_cond1: "Die erste Rate wird drei Monate nach Auszahlung der Mittel fällig.",
+  reg_cond2: "Die weiteren Raten erfolgen per Banküberweisung auf das mitgeteilte Konto.",
+  reg_cond3: "Die Rückzahlung erfolgt gemäß dem gewählten Tilgungsplan.",
+  reg_thanks: "Bitte füllen Sie dieses Formular sorgfältig aus und übermitteln Sie uns die Unterlagen zeitnah.",
+  reg_applicant: "Kunde / Antragsteller",
 
   // Tilgungsplan
   amort_title: "Tilgungsplan",
@@ -82,13 +92,22 @@ const de: Dict = {
 
   // Einlagenzertifikat
   cert_title: "Einlagenzertifikat",
-  cert_intro: "Hiermit wird bestätigt, dass das folgende Dossier registriert wurde. Dieses Zertifikat bescheinigt ausschließlich die Registrierung der Anfrage und stellt keine Finanzierungszusage dar.",
-  cert_holder: "Titular",
+  cert_subref: "Zertifikatsnummer",
+  cert_amount: "Betrag",
+  cert_beneficiary: "Begünstigter",
   cert_reference: "Referenz",
-  cert_amount: "Betrag der Anfrage",
+  cert_senderLabel: "Absender / Aussteller",
+  cert_beneficiaryLabel: "Begünstigter",
+  cert_senderInfo: "{company} teilt Ihnen als Absender der Mittel mit, dass der Betrag von:",
+  cert_sentTo: "auf das nachstehende, noch nicht bestätigte Bankkonto überwiesen wurde:",
+  cert_holder: "Kontoinhaber",
+  cert_bank: "Name der Bank",
+  cert_iban: "IBAN",
+  cert_bic: "BIC / SWIFT",
+  cert_country: "Land (Begünstigter)",
+  cert_confirm: "{company} bestätigt, dass der Betrag von {amount} zur Überweisung auf Ihr Bankkonto bereitsteht, sobald die Bedingungen des Vertrags erfüllt sind.",
+  cert_stampNote: "Dieses Einlagenzertifikat ist mit dem Stempel des Mittelempfängers zu versehen.",
   cert_date: "Datum",
-  cert_object: "Gegenstand",
-  cert_note: "Ausschließlich gültig nach positiver Prüfung und Vertragsunterzeichnung.",
 };
 
 const pl: Dict = {

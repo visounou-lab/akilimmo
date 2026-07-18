@@ -8,10 +8,14 @@ export type Permission =
   | "applications.view"
   | "applications.assign"
   | "applications.changeStatus"
+  | "applications.edit"
+  | "applications.delete"
   | "applications.addNote"
   | "applications.createOffer"
+  | "documents.generate"
   | "creditProducts.view"
   | "creditProducts.edit"
+  | "settings.manage"
   | "audit.view"
   | "users.manage";
 
@@ -20,10 +24,14 @@ const MATRIX: Record<Role, Permission[]> = {
     "applications.view",
     "applications.assign",
     "applications.changeStatus",
+    "applications.edit",
+    "applications.delete",
     "applications.addNote",
     "applications.createOffer",
+    "documents.generate",
     "creditProducts.view",
     "creditProducts.edit",
+    "settings.manage",
     "audit.view",
     "users.manage",
   ],
@@ -31,12 +39,14 @@ const MATRIX: Record<Role, Permission[]> = {
     "applications.view",
     "applications.assign",
     "applications.changeStatus",
+    "applications.edit",
     "applications.addNote",
     "applications.createOffer",
+    "documents.generate",
     "creditProducts.view",
     "audit.view",
   ],
-  ADVISOR: ["applications.view", "applications.addNote", "creditProducts.view"],
+  ADVISOR: ["applications.view", "applications.edit", "applications.addNote", "documents.generate", "creditProducts.view"],
   READ_ONLY: ["applications.view", "creditProducts.view", "audit.view"],
 };
 

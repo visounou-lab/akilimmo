@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import type { ApplicationStatus } from "@prisma/client";
 import { prisma } from "@/lib/db";
@@ -7,6 +8,78 @@ import { requirePermission } from "@/lib/auth/server";
 import { writeAudit } from "@/lib/audit";
 import { calculate, type CreditProductVersion } from "@/lib/credit-engine";
 import { ALL_STATUSES } from "@/lib/application-status";
+
+function s(fd: FormData, k: string): string | null {
+  const v = String(fd.get(k) ?? "").trim();
+  return v || null;
+}
+function n(fd: FormData, k: string): number | null {
+  const v = fd.get(k);
+  const num = Number(v);
+  return v != null && String(v).trim() !== "" && Number.isFinite(num) ? num : null;
+}
+
+/** Full dossier edit (personal data, credit request, bank details, status). */
+export async function updateApplicationAction(formData: FormData) {
+  const user = await requirePermission("applications.edit");
+  const reference = String(formData.get("reference") ?? "");
+  const app = await prisma.application.findUnique({ where: { reference } });
+  if (!app) return;
+
+  const status = String(formData.get("status") ?? app.status) as ApplicationStatus;
+  const amount = n(formData, "amount");
+  const termMonths = n(formData, "termMonths");
+
+  await prisma.$transaction(async (tx) => {
+    await tx.customer.update({
+      where: { id: app.customerId },
+      data: {
+        firstName: s(formData, "firstName") ?? "",
+        lastName: s(formData, "lastName") ?? "",
+        email: s(formData, "email") ?? "",
+        phone: s(formData, "phone"),
+        birthDate: s(formData, "birthDate"),
+        occupation: s(formData, "occupation"),
+        address: s(formData, "address"),
+        postalCode: s(formData, "postalCode"),
+        city: s(formData, "city"),
+      },
+    });
+    await tx.application.update({
+      where: { reference },
+      data: {
+        amount: amount ?? app.amount,
+        termMonths: termMonths ?? app.termMonths,
+        purpose: s(formData, "purpose"),
+        insuranceAmount: n(formData, "insuranceAmount"),
+        bankName: s(formData, "bankName"),
+        iban: s(formData, "iban"),
+        bic: s(formData, "bic"),
+        paymentStartDate: s(formData, "paymentStartDate"),
+        transferDate: s(formData, "transferDate"),
+        status: ALL_STATUSES.includes(status) ? status : app.status,
+      },
+    });
+    // income lives on the financial profile
+    const income = n(formData, "income");
+    await tx.financialProfile.upsert({
+      where: { applicationId: reference },
+      update: { income },
+      create: { applicationId: reference, income },
+    });
+  });
+
+  await writeAudit({ actorId: user.id, action: "application.updated", entity: "Application", entityId: reference });
+  revalidatePath(`/admin/applications/${reference}`);
+}
+
+export async function deleteApplicationAction(formData: FormData) {
+  const user = await requirePermission("applications.delete");
+  const reference = String(formData.get("reference") ?? "");
+  await prisma.application.delete({ where: { reference } });
+  await writeAudit({ actorId: user.id, action: "application.deleted", entity: "Application", entityId: reference });
+  redirect("/admin/applications");
+}
 
 export async function changeStatusAction(formData: FormData) {
   const user = await requirePermission("applications.changeStatus");

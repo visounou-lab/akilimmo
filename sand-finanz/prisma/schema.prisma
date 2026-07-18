@@ -97,6 +97,9 @@ model Customer {
   email             String
   phone             String?
   address           String?
+  postalCode        String?
+  city              String?
+  occupation        String?
   locale            String    @default("de")
   consentPrivacyAt  DateTime?
   consentContactAt  DateTime?
@@ -118,6 +121,12 @@ model Application {
   amount       Float
   termMonths   Int
   purpose      String?
+  insuranceAmount Float?
+  bankName        String?
+  iban            String?
+  bic             String?
+  paymentStartDate String?
+  transferDate     String?
   status       ApplicationStatus @default(SUBMITTED)
   assignedTo   User?             @relation("AssignedAnalyst", fields: [assignedToId], references: [id])
   assignedToId String?
@@ -234,6 +243,25 @@ model Offer {
 }
 
 // --- Audit -------------------------------------------------------------------
+
+// --- Company / legal settings (singleton, id = "default") --------------------
+
+model CompanySettings {
+  id             String   @id @default("default")
+  legalName      String   @default("SAND FINANZ GRUPPE")
+  address        String?
+  registration   String? // Handelsregister / Registernummer
+  vatId          String? // USt-IdNr.
+  shareCapital   String? // Stammkapital
+  email          String?
+  phone          String?
+  bankName       String?
+  iban           String?
+  bic            String?
+  representative String? // gesetzliche Vertretung
+  updatedAt      DateTime @updatedAt
+  updatedById    String?
+}
 
 model AuditLog {
   id        String   @id @default(cuid())

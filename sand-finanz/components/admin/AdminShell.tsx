@@ -8,8 +8,9 @@ const NAV: Array<{ href: string; label: string; perm: Permission }> = [
   { href: "/admin", label: "Dashboard", perm: "applications.view" },
   { href: "/admin/applications", label: "Anträge", perm: "applications.view" },
   { href: "/admin/credit-products", label: "Kreditparameter", perm: "creditProducts.view" },
+  { href: "/admin/einstellungen", label: "Einstellungen", perm: "settings.manage" },
+  { href: "/admin/zugang", label: "Zugang", perm: "applications.view" },
   { href: "/admin/audit", label: "Audit-Log", perm: "audit.view" },
-  { href: "/admin/users", label: "Benutzer", perm: "users.manage" },
 ];
 
 export function AdminShell({

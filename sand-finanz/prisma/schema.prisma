@@ -1,6 +1,8 @@
 // SAND FINANZ GRUPPE — data model (plan ch. 12) and dossier statuses (ch. 10.1).
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // "native" for local dev; the rhel target is required by the Vercel runtime.
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {

@@ -30,7 +30,7 @@ export default function PartnerSection() {
   return (
     <section
       aria-labelledby="partner-heading"
-      className="py-20 lg:py-28"
+      className="py-16 lg:py-24"
       style={{ backgroundColor: "#1B4D3E" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

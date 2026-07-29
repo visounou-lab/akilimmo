@@ -142,7 +142,7 @@ export default function FeaturedProperties({
     <section
       id="biens"
       aria-labelledby="properties-heading"
-      className="py-20 lg:py-28"
+      className="py-16 lg:py-24"
       style={{ backgroundColor: "#F5F0E8" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

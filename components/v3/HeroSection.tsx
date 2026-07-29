@@ -33,7 +33,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[760px] h-[88vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[560px] h-[74vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image

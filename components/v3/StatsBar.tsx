@@ -6,11 +6,19 @@ export type SiteStats = {
   cityCount: number;          // villes couvertes
 };
 
-// Seuil en dessous duquel on préfère un libellé qualitatif à un chiffre trop
-// petit pour être crédible. On ne montre JAMAIS un chiffre faible ou faux.
+// Seuil en dessous duquel on n'affiche PAS le chiffre : un compteur trop petit
+// affaiblit la preuve. On met alors en avant le PROCESSUS, jamais un faux chiffre.
 const MIN_CREDIBLE = 3;
 
-type Pillar = { icon: typeof FileCheck2; title: string; desc: string };
+// `metric` = chiffre réel affiché en appui discret (eyebrow doré), seulement
+// s'il est crédible. Le titre porte toujours l'engagement, pas le compteur :
+// c'est le processus qui rassure la diaspora, pas la taille du catalogue.
+type Pillar = {
+  icon: typeof FileCheck2;
+  metric?: string;
+  title: string;
+  desc: string;
+};
 
 function buildPillars(stats?: SiteStats): Pillar[] {
   const listings = stats?.listingCount ?? 0;
@@ -20,23 +28,26 @@ function buildPillars(stats?: SiteStats): Pillar[] {
   return [
     {
       icon: FileCheck2,
-      title: listings >= MIN_CREDIBLE ? `${listings} annonces contrôlées` : "Annonces contrôlées",
-      desc: "Chaque annonce est examinée avant publication",
+      metric: listings >= MIN_CREDIBLE ? `${listings} annonces` : undefined,
+      title: "Chaque annonce contrôlée",
+      desc: "Examinée par notre équipe avant sa mise en ligne",
     },
     {
       icon: ScrollText,
-      title: titles >= MIN_CREDIBLE ? `${titles} titres vérifiés` : "Titres vérifiés sur pièce",
-      desc: "Le titre foncier est contrôlé par notre équipe",
+      metric: titles >= MIN_CREDIBLE ? `${titles} titres vérifiés` : undefined,
+      title: "Titre foncier vérifié",
+      desc: "Contrôlé sur pièce, document à l'appui",
     },
     {
       icon: MapPin,
-      title: cities >= MIN_CREDIBLE ? `${cities} villes couvertes` : "2 pays couverts",
-      desc: "Côte d'Ivoire · Bénin",
+      metric: cities >= MIN_CREDIBLE ? `${cities} villes` : undefined,
+      title: "Bénin & Côte d'Ivoire",
+      desc: "Cotonou · Abomey-Calavi · Abidjan",
     },
     {
       icon: KeyRound,
-      title: "Suivi humain",
-      desc: "Un conseiller vous accompagne jusqu'aux clés",
+      title: "Suivi humain jusqu'aux clés",
+      desc: "Un conseiller dédié, sur place ou depuis la diaspora",
     },
   ];
 }
@@ -51,8 +62,26 @@ export default function StatsBar({ stats }: { stats?: SiteStats }) {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <dl className="grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-4">
-          {pillars.map(({ icon: Icon, title, desc }) => (
+          {pillars.map(({ icon: Icon, metric, title, desc }) => (
             <div key={title} className="flex flex-col items-center text-center">
+              {/* Slot toujours réservé pour garder icônes et titres alignés,
+                  que le chiffre soit affiché ou non. */}
+              <span
+                aria-hidden={metric ? undefined : true}
+                style={{
+                  fontFamily: "var(--font-inter), sans-serif",
+                  fontWeight: 600,
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "#C8922A",
+                  marginBottom: "0.6rem",
+                  minHeight: "0.85rem",
+                  visibility: metric ? "visible" : "hidden",
+                }}
+              >
+                {metric ?? " "}
+              </span>
               <Icon
                 size={26}
                 aria-hidden="true"

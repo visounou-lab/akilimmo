@@ -9,6 +9,16 @@ const CITIES = [
   "Abomey-Calavi", "Tokan", "Calavi", "Plateau", "Marcory",
 ];
 
+// ── Image de fond du hero ────────────────────────────────────────────────
+// Pour remplacer par une vraie photo Abidjan / Cotonou : déposer le fichier
+// dans public/brand/hero/ et remplacer la valeur ci-dessous par
+// "/brand/hero/mon-image.jpg". Éviter les décors Dubaï / Europe / Amérique —
+// l'identité AKIL IMMO est ouest-africaine (cf. docs/PROMPTS-PUBLICITES-AKI.md).
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80";
+const HERO_IMAGE_ALT =
+  "Villa résidentielle contemporaine dans un quartier d'Afrique de l'Ouest";
+
 export default function HeroSection() {
   const [query, setQuery] = useState("");
 
@@ -27,19 +37,29 @@ export default function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80"
-          alt="Belle villa dans un quartier résidentiel en Afrique de l'Ouest"
+          src={HERO_IMAGE}
+          alt={HERO_IMAGE_ALT}
           fill
           priority
           className="object-cover"
           sizes="100vw"
         />
-        {/* Charcoal overlay — Option C */}
+        {/* Voile vert forêt → charbon : ancre l'identité AKIL IMMO dès le hero
+            tout en gardant le texte central parfaitement lisible. */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(160deg, rgba(28,25,23,0.96) 0%, rgba(28,25,23,0.88) 55%, rgba(28,25,23,0.72) 100%)",
+              "linear-gradient(152deg, rgba(18,56,45,0.97) 0%, rgba(28,25,23,0.93) 46%, rgba(27,77,62,0.80) 100%)",
+          }}
+        />
+        {/* Halo vert forêt en bas : fait la transition vers la section suivante */}
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(120% 70% at 50% 118%, rgba(27,77,62,0.55) 0%, transparent 60%)",
           }}
         />
       </div>

@@ -99,6 +99,44 @@ function formatPrice(price: number): string {
   return new Intl.NumberFormat("fr-FR").format(price) + " XOF / nuit";
 }
 
+// Beaucoup de photos sont prises au téléphone (format portrait) et étaient
+// recadrées brutalement par object-cover dans le cadre paysage de la carte.
+// On détecte l'orientation au chargement : paysage → plein cadre comme avant ;
+// portrait → photo entière (object-contain) posée sur un fond flou tiré de la
+// même image. Corrige le problème à la racine pour toutes les cartes.
+const CARD_IMG_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
+function CardImage({ src, alt }: { src: string; alt: string }) {
+  const [portrait, setPortrait] = useState(false);
+
+  return (
+    <>
+      {portrait && (
+        <Image
+          src={src}
+          alt=""
+          aria-hidden="true"
+          fill
+          className="object-cover blur-xl scale-110"
+          style={{ opacity: 0.6 }}
+          sizes={CARD_IMG_SIZES}
+        />
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        onLoad={(e) => {
+          const img = e.currentTarget;
+          if (img.naturalHeight > img.naturalWidth) setPortrait(true);
+        }}
+        className={`${portrait ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-105`}
+        sizes={CARD_IMG_SIZES}
+      />
+    </>
+  );
+}
+
 export default function FeaturedProperties({
   properties,
 }: {
@@ -242,14 +280,12 @@ export default function FeaturedProperties({
                   }}
                 >
                   {/* Image */}
-                  <a href={`/biens/${prop.slug}`} className="block relative h-52 overflow-hidden">
-                    <Image
-                      src={imageSrc}
-                      alt={prop.title}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                  <a
+                    href={`/biens/${prop.slug}`}
+                    className="block relative h-52 overflow-hidden"
+                    style={{ backgroundColor: "#1C1917" }}
+                  >
+                    <CardImage src={imageSrc} alt={prop.title} />
                     {/* Disponible badge */}
                     <div
                       className="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium"

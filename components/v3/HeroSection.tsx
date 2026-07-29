@@ -227,28 +227,6 @@ export default function HeroSection() {
           ))}
         </div>
       </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
-        <span
-          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
-          aria-hidden="true"
-        />
-        <a
-          href="#categories"
-          className="text-xs tracking-widest uppercase cursor-pointer"
-          style={{
-            fontFamily: "var(--font-inter), sans-serif",
-            color: "rgba(253,252,248,0.38)",
-          }}
-        >
-          Découvrir
-        </a>
-        <span
-          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
-          aria-hidden="true"
-        />
-      </div>
     </section>
   );
 }

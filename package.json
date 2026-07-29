@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && npm run migrate:prod && next build",
+    "migrate:prod": "if [ \"$VERCEL_ENV\" = production ]; then prisma migrate deploy; else echo 'skip prisma migrate deploy (preview/local)'; fi",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"

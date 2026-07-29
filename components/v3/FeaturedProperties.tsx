@@ -99,41 +99,30 @@ function formatPrice(price: number): string {
   return new Intl.NumberFormat("fr-FR").format(price) + " XOF / nuit";
 }
 
-// Beaucoup de photos sont prises au téléphone (format portrait) et étaient
-// recadrées brutalement par object-cover dans le cadre paysage de la carte.
-// On détecte l'orientation au chargement : paysage → plein cadre comme avant ;
-// portrait → photo entière (object-contain) posée sur un fond flou tiré de la
-// même image. Corrige le problème à la racine pour toutes les cartes.
+// Cadre 4:3 + object-cover (façon Airbnb) : photos pleines et uniformes.
+// Ce format proche du carré recadre beaucoup moins les photos portrait
+// (prises au téléphone) que l'ancien cadre large, sans bande floue. Pour le
+// portrait, on biaise légèrement le cadrage vers le haut afin de garder la
+// pièce plutôt que le sol. La photo complète reste visible dans la galerie
+// du bien (object-contain).
 const CARD_IMG_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
 
 function CardImage({ src, alt }: { src: string; alt: string }) {
   const [portrait, setPortrait] = useState(false);
 
   return (
-    <>
-      {portrait && (
-        <Image
-          src={src}
-          alt=""
-          aria-hidden="true"
-          fill
-          className="object-cover blur-xl scale-110"
-          style={{ opacity: 0.6 }}
-          sizes={CARD_IMG_SIZES}
-        />
-      )}
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        onLoad={(e) => {
-          const img = e.currentTarget;
-          if (img.naturalHeight > img.naturalWidth) setPortrait(true);
-        }}
-        className={`${portrait ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-105`}
-        sizes={CARD_IMG_SIZES}
-      />
-    </>
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      onLoad={(e) => {
+        const img = e.currentTarget;
+        setPortrait(img.naturalHeight > img.naturalWidth);
+      }}
+      className="object-cover transition-transform duration-300 group-hover:scale-105"
+      style={{ objectPosition: portrait ? "center 38%" : "center" }}
+      sizes={CARD_IMG_SIZES}
+    />
   );
 }
 
@@ -282,7 +271,7 @@ export default function FeaturedProperties({
                   {/* Image */}
                   <a
                     href={`/biens/${prop.slug}`}
-                    className="block relative h-52 overflow-hidden"
+                    className="block relative aspect-[4/3] overflow-hidden"
                     style={{ backgroundColor: "#1C1917" }}
                   >
                     <CardImage src={imageSrc} alt={prop.title} />

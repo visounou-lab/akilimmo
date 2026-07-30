@@ -114,11 +114,11 @@ export default async function V3Page() {
         {/* 2. Nos 3 catégories de services */}
         <CategoriesSection />
 
-        {/* 3. Chiffres de confiance — réels, calculés en direct */}
-        <StatsBar stats={siteStats} />
-
-        {/* 4. Biens disponibles — données réelles depuis la DB */}
+        {/* 3. Biens disponibles — remontés avant la confiance : on montre l'offre tôt */}
         <FeaturedProperties properties={properties} />
+
+        {/* 4. Chiffres de confiance — juste après les biens : répond au « pourquoi ici » */}
+        <StatsBar stats={siteStats} />
 
         {/* 4bis. Terrains à vendre — affiché seulement s'il y en a */}
         {terrains.length > 0 && <FeaturedTerrains terrains={terrains} />}

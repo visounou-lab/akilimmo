@@ -9,6 +9,16 @@ const CITIES = [
   "Abomey-Calavi", "Tokan", "Calavi", "Plateau", "Marcory",
 ];
 
+// ── Image de fond du hero ────────────────────────────────────────────────
+// Pour remplacer par une vraie photo Abidjan / Cotonou : déposer le fichier
+// dans public/brand/hero/ et remplacer la valeur ci-dessous par
+// "/brand/hero/mon-image.jpg". Éviter les décors Dubaï / Europe / Amérique —
+// l'identité AKIL IMMO est ouest-africaine (cf. docs/PROMPTS-PUBLICITES-AKI.md).
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80";
+const HERO_IMAGE_ALT =
+  "Villa résidentielle contemporaine dans un quartier d'Afrique de l'Ouest";
+
 export default function HeroSection() {
   const [query, setQuery] = useState("");
 
@@ -23,23 +33,45 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[760px] h-[88vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[560px] h-[74vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80"
-          alt="Belle villa dans un quartier résidentiel en Afrique de l'Ouest"
+          src={HERO_IMAGE}
+          alt={HERO_IMAGE_ALT}
           fill
           priority
           className="object-cover"
           sizes="100vw"
         />
-        {/* Charcoal overlay — Option C */}
+        {/* Voile vert forêt → charbon, ALLÉGÉ : ancre l'identité AKIL IMMO
+            tout en laissant respirer une photo lumineuse (villa, ciel, piscine).
+            Coins verts marqués, centre plus clair pour révéler le bien. */}
         <div
           className="absolute inset-0"
+          aria-hidden="true"
           style={{
             background:
-              "linear-gradient(160deg, rgba(28,25,23,0.96) 0%, rgba(28,25,23,0.88) 55%, rgba(28,25,23,0.72) 100%)",
+              "linear-gradient(152deg, rgba(18,56,45,0.86) 0%, rgba(28,25,23,0.52) 46%, rgba(27,77,62,0.62) 100%)",
+          }}
+        />
+        {/* Scrim central : assombrit uniquement derrière le texte centré pour
+            garantir la lisibilité, même sur une villa blanche en plein soleil. */}
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(78% 58% at 50% 46%, rgba(24,22,20,0.60) 0%, transparent 72%)",
+          }}
+        />
+        {/* Halo vert forêt en bas : fait la transition vers la section suivante */}
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(120% 70% at 50% 118%, rgba(27,77,62,0.50) 0%, transparent 58%)",
           }}
         />
       </div>
@@ -70,6 +102,7 @@ export default function HeroSection() {
             lineHeight: 1.15,
             color: "#FDFCF8",
             letterSpacing: "-0.01em",
+            textShadow: "0 2px 24px rgba(20,18,16,0.55)",
           }}
         >
           Locations, voitures &amp; séjours
@@ -85,8 +118,9 @@ export default function HeroSection() {
           style={{
             fontFamily: "var(--font-inter), sans-serif",
             fontWeight: 300,
-            color: "rgba(253,252,248,0.65)",
+            color: "rgba(253,252,248,0.78)",
             lineHeight: 1.8,
+            textShadow: "0 1px 16px rgba(20,18,16,0.45)",
           }}
         >
           Appartements et villas meublés vérifiés, voitures de qualité et séjours
@@ -192,28 +226,6 @@ export default function HeroSection() {
             </a>
           ))}
         </div>
-      </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
-        <span
-          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
-          aria-hidden="true"
-        />
-        <a
-          href="#categories"
-          className="text-xs tracking-widest uppercase cursor-pointer"
-          style={{
-            fontFamily: "var(--font-inter), sans-serif",
-            color: "rgba(253,252,248,0.38)",
-          }}
-        >
-          Découvrir
-        </a>
-        <span
-          style={{ display: "block", width: 28, height: 1, backgroundColor: "#C8922A", opacity: 0.5 }}
-          aria-hidden="true"
-        />
       </div>
     </section>
   );

@@ -118,6 +118,7 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
             maxWidth: 1100,
             aspectRatio: "16 / 10",
             boxShadow: "0 8px 32px rgba(28,25,23,0.14)",
+            backgroundColor: "#1C1917",
           }}
           onTouchStart={(e) => { carouselTouchX.current = e.touches[0].clientX; }}
           onTouchEnd={(e) => {
@@ -125,13 +126,26 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
             if (Math.abs(dx) > 50) dx > 0 ? next() : prev();
           }}
         >
-          {/* Image */}
+          {/* Fond flou : remplit le cadre 16:10 à partir de la même photo pour
+              que les clichés portrait ne soient jamais coupés. */}
           <Image
+            key={`bg-${active.id}`}
+            src={active.url}
+            alt=""
+            aria-hidden="true"
+            fill
+            unoptimized
+            className="object-cover blur-2xl scale-110"
+            style={{ opacity: 0.5 }}
+          />
+          {/* Photo entière, jamais recadrée (comme le lightbox) */}
+          <Image
+            key={active.id}
             src={active.url}
             alt={active.alt ?? `Photo ${activeIdx + 1}`}
             fill
             unoptimized
-            className="object-cover"
+            className="object-contain"
             priority={activeIdx === 0}
           />
 

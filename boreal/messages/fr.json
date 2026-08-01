@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "name": "Boreal Finance Group",
+    "shortName": "Boreal Finance",
+    "tagline": "Le financement, avec la clarté du Nord",
+    "description": "Solutions de financement personnelles et professionnelles pour le marché canadien. Taux à partir de 3 %, sous réserve d'admissibilité."
+  },
+  "demoBanner": {
+    "label": "Environnement de démonstration",
+    "text": "Ce site est une démonstration. Aucune offre réelle, aucune donnée réelle : tous les contenus, taux et exemples sont fictifs et fournis à titre indicatif."
+  },
+  "nav": {
+    "home": "Accueil",
+    "financing": "Financements",
+    "simulator": "Simulateur",
+    "howItWorks": "Comment ça fonctionne",
+    "about": "À propos",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "clientArea": "Espace client",
+    "apply": "Faire une demande",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu"
+  },
+  "localeSwitcher": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Financement personnel et professionnel — Canada",
+      "title": "Financez vos projets avec sérénité et transparence.",
+      "subtitle": "Boreal Finance Group accompagne les particuliers et les entreprises au Canada avec des solutions de financement claires, un processus simple et un conseil humain.",
+      "ctaPrimary": "Simuler mon financement",
+      "ctaSecondary": "Découvrir les financements",
+      "trust1": "Processus 100 % en ligne",
+      "trust2": "Réponse indicative rapide",
+      "trust3": "Conseiller dédié"
+    },
+    "rate": {
+      "badge": "Taux annuel",
+      "value": "À partir de 3 %",
+      "caption": "Taux indicatif, sous réserve d'admissibilité, d'analyse du dossier et des conditions en vigueur. Le taux de 3 % n'est ni automatique ni garanti."
+    },
+    "quickSim": {
+      "title": "Simulateur rapide",
+      "subtitle": "Estimez votre mensualité en quelques secondes.",
+      "cta": "Affiner ma simulation"
+    },
+    "products": {
+      "eyebrow": "Nos financements",
+      "title": "Une solution pour chaque projet",
+      "subtitle": "Six familles de financement pensées pour les particuliers et les entreprises.",
+      "fromRate": "À partir de {rate}",
+      "cta": "En savoir plus",
+      "amountRange": "De {min} à {max}"
+    },
+    "process": {
+      "eyebrow": "Le parcours",
+      "title": "Un financement en quatre étapes",
+      "subtitle": "Simple, transparent, à votre rythme.",
+      "steps": {
+        "s1": {
+          "title": "Simulez",
+          "text": "Estimez votre mensualité et le coût total avec le simulateur."
+        },
+        "s2": {
+          "title": "Déposez votre demande",
+          "text": "Un formulaire guidé, étape par étape, en quelques minutes."
+        },
+        "s3": {
+          "title": "Étude du dossier",
+          "text": "Nos équipes analysent votre demande et vous transmettent une proposition indicative."
+        },
+        "s4": {
+          "title": "Décision & suivi",
+          "text": "Suivez l'avancement de votre dossier dans votre espace client sécurisé."
+        }
+      }
+    },
+    "advantages": {
+      "eyebrow": "Pourquoi Boreal",
+      "title": "Un partenaire de confiance",
+      "items": {
+        "a1": {
+          "title": "Transparence totale",
+          "text": "Coûts, taux indicatifs et échéanciers présentés clairement, sans surprise."
+        },
+        "a2": {
+          "title": "Bilingue et local",
+          "text": "Un accompagnement en français et en anglais, pensé pour le marché canadien."
+        },
+        "a3": {
+          "title": "Sécurité des données",
+          "text": "Vos informations sont protégées. Nous ne demandons jamais de NIP, de CVV ni de mot de passe bancaire."
+        },
+        "a4": {
+          "title": "Conseil humain",
+          "text": "Un conseiller dédié vous accompagne à chaque étape de votre dossier."
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "Questions fréquentes",
+      "title": "Vous avez des questions ?",
+      "cta": "Voir toutes les questions"
+    },
+    "cta": {
+      "title": "Prêt à concrétiser votre projet ?",
+      "subtitle": "Lancez une simulation gratuite et sans engagement en quelques minutes.",
+      "primary": "Simuler mon financement",
+      "secondary": "Nous contacter"
+    }
+  },
+  "products": {
+    "items": {
+      "personal": {
+        "title": "Prêt personnel",
+        "short": "Pour vos projets de vie",
+        "description": "Un financement flexible pour vos projets personnels : imprévus, équipement, événements de la vie."
+      },
+      "auto": {
+        "title": "Financement automobile",
+        "short": "Voiture neuve ou d'occasion",
+        "description": "Financez l'achat de votre véhicule avec des mensualités adaptées à votre budget."
+      },
+      "renovation": {
+        "title": "Prêt rénovation",
+        "short": "Valorisez votre logement",
+        "description": "Rénovez, agrandissez ou améliorez l'efficacité énergétique de votre habitation."
+      },
+      "consolidation": {
+        "title": "Regroupement de dettes",
+        "short": "Une seule mensualité",
+        "description": "Regroupez vos crédits en un seul financement pour simplifier votre budget."
+      },
+      "business": {
+        "title": "Financement professionnel",
+        "short": "Développez votre activité",
+        "description": "Trésorerie, équipement ou croissance : un financement adapté aux entreprises."
+      },
+      "project": {
+        "title": "Financement de projet",
+        "short": "Donnez vie à vos ambitions",
+        "description": "Un accompagnement sur mesure pour financer un projet structurant."
+      }
+    }
+  },
+  "simulator": {
+    "title": "Simulateur de financement",
+    "subtitle": "Estimez votre mensualité, le coût total et l'échéancier. Résultats fournis à titre indicatif uniquement.",
+    "fields": {
+      "product": "Type de financement",
+      "amount": "Montant",
+      "duration": "Durée",
+      "rate": "Taux annuel indicatif",
+      "months": "{count, plural, one {# mois} other {# mois}}",
+      "years": "{count, plural, one {# an} other {# ans}}"
+    },
+    "results": {
+      "monthly": "Mensualité estimée",
+      "perMonth": "/ mois",
+      "totalCost": "Coût total du crédit",
+      "totalPaid": "Total remboursé",
+      "interest": "Dont intérêts",
+      "rateApplied": "Taux indicatif appliqué"
+    },
+    "schedule": {
+      "title": "Échéancier indicatif",
+      "toggleShow": "Afficher l'échéancier",
+      "toggleHide": "Masquer l'échéancier",
+      "period": "Échéance",
+      "payment": "Mensualité",
+      "principal": "Capital",
+      "interest": "Intérêts",
+      "balance": "Solde restant",
+      "more": "… et {count} échéances supplémentaires"
+    },
+    "disclaimer": "Cette simulation est fournie à titre purement indicatif et ne constitue ni une offre, ni un accord de financement, ni un engagement contractuel. Le taux, la mensualité et le coût réels dépendent de l'analyse de votre dossier et des conditions en vigueur. Le taux de 3 % n'est ni automatique ni garanti.",
+    "cta": "Faire une demande",
+    "reset": "Réinitialiser"
+  },
+  "pages": {
+    "financing": {
+      "title": "Nos financements",
+      "subtitle": "Des solutions claires pour les particuliers et les entreprises, sur le marché canadien.",
+      "detailAmount": "Montant indicatif",
+      "detailDuration": "Durée",
+      "detailRate": "Taux indicatif",
+      "simulate": "Simuler ce financement"
+    },
+    "howItWorks": {
+      "title": "Comment ça fonctionne",
+      "subtitle": "De la première simulation au suivi de votre dossier, un parcours transparent en quatre étapes.",
+      "note": "Les délais et décisions dépendent de l'analyse de chaque dossier. Aucune approbation n'est automatique."
+    },
+    "about": {
+      "title": "À propos de Boreal Finance Group",
+      "intro": "Boreal Finance Group est une société de financement dont la société exploitante est établie en Allemagne et qui concentre son activité sur le marché canadien.",
+      "missionTitle": "Notre mission",
+      "mission": "Rendre le financement plus simple, plus transparent et plus humain, en français comme en anglais.",
+      "valuesTitle": "Nos valeurs",
+      "values": {
+        "v1": "Transparence : des informations claires, sans clause cachée.",
+        "v2": "Responsabilité : un financement adapté à votre situation réelle.",
+        "v3": "Proximité : un accompagnement bilingue et attentif."
+      },
+      "legalNote": "Les informations d'enregistrement, licences et autorités de tutelle applicables seront précisées ici avant toute mise en production. [Placeholder — à compléter]"
+    },
+    "faq": {
+      "title": "Foire aux questions",
+      "subtitle": "Les réponses aux questions les plus fréquentes."
+    },
+    "contact": {
+      "title": "Nous contacter",
+      "subtitle": "Une question ? Notre équipe vous répond.",
+      "form": {
+        "name": "Nom complet",
+        "email": "Adresse courriel",
+        "subject": "Sujet",
+        "message": "Votre message",
+        "submit": "Envoyer le message",
+        "success": "Merci ! Votre message a bien été pris en compte (démonstration).",
+        "namePlaceholder": "Votre nom",
+        "emailPlaceholder": "vous@exemple.ca",
+        "subjectPlaceholder": "Objet de votre demande",
+        "messagePlaceholder": "Décrivez votre besoin…"
+      },
+      "infoTitle": "Coordonnées",
+      "companyLabel": "Société exploitante",
+      "company": "Boreal Finance Group — [Raison sociale à compléter]",
+      "addressLabel": "Adresse",
+      "address": "[Adresse en Allemagne — à compléter]",
+      "emailLabel": "Courriel",
+      "email": "[contact@borealfinanx.com — à confirmer]",
+      "marketLabel": "Marché principal",
+      "market": "Canada",
+      "privacyNote": "Nous ne vous demanderons jamais votre NIP, votre CVV, un mot de passe bancaire ou un code de sécurité par courriel ou téléphone."
+    },
+    "legal": {
+      "title": "Mentions légales",
+      "subtitle": "Informations légales relatives à l'éditeur du site.",
+      "editorTitle": "Éditeur",
+      "editor": "Boreal Finance Group. Société exploitante établie en Allemagne. [Raison sociale, forme juridique, capital et représentant légal — à compléter].",
+      "registrationTitle": "Enregistrement",
+      "registration": "[Numéro d'enregistrement / registre du commerce — à compléter]. Aucune licence ou autorité de tutelle n'est affichée tant qu'elle n'a pas été formellement confirmée.",
+      "hostingTitle": "Hébergement",
+      "hosting": "Site hébergé sur Vercel Inc. [Coordonnées de l'hébergeur — à compléter].",
+      "domainTitle": "Domaine",
+      "domain": "borealfinanx.com",
+      "disclaimer": "Ce site est actuellement une démonstration. Les informations légales seront complétées et vérifiées avant toute mise en production."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "subtitle": "Comment nous traitons et protégeons vos données personnelles.",
+      "sections": {
+        "s1": {
+          "title": "Données collectées",
+          "text": "Dans le cadre d'une demande, nous pouvons collecter votre identité, vos coordonnées et des informations relatives à votre projet de financement. Nous ne collectons jamais de NIP, de CVV ni de mot de passe bancaire."
+        },
+        "s2": {
+          "title": "Finalités",
+          "text": "Vos données servent à étudier votre demande, vous répondre et assurer le suivi de votre dossier."
+        },
+        "s3": {
+          "title": "Conservation",
+          "text": "Vos données sont conservées pour la durée nécessaire au traitement de votre demande et aux obligations légales applicables. [Durées précises à compléter]."
+        },
+        "s4": {
+          "title": "Vos droits",
+          "text": "Vous disposez de droits d'accès, de rectification et de suppression de vos données. [Modalités d'exercice à compléter]."
+        },
+        "s5": {
+          "title": "Sécurité",
+          "text": "Nous mettons en œuvre des mesures techniques et organisationnelles pour protéger vos données."
+        }
+      },
+      "disclaimer": "Document de démonstration. La politique définitive, conforme aux réglementations applicables, sera publiée avant la mise en production."
+    },
+    "complaints": {
+      "title": "Réclamations",
+      "subtitle": "Nous nous engageons à traiter chaque réclamation avec sérieux et diligence.",
+      "processTitle": "Comment déposer une réclamation",
+      "steps": {
+        "s1": "Contactez notre équipe via la page Contact en précisant l'objet de votre réclamation.",
+        "s2": "Nous accusons réception de votre demande et l'enregistrons.",
+        "s3": "Votre réclamation est étudiée par le service concerné.",
+        "s4": "Nous vous transmettons une réponse motivée dans les meilleurs délais."
+      },
+      "escalationTitle": "En cas de désaccord",
+      "escalation": "Si la réponse apportée ne vous satisfait pas, les voies de recours et de médiation applicables seront précisées ici. [Autorité / médiateur compétent — à compléter].",
+      "disclaimer": "Procédure de démonstration. Les coordonnées et voies de recours officielles seront précisées avant la mise en production."
+    }
+  },
+  "faqList": {
+    "q1": {
+      "q": "Le taux de 3 % est-il garanti ?",
+      "a": "Non. Le taux « à partir de 3 % » est un taux indicatif de départ. Le taux réel dépend de l'analyse de votre dossier, de votre profil et des conditions en vigueur. Il n'est ni automatique ni garanti."
+    },
+    "q2": {
+      "q": "La simulation constitue-t-elle une offre ?",
+      "a": "Non. Le simulateur fournit une estimation à titre indicatif. Il ne constitue ni une offre, ni un accord de financement, ni un engagement contractuel."
+    },
+    "q3": {
+      "q": "Quels types de financement proposez-vous ?",
+      "a": "Prêt personnel, financement automobile, prêt rénovation, regroupement de dettes, financement professionnel et financement de projet."
+    },
+    "q4": {
+      "q": "Le service est-il disponible en anglais ?",
+      "a": "Oui. L'ensemble du site et l'accompagnement sont disponibles en français et en anglais."
+    },
+    "q5": {
+      "q": "Comment mes données sont-elles protégées ?",
+      "a": "Vos données sont protégées par des mesures techniques et organisationnelles. Nous ne demandons jamais de NIP, de CVV, de mot de passe bancaire ni de code SMS."
+    },
+    "q6": {
+      "q": "Combien de temps prend l'étude d'un dossier ?",
+      "a": "Les délais dépendent de chaque dossier. Vous suivez l'avancement à tout moment depuis votre espace client (à venir)."
+    }
+  },
+  "footer": {
+    "tagline": "Le financement, avec la clarté du Nord.",
+    "market": "Marché principal : Canada",
+    "operator": "Société exploitante établie en Allemagne",
+    "columns": {
+      "products": "Financements",
+      "company": "Société",
+      "legal": "Informations légales"
+    },
+    "rateNote": "Taux à partir de 3 % par an, à titre indicatif, sous réserve d'admissibilité. Non garanti.",
+    "rights": "Tous droits réservés.",
+    "legalPlaceholder": "Informations d'enregistrement et licences : [à compléter avant la mise en production]."
+  }
+}

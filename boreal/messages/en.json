@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "name": "Boreal Finance Group",
+    "shortName": "Boreal Finance",
+    "tagline": "Financing, with the clarity of the North",
+    "description": "Personal and business financing solutions for the Canadian market. Rates from 3%, subject to eligibility."
+  },
+  "demoBanner": {
+    "label": "Demonstration environment",
+    "text": "This site is a demonstration. No real offer, no real data: all content, rates and examples are fictitious and provided for illustration only."
+  },
+  "nav": {
+    "home": "Home",
+    "financing": "Financing",
+    "simulator": "Simulator",
+    "howItWorks": "How it works",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "clientArea": "Client area",
+    "apply": "Apply now",
+    "menu": "Menu",
+    "openMenu": "Open menu"
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "fr": "Français",
+    "en": "English"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Personal & business financing — Canada",
+      "title": "Finance your projects with confidence and transparency.",
+      "subtitle": "Boreal Finance Group supports individuals and businesses across Canada with clear financing solutions, a simple process and human advice.",
+      "ctaPrimary": "Simulate my financing",
+      "ctaSecondary": "Explore financing",
+      "trust1": "100% online process",
+      "trust2": "Fast indicative response",
+      "trust3": "Dedicated advisor"
+    },
+    "rate": {
+      "badge": "Annual rate",
+      "value": "From 3%",
+      "caption": "Indicative rate, subject to eligibility, file review and prevailing conditions. The 3% rate is neither automatic nor guaranteed."
+    },
+    "quickSim": {
+      "title": "Quick simulator",
+      "subtitle": "Estimate your monthly payment in seconds.",
+      "cta": "Refine my simulation"
+    },
+    "products": {
+      "eyebrow": "Our financing",
+      "title": "A solution for every project",
+      "subtitle": "Six financing families designed for individuals and businesses.",
+      "fromRate": "From {rate}",
+      "cta": "Learn more",
+      "amountRange": "From {min} to {max}"
+    },
+    "process": {
+      "eyebrow": "The journey",
+      "title": "Financing in four steps",
+      "subtitle": "Simple, transparent, at your own pace.",
+      "steps": {
+        "s1": {
+          "title": "Simulate",
+          "text": "Estimate your monthly payment and total cost with the simulator."
+        },
+        "s2": {
+          "title": "Submit your request",
+          "text": "A guided, step-by-step form in just a few minutes."
+        },
+        "s3": {
+          "title": "File review",
+          "text": "Our teams review your request and send you an indicative proposal."
+        },
+        "s4": {
+          "title": "Decision & follow-up",
+          "text": "Track your file's progress in your secure client area."
+        }
+      }
+    },
+    "advantages": {
+      "eyebrow": "Why Boreal",
+      "title": "A partner you can trust",
+      "items": {
+        "a1": {
+          "title": "Full transparency",
+          "text": "Costs, indicative rates and schedules presented clearly, with no surprises."
+        },
+        "a2": {
+          "title": "Bilingual and local",
+          "text": "Support in French and English, designed for the Canadian market."
+        },
+        "a3": {
+          "title": "Data security",
+          "text": "Your information is protected. We never ask for a PIN, CVV or banking password."
+        },
+        "a4": {
+          "title": "Human advice",
+          "text": "A dedicated advisor supports you at every step of your file."
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "Frequently asked",
+      "title": "Have questions?",
+      "cta": "See all questions"
+    },
+    "cta": {
+      "title": "Ready to bring your project to life?",
+      "subtitle": "Start a free, no-obligation simulation in just a few minutes.",
+      "primary": "Simulate my financing",
+      "secondary": "Contact us"
+    }
+  },
+  "products": {
+    "items": {
+      "personal": {
+        "title": "Personal loan",
+        "short": "For life's projects",
+        "description": "Flexible financing for your personal projects: unexpected costs, equipment, life events."
+      },
+      "auto": {
+        "title": "Auto financing",
+        "short": "New or used vehicle",
+        "description": "Finance your vehicle purchase with monthly payments that fit your budget."
+      },
+      "renovation": {
+        "title": "Renovation loan",
+        "short": "Enhance your home",
+        "description": "Renovate, expand or improve the energy efficiency of your home."
+      },
+      "consolidation": {
+        "title": "Debt consolidation",
+        "short": "A single monthly payment",
+        "description": "Combine your loans into a single financing to simplify your budget."
+      },
+      "business": {
+        "title": "Business financing",
+        "short": "Grow your activity",
+        "description": "Cash flow, equipment or growth: financing tailored to businesses."
+      },
+      "project": {
+        "title": "Project financing",
+        "short": "Bring your ambitions to life",
+        "description": "Tailored support to finance a structuring project."
+      }
+    }
+  },
+  "simulator": {
+    "title": "Financing simulator",
+    "subtitle": "Estimate your monthly payment, total cost and schedule. Results provided for illustration only.",
+    "fields": {
+      "product": "Financing type",
+      "amount": "Amount",
+      "duration": "Term",
+      "rate": "Indicative annual rate",
+      "months": "{count, plural, one {# month} other {# months}}",
+      "years": "{count, plural, one {# year} other {# years}}"
+    },
+    "results": {
+      "monthly": "Estimated monthly payment",
+      "perMonth": "/ month",
+      "totalCost": "Total cost of credit",
+      "totalPaid": "Total repaid",
+      "interest": "Of which interest",
+      "rateApplied": "Indicative rate applied"
+    },
+    "schedule": {
+      "title": "Indicative schedule",
+      "toggleShow": "Show schedule",
+      "toggleHide": "Hide schedule",
+      "period": "Period",
+      "payment": "Payment",
+      "principal": "Principal",
+      "interest": "Interest",
+      "balance": "Remaining balance",
+      "more": "… and {count} more payments"
+    },
+    "disclaimer": "This simulation is provided for illustration only and does not constitute an offer, a financing agreement or a contractual commitment. The actual rate, payment and cost depend on the review of your file and prevailing conditions. The 3% rate is neither automatic nor guaranteed.",
+    "cta": "Apply now",
+    "reset": "Reset"
+  },
+  "pages": {
+    "financing": {
+      "title": "Our financing",
+      "subtitle": "Clear solutions for individuals and businesses, in the Canadian market.",
+      "detailAmount": "Indicative amount",
+      "detailDuration": "Term",
+      "detailRate": "Indicative rate",
+      "simulate": "Simulate this financing"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "From the first simulation to tracking your file, a transparent four-step journey.",
+      "note": "Timelines and decisions depend on the review of each file. No approval is automatic."
+    },
+    "about": {
+      "title": "About Boreal Finance Group",
+      "intro": "Boreal Finance Group is a financing company whose operating entity is established in Germany and which focuses its activity on the Canadian market.",
+      "missionTitle": "Our mission",
+      "mission": "To make financing simpler, more transparent and more human, in both French and English.",
+      "valuesTitle": "Our values",
+      "values": {
+        "v1": "Transparency: clear information, no hidden clauses.",
+        "v2": "Responsibility: financing tailored to your real situation.",
+        "v3": "Proximity: attentive, bilingual support."
+      },
+      "legalNote": "Applicable registration details, licences and supervisory authorities will be specified here before any production launch. [Placeholder — to be completed]"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Answers to the most common questions."
+    },
+    "contact": {
+      "title": "Contact us",
+      "subtitle": "A question? Our team is here to help.",
+      "form": {
+        "name": "Full name",
+        "email": "Email address",
+        "subject": "Subject",
+        "message": "Your message",
+        "submit": "Send message",
+        "success": "Thank you! Your message has been received (demonstration).",
+        "namePlaceholder": "Your name",
+        "emailPlaceholder": "you@example.ca",
+        "subjectPlaceholder": "Subject of your request",
+        "messagePlaceholder": "Describe your need…"
+      },
+      "infoTitle": "Contact details",
+      "companyLabel": "Operating entity",
+      "company": "Boreal Finance Group — [Legal name to be completed]",
+      "addressLabel": "Address",
+      "address": "[Address in Germany — to be completed]",
+      "emailLabel": "Email",
+      "email": "[contact@borealfinanx.com — to be confirmed]",
+      "marketLabel": "Primary market",
+      "market": "Canada",
+      "privacyNote": "We will never ask for your PIN, CVV, banking password or a security code by email or phone."
+    },
+    "legal": {
+      "title": "Legal notice",
+      "subtitle": "Legal information about the site publisher.",
+      "editorTitle": "Publisher",
+      "editor": "Boreal Finance Group. Operating entity established in Germany. [Legal name, legal form, capital and legal representative — to be completed].",
+      "registrationTitle": "Registration",
+      "registration": "[Registration number / commercial register — to be completed]. No licence or supervisory authority is displayed until formally confirmed.",
+      "hostingTitle": "Hosting",
+      "hosting": "Site hosted on Vercel Inc. [Host contact details — to be completed].",
+      "domainTitle": "Domain",
+      "domain": "borealfinanx.com",
+      "disclaimer": "This site is currently a demonstration. Legal information will be completed and verified before any production launch."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "subtitle": "How we process and protect your personal data.",
+      "sections": {
+        "s1": {
+          "title": "Data collected",
+          "text": "As part of a request, we may collect your identity, contact details and information about your financing project. We never collect a PIN, CVV or banking password."
+        },
+        "s2": {
+          "title": "Purposes",
+          "text": "Your data is used to review your request, respond to you and follow up on your file."
+        },
+        "s3": {
+          "title": "Retention",
+          "text": "Your data is kept for as long as necessary to process your request and meet applicable legal obligations. [Specific durations to be completed]."
+        },
+        "s4": {
+          "title": "Your rights",
+          "text": "You have rights to access, correct and delete your data. [How to exercise them to be completed]."
+        },
+        "s5": {
+          "title": "Security",
+          "text": "We implement technical and organisational measures to protect your data."
+        }
+      },
+      "disclaimer": "Demonstration document. The final policy, compliant with applicable regulations, will be published before production launch."
+    },
+    "complaints": {
+      "title": "Complaints",
+      "subtitle": "We are committed to handling every complaint seriously and diligently.",
+      "processTitle": "How to file a complaint",
+      "steps": {
+        "s1": "Contact our team via the Contact page, specifying the subject of your complaint.",
+        "s2": "We acknowledge receipt of your request and register it.",
+        "s3": "Your complaint is reviewed by the relevant department.",
+        "s4": "We provide you with a reasoned response as soon as possible."
+      },
+      "escalationTitle": "In case of disagreement",
+      "escalation": "If the response provided does not satisfy you, the applicable recourse and mediation options will be specified here. [Competent authority / mediator — to be completed].",
+      "disclaimer": "Demonstration procedure. Official contact details and recourse options will be specified before production launch."
+    }
+  },
+  "faqList": {
+    "q1": {
+      "q": "Is the 3% rate guaranteed?",
+      "a": "No. The \"from 3%\" rate is an indicative starting rate. The actual rate depends on the review of your file, your profile and prevailing conditions. It is neither automatic nor guaranteed."
+    },
+    "q2": {
+      "q": "Does the simulation constitute an offer?",
+      "a": "No. The simulator provides an estimate for illustration only. It does not constitute an offer, a financing agreement or a contractual commitment."
+    },
+    "q3": {
+      "q": "What types of financing do you offer?",
+      "a": "Personal loan, auto financing, renovation loan, debt consolidation, business financing and project financing."
+    },
+    "q4": {
+      "q": "Is the service available in English?",
+      "a": "Yes. The entire site and support are available in both French and English."
+    },
+    "q5": {
+      "q": "How is my data protected?",
+      "a": "Your data is protected by technical and organisational measures. We never ask for a PIN, CVV, banking password or SMS code."
+    },
+    "q6": {
+      "q": "How long does a file review take?",
+      "a": "Timelines depend on each file. You can track progress at any time from your client area (coming soon)."
+    }
+  },
+  "footer": {
+    "tagline": "Financing, with the clarity of the North.",
+    "market": "Primary market: Canada",
+    "operator": "Operating entity established in Germany",
+    "columns": {
+      "products": "Financing",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "rateNote": "Rates from 3% per year, indicative, subject to eligibility. Not guaranteed.",
+    "rights": "All rights reserved.",
+    "legalPlaceholder": "Registration details and licences: [to be completed before production launch]."
+  }
+}

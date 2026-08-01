@@ -53,7 +53,7 @@ jobs:
         # `db push` matérialise l'état de schema.prisma sur la base de CI.
         # (On n'utilise pas `migrate deploy` ici : l'historique de migrations
         # n'est pas rejouable de zéro — voir la tâche « baseline Prisma ».)
-        run: npx prisma db push --skip-generate --accept-data-loss
+        run: npx prisma db push --accept-data-loss
 
       - name: Typecheck
         run: npx tsc --noEmit

@@ -75,9 +75,7 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="inline-flex items-center shrink-0">
-          <div className={`${isBienDetail && !scrolled ? "bg-white/15 backdrop-blur-sm" : "bg-[#0066CC]"} rounded-xl px-2 py-1.5 transition-colors duration-300`}>
-            <Image src="/logo.png" alt="Akil Immo" width={120} height={38} priority style={{ height: "38px", width: "auto" }} />
-          </div>
+          <Image src="/logo.png" alt="Akil Immo" width={40} height={40} priority style={{ height: "40px", width: "40px" }} />
         </Link>
 
         {/* Desktop nav */}

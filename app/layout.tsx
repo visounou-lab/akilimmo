@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -69,6 +69,14 @@ export const metadata: Metadata = {
     description: "Appartements et villas meublées à Cotonou et Abidjan.",
     images: ["https://www.akilimmo.com/og-image.jpg"],
   },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  manifest: "/manifest.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -82,6 +90,11 @@ export const metadata: Metadata = {
       "ZtaM7Xo46vkb5lQVeY4MtywFBnFdz9bnnXA-5P-Vrr0",
     ],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1C1917",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

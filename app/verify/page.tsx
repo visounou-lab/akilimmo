@@ -138,7 +138,7 @@ export default function VerifyPage() {
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-10 max-w-md w-full text-center">
         <Link href="/" className="inline-block mb-8">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="AKIL IMMO" className="h-10 mx-auto" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(88%) saturate(1500%) hue-rotate(200deg)" }} />
+          <img src="/logo.png" alt="AKIL IMMO" className="h-12 mx-auto" />
         </Link>
         <Suspense fallback={<p className="text-slate-400 text-sm">Chargement…</p>}>
           <VerifyContent />

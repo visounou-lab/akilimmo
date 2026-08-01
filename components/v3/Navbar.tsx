@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, Home } from "lucide-react";
+import { BrandLogo } from "../brand/BrandLogo";
 
 const NAV_LINKS = [
   { label: "Louer",    href: "/biens" },
@@ -33,28 +34,7 @@ export default function Navbar() {
             className="flex items-center gap-3 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
             aria-label="AKIL IMMO — Accueil"
           >
-            <span
-              style={{
-                display: "block",
-                width: 4,
-                height: 28,
-                backgroundColor: "#C8922A",
-                borderRadius: 2,
-                flexShrink: 0,
-              }}
-              aria-hidden="true"
-            />
-            <span
-              style={{
-                fontFamily: "var(--font-playfair), serif",
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#FDFCF8",
-                letterSpacing: "0.06em",
-              }}
-            >
-              AKIL IMMO
-            </span>
+            <BrandLogo height={32} theme="dark" />
           </a>
 
           {/* Desktop nav — liens services */}

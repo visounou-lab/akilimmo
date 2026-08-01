@@ -5,6 +5,9 @@ import Navbar from "../../../components/v3/Navbar";
 import Footer from "../../../components/v3/Footer";
 import VehicleDetail from "../../../components/v3/VehicleDetail";
 
+// ISR : la fiche véhicule se rafraîchit (prix, disponibilité) sans redéploiement.
+export const revalidate = 3600;
+
 interface Props {
   params: Promise<{ id: string }>;
 }

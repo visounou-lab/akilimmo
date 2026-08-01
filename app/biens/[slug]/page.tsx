@@ -48,11 +48,18 @@ const getProperty = cache(async (slug: string) => {
 });
 
 export async function generateStaticParams() {
-  const biens = await prisma.property.findMany({
-    where: { publishStatus: "published" },
-    select: { slug: true },
-  });
-  return biens.map((b) => ({ slug: b.slug }));
+  // Le pré-rendu ne doit pas coupler le build à la base : si elle est
+  // injoignable (CI, preview), on renvoie [] et les pages sont rendues à la
+  // demande (dynamicParams reste true par défaut).
+  try {
+    const biens = await prisma.property.findMany({
+      where: { publishStatus: "published" },
+      select: { slug: true },
+    });
+    return biens.map((b) => ({ slug: b.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

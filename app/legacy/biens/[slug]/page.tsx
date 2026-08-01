@@ -21,11 +21,15 @@ import FloatingReserveButton from "../../../components/ui/FloatingReserveButton"
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const biens = await prisma.property.findMany({
-    where: { publishStatus: "published" },
-    select: { slug: true },
-  });
-  return biens.map((b) => ({ slug: b.slug }));
+  try {
+    const biens = await prisma.property.findMany({
+      where: { publishStatus: "published" },
+      select: { slug: true },
+    });
+    return biens.map((b) => ({ slug: b.slug }));
+  } catch {
+    return [];
+  }
 }
 
 type Props = { params: Promise<{ slug: string }> };

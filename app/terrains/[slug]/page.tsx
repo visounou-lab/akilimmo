@@ -38,11 +38,16 @@ const getLand = cache(async (slug: string) => {
 });
 
 export async function generateStaticParams() {
-  const lands = await prisma.land.findMany({
-    where: { publishStatus: "published" },
-    select: { slug: true },
-  });
-  return lands.map((l) => ({ slug: l.slug }));
+  // Build découplé de la base : rendu à la demande en repli (voir /biens).
+  try {
+    const lands = await prisma.land.findMany({
+      where: { publishStatus: "published" },
+      select: { slug: true },
+    });
+    return lands.map((l) => ({ slug: l.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

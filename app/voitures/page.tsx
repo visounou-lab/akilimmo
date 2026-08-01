@@ -4,6 +4,10 @@ import Navbar from "../../components/v3/Navbar";
 import Footer from "../../components/v3/Footer";
 import VoituresClient from "../../components/v3/VoituresClient";
 
+// ISR : la liste se régénère régulièrement pour refléter les nouveaux
+// véhicules sans redéploiement (cohérent avec /biens et /terrains).
+export const revalidate = 60;
+
 const TITLE = "Location de Voitures à Abidjan — SUV Premium | AKIL IMMO";
 const DESC   = "Louez un SUV premium à Abidjan — KIA Sportage, Hyundai Tucson, KIA Seltos. 70 000 XOF/jour, 60 000 XOF/jour en long séjour. Réservation rapide sur WhatsApp.";
 

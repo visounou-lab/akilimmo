@@ -3,6 +3,7 @@
 import { MessageCircle, Mail, MapPin, Phone } from "lucide-react";
 import WaCountryPicker from "./WaCountryPicker";
 import WhatsAppButton from "../../app/components/WhatsAppButton";
+import { BrandLogo } from "../brand/BrandLogo";
 
 function WhatsAppFloating() {
   return <WhatsAppButton />;
@@ -159,29 +160,8 @@ export default function Footer({ showContactCTA = true }: { showContactCTA?: boo
           <div className="grid gap-10 md:grid-cols-5">
             {/* Brand */}
             <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <span
-                  style={{
-                    display: "block",
-                    width: 3,
-                    height: 22,
-                    backgroundColor: "#C8922A",
-                    borderRadius: 2,
-                    flexShrink: 0,
-                  }}
-                  aria-hidden="true"
-                />
-                <p
-                  style={{
-                    fontFamily: "var(--font-playfair), serif",
-                    fontWeight: 700,
-                    fontSize: "1.1rem",
-                    color: "#FDFCF8",
-                    letterSpacing: "0.06em",
-                  }}
-                >
-                  AKIL IMMO
-                </p>
+              <div className="mb-4">
+                <BrandLogo height={30} theme="dark" />
               </div>
               <p
                 className="text-sm leading-relaxed mb-6"

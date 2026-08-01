@@ -1,14 +1,31 @@
 # Prompts publicitaires AKI — AKIL IMMO
 
+> **Méthode « les deux ».** Deux chemins complémentaires :
+> 1. **Gabarits prêts** — dupliquer les visuels finis de `public/brand/ads/`
+>    (feed 4:5 et story 9:16, CI & Bénin) dans Canva, changer le titre / la
+>    ville / le numéro. Rapide, aucun rendu à générer.
+> 2. **Nouvelles scènes AKI** — utiliser les prompts ci‑dessous pour créer de
+>    nouveaux décors, puis signer avec le logo officiel dans Canva.
+>
+> Charte complète : `docs/BRAND-GUIDELINES.md`.
+
 ## Fichiers à joindre à ChatGPT
 
 Pour chaque génération, joindre :
 
 1. `public/brand/aki/aki-master-concept-v1.png` — référence obligatoire de la mascotte.
-2. `public/logo.png` — vrai logo officiel de l’entreprise, obligatoire lorsque la publicité doit être signée.
+   (Détourage transparent prêt à composer : `public/brand/aki/aki-cutout.png`.)
+2. Le **logo officiel** — au choix selon le visuel :
+   - `public/brand/logo/horizontal/akil-horizontal-ondark.png` (fond sombre / forêt),
+   - `public/brand/logo/horizontal/akil-horizontal-onlight.png` (fond clair),
+   - `public/brand/logo/svg/akil-monogram-gold.svg` (monogramme seul).
 
-Le vrai logo reste l’identité principale d’AKIL IMMO. AKI est la mascotte et l’ambassadeur publicitaire secondaire.
-Ne jamais demander à l’IA de réinventer, recolorer, moderniser ou remplacer le vrai logo. Ne jamais présenter AKI comme le nouveau logo.
+Le logo officiel est le **monogramme « A‑maison » + le logotype AKIL IMMO en
+Playfair Display** (AKIL ivoire ou ink, IMMO or). Il reste l’identité principale
+d’AKIL IMMO ; AKI est la mascotte et l’ambassadeur publicitaire secondaire.
+Ne jamais demander à l’IA de réinventer, recolorer, moderniser ou remplacer le
+logo. Ne jamais présenter AKI comme le logo. Le plus fiable : **générer la scène
+sans logo, puis poser le fichier logo officiel dans Canva.**
 
 ## Coordonnées officielles
 

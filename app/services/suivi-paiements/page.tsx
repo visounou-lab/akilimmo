@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
+import Navbar from "../../../components/v3/Navbar";
+import Footer from "../../../components/v3/Footer";
 import ContactForm from "../../components/contact-form";
 
 const fadeInUp = {
@@ -17,7 +17,7 @@ export default function SuiviPaiementsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-12 bg-gradient-to-br from-[#0066CC]/5 to-slate-50">
+      <section className="pt-32 pb-12 bg-gradient-to-br from-[#C8922A]/5 to-slate-50">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -87,7 +87,7 @@ export default function SuiviPaiementsPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   variants={fadeInUp}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="p-6 rounded-2xl border border-slate-200 bg-slate-50 hover:border-[#0066CC] hover:bg-[#0066CC]/5 transition"
+                  className="p-6 rounded-2xl border border-slate-200 bg-slate-50 hover:border-[#C8922A] hover:bg-[#C8922A]/5 transition"
                 >
                   <div className="text-3xl mb-3">{item.icon}</div>
                   <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
@@ -198,7 +198,7 @@ export default function SuiviPaiementsPage() {
                   <ul className="space-y-2">
                     {section.items.map((item, j) => (
                       <li key={j} className="flex items-center gap-2 text-slate-600">
-                        <span className="text-[#0066CC] font-bold">•</span>
+                        <span className="text-[#C8922A] font-bold">•</span>
                         {item}
                       </li>
                     ))}
@@ -252,7 +252,7 @@ export default function SuiviPaiementsPage() {
             <div>
               <a
                 href="/#contact"
-                className="block w-full text-center rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+                className="block w-full text-center rounded-2xl bg-[#C8922A] hover:bg-[#A97620] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
               >
                 Formulaire de contact
               </a>
@@ -261,7 +261,7 @@ export default function SuiviPaiementsPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer showContactCTA={false} />
     </div>
   );
 }

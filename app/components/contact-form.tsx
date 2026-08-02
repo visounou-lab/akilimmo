@@ -57,7 +57,7 @@ export default function ContactForm() {
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="rounded-full bg-[#0066CC] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#004499] transition-colors"
+          className="rounded-full bg-[#C8922A] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#A97620] transition-colors"
         >
           Envoyer un autre message
         </button>
@@ -66,7 +66,7 @@ export default function ContactForm() {
   }
 
   const inputClass =
-    "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 transition-colors";
+    "w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#C8922A] focus:ring-2 focus:ring-[#C8922A]/20 transition-colors";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -162,7 +162,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0066CC] px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#004499] disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#C8922A] px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#A97620] disabled:opacity-60"
       >
         {status === "loading" ? (
           <>

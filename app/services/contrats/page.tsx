@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
+import Navbar from "../../../components/v3/Navbar";
+import Footer from "../../../components/v3/Footer";
 import ContactForm from "../../components/contact-form";
 
 const fadeInUp = {
@@ -17,7 +17,7 @@ export default function ContratsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-12 bg-gradient-to-br from-[#0066CC]/5 to-slate-50">
+      <section className="pt-32 pb-12 bg-gradient-to-br from-[#C8922A]/5 to-slate-50">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -87,7 +87,7 @@ export default function ContratsPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   variants={fadeInUp}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="p-6 rounded-2xl border border-slate-200 bg-slate-50 hover:border-[#0066CC] hover:bg-[#0066CC]/5 transition"
+                  className="p-6 rounded-2xl border border-slate-200 bg-slate-50 hover:border-[#C8922A] hover:bg-[#C8922A]/5 transition"
                 >
                   <div className="text-3xl mb-3">{item.icon}</div>
                   <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
@@ -163,7 +163,7 @@ export default function ContratsPage() {
                   transition={{ duration: 0.6, delay: i * 0.1 }}
                   className="flex gap-4"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#0066CC] text-white flex items-center justify-center font-bold text-lg">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#C8922A] text-white flex items-center justify-center font-bold text-lg">
                     {item.step}
                   </div>
                   <div>
@@ -219,7 +219,7 @@ export default function ContratsPage() {
             <div>
               <a
                 href="/#contact"
-                className="block w-full text-center rounded-2xl bg-[#0066CC] hover:bg-[#004499] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
+                className="block w-full text-center rounded-2xl bg-[#C8922A] hover:bg-[#A97620] px-6 py-4 text-lg font-semibold text-white transition shadow-lg"
               >
                 Formulaire de contact
               </a>
@@ -228,7 +228,7 @@ export default function ContratsPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer showContactCTA={false} />
     </div>
   );
 }

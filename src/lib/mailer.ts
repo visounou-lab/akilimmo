@@ -328,7 +328,7 @@ export async function sendPropertySubmitReminderEmail(to: string, firstName: str
             <strong>dès aujourd'hui</strong>.
           </p>
 
-          <div style="background:#F0F7FF;border-radius:10px;padding:20px 24px;margin:24px 0">
+          <div style="background:#FBF6EC;border-radius:10px;padding:20px 24px;margin:24px 0">
             <p style="margin:0 0 12px;font-weight:700;color:#1B4D3E;font-size:15px">Ce que vous obtenez avec AKIL IMMO :</p>
             <table style="width:100%;border-collapse:collapse">
               <tr>
@@ -397,7 +397,7 @@ export async function sendTenantAccessEmail(to: string, name: string, token: str
             Votre compte locataire a été créé sur la plateforme AKIL IMMO.<br />
             Voici vos informations de connexion :
           </p>
-          <div style="background:#F0F7FF;border-radius:10px;padding:16px 20px;margin:20px 0">
+          <div style="background:#FBF6EC;border-radius:10px;padding:16px 20px;margin:20px 0">
             <p style="margin:0 0 8px;color:#374151"><strong>Email :</strong> ${to}</p>
             <p style="margin:0;color:#374151"><strong>Site :</strong> <a href="https://www.akilimmo.com/login" style="color:#1B4D3E">www.akilimmo.com/login</a></p>
           </div>

@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import Navbar from "../../../components/v3/Navbar";
 import Footer from "../../../components/v3/Footer";
 import VehicleDetail from "../../../components/v3/VehicleDetail";
+import { JsonLd } from "../../../components/seo/JsonLd";
+import { SITE_URL } from "@/lib/share";
 
 // ISR : la fiche véhicule se rafraîchit (prix, disponibilité) sans redéploiement.
 export const revalidate = 3600;
@@ -42,8 +44,34 @@ export default async function VehiclePage({ params }: Props) {
   const vehicle = await prisma.vehicle.findUnique({ where: { id } });
   if (!vehicle) notFound();
 
+  const vImages = vehicle.images.length
+    ? vehicle.images
+    : vehicle.imageUrl
+      ? [vehicle.imageUrl]
+      : [];
+  const vehicleLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: vehicle.name,
+    description: `Location ${vehicle.variant} à ${vehicle.city} — ${vehicle.color}, ${vehicle.seats} places, ${vehicle.fuel}.`,
+    image: vImages.slice(0, 6),
+    category: "Location de voiture",
+    brand: { "@type": "Brand", name: "AKIL IMMO" },
+    offers: {
+      "@type": "Offer",
+      price: vehicle.priceDay,
+      priceCurrency: "XOF",
+      availability: vehicle.available
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      url: `${SITE_URL}/voitures/${vehicle.id}`,
+      seller: { "@type": "RealEstateAgent", name: "AKIL IMMO" },
+    },
+  };
+
   return (
     <>
+      <JsonLd data={vehicleLd} />
       <Navbar />
       <main id="main-content" className="pt-16">
         <VehicleDetail vehicle={vehicle} />

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import AnalyticsConsent from "./components/AnalyticsConsent";
+import { JsonLd, organizationSchema, websiteSchema } from "../components/seo/JsonLd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -111,6 +112,8 @@ export default function RootLayout({
       <body className="min-h-full bg-slate-50 text-slate-900" style={{ colorScheme: "light" }}>
         <Providers>{children}</Providers>
         <AnalyticsConsent />
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
       </body>
     </html>
   );

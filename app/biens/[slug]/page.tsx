@@ -17,6 +17,7 @@ import ViewTracker from "../../../components/v3/biens/ViewTracker";
 import ReportListingButton from "../../../components/v3/biens/ReportListingButton";
 import TrustBadge from "../../../components/v3/TrustBadge";
 import { derivePropertyTrust } from "@/lib/trust-badges";
+import { JsonLd } from "../../../components/seo/JsonLd";
 
 export const revalidate = 3600;
 
@@ -111,6 +112,43 @@ export default async function V3BienDetailPage({ params }: Props) {
     propertyVerifications: bien.verificationCases,
   });
 
+  // Données structurées Schema.org (résultats enrichis Google).
+  const listingImages = bien.images.length
+    ? bien.images.map((i) => i.url)
+    : [getPropertyMainImage({
+        videoUrl: bien.videoUrl,
+        imageUrl: bien.imageUrl,
+        images: [],
+      })];
+  const listingLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: bien.title,
+    description:
+      bien.description?.slice(0, 300) ||
+      `${bien.title} — location meublée à ${bien.city}, ${cLabel}.`,
+    image: listingImages.slice(0, 6),
+    category: propertyTypeLabel(bien.propertyType) || "Location meublée",
+    brand: { "@type": "Brand", name: "AKIL IMMO" },
+    offers: {
+      "@type": "Offer",
+      price: price,
+      priceCurrency: "XOF",
+      availability: "https://schema.org/InStock",
+      url: pageUrl,
+      seller: { "@type": "RealEstateAgent", name: "AKIL IMMO" },
+    },
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Biens", item: `${SITE_URL}/biens` },
+      { "@type": "ListItem", position: 3, name: bien.title, item: pageUrl },
+    ],
+  };
+
   const sectionTitle: React.CSSProperties = {
     fontFamily: "var(--font-inter), sans-serif",
     fontSize: "0.7rem",
@@ -131,6 +169,8 @@ export default async function V3BienDetailPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={listingLd} />
+      <JsonLd data={breadcrumbLd} />
       <Navbar />
       {/* Compteur de vues — déclenché côté client, 1 fois par session */}
       <ViewTracker slug={bien.slug} />

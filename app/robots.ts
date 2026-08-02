@@ -5,7 +5,19 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/dashboard/", "/owner/", "/api/", "/login"],
+      disallow: [
+        "/dashboard/",
+        "/owner/",
+        "/agent/",
+        "/tenant/",
+        "/api/",
+        "/login",
+        "/register",
+        "/verify",
+        "/verification",
+        "/forgot-password",
+        "/reset-password",
+      ],
     },
     sitemap: "https://www.akilimmo.com/sitemap.xml",
   };

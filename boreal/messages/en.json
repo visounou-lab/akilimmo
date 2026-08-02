@@ -177,6 +177,7 @@
       "balance": "Remaining balance",
       "more": "… and {count} more payments"
     },
+    "noOffer": "Indicative, non-binding calculation. No credit offer.",
     "disclaimer": "This simulation is provided for illustration only and does not constitute an offer, a financing agreement or a contractual commitment. The actual rate, payment and cost depend on the review of your file and prevailing conditions. The 3% rate is neither automatic nor guaranteed.",
     "cta": "Apply now",
     "reset": "Reset"

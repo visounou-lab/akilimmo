@@ -155,6 +155,9 @@ export function FinancingSimulator({
               {t("results.perMonth")}
             </span>
           </div>
+          <p className="mt-2 text-xs font-medium text-primary-foreground/70">
+            {t("noOffer")}
+          </p>
 
           <dl className="mt-6 space-y-3 border-t border-primary-foreground/15 pt-5 text-sm">
             <Row

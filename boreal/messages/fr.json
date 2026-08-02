@@ -177,6 +177,7 @@
       "balance": "Solde restant",
       "more": "… et {count} échéances supplémentaires"
     },
+    "noOffer": "Calcul indicatif non contractuel. Aucune offre de crédit.",
     "disclaimer": "Cette simulation est fournie à titre purement indicatif et ne constitue ni une offre, ni un accord de financement, ni un engagement contractuel. Le taux, la mensualité et le coût réels dépendent de l'analyse de votre dossier et des conditions en vigueur. Le taux de 3 % n'est ni automatique ni garanti.",
     "cta": "Faire une demande",
     "reset": "Réinitialiser"

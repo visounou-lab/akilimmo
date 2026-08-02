@@ -32,3 +32,7 @@ yarn-error.log*
 
 # prisma
 /prisma/*.db
+
+# The parent project's .gitignore excludes `scripts/`; re-include ours.
+!scripts/
+!scripts/**

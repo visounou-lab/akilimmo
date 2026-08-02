@@ -1,24 +1,84 @@
-// BOREAL FINANCE — Prisma schema (fondation Phase 1)
-// Le site public et le simulateur ne dépendent PAS de la base de données.
-// Ces modèles posent les bases des phases suivantes (espace client, admin).
+// =============================================================================
+// BOREAL FINANCE GROUP — Prisma schema
+// PostgreSQL (Neon via l'intégration Vercel) + Prisma.
+//   - DATABASE_URL          : connexion applicative (pooled / pgBouncer)
+//   - DATABASE_URL_UNPOOLED : connexion directe (migrations / db push)
 // Toutes les données de démonstration doivent rester fictives.
+// Les coordonnées légales (CompanySettings) sont saisies par l'admin,
+// jamais inventées.
+// =============================================================================
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
+// ----------------------------------------------------------------------------
+// Rôles & permissions (RBAC — 8 rôles)
+// ----------------------------------------------------------------------------
 enum Role {
-  CLIENT
-  AGENT
-  ADMIN
+  SUPER_ADMIN
+  COMPLIANCE
+  FINANCIAL_ANALYST
+  CASE_MANAGER
+  DOCUMENT_MANAGER
+  CUSTOMER_SUPPORT
+  AUDITOR
+  READ_ONLY
 }
 
+// ----------------------------------------------------------------------------
+// Personnel du back-office (admin en français)
+// ----------------------------------------------------------------------------
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  role         Role      @default(READ_ONLY)
+  passwordHash String
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions        Session[]
+  assigned        Application[]   @relation("AssignedTo")
+  statusChanges   StatusChange[]  @relation("ChangedBy")
+  notes           ApplicationNote[]
+  documents       Document[]      @relation("DocumentAuthor")
+  auditLogs       AuditLog[]      @relation("AuditActor")
+  settingsUpdates CompanySettings[] @relation("SettingsEditor")
+
+  @@index([role])
+}
+
+// ----------------------------------------------------------------------------
+// Sessions révocables — seule l'empreinte SHA-256 du jeton est stockée
+// ----------------------------------------------------------------------------
+model Session {
+  id        String    @id @default(cuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  tokenHash String    @unique
+  ip        String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  revokedAt DateTime?
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ----------------------------------------------------------------------------
+// Demandes de financement
+// ----------------------------------------------------------------------------
 enum ApplicationStatus {
   DRAFT
   SUBMITTED
@@ -31,38 +91,206 @@ enum ApplicationStatus {
   CLOSED
 }
 
-model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  name         String?
-  role         Role          @default(CLIENT)
-  locale       String        @default("fr")
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  applications Application[]
+enum EmploymentStatus {
+  EMPLOYED
+  SELF_EMPLOYED
+  CIVIL_SERVANT
+  RETIRED
+  STUDENT
+  UNEMPLOYED
+  OTHER
+}
+
+enum HousingStatus {
+  OWNER
+  TENANT
+  HOSTED
+  OTHER
 }
 
 model Application {
-  id          String            @id @default(cuid())
-  reference   String            @unique
-  product     String
-  amount      Int
-  months      Int
-  annualRate  Float
-  status      ApplicationStatus @default(DRAFT)
-  locale      String            @default("fr")
-  user        User?             @relation(fields: [userId], references: [id])
-  userId      String?
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id        String            @id @default(cuid())
+  reference String            @unique
+  status    ApplicationStatus @default(SUBMITTED)
+  locale    String            @default("fr")
+
+  // Étape 1 — Projet
+  product        String // clé CreditProduct
+  country        String // ISO-3166 alpha-2
+  currency       String // ISO-4217, dérivée du pays
+  amount         Int
+  months         Int
+  annualRate     Float // taux fixe indicatif au moment de la demande
+  monthlyPayment Float
+  totalCost      Float
+  purpose        String?
+
+  // Étape 2 — Identité
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  birthDate   DateTime?
+  nationalId  String? // optionnel
+  addressLine String?
+  postalCode  String?
+  city        String?
+
+  // Étape 2 — Situation
+  employmentStatus EmploymentStatus @default(OTHER)
+  employerName     String?
+  monthlyIncome    Float            @default(0)
+  monthlyExpenses  Float            @default(0)
+  housingStatus    HousingStatus    @default(OTHER)
+  existingCredits  Float            @default(0)
+
+  // Consentements
+  consentDataProcessing Boolean @default(false)
+  consentAccuracy       Boolean @default(false)
+  consentContact        Boolean @default(false)
+  consentMarketing      Boolean @default(false)
+
+  // Suivi
+  assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+  assignedToId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  statusHistory StatusChange[]
+  notes         ApplicationNote[]
+  documents     Document[]
+
+  @@index([status])
+  @@index([country])
+  @@index([product])
+  @@index([assignedToId])
+  @@index([createdAt])
 }
 
-model ContactMessage {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  subject   String?
-  message   String
-  locale    String   @default("fr")
-  createdAt DateTime @default(now())
+// Historique des changements de statut
+model StatusChange {
+  id            String             @id @default(cuid())
+  application   Application        @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String
+  fromStatus    ApplicationStatus?
+  toStatus      ApplicationStatus
+  reason        String?
+  changedBy     User?              @relation("ChangedBy", fields: [changedById], references: [id], onDelete: SetNull)
+  changedById   String?
+  createdAt     DateTime           @default(now())
+
+  @@index([applicationId])
+}
+
+// Notes internes
+model ApplicationNote {
+  id            String      @id @default(cuid())
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String
+  author        User?       @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId      String?
+  body          String
+  createdAt     DateTime    @default(now())
+
+  @@index([applicationId])
+}
+
+// ----------------------------------------------------------------------------
+// Documents PDF — BROUILLONS vérifiables (non contractuels)
+// ----------------------------------------------------------------------------
+enum DocumentType {
+  ACKNOWLEDGEMENT // accusé de réception
+  DOCUMENTS_REQUEST // demande de pièces
+  SUMMARY // récapitulatif
+  INDICATIVE_PROPOSAL // proposition indicative
+  SCHEDULE // échéancier
+  CONTRACT // contrat
+  ACCEPTANCE // acceptation
+  REJECTION // refus
+  CANCELLATION // annulation
+  CLOSURE // clôture
+}
+
+model Document {
+  id            String       @id @default(cuid()) // = identifiant de vérification (/verify/[id])
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String
+  type          DocumentType
+  version       Int          @default(1)
+  sha256        String
+  payload       Json // instantané des données pour un rendu déterministe
+  isDraft       Boolean      @default(true)
+  createdBy     User?        @relation("DocumentAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById   String?
+  createdAt     DateTime     @default(now())
+
+  @@index([applicationId])
+  @@index([type])
+}
+
+// ----------------------------------------------------------------------------
+// Journal d'audit
+// ----------------------------------------------------------------------------
+model AuditLog {
+  id         String   @id @default(cuid())
+  actor      User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  actorId    String?
+  action     String
+  entityType String?
+  entityId   String?
+  summary    String?
+  metadata   Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  @@index([actorId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+// ----------------------------------------------------------------------------
+// Réglages société — placeholders saisis par l'admin, jamais inventés.
+// Alimentent l'Impressum (mentions légales) et le pied des PDF.
+// ----------------------------------------------------------------------------
+model CompanySettings {
+  id                   String  @id @default("singleton")
+  legalName            String?
+  legalForm            String?
+  registerCourt        String?
+  registerNumber       String?
+  lei                  String?
+  vatId                String?
+  iban                 String?
+  bic                  String?
+  managingDirector     String?
+  supervisoryAuthority String?
+  addressLine          String?
+  postalCode           String?
+  city                 String?
+  country              String?
+  email                String?
+  phone                String?
+  website              String?
+
+  updatedAt   DateTime @updatedAt
+  updatedBy   User?    @relation("SettingsEditor", fields: [updatedById], references: [id], onDelete: SetNull)
+  updatedById String?
+}
+
+// ----------------------------------------------------------------------------
+// Paramètres de crédit — produits configurables (conditions min/max, taux)
+// Les libellés restent dans les fichiers de traduction (clé = key).
+// ----------------------------------------------------------------------------
+model CreditProduct {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  enabled    Boolean  @default(true)
+  minAmount  Int
+  maxAmount  Int
+  minMonths  Int
+  maxMonths  Int
+  annualRate Float
+  sortOrder  Int      @default(0)
+  updatedAt  DateTime @updatedAt
 }

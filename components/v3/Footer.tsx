@@ -22,6 +22,7 @@ const NAV_COLUMNS = [
     title: "AKIL IMMO",
     links: [
       { label: "Comment ça marche", href: "/comment-ca-marche" },
+      { label: "Journal", href: "/blog" },
       { label: "Mentions légales", href: "/mentions-legales" },
       { label: "Confidentialité", href: "/confidentialite" },
     ],

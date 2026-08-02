@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: "Terrains", href: "/terrains" },
   { label: "Voitures", href: "/voitures" },
   { label: "Séjours",  href: "/sejours" },
+  { label: "Journal",  href: "/blog" },
 ];
 
 export default function Navbar() {

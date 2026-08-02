@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { getAllPosts } from "@/lib/blog";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,7 @@ const STATIC_ROUTES: { path: string; freq: MetadataRoute.Sitemap[number]["change
   { path: "/voitures",                     freq: "daily",   priority: 0.8 },
   { path: "/sejours",                      freq: "weekly",  priority: 0.6 },
   { path: "/comment-ca-marche",            freq: "monthly", priority: 0.6 },
+  { path: "/blog",                         freq: "weekly",  priority: 0.7 },
   { path: "/inscription",                  freq: "monthly", priority: 0.6 },
   { path: "/agence-partenaire",            freq: "monthly", priority: 0.6 },
   { path: "/services/gestion-locative",    freq: "monthly", priority: 0.5 },
@@ -76,5 +78,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   } catch {}
 
-  return [...staticUrls, ...propertyUrls, ...landUrls, ...vehicleUrls];
+  // Articles de blog (contenu local, pas de BD).
+  const blogUrls: MetadataRoute.Sitemap = getAllPosts().map((p) => ({
+    url: `${BASE}/blog/${p.slug}`,
+    lastModified: new Date(p.isoDate),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticUrls, ...propertyUrls, ...landUrls, ...vehicleUrls, ...blogUrls];
 }

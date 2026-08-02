@@ -603,3 +603,25 @@ model LandInquiry {
   @@index([status])
   @@index([createdAt])
 }
+
+// Articles du Journal AKIL IMMO (blog). Source : base de données (éditables
+// depuis le dashboard). Deux articles « starter » restent servis depuis
+// content/blog/*.md en repli tant que la base est vide.
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String
+  category    String    @default("Conseils") // Sécurité | Conseils | Marché | Événements
+  cover       String?
+  body        String // contenu Markdown
+  author      String    @default("AKIL IMMO")
+  published   Boolean   @default(false)
+  featured    Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+  @@index([category])
+}

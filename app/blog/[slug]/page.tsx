@@ -10,8 +10,8 @@ const SITE = "https://www.akilimmo.com";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getAllSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: Props) {
   const cat = CATEGORY_META[post.category] ?? { label: post.category, color: "#C8922A" };
   const url = `${SITE}/blog/${post.slug}`;
   const cover = post.cover || "/brand/blog/cover-default.jpg";
-  const related = getRelatedPosts(post.slug, post.category);
+  const related = await getRelatedPosts(post.slug, post.category);
 
   const articleLd = {
     "@context": "https://schema.org",

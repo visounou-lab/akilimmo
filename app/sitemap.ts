@@ -78,8 +78,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   } catch {}
 
-  // Articles de blog (contenu local, pas de BD).
-  const blogUrls: MetadataRoute.Sitemap = getAllPosts().map((p) => ({
+  // Articles de blog (base + fichiers en repli).
+  const blogPosts = await getAllPosts();
+  const blogUrls: MetadataRoute.Sitemap = blogPosts.map((p) => ({
     url: `${BASE}/blog/${p.slug}`,
     lastModified: new Date(p.isoDate),
     changeFrequency: "monthly",

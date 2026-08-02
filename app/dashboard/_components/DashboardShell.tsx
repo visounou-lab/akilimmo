@@ -24,6 +24,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/dashboard/demandes":       "Demandes docs",
   "/dashboard/voitures":       "Voitures",
   "/dashboard/messages":       "Messages",
+  "/dashboard/blog":           "Journal",
 };
 
 function getPageTitle(pathname: string): string {

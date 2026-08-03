@@ -78,7 +78,7 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 lg:flex">
           <LocaleSwitcher />
           <Button asChild variant="aurora" size="sm">
-            <Link href="/simulateur">
+            <Link href="/demande">
               {t("apply")}
               <ArrowRight className="size-4" />
             </Link>

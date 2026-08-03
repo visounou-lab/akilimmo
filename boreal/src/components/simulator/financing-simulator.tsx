@@ -184,7 +184,7 @@ export function FinancingSimulator({
               </Button>
             ) : (
               <Button asChild variant="aurora" className="w-full">
-                <Link href="/contact">
+                <Link href="/demande">
                   {t("cta")}
                   <ArrowRight className="size-4" />
                 </Link>

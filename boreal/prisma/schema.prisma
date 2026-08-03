@@ -91,23 +91,6 @@ enum ApplicationStatus {
   CLOSED
 }
 
-enum EmploymentStatus {
-  EMPLOYED
-  SELF_EMPLOYED
-  CIVIL_SERVANT
-  RETIRED
-  STUDENT
-  UNEMPLOYED
-  OTHER
-}
-
-enum HousingStatus {
-  OWNER
-  TENANT
-  HOSTED
-  OTHER
-}
-
 model Application {
   id        String            @id @default(cuid())
   reference String            @unique
@@ -126,23 +109,24 @@ model Application {
   purpose        String?
 
   // Étape 2 — Identité
+  salutation  String?
   firstName   String
   lastName    String
-  email       String
-  phone       String
   birthDate   DateTime?
+  nationality String?
   nationalId  String? // optionnel
   addressLine String?
   postalCode  String?
   city        String?
+  phone       String
+  email       String
 
   // Étape 2 — Situation
-  employmentStatus EmploymentStatus @default(OTHER)
-  employerName     String?
-  monthlyIncome    Float            @default(0)
-  monthlyExpenses  Float            @default(0)
-  housingStatus    HousingStatus    @default(OTHER)
-  existingCredits  Float            @default(0)
+  occupation      String?
+  monthlyIncome   Float   @default(0)
+  monthlyExpenses Float   @default(0)
+  housingSituation String?
+  existingCredits  String?
 
   // Consentements
   consentDataProcessing Boolean @default(false)

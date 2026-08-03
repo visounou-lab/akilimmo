@@ -320,6 +320,105 @@
       "a": "Timelines depend on each file. You can track progress at any time from your client area (coming soon)."
     }
   },
+  "countries": {
+    "CA": "Canada",
+    "FR": "France",
+    "DE": "Germany",
+    "BE": "Belgium",
+    "CH": "Switzerland",
+    "GB": "United Kingdom",
+    "US": "United States"
+  },
+  "apply": {
+    "badge": "Response within 24 hours",
+    "title": "Apply for financing",
+    "subtitle": "In a few steps. Your information is treated confidentially.",
+    "stepOf": "Step {current} of {total}",
+    "autosaved": "Automatically saved",
+    "reference": "Reference",
+    "noOffer": "Indicative, non-binding calculation. No credit offer.",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit request",
+    "submitting": "Submitting…",
+    "steps": {
+      "project": "Project",
+      "info": "Your information"
+    },
+    "project": {
+      "heading": "Project",
+      "type": "Financing type",
+      "country": "Country",
+      "amount": "Amount ({currency})",
+      "duration": "Term (months)",
+      "purpose": "Purpose",
+      "purposePlaceholder": "Briefly describe your project (optional)",
+      "simTitle": "Simulation of your financing",
+      "monthly": "Monthly payment",
+      "rate": "Fixed rate",
+      "totalCost": "Total cost of credit",
+      "conditions": "Financing conditions",
+      "minAmount": "Minimum amount",
+      "maxAmount": "Maximum amount",
+      "minDuration": "Minimum term",
+      "maxDuration": "Maximum term",
+      "months": "{count} months"
+    },
+    "identity": {
+      "heading": "Identity",
+      "salutation": "Salutation",
+      "salutationNone": "—",
+      "salutationMr": "Mr.",
+      "salutationMrs": "Mrs.",
+      "salutationOther": "Other",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "birthDate": "Date of birth",
+      "nationality": "Nationality",
+      "nationalId": "National / social insurance number",
+      "nationalIdPlaceholder": "e.g. 123 456 789",
+      "nationalIdHint": "Optional — speeds up the credit review, treated confidentially.",
+      "address": "Address",
+      "postalCode": "Postal code",
+      "city": "City",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "situation": {
+      "heading": "Situation",
+      "occupation": "Employment / activity",
+      "income": "Monthly net income ({currency})",
+      "expenses": "Monthly expenses ({currency})",
+      "housing": "Housing",
+      "housingPlaceholder": "Owner, tenant, hosted…",
+      "existingCredits": "Existing credits",
+      "existingCreditsPlaceholder": "e.g. car loan $200/month",
+      "securityNote": "We never ask for a banking password, PIN, 2FA/SMS code, or access to your bank account."
+    },
+    "consents": {
+      "heading": "Consents",
+      "dataProcessing": "I have read the privacy policy and consent to the processing of my data to review my request.",
+      "accuracy": "I confirm that my information is complete and accurate.",
+      "contact": "I agree to be contacted regarding my request.",
+      "marketing": "I would like to receive information about offers (optional)."
+    },
+    "errors": {
+      "required": "This field is required.",
+      "email": "Invalid email address.",
+      "consent": "This consent is required.",
+      "amountRange": "The amount must be within the limits of the selected financing.",
+      "durationRange": "The term must be within the limits of the selected financing.",
+      "generic": "Please check the highlighted fields."
+    },
+    "success": {
+      "title": "Request submitted",
+      "body": "Thank you. Your request has been registered. Keep your case reference for any further exchange.",
+      "referenceLabel": "Case reference",
+      "demoNote": "Demonstration environment: no credit offer is issued and no decision is made.",
+      "home": "Back to home",
+      "another": "New request"
+    }
+  },
   "footer": {
     "tagline": "Financing, with the clarity of the North.",
     "market": "Primary market: Canada",

@@ -320,6 +320,105 @@
       "a": "Les délais dépendent de chaque dossier. Vous suivez l'avancement à tout moment depuis votre espace client (à venir)."
     }
   },
+  "countries": {
+    "CA": "Canada",
+    "FR": "France",
+    "DE": "Allemagne",
+    "BE": "Belgique",
+    "CH": "Suisse",
+    "GB": "Royaume-Uni",
+    "US": "États-Unis"
+  },
+  "apply": {
+    "badge": "Réponse sous 24 heures",
+    "title": "Demander un financement",
+    "subtitle": "En quelques étapes. Vos informations sont traitées de façon confidentielle.",
+    "stepOf": "Étape {current} sur {total}",
+    "autosaved": "Enregistré automatiquement",
+    "reference": "Référence",
+    "noOffer": "Calcul indicatif non contractuel. Aucune offre de crédit.",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Envoyer la demande",
+    "submitting": "Envoi…",
+    "steps": {
+      "project": "Projet",
+      "info": "Vos informations"
+    },
+    "project": {
+      "heading": "Projet",
+      "type": "Type de financement",
+      "country": "Pays",
+      "amount": "Montant ({currency})",
+      "duration": "Durée (mois)",
+      "purpose": "Objet",
+      "purposePlaceholder": "Décrivez brièvement votre projet (facultatif)",
+      "simTitle": "Simulation de votre financement",
+      "monthly": "Mensualité",
+      "rate": "Taux fixe",
+      "totalCost": "Coût total du crédit",
+      "conditions": "Conditions du financement",
+      "minAmount": "Montant minimum",
+      "maxAmount": "Montant maximum",
+      "minDuration": "Durée minimale",
+      "maxDuration": "Durée maximale",
+      "months": "{count} mois"
+    },
+    "identity": {
+      "heading": "Identité",
+      "salutation": "Civilité",
+      "salutationNone": "—",
+      "salutationMr": "M.",
+      "salutationMrs": "Mme",
+      "salutationOther": "Autre",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "birthDate": "Date de naissance",
+      "nationality": "Nationalité",
+      "nationalId": "Numéro national / d'assurance sociale",
+      "nationalIdPlaceholder": "Ex. 123 456 789",
+      "nationalIdHint": "Facultatif — accélère l'analyse de solvabilité, traité de façon confidentielle.",
+      "address": "Adresse",
+      "postalCode": "Code postal",
+      "city": "Ville",
+      "phone": "Téléphone",
+      "email": "Courriel"
+    },
+    "situation": {
+      "heading": "Situation",
+      "occupation": "Emploi / activité",
+      "income": "Revenu net mensuel ({currency})",
+      "expenses": "Charges mensuelles ({currency})",
+      "housing": "Logement",
+      "housingPlaceholder": "Propriétaire, locataire, hébergé…",
+      "existingCredits": "Crédits en cours",
+      "existingCreditsPlaceholder": "Ex. prêt auto 200 $/mois",
+      "securityNote": "Nous ne demandons jamais de mot de passe bancaire, NIP, code 2FA/SMS, ni d'accès à votre compte bancaire."
+    },
+    "consents": {
+      "heading": "Consentements",
+      "dataProcessing": "J'ai lu la politique de confidentialité et je consens au traitement de mes données pour l'analyse de ma demande.",
+      "accuracy": "Je confirme que mes informations sont complètes et exactes.",
+      "contact": "J'accepte d'être contacté(e) au sujet de ma demande.",
+      "marketing": "Je souhaite recevoir des informations sur les offres (facultatif)."
+    },
+    "errors": {
+      "required": "Ce champ est requis.",
+      "email": "Adresse courriel invalide.",
+      "consent": "Ce consentement est requis.",
+      "amountRange": "Le montant doit respecter les limites du financement choisi.",
+      "durationRange": "La durée doit respecter les limites du financement choisi.",
+      "generic": "Veuillez vérifier les champs en surbrillance."
+    },
+    "success": {
+      "title": "Demande envoyée",
+      "body": "Merci. Votre demande a bien été enregistrée. Conservez votre référence de dossier pour tout échange ultérieur.",
+      "referenceLabel": "Référence de dossier",
+      "demoNote": "Environnement de démonstration : aucune offre de crédit n'est émise et aucune décision n'est prise.",
+      "home": "Retour à l'accueil",
+      "another": "Nouvelle demande"
+    }
+  },
   "footer": {
     "tagline": "Le financement, avec la clarté du Nord.",
     "market": "Marché principal : Canada",

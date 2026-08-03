@@ -5,6 +5,7 @@ const PATHS = [
   "",
   "/financements",
   "/simulateur",
+  "/demande",
   "/comment-ca-fonctionne",
   "/a-propos",
   "/faq",

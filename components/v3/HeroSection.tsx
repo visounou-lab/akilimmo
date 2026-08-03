@@ -4,11 +4,6 @@ import Image from "next/image";
 import { ArrowRight, Search } from "lucide-react";
 import { useState } from "react";
 
-const CITIES = [
-  "Abidjan", "Cotonou", "Cocody", "Angré", "Zone 4",
-  "Abomey-Calavi", "Tokan", "Calavi", "Plateau", "Marcory",
-];
-
 // ── Image de fond du hero ────────────────────────────────────────────────
 // Pour remplacer par une vraie photo Abidjan / Cotonou : déposer le fichier
 // dans public/brand/hero/ et remplacer la valeur ci-dessous par
@@ -33,7 +28,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[560px] h-[74vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[560px] h-[74vh] flex flex-col items-center justify-center overflow-hidden pt-16">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -163,7 +158,6 @@ export default function HeroSection() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Ville ou quartier… ex: Cocody, Zone 4"
-            list="city-suggestions"
             className="flex-1 min-w-0 bg-transparent outline-none text-sm"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
@@ -172,10 +166,6 @@ export default function HeroSection() {
               paddingBottom: 10,
             }}
           />
-          <datalist id="city-suggestions">
-            {CITIES.map((c) => <option key={c} value={c} />)}
-          </datalist>
-
           <button
             type="submit"
             aria-label="Rechercher"
@@ -194,38 +184,6 @@ export default function HeroSection() {
             <ArrowRight size={14} aria-hidden="true" />
           </button>
         </form>
-
-        {/* Quick links */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-          {[
-            { label: "Long séjour",   href: "#biens" },
-            { label: "Court séjour",  href: "/sejours" },
-            { label: "Cocody",        href: "/biens?q=Cocody" },
-            { label: "Zone 4",        href: "/biens?q=Zone+4" },
-            { label: "Cotonou",       href: "/biens?q=Cotonou" },
-          ].map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="rounded-full px-3.5 py-1.5 text-xs cursor-pointer transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8922A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1917]"
-              style={{
-                fontFamily: "var(--font-inter), sans-serif",
-                color: "rgba(253,252,248,0.55)",
-                border: "1px solid rgba(253,252,248,0.18)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#C8922A";
-                e.currentTarget.style.borderColor = "rgba(200,146,42,0.4)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "rgba(253,252,248,0.55)";
-                e.currentTarget.style.borderColor = "rgba(253,252,248,0.18)";
-              }}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
       </div>
     </section>
   );

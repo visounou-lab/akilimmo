@@ -15,7 +15,6 @@ import {
   ArrowRight,
   Clock,
   Save,
-  ShieldCheck,
   CheckCircle2,
   Loader2,
 } from "lucide-react";
@@ -688,11 +687,6 @@ function StepInfo({ t, currency, control, register, err }: StepInfoProps) {
               {...register("existingCredits")}
             />
           </Field>
-        </div>
-
-        <div className="flex items-start gap-3 rounded-xl border border-glacier/40 bg-accent/40 p-4 text-sm">
-          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-glacier" />
-          <p className="text-muted-foreground">{t("situation.securityNote")}</p>
         </div>
       </section>
 

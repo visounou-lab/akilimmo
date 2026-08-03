@@ -92,7 +92,7 @@
         },
         "a3": {
           "title": "Sécurité des données",
-          "text": "Vos informations sont protégées. Nous ne demandons jamais de NIP, de CVV ni de mot de passe bancaire."
+          "text": "Vos informations sont protégées par des mesures techniques et organisationnelles rigoureuses."
         },
         "a4": {
           "title": "Conseil humain",
@@ -256,7 +256,7 @@
       "sections": {
         "s1": {
           "title": "Données collectées",
-          "text": "Dans le cadre d'une demande, nous pouvons collecter votre identité, vos coordonnées et des informations relatives à votre projet de financement. Nous ne collectons jamais de NIP, de CVV ni de mot de passe bancaire."
+          "text": "Dans le cadre d'une demande, nous pouvons collecter votre identité, vos coordonnées et des informations relatives à votre projet de financement."
         },
         "s2": {
           "title": "Finalités",
@@ -311,7 +311,7 @@
     },
     "q5": {
       "q": "Comment mes données sont-elles protégées ?",
-      "a": "Vos données sont protégées par des mesures techniques et organisationnelles. Nous ne demandons jamais de NIP, de CVV, de mot de passe bancaire ni de code SMS."
+      "a": "Vos données sont protégées par des mesures techniques et organisationnelles adaptées."
     },
     "q6": {
       "q": "Combien de temps prend l'étude d'un dossier ?",
@@ -390,8 +390,7 @@
       "housing": "Logement",
       "housingPlaceholder": "Propriétaire, locataire, hébergé…",
       "existingCredits": "Crédits en cours",
-      "existingCreditsPlaceholder": "Ex. prêt auto 200 $/mois",
-      "securityNote": "Nous ne demandons jamais de mot de passe bancaire, NIP, code 2FA/SMS, ni d'accès à votre compte bancaire."
+      "existingCreditsPlaceholder": "Ex. prêt auto 200 $/mois"
     },
     "consents": {
       "heading": "Consentements",

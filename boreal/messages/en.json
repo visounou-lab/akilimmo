@@ -92,7 +92,7 @@
         },
         "a3": {
           "title": "Data security",
-          "text": "Your information is protected. We never ask for a PIN, CVV or banking password."
+          "text": "Your information is protected by rigorous technical and organisational measures."
         },
         "a4": {
           "title": "Human advice",
@@ -256,7 +256,7 @@
       "sections": {
         "s1": {
           "title": "Data collected",
-          "text": "As part of a request, we may collect your identity, contact details and information about your financing project. We never collect a PIN, CVV or banking password."
+          "text": "As part of a request, we may collect your identity, contact details and information about your financing project."
         },
         "s2": {
           "title": "Purposes",
@@ -311,7 +311,7 @@
     },
     "q5": {
       "q": "How is my data protected?",
-      "a": "Your data is protected by technical and organisational measures. We never ask for a PIN, CVV, banking password or SMS code."
+      "a": "Your data is protected by appropriate technical and organisational measures."
     },
     "q6": {
       "q": "How long does a file review take?",
@@ -390,8 +390,7 @@
       "housing": "Housing",
       "housingPlaceholder": "Owner, tenant, hosted…",
       "existingCredits": "Existing credits",
-      "existingCreditsPlaceholder": "e.g. car loan $200/month",
-      "securityNote": "We never ask for a banking password, PIN, 2FA/SMS code, or access to your bank account."
+      "existingCreditsPlaceholder": "e.g. car loan $200/month"
     },
     "consents": {
       "heading": "Consents",

@@ -17,7 +17,6 @@
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact",
-    "clientArea": "Client area",
     "apply": "Apply now",
     "menu": "Menu",
     "openMenu": "Open menu"
@@ -75,7 +74,7 @@
         },
         "s4": {
           "title": "Decision & follow-up",
-          "text": "Track your file's progress in your secure client area."
+          "text": "You are kept informed of your file's progress by email."
         }
       }
     },
@@ -236,8 +235,7 @@
       "emailLabel": "Email",
       "email": "[contact@borealfinanx.com — to be confirmed]",
       "marketLabel": "Primary market",
-      "market": "Canada",
-      "privacyNote": "We will never ask for your PIN, CVV, banking password or a security code by email or phone."
+      "market": "Canada"
     },
     "legal": {
       "title": "Legal notice",
@@ -317,7 +315,7 @@
     },
     "q6": {
       "q": "How long does a file review take?",
-      "a": "Timelines depend on each file. You can track progress at any time from your client area (coming soon)."
+      "a": "Timelines depend on each file. You are kept informed of your file's progress by email."
     }
   },
   "countries": {

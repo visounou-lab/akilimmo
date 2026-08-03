@@ -17,7 +17,6 @@
     "about": "À propos",
     "faq": "FAQ",
     "contact": "Contact",
-    "clientArea": "Espace client",
     "apply": "Faire une demande",
     "menu": "Menu",
     "openMenu": "Ouvrir le menu"
@@ -75,7 +74,7 @@
         },
         "s4": {
           "title": "Décision & suivi",
-          "text": "Suivez l'avancement de votre dossier dans votre espace client sécurisé."
+          "text": "Vous êtes tenu(e) informé(e) de l'avancement de votre dossier par courriel."
         }
       }
     },
@@ -236,8 +235,7 @@
       "emailLabel": "Courriel",
       "email": "[contact@borealfinanx.com — à confirmer]",
       "marketLabel": "Marché principal",
-      "market": "Canada",
-      "privacyNote": "Nous ne vous demanderons jamais votre NIP, votre CVV, un mot de passe bancaire ou un code de sécurité par courriel ou téléphone."
+      "market": "Canada"
     },
     "legal": {
       "title": "Mentions légales",
@@ -317,7 +315,7 @@
     },
     "q6": {
       "q": "Combien de temps prend l'étude d'un dossier ?",
-      "a": "Les délais dépendent de chaque dossier. Vous suivez l'avancement à tout moment depuis votre espace client (à venir)."
+      "a": "Les délais dépendent de chaque dossier. Vous êtes tenu(e) informé(e) de l'avancement de votre dossier par courriel."
     }
   },
   "countries": {

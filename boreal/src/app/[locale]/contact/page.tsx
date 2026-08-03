@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
-import { Building2, MapPin, Mail, Globe2, ShieldAlert } from "lucide-react";
+import { Building2, MapPin, Mail, Globe2 } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { ContactForm } from "@/components/contact/contact-form";
@@ -62,11 +62,6 @@ function ContactContent() {
                 </li>
               ))}
             </ul>
-
-            <div className="flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm">
-              <ShieldAlert className="mt-0.5 size-4 shrink-0 text-destructive" />
-              <p className="text-muted-foreground">{t("privacyNote")}</p>
-            </div>
           </aside>
         </div>
       </div>

@@ -3,7 +3,7 @@ title: "Louer à distance sans se faire arnaquer : 10 réflexes essentiels"
 excerpt: "Vous cherchez un logement à Abidjan, Cotonou ou Calavi depuis l'étranger ? Voici les 10 réflexes AKIL IMMO pour repérer une arnaque et payer en toute sécurité."
 date: "2026-07-28"
 category: "Sécurité"
-cover: "/brand/blog/cover-securite.jpg"
+cover: "/brand/blog/cover-securite-aki.jpg"
 author: "AKIL IMMO"
 featured: true
 published: true

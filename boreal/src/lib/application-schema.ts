@@ -40,9 +40,6 @@ export const applicationSchema = z
     monthlyIncome: z
       .number({ invalid_type_error: "required" })
       .nonnegative("required"),
-    monthlyExpenses: z
-      .number({ invalid_type_error: "required" })
-      .nonnegative("required"),
     housingSituation: z.string().max(500).optional().or(z.literal("")),
     existingCredits: z.string().max(500).optional().or(z.literal("")),
 

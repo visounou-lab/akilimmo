@@ -70,7 +70,6 @@ const DEFAULT_VALUES: ApplicationInput = {
   email: "",
   occupation: "",
   monthlyIncome: 0,
-  monthlyExpenses: 0,
   housingSituation: "",
   existingCredits: "",
   consentDataProcessing: true,
@@ -645,34 +644,19 @@ function StepInfo({ t, currency, control, register, err }: StepInfoProps) {
           <Input {...register("occupation")} />
         </Field>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field
-            label={t("situation.income", { currency })}
-            required
-            error={err("monthlyIncome")}
-          >
-            <Input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              step={100}
-              {...register("monthlyIncome", { valueAsNumber: true })}
-            />
-          </Field>
-          <Field
-            label={t("situation.expenses", { currency })}
-            required
-            error={err("monthlyExpenses")}
-          >
-            <Input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              step={100}
-              {...register("monthlyExpenses", { valueAsNumber: true })}
-            />
-          </Field>
-        </div>
+        <Field
+          label={t("situation.income", { currency })}
+          required
+          error={err("monthlyIncome")}
+        >
+          <Input
+            type="number"
+            inputMode="numeric"
+            min={0}
+            step={100}
+            {...register("monthlyIncome", { valueAsNumber: true })}
+          />
+        </Field>
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label={t("situation.housing")}>

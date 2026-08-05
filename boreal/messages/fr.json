@@ -386,7 +386,6 @@
       "heading": "Situation",
       "occupation": "Emploi / activité",
       "income": "Revenu net mensuel ({currency})",
-      "expenses": "Charges mensuelles ({currency})",
       "housing": "Logement",
       "housingPlaceholder": "Propriétaire, locataire, hébergé…",
       "existingCredits": "Crédits en cours",

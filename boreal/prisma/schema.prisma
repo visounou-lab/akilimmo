@@ -122,9 +122,8 @@ model Application {
   email       String
 
   // Étape 2 — Situation
-  occupation      String?
-  monthlyIncome   Float   @default(0)
-  monthlyExpenses Float   @default(0)
+  occupation       String?
+  monthlyIncome    Float   @default(0)
   housingSituation String?
   existingCredits  String?
 

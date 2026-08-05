@@ -386,7 +386,6 @@
       "heading": "Situation",
       "occupation": "Employment / activity",
       "income": "Monthly net income ({currency})",
-      "expenses": "Monthly expenses ({currency})",
       "housing": "Housing",
       "housingPlaceholder": "Owner, tenant, hosted…",
       "existingCredits": "Existing credits",

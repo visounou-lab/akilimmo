@@ -67,7 +67,6 @@ export async function submitApplication(
     email: data.email,
     occupation: data.occupation || null,
     monthlyIncome: data.monthlyIncome,
-    monthlyExpenses: data.monthlyExpenses,
     housingSituation: data.housingSituation || null,
     existingCredits: data.existingCredits || null,
     consentDataProcessing: true,

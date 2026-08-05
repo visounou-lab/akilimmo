@@ -12,6 +12,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    // French UI copy contains many apostrophes in JSX text; this stylistic
+    // rule would flag every one of them.
+    rules: {
+      "react/no-unescaped-entities": "off",
+    },
+  },
+  {
     ignores: [".next/**", "node_modules/**"],
   },
 ];

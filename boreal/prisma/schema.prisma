@@ -186,9 +186,11 @@ enum DocumentType {
   ACKNOWLEDGEMENT // accusé de réception
   DOCUMENTS_REQUEST // demande de pièces
   SUMMARY // récapitulatif
+  REGISTRATION // formulaire d'inscription
   INDICATIVE_PROPOSAL // proposition indicative
-  SCHEDULE // échéancier
-  CONTRACT // contrat
+  SCHEDULE // tableau d'amortissement / échéancier
+  CONTRACT // contrat de prêt
+  DEPOSIT_CERTIFICATE // certificat de dépôt
   ACCEPTANCE // acceptation
   REJECTION // refus
   CANCELLATION // annulation

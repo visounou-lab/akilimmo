@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft, FileText, Download, ShieldCheck } from "lucide-react";
 
 import { prisma } from "@/lib/prisma";
 import { requirePermission } from "@/lib/auth/guards";
@@ -20,6 +20,8 @@ import {
   addNoteAction,
   assignAction,
 } from "../actions";
+import { generateDocumentAction } from "./documents-actions";
+import { DOCUMENT_LABELS, AVAILABLE_DOCUMENT_TYPES } from "@/lib/documents";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +45,7 @@ export default async function ApplicationDetailPage({
         orderBy: { createdAt: "desc" },
         include: { changedBy: { select: { name: true } } },
       },
+      documents: { orderBy: { createdAt: "desc" } },
     },
   });
   if (!app) notFound();
@@ -236,18 +239,77 @@ export default async function ApplicationDetailPage({
           )}
 
           <Card title="Documents">
-            <p className="text-sm text-muted-foreground">
-              Génération de documents (brouillons vérifiables « BROUILLON — non
-              contractuel » avec QR de vérification) — à venir.
+            <p className="text-xs text-muted-foreground">
+              Brouillons vérifiables (« BROUILLON — non contractuel », empreinte
+              SHA-256 + QR). Sans signature ni cachet.
             </p>
-            <button
-              type="button"
-              disabled
-              className="mt-3 inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm text-muted-foreground opacity-60"
-            >
-              <FileText className="size-4" />
-              Générer un document
-            </button>
+
+            {can(user.role, "documents.generate") && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {AVAILABLE_DOCUMENT_TYPES.map((type) => (
+                  <form key={type} action={generateDocumentAction}>
+                    <input type="hidden" name="applicationId" value={app.id} />
+                    <input type="hidden" name="type" value={type} />
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium hover:bg-accent"
+                    >
+                      <FileText className="size-3.5" />
+                      {DOCUMENT_LABELS[type]}
+                    </button>
+                  </form>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-4 space-y-2">
+              {app.documents.length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  Aucun document généré.
+                </p>
+              )}
+              {app.documents.map((d) => (
+                <div
+                  key={d.id}
+                  className="flex items-center justify-between gap-3 rounded-lg border bg-secondary/30 px-3 py-2 text-sm"
+                >
+                  <div className="min-w-0">
+                    <div className="truncate font-medium">
+                      {DOCUMENT_LABELS[d.type]}{" "}
+                      <span className="text-xs text-muted-foreground">v{d.version}</span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {formatDate(d.createdAt)}
+                    </div>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <a
+                      href={`/admin/documents/${d.id}/pdf`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium hover:bg-accent"
+                    >
+                      <Download className="size-3.5" />
+                      PDF
+                    </a>
+                    <a
+                      href={`/verify/${d.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium hover:bg-accent"
+                    >
+                      <ShieldCheck className="size-3.5" />
+                      Vérifier
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-3 text-xs text-muted-foreground">
+              Contrat de prêt et certificat de dépôt : disponibles prochainement
+              (en attente des modèles).
+            </p>
           </Card>
 
           {can(user.role, "applications.delete") && (

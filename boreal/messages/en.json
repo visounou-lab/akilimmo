@@ -239,16 +239,11 @@
     },
     "legal": {
       "title": "Legal notice",
-      "subtitle": "Legal information about the site publisher.",
-      "editorTitle": "Publisher",
-      "editor": "Boreal Finance Group. Operating entity established in Germany. [Legal name, legal form, capital and legal representative — to be completed].",
-      "registrationTitle": "Registration",
-      "registration": "[Registration number / commercial register — to be completed]. No licence or supervisory authority is displayed until formally confirmed.",
-      "hostingTitle": "Hosting",
-      "hosting": "Site hosted on Vercel Inc. [Host contact details — to be completed].",
-      "domainTitle": "Domain",
-      "domain": "borealfinanx.com",
-      "disclaimer": "This site is currently a demonstration. Legal information will be completed and verified before any production launch."
+      "subtitle": "Impressum of Boreal Finance Group AG.",
+      "authoritativeNote": "The German version of this legal notice is authoritative.",
+      "verificationNotice": "The registration and regulatory data below are declared by the operator and must be verified against official sources (Handelsregister, BaFin, ECB) before any production launch.",
+      "supervisionDisclaimer": "Listing the authorities below does not constitute proof of authorisation, licence or regulatory supervision. The regulatory status of Boreal Finance Group AG is not confirmed at this time.",
+      "datenschutzLink": "View the privacy policy"
     },
     "privacy": {
       "title": "Privacy policy",

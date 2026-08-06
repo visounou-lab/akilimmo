@@ -239,16 +239,11 @@
     },
     "legal": {
       "title": "Mentions légales",
-      "subtitle": "Informations légales relatives à l'éditeur du site.",
-      "editorTitle": "Éditeur",
-      "editor": "Boreal Finance Group. Société exploitante établie en Allemagne. [Raison sociale, forme juridique, capital et représentant légal — à compléter].",
-      "registrationTitle": "Enregistrement",
-      "registration": "[Numéro d'enregistrement / registre du commerce — à compléter]. Aucune licence ou autorité de tutelle n'est affichée tant qu'elle n'a pas été formellement confirmée.",
-      "hostingTitle": "Hébergement",
-      "hosting": "Site hébergé sur Vercel Inc. [Coordonnées de l'hébergeur — à compléter].",
-      "domainTitle": "Domaine",
-      "domain": "borealfinanx.com",
-      "disclaimer": "Ce site est actuellement une démonstration. Les informations légales seront complétées et vérifiées avant toute mise en production."
+      "subtitle": "Impressum de Boreal Finance Group AG.",
+      "authoritativeNote": "La version allemande de ces mentions légales fait foi.",
+      "verificationNotice": "Les données d'enregistrement et réglementaires ci-dessous sont déclarées par l'exploitant et doivent être vérifiées auprès des sources officielles (Handelsregister, BaFin, BCE) avant toute mise en production.",
+      "supervisionDisclaimer": "L'indication des autorités ci-dessous ne constitue pas une preuve d'agrément, de licence ou de supervision réglementaire. Le statut réglementaire de Boreal Finance Group AG n'est pas confirmé à ce jour.",
+      "datenschutzLink": "Consulter la politique de confidentialité"
     },
     "privacy": {
       "title": "Politique de confidentialité",

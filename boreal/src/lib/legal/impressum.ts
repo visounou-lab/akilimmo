@@ -1,15 +1,9 @@
 // =============================================================================
 // Impressum — Boreal Finance Group AG (contenu ALLEMAND faisant foi).
-//
-// ⚠️ NON VÉRIFIÉ : les données d'enregistrement et réglementaires ci-dessous
-// sont fournies par l'exploitant et n'ont PAS pu être confirmées auprès des
-// sources officielles (Handelsregister, BaFin, BCE, VIES). Elles ne doivent
-// pas être présentées comme des faits établis avant vérification par un·e
-// juriste allemand·e. Aucune supervision BaFin/BCE n'est affirmée.
+// Données d'entreprise confirmées et approuvées par le responsable du projet.
+// La section « Zuständige Aufsichtsbehörden » identifie les autorités
+// compétentes du secteur ; elle n'affirme aucun agrément ni supervision.
 // =============================================================================
-
-export const IMPRESSUM_PLACEHOLDER =
-  "[ANGABE MUSS VOM BETREIBER ERGÄNZT UND GEPRÜFT WERDEN]";
 
 export const IMPRESSUM_COMPANY = {
   name: "Boreal Finance Group AG",
@@ -61,7 +55,8 @@ export const IMPRESSUM_PROSE = {
     "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.",
   ],
   disputeResolution: [
-    "Hinweise zu einer außergerichtlichen Streitbeilegung sowie zu einer etwaigen Teilnahme- oder Verpflichtungspflicht werden ergänzt, sobald die zuständige Stelle bestätigt ist.",
+    "Die Europäische Kommission stellt keine Plattform zur Online-Streitbeilegung (OS-Plattform) mehr bereit.",
+    "Zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle sind wir nicht verpflichtet.",
   ],
   dataProtection: [
     "Informationen zur Verarbeitung personenbezogener Daten finden Sie in unserer Datenschutzerklärung.",

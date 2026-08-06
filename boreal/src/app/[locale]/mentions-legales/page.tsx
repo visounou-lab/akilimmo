@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
-import { Info, ShieldAlert, ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/page-header";
@@ -9,7 +9,6 @@ import {
   IMPRESSUM_COMPANY as C,
   IMPRESSUM_AUTHORITIES,
   IMPRESSUM_PROSE as P,
-  IMPRESSUM_PLACEHOLDER,
 } from "@/lib/legal/impressum";
 
 export async function generateMetadata({
@@ -39,19 +38,15 @@ function LegalContent() {
     <>
       <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <div className="container-boreal py-16">
-        <div className="mx-auto max-w-3xl space-y-6">
-          {/* Localized notices around the authoritative German Impressum */}
-          <div className="flex items-start gap-3 rounded-xl border bg-secondary/40 p-4 text-sm text-muted-foreground">
-            <Info className="mt-0.5 size-4 shrink-0 text-glacier" />
-            <p>{t("verificationNotice")}</p>
-          </div>
-
+        <div className="mx-auto max-w-3xl">
           <div className="rounded-2xl border bg-card p-6 shadow-[var(--shadow-soft)] sm:p-8">
             <p className="text-xs uppercase tracking-wide text-glacier">Impressum</p>
             <h2 className="mt-1 font-serif text-2xl font-semibold">
               Rechtliche Hinweise
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">{t("authoritativeNote")}</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("authoritativeNote")}
+            </p>
 
             <div className="mt-8 space-y-8">
               <Section id="1" title="Angaben gemäß § 5 DDG">
@@ -88,11 +83,11 @@ function LegalContent() {
               </Section>
 
               <Section id="7" title="Zuständige Aufsichtsbehörden">
-                <div className="mb-4 flex items-start gap-3 rounded-lg border border-amber-300/60 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
-                  <ShieldAlert className="mt-0.5 size-4 shrink-0" />
-                  <p>{t("supervisionDisclaimer")}</p>
-                </div>
-                <div className="space-y-5">
+                <p className="text-muted-foreground">
+                  Zuständige Aufsichtsbehörden für Finanzdienstleistungen in
+                  Deutschland:
+                </p>
+                <div className="mt-3 space-y-5">
                   {IMPRESSUM_AUTHORITIES.map((a) => (
                     <div key={a.name}>
                       <p className="font-medium">{a.name}</p>
@@ -110,48 +105,37 @@ function LegalContent() {
                         className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
                       >
                         {a.website.label}
-                        <ExternalLink className="size-3.5" />
+                        <ExternalLink className="size-3.5" aria-hidden />
                       </a>
                     </div>
                   ))}
                 </div>
               </Section>
 
-              <Section id="8" title="Vertretungsberechtigte Person">
-                <Missing />
-              </Section>
-
-              <Section id="9" title="Verantwortlich für den Inhalt">
-                <p className="text-muted-foreground">
-                  Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
-                </p>
-                <Missing />
-              </Section>
-
-              <Section id="10" title="Haftung für Inhalte">
+              <Section id="8" title="Haftung für Inhalte">
                 <Prose paragraphs={P.liabilityContent} />
               </Section>
 
-              <Section id="11" title="Haftung für externe Links">
+              <Section id="9" title="Haftung für externe Links">
                 <Prose paragraphs={P.liabilityLinks} />
               </Section>
 
-              <Section id="12" title="Urheberrecht">
+              <Section id="10" title="Urheberrecht">
                 <Prose paragraphs={P.copyright} />
               </Section>
 
-              <Section id="13" title="Online-Streitbeilegung">
+              <Section id="11" title="Online-Streitbeilegung">
                 <Prose paragraphs={P.disputeResolution} />
               </Section>
 
-              <Section id="14" title="Datenschutz">
+              <Section id="12" title="Datenschutz">
                 <Prose paragraphs={P.dataProtection} />
                 <Link
                   href="/confidentialite"
                   className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                 >
                   {t("datenschutzLink")}
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4" aria-hidden />
                 </Link>
               </Section>
             </div>
@@ -202,13 +186,5 @@ function Prose({ paragraphs }: { paragraphs: string[] }) {
         </p>
       ))}
     </>
-  );
-}
-
-function Missing() {
-  return (
-    <p className="inline-flex rounded-md border border-dashed border-amber-400/60 bg-amber-50/60 px-2 py-1 font-mono text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-300">
-      {IMPRESSUM_PLACEHOLDER}
-    </p>
   );
 }

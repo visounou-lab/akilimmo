@@ -76,5 +76,7 @@ export function getPropertyMainImage(property: PropertyLike): string {
     .filter((img) => img.status === "APPROVED")
     .sort((a, b) => a.order - b.order);
   if (approved.length > 0) return approved[0].url;
-  return getYouTubeThumbnail(property.videoUrl);
+  // hqdefault existe pour TOUTE vidéo YouTube ; maxresdefault manque souvent
+  // (vidéos filmées au téléphone) et renvoyait une miniature cassée → placeholder.
+  return getYouTubeThumbnailFallback(property.videoUrl);
 }

@@ -48,6 +48,7 @@ export default function AkiSection() {
                 alt="AKI, la mascotte d'AKIL IMMO, maison stylisée verte et ivoire tenant une clé dorée"
                 width={1254}
                 height={1254}
+                unoptimized
                 className="w-full h-auto rounded-3xl"
                 sizes="(max-width: 1024px) 80vw, 320px"
               />

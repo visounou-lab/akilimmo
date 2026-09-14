@@ -1,4 +1,4 @@
-const PLACEHOLDER_SVG =
+export const PLACEHOLDER_SVG =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3Crect width='160' height='100' fill='%23FDFCF8'/%3E%3Cpath d='M80 22 L48 48 V80 h18 V62 h28 V80 h18 V48 Z' fill='%23C8922A' opacity='0.35'/%3E%3C/svg%3E";
 
 /** Accepts full YouTube URLs, youtu.be short links, embed URLs, or raw 11-char IDs. */

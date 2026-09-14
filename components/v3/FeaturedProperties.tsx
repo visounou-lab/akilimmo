@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 import { MapPin, BedDouble, Bath, ArrowRight, MessageCircle, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
@@ -111,7 +111,7 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
   const [portrait, setPortrait] = useState(false);
 
   return (
-    <Image
+    <SafeImage
       src={src}
       alt={alt}
       fill
@@ -120,6 +120,7 @@ function CardImage({ src, alt }: { src: string; alt: string }) {
         setPortrait(img.naturalHeight > img.naturalWidth);
       }}
       className="object-cover transition-transform duration-300 group-hover:scale-105"
+      fallbackClassName="object-cover"
       style={{ objectPosition: portrait ? "center 38%" : "center" }}
       sizes={CARD_IMG_SIZES}
     />

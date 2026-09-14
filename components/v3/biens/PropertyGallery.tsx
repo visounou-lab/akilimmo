@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import SafeImage from "../SafeImage";
 
 type GalleryImage = {
   id: string;
@@ -139,13 +140,14 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
             style={{ opacity: 0.5 }}
           />
           {/* Photo entière, jamais recadrée (comme le lightbox) */}
-          <Image
+          <SafeImage
             key={active.id}
             src={active.url}
             alt={active.alt ?? `Photo ${activeIdx + 1}`}
             fill
             unoptimized
             className="object-contain"
+            fallbackClassName="object-contain"
             priority={activeIdx === 0}
           />
 
@@ -243,12 +245,13 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
                   ["--tw-ring-color" as string]: "#C8922A",
                 }}
               >
-                <Image
+                <SafeImage
                   src={img.url}
                   alt={img.alt ?? `Miniature ${idx + 1}`}
                   fill
                   unoptimized
                   className="object-cover"
+                  fallbackClassName="object-cover"
                 />
               </button>
             ))}
@@ -296,12 +299,13 @@ export default function PropertyGallery({ images }: { images: GalleryImage[] }) 
             style={{ width: "90vw", height: "90vh" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
+            <SafeImage
               src={lbImage.url}
               alt={lbImage.alt ?? `Photo ${lightboxIdx + 1}`}
               fill
               unoptimized
               className="object-contain"
+              fallbackClassName="object-contain"
             />
           </div>
 

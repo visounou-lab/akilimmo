@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 import { MapPin, BedDouble, Bath, MessageCircle, SearchX, Heart } from "lucide-react";
 import { getPropertyMainImage } from "@/lib/youtube";
 import { trackWhatsAppClick } from "@/lib/analytics";
@@ -410,11 +410,12 @@ export default function BiensListClient({
                         style={{ aspectRatio: "16/10" }}
                         aria-label={`Voir le détail : ${prop.title}`}
                       >
-                        <Image
+                        <SafeImage
                           src={imageSrc}
                           alt={prop.title}
                           fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          fallbackClassName="object-cover"
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                         <div

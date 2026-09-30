@@ -142,6 +142,8 @@ model User {
   resetToken              String?                @unique
   resetExpires            DateTime?
   status                  String                 @default("pending")
+  twoFactorSecret         String?                // secret TOTP (base32) — présent dès l'enrôlement
+  twoFactorEnabled        Boolean                @default(false) // 2FA active (exigée à la connexion)
   referralCode            String?                @unique
   referredById            String?
   referredBy              User?                  @relation("UserReferrals", fields: [referredById], references: [id])

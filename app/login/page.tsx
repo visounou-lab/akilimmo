@@ -10,6 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 function LoginForm() {
   const [email,       setEmail]       = useState("");
   const [password,    setPassword]    = useState("");
+  const [code,        setCode]        = useState("");
   const [showPass,    setShowPass]    = useState(false);
   const [error,       setError]       = useState("");
   const [loading,     setLoading]     = useState(false);
@@ -22,10 +23,10 @@ function LoginForm() {
     setError("");
     setLoading(true);
 
-    const result = await signIn("credentials", { email, password, redirect: false });
+    const result = await signIn("credentials", { email, password, code, redirect: false });
 
     if (result?.error) {
-      setError("Email ou mot de passe incorrect");
+      setError("Identifiants incorrects — ou code d'authentification manquant/invalide pour les administrateurs.");
       setLoading(false);
       return;
     }
@@ -145,6 +146,37 @@ function LoginForm() {
               {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+        </div>
+
+        <div>
+          <label
+            className="block mb-1.5"
+            style={{
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#6B5E52",
+              fontFamily: "var(--font-inter), sans-serif",
+            }}
+          >
+            Code d&apos;authentification <span style={{ textTransform: "none", fontWeight: 400 }}>(administrateurs)</span>
+          </label>
+          <input
+            type="text"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={6}
+            placeholder="123456"
+            value={code}
+            onChange={e => setCode(e.target.value.replace(/\D/g, ""))}
+            style={{ ...inputStyle, letterSpacing: "0.3em" }}
+            onFocus={e => { e.currentTarget.style.borderColor = "#C8922A"; }}
+            onBlur={e => { e.currentTarget.style.borderColor = "rgba(200,146,42,0.25)"; }}
+          />
+          <p style={{ marginTop: 6, fontSize: "0.72rem", color: "#94A3B8", fontFamily: "var(--font-inter), sans-serif" }}>
+            Requis uniquement pour les comptes administrateur. Laissez vide sinon.
+          </p>
         </div>
 
         <div className="flex justify-end">

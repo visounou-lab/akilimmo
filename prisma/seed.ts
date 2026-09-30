@@ -11,12 +11,14 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const hashedPassword = await bcrypt.hash("Admin2026!", 12);
 
+  // Compte administrateur AKIL IMMO. Le mot de passe par défaut (Admin2026!)
+  // DOIT être changé après la première connexion. La 2FA est ensuite exigée.
   const user = await prisma.user.upsert({
-    where: { email: "david@akilimmo.com" },
-    update: {},
+    where: { email: "davidayina.akilservices@gmail.com" },
+    update: { role: "ADMIN" },
     create: {
       name: "David Ayina",
-      email: "david@akilimmo.com",
+      email: "davidayina.akilservices@gmail.com",
       password: hashedPassword,
       role: "ADMIN",
     },

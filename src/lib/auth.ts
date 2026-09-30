@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
+import { verifyTwoFactorToken } from "./twofactor";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -12,13 +13,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         email:    { label: "Email",          type: "email" },
         password: { label: "Mot de passe",   type: "password" },
+        code:     { label: "Code 2FA",       type: "text" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
-          select: { id: true, email: true, name: true, password: true, role: true, requestedRole: true, status: true },
+          select: { id: true, email: true, name: true, password: true, role: true, requestedRole: true, status: true, twoFactorEnabled: true, twoFactorSecret: true },
         });
 
         if (!user || !user.password) return null;
@@ -28,6 +30,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           user.password
         );
         if (!isValid) return null;
+
+        // Double authentification : exigée pour les comptes ADMIN qui l'ont activée.
+        if (user.role === "ADMIN" && user.twoFactorEnabled) {
+          const code = typeof credentials.code === "string" ? credentials.code : "";
+          if (!user.twoFactorSecret || !verifyTwoFactorToken(code, user.twoFactorSecret)) {
+            return null;
+          }
+        }
 
         return {
           id:     user.id,
